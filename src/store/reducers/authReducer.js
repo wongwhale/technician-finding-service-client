@@ -7,6 +7,11 @@ authType.LOADING = 'LOADING'
 const initialState = {
     isLoading : false ,
     isAuth : false ,
+    userInfo : {
+        firstname : '',
+        lastname : '',
+        role : ''
+    }
 }
 
 export default authReducer = (state = initialState , action) => {
@@ -15,7 +20,8 @@ export default authReducer = (state = initialState , action) => {
             return{
                 ...state,
                 isLoading: false,
-                isAuth : true
+                isAuth : true,
+                userInfo : action.payload
             }
         case authType.LOGIN_FAIL:
             return{

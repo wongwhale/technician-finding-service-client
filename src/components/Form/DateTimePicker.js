@@ -77,7 +77,6 @@ const DateTimePicker = () => {
                         <View style={datePicker.headerContainer}>
                             <Text style={datePicker.headerText}>เลือกวันที่</Text>
                         </View>
-                        <Button title='test' onPress={() => console.log(year_)} />
                         <View style={datePicker.pickerContainer}>
                             <View style={datePicker.dayContainer}>
                                 <Picker
@@ -138,7 +137,6 @@ const DateTimePicker = () => {
                         <View style={datePicker.headerContainer}>
                             <Text style={datePicker.headerText}>เลือกเวลา</Text>
                         </View>
-                        <Button title='test' onPress={() => console.log(year_)} />
                         <View style={datePicker.pickerContainer}>
                             <View style={datePicker.dayContainer}>
                                 <Picker

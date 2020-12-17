@@ -1,6 +1,5 @@
-import React from 'react';
+import React  from 'react';
 
-import { Text } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -16,7 +15,15 @@ import Notification from './screens/Notification'
 import Chat from './screens/Chat'
 import TechnicianInfo from './screens/TechnicianInfo'
 import Login from './screens/Login'
+import BasicInfo from './screens/Registor/BasicInfo'
+import Name from './screens/Registor/Name'
+import SelectRole from './screens/Registor/SelectRole'
+import PhoneNumber from './screens/Registor/PhoneNumber'
+import OTP from './screens/Registor/OTP'
+
 import { connect } from 'react-redux';
+
+import { color } from './stylesheet'
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth
@@ -30,21 +37,24 @@ const TabNavigation = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
+          let iconSize;
 
           if (route.name === 'menu') {
-            iconName = focused
-              ? 'home'
-              : 'home';
+            iconName = focused ? 'home' : 'home';
+            iconSize = focused ? 30 : 25
+
           } else if (route.name === 'notification') {
             iconName = focused ? 'bell' : 'bell';
+            iconSize = focused ? 30 : 25
+
           }
           // You can return any component that you like here!
-          return <Feather name={iconName} size={size} color={color} />;
+          return <Feather name={iconName} size={iconSize} color={color} />;
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
+        activeTintColor: color.DARK_GREEN,
+        inactiveTintColor: '#999',
         showLabel: false
       }}
     >
@@ -54,10 +64,11 @@ const TabNavigation = () => {
   )
 }
 
+
 const Router = (props) => {
   return (
     <>
-      <NavigationContainer>
+      <NavigationContainer >
         {
           props.isAuth ? (
             <Stack.Navigator>
@@ -68,6 +79,11 @@ const Router = (props) => {
           ) : (
               <Stack.Navigator>
                 <Stack.Screen name='login' component={Login} options={{ headerShown: false }} />
+                <Stack.Screen name='reg_basic' component={BasicInfo} options={{ headerShown: false }} />
+                <Stack.Screen name='reg_name' component={Name} options={{ headerShown: false }} />
+                <Stack.Screen name='reg_select' component={SelectRole} options={{ headerShown: false }} />
+                <Stack.Screen name='reg_phone' component={PhoneNumber} options={{ headerShown: false }} />
+                <Stack.Screen name='reg_otp' component={OTP} options={{ headerShown: false }} />
               </Stack.Navigator>
             )
         }

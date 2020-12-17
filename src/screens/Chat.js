@@ -7,6 +7,7 @@ import ChatInput from '../components/Chat/ChatInput'
 import ChatBox from '../components/Chat/ChatBox'
 
 import { ScrollView } from 'react-native-gesture-handler'
+import { color } from '../stylesheet'
 
 const Chat = ({ navigation }) => {
 
@@ -21,7 +22,7 @@ const Chat = ({ navigation }) => {
 
     return (
         <>
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: color.WHITE }}>
                 <ChatHeader navigation={navigation} />
                 <ScrollView>
                     <ChatBox message={message} />

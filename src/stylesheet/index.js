@@ -1,14 +1,23 @@
 import { StyleSheet } from 'react-native'
 
 export const color = {}
-color.BLUE = '#3F52B9'
-color.GREY_LIGHT_BLUE = '#E5E5ED'
-color.DARK_GREEN = '#386065'
-color.YELLOW = '#FFAA38'
-color.LIGHT_GREY = '#E6E6E6'
+// color.BLUE = '#325288'
+color.BLUE = '#40506E'
+color.GREY_BLUE = '#7d8aa1'
+color.DARK_BLUE = '#112046'
+color.GREY_LIGHT_BLUE = '#EAEAED'
+color.YELLOW = '#F2C743'
+// color.LIGHT_GREY = '#E6E6E6'
+color.LIGHT_GREY = '#D4D4CE'
 color.GREEN = '#248152'
+// color.DARK_GREEN = '#386065'
+color.DARK_GREEN = '#23383F'
 color.IOS_BLUE = '#0461e9'
-
+color.LIGHT_BLUE = '#97B3D0'
+// color.GREY_BLUE = '#539D'
+color.SKIN = '#F0EEE8'
+color.WHITE = '#F6F6F6'
+color.GREY = '#999999'
 
 export const content = StyleSheet.create({
     container: {
@@ -180,11 +189,11 @@ export const searchScreen = StyleSheet.create({
         color: color.BLUE,
         borderRadius: 10,
         padding: 10,
-        paddingLeft:20,
+        paddingLeft: 20,
         marginHorizontal: 25,
         flexDirection: 'row-reverse',
-        backgroundColor:color.GREY_LIGHT_BLUE,
-        justifyContent:'space-between'
+        backgroundColor: color.GREY_LIGHT_BLUE,
+        justifyContent: 'space-between'
     },
     textInput: {
         flex: 1,
@@ -199,50 +208,50 @@ export const searchScreen = StyleSheet.create({
         fontSize: 25,
         color: color.BLUE,
     },
-    listContainer:{
-        alignItems:'flex-start',
-        flexDirection:'row',
-        paddingVertical:10,
-        paddingHorizontal:15,
-        borderBottomWidth:0.3,
-        borderBottomColor:color.LIGHT_GREY
+    listContainer: {
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderBottomWidth: 0.3,
+        borderBottomColor: color.LIGHT_GREY
     },
-    listRowContainer:{
-        alignItems:'flex-start',
-        marginVertical:2,
-        flexDirection:'row',
-        justifyContent:'flex-start',
-        alignItems:'center'
+    listRowContainer: {
+        alignItems: 'flex-start',
+        marginVertical: 2,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
     },
-    distanceText:{
-        color:color.BLUE
+    distanceText: {
+        color: color.BLUE
     },
-    nameText:{
-        color:color.BLUE,
-        fontWeight:'bold'
+    nameText: {
+        color: color.BLUE,
+        fontWeight: 'bold'
     },
-    infoContainer:{
-        paddingLeft:25,
-        flex:1,
+    infoContainer: {
+        paddingLeft: 25,
+        flex: 1,
     },
-    imageContainer:{
-        justifyContent:'center',
-        alignItems:'center',
+    imageContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    techImage:{
-        width:60,
-        height:60,
-        borderRadius:30,
-        backgroundColor:color.DARK_GREEN
+    techImage: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: color.DARK_GREEN
     },
-    detailbtnContainer:{
-        flexDirection:'row',
-        alignItems:'center',
-        textAlignVertical:'center'
+    detailbtnContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        textAlignVertical: 'center'
     },
-    detailbtnText:{
-        color:color.BLUE,
-        fontSize:12
+    detailbtnText: {
+        color: color.BLUE,
+        fontSize: 12
     }
 })
 
@@ -350,7 +359,7 @@ export const posting = StyleSheet.create({
         borderRadius: 10,
         // borderWidth: 2,
         // borderColor: color.BLUE,
-        backgroundColor:color.GREY_LIGHT_BLUE,
+        backgroundColor: color.GREY_LIGHT_BLUE,
         height: 35,
         flexDirection: 'row',
     },
@@ -368,10 +377,10 @@ export const posting = StyleSheet.create({
         padding: 5,
         paddingHorizontal: 15,
         borderRadius: 10,
-        justifyContent:'center',
+        justifyContent: 'center',
         // borderWidth: 2,
         // borderColor: color.BLUE,
-        backgroundColor:color.GREY_LIGHT_BLUE,
+        backgroundColor: color.GREY_LIGHT_BLUE,
         height: 35,
         flexDirection: 'row',
         justifyContent: 'space-between'
@@ -387,7 +396,7 @@ export const posting = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         borderWidth: 1,
-        borderColor:color.GREY_LIGHT_BLUE,
+        borderColor: color.GREY_LIGHT_BLUE,
         // borderColor: color.BLUE,
         lineHeight: 20,
     },
@@ -570,7 +579,7 @@ export const message = StyleSheet.create({
         paddingVertical: 7,
         paddingHorizontal: 15,
         borderRadius: 25,
-        maxWidth:'75%'
+        maxWidth: '75%'
     },
     rightBubble: {
         // borderBottomRightRadius: 0,
@@ -590,221 +599,294 @@ export const message = StyleSheet.create({
         backgroundColor: color.YELLOW
     },
     leftText: {
-        color:'#111'
+        color: '#111'
     },
-    chatInputContainer:{
-        flexDirection:'row',
-        borderTopColor:'#666',
-        borderTopWidth:0.3,
-        paddingVertical:5
+    chatInputContainer: {
+        flexDirection: 'row',
+        borderTopColor: '#666',
+        borderTopWidth: 0.3,
+        paddingVertical: 5
     },
-    textInput:{
-        borderWidth:2,
-        borderColor:'#a6a6a6',
-        paddingVertical:10,
-        paddingHorizontal:20,
-        marginHorizontal:10,
-        flex:1,
-        borderRadius:25,
-        height:'auto',
-        lineHeight:20,
-        textAlignVertical:'center'  
+    textInput: {
+        borderWidth: 2,
+        borderColor: '#a6a6a6',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        marginHorizontal: 10,
+        flex: 1,
+        borderRadius: 25,
+        height: 'auto',
+        lineHeight: 20,
+        textAlignVertical: 'center'
     },
-    sendButton:{
-        marginRight:10,
-        justifyContent:'center',
-        alignItems:'center'
+    sendButton: {
+        marginRight: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    nameContainer:{
-        marginTop:10,
-        marginBottom:3
+    nameContainer: {
+        marginTop: 10,
+        marginBottom: 3
     },
-    rightNameContainer:{
-        marginRight:15
+    rightNameContainer: {
+        marginRight: 15
     },
-    leftNameContainer:{
-        marginLeft:15,
+    leftNameContainer: {
+        marginLeft: 15,
     },
-    nameText:{
-        fontSize:12
+    nameText: {
+        fontSize: 12
     },
-    rightNameText:{
-        color:color.BLUE
+    rightNameText: {
+        color: color.BLUE
     },
-    leftNameText:{
-        color:color.YELLOW
+    leftNameText: {
+        color: color.YELLOW
     },
-    dateTimeContainer:{
+    dateTimeContainer: {
 
     },
-    dateTimeText:{
-        color:'#666',
-        fontSize:12
+    dateTimeText: {
+        color: '#666',
+        fontSize: 12
     },
-    newDateContainer:{
-        justifyContent:'center',
-        alignItems:'center',
-        marginTop:20
+    newDateContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20
     },
-    newDateText:{
-        color:'#666',
-        fontSize:12
+    newDateText: {
+        color: '#666',
+        fontSize: 12
     }
 })
 
 export const technician = StyleSheet.create({
-    infoContainer:{
+    infoContainer: {
         // backgroundColor:'green',
-        flexDirection:'row',
+        flexDirection: 'row',
     },
-    imageContainer:{
+    imageContainer: {
         // backgroundColor:'blue',
-        width:120,
-        alignItems:'center',
-        justifyContent:'center',
-        paddingVertical:10,
+        width: 120,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 10,
     },
-    image:{
-        width:80,
-        height:80,
-        aspectRatio:1,
-        borderRadius:50,
+    image: {
+        width: 80,
+        height: 80,
+        aspectRatio: 1,
+        borderRadius: 50,
     },
-    textContainer:{
+    textContainer: {
         // backgroundColor:'yellow',
-        flexDirection:'column',
-        flex:1,
-        padding:10,  
+        flexDirection: 'column',
+        flex: 1,
+        padding: 10,
     },
-    aptitude:{
-        backgroundColor:'#666',
-        paddingHorizontal:10,
-        paddingVertical:2,
-        marginVertical:2.5,
-        height:30,
-        borderRadius:20,
+    aptitude: {
+        backgroundColor: '#666',
+        paddingHorizontal: 10,
+        paddingVertical: 2,
+        marginVertical: 2.5,
+        height: 30,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 5,
+    },
+    aptitudeText: {
+        color: '#fff',
+        fontSize: 13
+    },
+    aptitudeContainer: {
+        // backgroundColor:'red',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+        paddingVertical: 5,
+    },
+    onsiteContainer: {
+        backgroundColor: color.GREEN,
+        paddingHorizontal: 15,
+        paddingVertical: 5,
+        borderRadius: 25
+    },
+    onsiteText: {
+        color: '#fff'
+    },
+    nameText: {
+        color: color.BLUE,
+        fontWeight: 'bold',
+        fontSize: 20
+
+    },
+    telText: {
+        color: color.GREEN,
+        fontSize: 16
+    },
+    telBtn: {
+        backgroundColor: color.GREEN,
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        borderRadius: 25,
+        marginHorizontal: 5,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    lineContainer: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        paddingVertical: 2.5,
+        alignItems: 'center'
+    },
+    telNum: {
+        color: '#fff',
+        fontSize: 16,
+        marginHorizontal: 2
+    },
+    chatBtn: {
+        backgroundColor: color.BLUE,
+        marginVertical: 5,
+        borderRadius: 25
+    },
+    chatText: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: '#fff',
+        padding: 5
+    },
+    locationContainer: {
+        borderBottomColor: '#aaa',
+        borderBottomWidth: 0.3,
+        paddingBottom: 10,
+        marginVertical: 10,
+    },
+    locationHeader: {
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+    },
+    locationText: {
+        color: color.BLUE,
+        fontWeight: 'bold',
+        fontSize: 18,
+    },
+    location: {
+        paddingTop: 5,
+        paddingHorizontal: 15
+    },
+    map: {
+        aspectRatio: 2,
+        backgroundColor: color.GREY_LIGHT_BLUE
+    },
+    ratingContainer: {
+        paddingHorizontal: 25,
+        alignItems: 'flex-start'
+    },
+    ratingNameContainer: {
+        marginVertical: 2.5
+    },
+    ratingName: {
+        fontSize: 16,
+        color: color.BLUE,
+    },
+    commentContainer: {
+        paddingLeft: 15,
+        paddingVertical: 5,
+        borderColor: color.LIGHT_GREY,
+        borderBottomWidth: 0.3,
+        width: '100%'
+    },
+    commentText: {
+        fontSize: 14,
+        color: '#666'
+    },
+    reviewContainer: {
+        padding: 15,
+        alignItems: 'flex-start',
+        borderBottomWidth: 0.3,
+        borderBottomColor: '#aaa'
+    },
+    reviewHeader: {
+        paddingVertical: 5,
+        marginBottom: 5,
+        borderBottomWidth: 0.3,
+        borderColor: color.LIGHT_GREY,
+        alignItems: 'flex-start',
+        width: '100%',
+    },
+})
+
+export const registor = StyleSheet.create({
+    container: {
+        flex: 1, 
+        justifyContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        paddingHorizontal: '10%', 
+        marginTop: '20%',
+    },
+    descText:{
+        color:color.GREY,
+        marginLeft:15,
+        marginBottom:15
+    },
+    whaturname:{
+        fontSize:20,
+        color:color.BLUE
+    },
+    selectBtn:{
+        flex:1,
+        backgroundColor:color.GREY_BLUE,
+        aspectRatio:1,
         justifyContent:'center',
         alignItems:'center',
-        marginRight:5,
+        borderRadius:10,
+        margin:3
     },
-    aptitudeText:{
-        color:'#fff',
-        fontSize:13
+    selectIcon:{
+        fontSize:40,
+        color:color.WHITE
     },
-    aptitudeContainer:{
-        // backgroundColor:'red',
-        flexDirection:'row',
-        flexWrap:'wrap',
-        alignItems:'flex-start',
-        paddingVertical:5,
-    },
-    onsiteContainer:{
-        backgroundColor:color.GREEN,
-        paddingHorizontal:15,
-        paddingVertical:5,
-        borderRadius:25
-    },
-    onsiteText:{
-        color:'#fff'
-    },
-    nameText:{
-        color:color.BLUE,
-        fontWeight:'bold',
-        fontSize:20
-        
-    },
-    telText:{
-        color:color.GREEN,
-        fontSize:16
-    },
-    telBtn:{
-        backgroundColor:color.GREEN,
-        paddingVertical:5,
-        paddingHorizontal:15,
-        borderRadius:25,
-        marginHorizontal:5,
-        flexDirection:'row',
-        alignItems:'center'
-    },
-    lineContainer:{
-        flexDirection:'row',
-        alignItems:'flex-start',
-        paddingVertical:2.5,
-        alignItems:'center'
-    },
-    telNum:{
-        color:'#fff',
-        fontSize:16,
-        marginHorizontal:2
-    },
-    chatBtn:{
-        backgroundColor:color.BLUE,
-        marginVertical:5,
-        borderRadius:25
-    },
-    chatText:{
-        fontSize:12,
-        fontWeight:'bold',
-        color:'#fff',
-        padding:5
-    },
-    locationContainer:{
-        borderBottomColor:'#aaa',
-        borderBottomWidth:0.3,
-        paddingBottom:10,
-        marginVertical:10,
-    },
-    locationHeader:{
-        paddingVertical:10,
-        paddingHorizontal:15,
-    },
-    locationText:{
-        color:color.BLUE,
-        fontWeight:'bold',
+    selectText:{
+        color:color.WHITE,
         fontSize:18,
+        marginTop:10
     },
-    location:{
-        paddingTop:5,
-        paddingHorizontal:15
-    },
-    map:{
-        aspectRatio:2,
-        backgroundColor:color.GREY_LIGHT_BLUE
-    },
-    ratingContainer:{
-        paddingHorizontal:25,
-        alignItems:'flex-start'
-    },
-    ratingNameContainer:{
-        marginVertical:2.5
-    },
-    ratingName:{
-        fontSize:16,
+    phoneInput:{
+        // backgroundColor:'red',
+        marginHorizontal:5,
+        flex:1,
+        fontSize:20,
         color:color.BLUE,
     },
-    commentContainer:{
-        paddingLeft:15,
+    regionNumber:{
+        fontSize:20,
+        color:color.BLUE,
+        marginHorizontal:5
+    },
+    phoneInputContainer:{
+        flexDirection:'row',
+        padding:10,
+        backgroundColor:color.GREY_LIGHT_BLUE,
+        borderRadius:10,
+        marginBottom:5
+    },
+    otpContainer:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        marginBottom:5
+    },
+    otpInput:{
+        borderBottomColor:color.BLUE,
+        borderBottomWidth:1,
+        flex:1,
+        marginHorizontal:5,
+        justifyContent:'center',
+        alignItems:'center',
+        textAlign:'center',
         paddingVertical:5,
-        borderColor:color.LIGHT_GREY,
-        borderBottomWidth:0.3,
-        width:'100%'
-    },
-    commentText:{
-        fontSize:14,
-        color:'#666'
-    },
-    reviewContainer:{
-        padding:15,
-        alignItems:'flex-start',
-        borderBottomWidth:0.3,
-        borderBottomColor:'#aaa'
-    },
-    reviewHeader:{
-        paddingVertical:5,
-        marginBottom:5,
-        borderBottomWidth:0.3,
-        borderColor:color.LIGHT_GREY,
-        alignItems:'flex-start',
-        width:'100%',
-    },
-}) 
+        fontSize:20,
+        color:color.BLUE,
+    }
+})
