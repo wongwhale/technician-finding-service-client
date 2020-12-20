@@ -47,7 +47,11 @@ const DateTimePicker = () => {
                 <View style={{ flex: 3 }}>
                     <Text style={posting.halfHeader}>วันที่</Text>
                     <TouchableOpacity style={posting.halfInput} onPress={() => setDatePickerVisibility(true)} >
-                        <Text style={posting.inputText}>{`${day} ${month} ${year}`}</Text>
+                            <Text style={posting.inputText}>{
+                                day === '' && month === '' && year === '' 
+                                ? `เลือกวันที่`
+                                :  `${day} ${month} ${year}`
+                            }</Text>
                         <Feather name='calendar' />
                     </TouchableOpacity>
                 </View>

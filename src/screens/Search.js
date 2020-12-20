@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
-import { searchScreen, content } from '../stylesheet'
+import { searchScreen, content, color } from '../stylesheet'
 
 import Header from '../components/Header'
 import ListBox from '../components/Search/ListBox'
@@ -34,13 +34,14 @@ const SearchScreen = ({ navigation }) => {
                         {
                             searchText.length != 0 ? (
                                 <TouchableOpacity onPress={() => setSearchText('')}>
-                                    <Feather name='x' size={25} color='#c6c6c6' />
+                                    <Feather name='x' size={25} color={color.BLUE_0} />
                                 </TouchableOpacity>
                             ) : null
                             
                         }
                         <TextInput
                             placeholder="ค้นหาช่าง  ประเภท , ชื่อ หรือ อื่นๆ "
+                            placeholderTextColor={color.BLUE_4}
                             style={searchScreen.textInput}
                             autoCorrect={false}
                             onChangeText={(val) => setSearchText(val)}

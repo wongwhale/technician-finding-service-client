@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 
 import Footer from '../../components/Registor/Footer'
@@ -22,18 +22,29 @@ const BasicInfo = (props) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [unameStatus , setUnameStatus] = useState(null)
+    const [passwordStatus , setPasswordStatus] = useState(null)
+    const [confirmPasswordStatus , setConfirmPasswordStatus] = useState(null)
 
-    const handleUsername = (uname) => {
-        const check = /^[a-z0-9_-]{4,}/.test(uname)
+    const handleUsername = () => {
+        const check = /^[a-z0-9_-]{4,}/.test(username)
         // return check
         console.log( username , check);
+        setUnameStatus(check)
+        return check
     }
 
-    const haddlePassword = (pwss) => {
-        const check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/.test(pwss)
-        if(check){
-            console.log('pass');
-        }else  console.log('reject')
+    const handlePassword = () => {
+        const check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/.test(password) && password !== '' ? true : false
+        setPasswordStatus(check)
+        return check
+    }
+
+    const handleConfirmPassword = () => {
+        const check = confirmPassword === password && confirmPassword !== '' ? true : false
+        if(check) console.log('ตรง');
+        setConfirmPasswordStatus(check)
+        return check
     }
 
     return (
@@ -47,29 +58,44 @@ const BasicInfo = (props) => {
                         }}
                         value={username}
                         isOnBlur={true}
-                        onBlur={ () => handleUsername(username)}
+                        onBlur={ () => handleUsername()}
+                        status={unameStatus}
                     />
-                    <Text style={registor.descText}>{'- ใช้ตัวอักษรภาษาอังกฤษและตัวเลขเท่านั้น \n-  มีความยาวมากกว่า 4 ตัวอักษร'}</Text>
+                    <Text style={registor.descText}>
+                        {'- ใช้ตัวอักษรภาษาอังกฤษและตัวเลขเท่านั้น \n-  มีความยาวมากกว่า 4 ตัวอักษร'}
+                    </Text>
                     <MyTextInput 
                         placeholder='Password' 
                         onChangeText={(val) => setPassword(val)} 
                         isSecure={true} 
                         value={password}
                         isOnBlur={true}
-                        onBlur={ () => haddlePassword(password)}
+                        onBlur={ () => handlePassword()}
+                        status={passwordStatus}
                     />
-                    <Text style={registor.descText}>{'- ใช้อักขระ 8 ตัวขึ้นไปที่มีทั้ง ตัวเลข ตัวอักษรพิมเล็กและพิมใหญ่'}</Text>
+                    <Text style={registor.descText}>
+                        {'- ใช้อักขระ 8 ตัวขึ้นไปที่มีทั้ง ตัวเลข ตัวอักษรพิมเล็กและพิมใหญ่'}
+                    </Text>
                     <MyTextInput 
                         placeholder='Confirm Password' 
                         onChangeText={(val) => setConfirmPassword(val)} 
                         isSecure={true} 
                         value={confirmPassword}
+                        isOnBlur={true}
+                        onBlur={ () => handleConfirmPassword()}
+                        status={confirmPasswordStatus}
                     />
                     <MyButton title='ถัดไป'
                         onPress={() => {
-                            props.navigation.navigate('reg_name')
-                            props.setUsernamePassword(username , password)
-                        }} />
+                            if( handleUsername() && handleConfirmPassword()  && handlePassword()){
+                                props.navigation.navigate('reg_name')
+                            }else{
+                                handleUsername()
+                                handleConfirmPassword()
+                                handlePassword()
+                            }
+                        }} 
+                    />
                 </View>
                 <Footer navigation={props.navigation} />
             </SafeAreaView>

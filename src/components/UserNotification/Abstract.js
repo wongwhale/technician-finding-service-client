@@ -19,18 +19,18 @@ const Abstract = ({ name, star, distance, price , last }) => {
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity style={userNotification.detailContainer}>
-                    <Text style={userNotification.text}>
+                    <Text style={[userNotification.text , userNotification.nameText]}>
                         {`${name}`}
                     </Text>
                     <View style={{justifyContent:'center'}}>
                         <View style={{alignItems:'flex-start'}}>
-                            <Rating imageSize={14} readonly startingValue={star}  />
+                            <Rating imageSize={12} readonly startingValue={star}  />
                         </View>
                     </View>
-                    <Text style={userNotification.text}>
+                    <Text style={[userNotification.text , userNotification.detailText]}>
                         {`ห่างจากคุณ : ${distance} กม. `}
                     </Text>
-                    <Text style={userNotification.text}>
+                    <Text style={[userNotification.text , userNotification.detailText]}>
                         {`ราคา: ${price} บาท`}
                     </Text>
                 </TouchableOpacity>

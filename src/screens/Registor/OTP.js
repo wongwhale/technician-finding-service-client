@@ -24,6 +24,16 @@ const OTP = (props) => {
     const [pin5, setPin5] = useState('')
     const [pin6, setPin6] = useState('')
 
+    const handleOTP = () => {
+        if( pin1.length === 1 && pin2.length === 1 && pin3.length === 1 
+            && pin4.length === 1 && pin5.length === 1 && pin6.length === 1 ) {
+                return true
+            }
+        else {
+            return false
+        }
+    }
+
     return (
         <>
             <SafeAreaView style={{ backgroundColor: color.WHITE, flex: 1 }}>
@@ -47,6 +57,7 @@ const OTP = (props) => {
                                 pin1 == '' ? pin2_ref.current.focus() : null
                             }}
                             onFocus={ () => setPin1('')}
+                            selectionColor={color.BLUE_3}
                         />
                         <TextInput
                             placeholder=''
@@ -60,6 +71,7 @@ const OTP = (props) => {
                                 pin2 == '' ? pin3_ref.current.focus() : null
                             }}
                             onFocus={ () => setPin2('')}
+                            selectionColor={color.BLUE_3}
                         />
                         <TextInput
                             placeholder=''
@@ -72,6 +84,7 @@ const OTP = (props) => {
                                 pin3 == '' ? pin4_ref.current.focus() : null
                             }}
                             onFocus={ () => setPin3('')}
+                            selectionColor={color.BLUE_3}
                         />
                         <TextInput
                             placeholder=''
@@ -84,6 +97,7 @@ const OTP = (props) => {
                                 pin4 == '' ? pin5_ref.current.focus() : null
                             }}
                             onFocus={ () => setPin4('')}
+                            selectionColor={color.BLUE_3}
                         />
                         <TextInput
                             placeholder=''
@@ -96,6 +110,7 @@ const OTP = (props) => {
                                 pin5 == '' ? pin6_ref.current.focus() : null
                             }}
                             onFocus={ () => setPin5('')}
+                            selectionColor={color.BLUE_3}
                         />
                         <TextInput
                             placeholder=''
@@ -108,9 +123,12 @@ const OTP = (props) => {
                                 pin6 == '' ? Keyboard.dismiss() : null
                             }}
                             onFocus={ () => setPin6('')}
+                            selectionColor={color.BLUE_3}
                         />
                     </View>
-                    <MyButton title='ยืนยัน' onPress={ () => props.navigation.navigate('tab')} />
+                    <MyButton title='ยืนยัน' onPress={ () => {
+                        if(handleOTP()) console.log('registor success');
+                    }} />
                 </View>
                 <Footer navigation={props.navigation} />
             </SafeAreaView>

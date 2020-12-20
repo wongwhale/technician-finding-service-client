@@ -6,17 +6,17 @@ import Feather from 'react-native-vector-icons/Feather'
 
 import { color } from '../stylesheet'
 
-const MyTextInput = ({ placeholder, onChangeText, value, 
-    isSecure = false , isOnBlur = false , onBlur }) => {
+const MyTextInput = ({ placeholder, onChangeText, value,
+    isSecure = false, isOnBlur = false, onBlur, status = true  }) => {
     const [secure, setSecure] = useState(isSecure)
 
     return (
         <>
-            <View style={styles.container}>
+            <View style={[inputStyles.container, !status && status !== null ? inputStyles.borderRed : null]}>
                 <TextInput
-                    style={styles.textInput}
+                    style={[inputStyles.textInput , !status && status !== null ? inputStyles.textRed : null]}
                     placeholder={placeholder}
-                    placeholderTextColor={color.GREY_BLUE}
+                    placeholderTextColor={!status && status !== null ? color.RED_0 : color.BLUE_2}
                     secureTextEntry={secure}
                     blurOnSubmit={false}
                     onSubmitEditing={() => Keyboard.dismiss()}
@@ -25,17 +25,21 @@ const MyTextInput = ({ placeholder, onChangeText, value,
                     autoCapitalize='none'
                     autoCorrect={false}
                     autoCompleteType='off'
-                    onBlur={ () => {
-                        if(isOnBlur){
+                    onBlur={() => {
+                        if (isOnBlur) {
                             onBlur()
                         }
                     }}
                 />
                 {
                     isSecure ? (
-                        <TouchableOpacity style={styles.iconContainer} onPress={() => setSecure(!secure)}>
-                            <Feather name={secure ? 'eye' : 'eye-off'} style={styles.icon} />
+                        <TouchableOpacity style={inputStyles.iconContainer} onPress={() => setSecure(!secure)}>
+                            <Feather name={secure ? 'eye' : 'eye-off'} style={[inputStyles.icon , !status && status !== null ? inputStyles.textRed : null]} />
                         </TouchableOpacity>
+                    ) : !status && status !== null ? (
+                        <View>
+                            <Feather name='x' style={[inputStyles.icon , inputStyles.textRed]} />
+                        </View>
                     ) : null
                 }
 
@@ -46,23 +50,21 @@ const MyTextInput = ({ placeholder, onChangeText, value,
 
 export default MyTextInput
 
-const styles = StyleSheet.create({
+export const inputStyles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         width: '100%',
-        // borderColor: color.LIGHT_BLUE,
-        // borderWidth: 2,
         borderRadius: 5,
         padding: 10,
         paddingLeft: 15,
         marginVertical: 5,
-        backgroundColor: color.GREY_LIGHT_BLUE
+        backgroundColor: color.BLUE_5
     },
     textInput: {
         flex: 1,
         fontSize: 16,
-        color: color.BLUE,
-        paddingLeft:5
+        color: color.BLUE_1,
+        paddingLeft: 5
     },
     iconContainer: {
         width: 30,
@@ -71,6 +73,14 @@ const styles = StyleSheet.create({
     },
     icon: {
         fontSize: 20,
-        color: color.BLUE
+        color: color.BLUE_2
+    },
+    borderRed: {
+        // borderColor : color.RED_1,
+        // borderWidth:1,
+        backgroundColor: color.RED_4
+    },
+    textRed:{
+        color:color.RED_0
     }
 })

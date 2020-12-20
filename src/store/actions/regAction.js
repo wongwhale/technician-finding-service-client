@@ -27,6 +27,15 @@ export const setLastname = (lastname) => dispatch => {
     })
 }
 
+export const setPhoneNumber = (phone_number) => dispatch => {
+    dispatch({
+        type : regType.SET_PHONE,
+        payload : {
+            phone : phone_number
+        }
+    })
+}
+
 export const clear = () => dispatch => {
     dispatch({
         type : regType.CLEAR

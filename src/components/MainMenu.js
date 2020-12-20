@@ -23,7 +23,7 @@ const MainMenu = ({navigation:changepage}) => {
                             changepage('search')
                         }}
                     >
-                        <Feather name='search' size={50} color={color.BLUE} />
+                        <Feather name='search' size={50} color={color.BLUE_1} />
                         <Text style={mainScreen.menuTextHalf}>
                             ค้นหา
                         </Text>
@@ -33,7 +33,7 @@ const MainMenu = ({navigation:changepage}) => {
                             changepage('nearme')
                         }}
                     >
-                        <Feather name='map' size={50} color={color.BLUE} />
+                        <Feather name='map' size={50} color={color.BLUE_1} />
                         <Text style={mainScreen.menuTextHalf}>
                             ใกล้ฉัน
                             </Text>
@@ -45,7 +45,7 @@ const MainMenu = ({navigation:changepage}) => {
                             changepage('post')
                         }}
                     >
-                        <Feather name='edit' size={50} color={color.GREY_LIGHT_BLUE} />
+                        <Feather name='edit' size={50} color={color.BLUE_5} />
                         <Text style={mainScreen.menuTextFull}>
                             บอกอาการ
                         </Text>

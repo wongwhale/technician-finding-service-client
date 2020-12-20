@@ -1,23 +1,49 @@
 import { StyleSheet } from 'react-native'
 
 export const color = {}
-// color.BLUE = '#325288'
-color.BLUE = '#40506E'
+// color.BLUE_0 = '#325288'
+color.BLUE_0 = '#182947'
+color.BLUE_1 = '#2A3A56'
+color.BLUE_2 = '#40506E'
+color.BLUE_3 = '#5B6A84'
+color.BLUE_4 = '#818CA0'
+color.BLUE_5 = '#D3D9E3'
+
+color.RED_0 = '#6A321D'
+color.RED_1 = '#824C38'
+color.RED_2 = '#A56E59'
+color.RED_3 = '#C79582'
+color.RED_4 = '#F1CCBE'
+
+color.GREEN_0 = '#144931'
+color.GREEN_1 = '#275A42'
+color.GREEN_2 = '#3D725A'
+color.GREEN_3 = '#5A8974'
+color.GREEN_4 = '#83A797'
+color.GREEN_5 = '#23383F'
+
+color.YELLOW_0 = '#6A4F1D'
+color.YELLOW_1 = '#826838'
+color.YELLOW_2 = '#A58B59'
+color.YELLOW_3 = '#C7AF82'
+color.YELLOW_4 = '#F1DFBE'
+
+color.FACEBOOK = '#3b5998'
+
 color.GREY_BLUE = '#7d8aa1'
 color.DARK_BLUE = '#112046'
-color.GREY_LIGHT_BLUE = '#EAEAED'
 color.YELLOW = '#F2C743'
 // color.LIGHT_GREY = '#E6E6E6'
 color.LIGHT_GREY = '#D4D4CE'
 color.GREEN = '#248152'
-// color.DARK_GREEN = '#386065'
-color.DARK_GREEN = '#23383F'
+// color.GREEN_5 = '#386065'
 color.IOS_BLUE = '#0461e9'
 color.LIGHT_BLUE = '#97B3D0'
 // color.GREY_BLUE = '#539D'
 color.SKIN = '#F0EEE8'
 color.WHITE = '#F6F6F6'
 color.GREY = '#999999'
+
 
 export const content = StyleSheet.create({
     container: {
@@ -41,28 +67,28 @@ export const mainScreen = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: color.GREY_LIGHT_BLUE,
+        backgroundColor: color.BLUE_5,
         marginHorizontal: 2.5,
         borderRadius: 10,
         aspectRatio: 1,
     },
     fullBox: {
-        backgroundColor: color.DARK_GREEN,
+        backgroundColor: color.GREEN_5,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
         aspectRatio: 2,
-        color: color.GREY_LIGHT_BLUE,
+        color: color.BLUE_5,
         flexDirection: 'row'
     },
     menuTextHalf: {
-        color: color.BLUE,
+        color: color.BLUE_1,
         fontSize: 20,
         marginTop: 5
     },
     menuTextFull: {
-        color: color.GREY_LIGHT_BLUE,
+        color: color.BLUE_5,
         fontSize: 30,
         marginLeft: 10
     }
@@ -76,7 +102,7 @@ export const global = StyleSheet.create({
         height: 80
     },
     headerText: {
-        color: color.BLUE,
+        color: color.BLUE_2,
         fontSize: 30,
         fontWeight: '600',
     },
@@ -87,7 +113,7 @@ export const global = StyleSheet.create({
     },
     chatIcon: {
         fontSize: 30,
-        color: color.BLUE,
+        color: color.BLUE_2,
     },
     badges: {
         aspectRatio: 1,
@@ -101,7 +127,7 @@ export const global = StyleSheet.create({
         alignItems: 'center'
     },
     badgesText: {
-        color: color.BLUE,
+        color: color.BLUE_2,
         fontWeight: 'bold'
     },
     backIconContainer: {
@@ -113,17 +139,17 @@ export const global = StyleSheet.create({
     },
     backIcon: {
         fontSize: 30,
-        color: color.BLUE,
+        color: color.BLUE_2,
     },
     backTextContainer: {
-        backgroundColor: color.BLUE,
+        backgroundColor: color.BLUE_2,
         paddingHorizontal: 10,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 20
     },
     backText: {
-        color: color.GREY_LIGHT_BLUE,
+        color: color.BLUE_5,
         fontWeight: 'bold'
     },
     interlocutorImage: {
@@ -138,7 +164,7 @@ export const global = StyleSheet.create({
     },
     bbt: {
         borderBottomWidth: 0.3,
-        borderBottomColor: color.LIGHT_GREY,
+        borderBottomColor: color.BLUE_5,
         paddingBottom: 15,
     },
     nameContainer: {
@@ -166,19 +192,19 @@ export const userInfo = StyleSheet.create({
         paddingLeft: 10,
     },
     name: {
-        color: color.BLUE,
+        color: color.BLUE_2,
         fontSize: 16,
         fontWeight: '600'
     },
     type: {
-        color: '#666',
+        color: color.BLUE_4,
         fontSize: 14,
         fontWeight: 'normal'
     },
     userImage: {
         aspectRatio: 1,
         width: 50,
-        backgroundColor: color.DARK_GREEN,
+        backgroundColor: color.BLUE_5,
         borderRadius: 25,
         marginLeft: 25
     }
@@ -186,18 +212,18 @@ export const userInfo = StyleSheet.create({
 
 export const searchScreen = StyleSheet.create({
     textInputContainer: {
-        color: color.BLUE,
         borderRadius: 10,
         padding: 10,
         paddingLeft: 20,
         marginHorizontal: 25,
         flexDirection: 'row-reverse',
-        backgroundColor: color.GREY_LIGHT_BLUE,
+        backgroundColor: color.BLUE_5,
         justifyContent: 'space-between'
     },
     textInput: {
         flex: 1,
         fontSize: 18,
+        color: color.BLUE_1,
     },
     searchIconContainer: {
         justifyContent: 'center',
@@ -206,7 +232,7 @@ export const searchScreen = StyleSheet.create({
     },
     searchIcon: {
         fontSize: 25,
-        color: color.BLUE,
+        color: color.BLUE_1,
     },
     listContainer: {
         alignItems: 'flex-start',
@@ -214,23 +240,27 @@ export const searchScreen = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 15,
         borderBottomWidth: 0.3,
-        borderBottomColor: color.LIGHT_GREY
+        borderBottomColor: color.BLUE_5,
     },
     listRowContainer: {
         alignItems: 'flex-start',
         marginVertical: 2,
         flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center'
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+
     },
     distanceText: {
-        color: color.BLUE
+        color: color.BLUE_2,
+        fontSize:14
     },
     nameText: {
-        color: color.BLUE,
-        fontWeight: 'bold'
+        color: color.BLUE_1,
+        fontSize:16
     },
     infoContainer: {
+        justifyContent:'space-between',
+        height:50,
         paddingLeft: 25,
         flex: 1,
     },
@@ -239,10 +269,10 @@ export const searchScreen = StyleSheet.create({
         alignItems: 'center',
     },
     techImage: {
-        width: 60,
-        height: 60,
+        width: 50,
+        height: 50,
         borderRadius: 30,
-        backgroundColor: color.DARK_GREEN
+        backgroundColor: color.GREEN_4
     },
     detailbtnContainer: {
         flexDirection: 'row',
@@ -250,7 +280,7 @@ export const searchScreen = StyleSheet.create({
         textAlignVertical: 'center'
     },
     detailbtnText: {
-        color: color.BLUE,
+        color: color.BLUE_3,
         fontSize: 12
     }
 })
@@ -270,16 +300,15 @@ export const userNotification = StyleSheet.create({
     },
     headerText: {
         fontSize: 20,
-        color: color.BLUE
+        color: color.BLUE_2
     },
     headerID: {
         fontSize: 14,
         color: '#666'
     },
     content: {
-        // backgroundColor:'blue'
         borderBottomWidth: 0.6,
-        borderBottomColor: '#e6e6e6',
+        borderBottomColor: color.BLUE_5 ,
         padding: 5,
     },
     abstractContainer: {
@@ -287,21 +316,20 @@ export const userNotification = StyleSheet.create({
         paddingVertical: 5
     },
     abstractBottomBorder: {
-        borderBottomWidth: 0.3,
-        borderColor: color.LIGHT_GREY
+        borderBottomWidth: 0.5,
+        borderColor: color.BLUE_5
     },
     imageContainer: {
         width: 75,
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor:'yellow'
     },
     image: {
         width: 50,
-        // aspectRatio: 1,
+        aspectRatio: 1,
         height: 50,
         borderRadius: 25,
-        backgroundColor: color.GREY_LIGHT_BLUE,
+        backgroundColor: color.BLUE_5,
     },
     detailContainer: {
         flex: 1,
@@ -311,24 +339,26 @@ export const userNotification = StyleSheet.create({
     buttonContainer: {
         // backgroundColor:'grey',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     button: {
-        marginVertical: 5,
         padding: 5,
         width: 75,
         height: 30,
         alignItems: 'center',
+        justifyContent:'center',
         borderRadius: 25,
+        marginVertical:2
     },
     contactButton: {
-        backgroundColor: color.BLUE,
+        backgroundColor: color.BLUE_2,
     },
     acceptButton: {
-        backgroundColor: color.GREEN,
+        backgroundColor: color.GREEN_2,
     },
     buttonText: {
-        color: color.GREY_LIGHT_BLUE
+        fontSize:12,
+        color: color.WHITE
     },
     star: {
         // backgroundColor:color.YELLOW
@@ -336,7 +366,13 @@ export const userNotification = StyleSheet.create({
         color: color.YELLOW
     },
     text: {
-        color: color.BLUE
+        color: color.BLUE_2
+    },
+    nameText:{
+        fontSize:14
+    },
+    detailText:{
+        fontSize:12
     }
 })
 
@@ -349,7 +385,7 @@ export const posting = StyleSheet.create({
     halfHeader: {
         textAlign: 'center',
         fontSize: 16,
-        color: color.BLUE
+        color: color.BLUE_0
     },
     halfInput: {
         alignItems: 'center',
@@ -358,8 +394,8 @@ export const posting = StyleSheet.create({
         marginHorizontal: 5,
         borderRadius: 10,
         // borderWidth: 2,
-        // borderColor: color.BLUE,
-        backgroundColor: color.GREY_LIGHT_BLUE,
+        // borderColor: color.BLUE_0,
+        backgroundColor: color.BLUE_5,
         height: 35,
         flexDirection: 'row',
     },
@@ -370,7 +406,7 @@ export const posting = StyleSheet.create({
     fullHeader: {
         paddingLeft: 15,
         fontSize: 16,
-        color: color.BLUE
+        color: color.BLUE_0
     },
     fullSelector: {
         marginTop: 5,
@@ -379,14 +415,14 @@ export const posting = StyleSheet.create({
         borderRadius: 10,
         justifyContent: 'center',
         // borderWidth: 2,
-        // borderColor: color.BLUE,
-        backgroundColor: color.GREY_LIGHT_BLUE,
+        // borderColor: color.BLUE_0,
+        backgroundColor: color.BLUE_5,
         height: 35,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
     inputText: {
-        color: color.IOS_BLUE,
+        color: color.BLUE_1,
         // textDecorationLine: 'underline',
         fontSize: 16
     },
@@ -396,8 +432,8 @@ export const posting = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: color.GREY_LIGHT_BLUE,
-        // borderColor: color.BLUE,
+        borderColor: color.BLUE_5,
+        // borderColor: color.BLUE_0,
         lineHeight: 20,
     },
     detailLength: {
@@ -406,20 +442,20 @@ export const posting = StyleSheet.create({
         paddingRight: 5
     },
     chevronDown: {
-        color: color.BLUE,
+        color: color.BLUE_0,
         width: 20,
         height: 20,
     },
     mapContainer: {
         aspectRatio: 1,
         width: '100%',
-        backgroundColor: color.GREY_LIGHT_BLUE,
+        backgroundColor: color.BLUE_5,
         marginTop: 5,
         borderRadius: 10
     },
     descLine: {
         height: 1,
-        borderBottomColor: color.GREY_LIGHT_BLUE,
+        borderBottomColor: color.BLUE_5,
         borderBottomWidth: 1,
         flex: 1,
     },
@@ -430,7 +466,7 @@ export const posting = StyleSheet.create({
     },
     descText: {
         marginHorizontal: 10,
-        color: color.BLUE
+        color: color.BLUE_0
     },
     mt: {
         marginTop: 15
@@ -455,8 +491,8 @@ export const datePicker = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 20,
         // borderWidth:1,
-        // borderColor:color.BLUE,
-        shadowColor: color.DARK_GREEN,
+        // borderColor:color.BLUE_0,
+        shadowColor: color.GREEN_5,
         shadowRadius: 7,
         shadowOffset: {
             width: 0,
@@ -472,7 +508,7 @@ export const datePicker = StyleSheet.create({
     headerText: {
         fontSize: 20,
         textAlign: 'center',
-        color: color.BLUE
+        color: color.BLUE_0
     },
     pickerContainer: {
         flexDirection: 'row'
@@ -496,8 +532,8 @@ export const datePicker = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 20,
         // borderWidth:1,
-        // borderColor:color.BLUE,
-        shadowColor: color.DARK_GREEN,
+        // borderColor:color.BLUE_0,
+        shadowColor: color.GREEN_5,
         shadowRadius: 7,
         shadowOffset: {
             width: 0,
@@ -507,7 +543,7 @@ export const datePicker = StyleSheet.create({
     },
     closeBtnText: {
         fontSize: 16,
-        color: color.DARK_GREEN
+        color: color.GREEN_5
     }
 })
 
@@ -524,7 +560,7 @@ export const message = StyleSheet.create({
         aspectRatio: 1,
         width: 50,
         height: 50,
-        backgroundColor: color.GREY_LIGHT_BLUE,
+        backgroundColor: color.BLUE_5,
         borderRadius: 25,
         marginHorizontal: 15,
     },
@@ -544,27 +580,26 @@ export const message = StyleSheet.create({
         alignItems: 'center'
     },
     badgesText: {
-        color: color.BLUE
+        color: color.BLUE_0
     },
     listContent: {
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         paddingHorizontal: 10
     },
     name: {
         fontSize: 18,
-        color: color.BLUE,
+        color: color.BLUE_0,
         fontWeight: 'normal'
     },
     unreadName: {
         fontWeight: 'bold',
     },
     text: {
-        fontSize: 16,
-        color: '#666',
+        fontSize: 14,
+        color: color.BLUE_0,
         fontWeight: 'normal'
     },
     unreadMessage: {
-        color: '#222',
         fontWeight: 'bold'
     },
     bubbleContainer: {
@@ -583,10 +618,7 @@ export const message = StyleSheet.create({
     },
     rightBubble: {
         // borderBottomRightRadius: 0,
-        backgroundColor: color.BLUE
-    },
-    text: {
-        fontSize: 16,
+        backgroundColor: color.BLUE_1
     },
     rightText: {
         color: '#fff'
@@ -638,10 +670,10 @@ export const message = StyleSheet.create({
         fontSize: 12
     },
     rightNameText: {
-        color: color.BLUE
+        color: color.BLUE_0
     },
     leftNameText: {
-        color: color.YELLOW
+        color: '#111'
     },
     dateTimeContainer: {
 
@@ -717,7 +749,7 @@ export const technician = StyleSheet.create({
         color: '#fff'
     },
     nameText: {
-        color: color.BLUE,
+        color: color.BLUE_0,
         fontWeight: 'bold',
         fontSize: 20
 
@@ -747,7 +779,7 @@ export const technician = StyleSheet.create({
         marginHorizontal: 2
     },
     chatBtn: {
-        backgroundColor: color.BLUE,
+        backgroundColor: color.BLUE_0,
         marginVertical: 5,
         borderRadius: 25
     },
@@ -768,7 +800,7 @@ export const technician = StyleSheet.create({
         paddingHorizontal: 15,
     },
     locationText: {
-        color: color.BLUE,
+        color: color.BLUE_0,
         fontWeight: 'bold',
         fontSize: 18,
     },
@@ -778,7 +810,7 @@ export const technician = StyleSheet.create({
     },
     map: {
         aspectRatio: 2,
-        backgroundColor: color.GREY_LIGHT_BLUE
+        backgroundColor: color.BLUE_5
     },
     ratingContainer: {
         paddingHorizontal: 25,
@@ -789,7 +821,7 @@ export const technician = StyleSheet.create({
     },
     ratingName: {
         fontSize: 16,
-        color: color.BLUE,
+        color: color.BLUE_0,
     },
     commentContainer: {
         paddingLeft: 15,
@@ -833,7 +865,7 @@ export const registor = StyleSheet.create({
     },
     whaturname:{
         fontSize:20,
-        color:color.BLUE
+        color:color.BLUE_0
     },
     selectBtn:{
         flex:1,
@@ -858,17 +890,18 @@ export const registor = StyleSheet.create({
         marginHorizontal:5,
         flex:1,
         fontSize:20,
-        color:color.BLUE,
+        color:color.BLUE_0,
+        letterSpacing:1
     },
     regionNumber:{
         fontSize:20,
-        color:color.BLUE,
-        marginHorizontal:5
+        color:color.BLUE_0,
+        marginHorizontal:5,
     },
     phoneInputContainer:{
         flexDirection:'row',
         padding:10,
-        backgroundColor:color.GREY_LIGHT_BLUE,
+        backgroundColor:color.BLUE_5,
         borderRadius:10,
         marginBottom:5
     },
@@ -878,15 +911,24 @@ export const registor = StyleSheet.create({
         marginBottom:5
     },
     otpInput:{
-        borderBottomColor:color.BLUE,
-        borderBottomWidth:1,
+        // borderBottomColor:color.BLUE_0,
+        // borderBottomWidth:1,
         flex:1,
         marginHorizontal:5,
         justifyContent:'center',
         alignItems:'center',
         textAlign:'center',
-        paddingVertical:5,
+        paddingHorizontal:5,
+        paddingVertical:10,
+        borderRadius:10,
         fontSize:20,
-        color:color.BLUE,
+        color:color.BLUE_0,
+        backgroundColor:color.BLUE_5
+    },
+    borderRed: {
+        backgroundColor: color.RED_4
+    },
+    textRed:{
+        color:color.RED_0
     }
 })

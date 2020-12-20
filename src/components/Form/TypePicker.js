@@ -60,7 +60,6 @@ const TypePicker = ({ isDatePickerVisible, isTimePickerVisible, setDatePickerVis
                         <View style={datePicker.headerContainer}>
                             <Text style={datePicker.headerText}>เลือกประเภทงาน/อุปกรณ์</Text>
                         </View>
-                        <Button title='test' onPress={() => console.log(year_)} />
                         <View style={datePicker.pickerContainer}>
                             <View style={datePicker.dayContainer}>
                                 <Picker

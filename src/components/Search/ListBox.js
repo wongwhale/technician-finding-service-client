@@ -1,6 +1,6 @@
 import React, { } from 'react'
 
-import { View, Text, Image , TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 
 import { Rating } from 'react-native-ratings'
 
@@ -8,10 +8,10 @@ import { searchScreen } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
-const ListBox = ({ name, distance, star, id , navigation }) => {
+const ListBox = ({ name, distance, star, id, navigation }) => {
     return (
         <>
-            <TouchableOpacity style={searchScreen.listContainer} onPress={ () => navigation.navigate('techInfo') } >
+            <TouchableOpacity style={searchScreen.listContainer} onPress={() => navigation.navigate('techInfo')} >
                 <View style={searchScreen.imageContainer}>
                     <View>
                         <Image style={searchScreen.techImage} />
@@ -22,13 +22,13 @@ const ListBox = ({ name, distance, star, id , navigation }) => {
                         <Text style={searchScreen.nameText}>
                             {name}
                         </Text>
+                        <View style={searchScreen.listRowContainer}>
+                            <Rating startingValue={star} imageSize={14} />
+                        </View>
                     </View>
-                    <View style={searchScreen.listRowContainer}>
-                        <Rating startingValue={star} imageSize={12} />
-                    </View>
-                    <View style={[searchScreen.listRowContainer , {justifyContent:'space-between'}]}>
+                    <View style={[searchScreen.listRowContainer, { justifyContent: 'space-between' }]}>
                         <Text style={searchScreen.distanceText}>
-                            {distance} กม.
+                            ห่างจากคุณ: {distance} กม.
                         </Text>
                         <TouchableOpacity style={[searchScreen.detailbtnContainer]}>
                             <Text style={searchScreen.detailbtnText}>
