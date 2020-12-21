@@ -3,11 +3,23 @@ import React, { useRef, useState } from 'react'
 
 import Footer from '../../components/Registor/Footer'
 import { registor, color } from '../../stylesheet'
-
+import { registor_success } from '../../store/actions/regAction'
 import MyButton from '../../components/MyButton'
 
 import { Text, SafeAreaView, View, TouchableOpacity , Keyboard} from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => ({
+    username : state.reg.username,
+    password : state.reg.password,
+    firstname : state.reg.firstname,
+    lastname : state.reg.lastname,
+    phone : state.reg.phone,
+    role : state.reg.role
+})
+
+const connector = connect(mapStateToProps , {registor_success})
 
 const OTP = (props) => {
     const pin1_ref = useRef()
@@ -127,7 +139,16 @@ const OTP = (props) => {
                         />
                     </View>
                     <MyButton title='ยืนยัน' onPress={ () => {
-                        if(handleOTP()) console.log('registor success');
+                        if(handleOTP()) {
+                            props.registor_success({
+                                username : props.username ,
+                                password : props.password ,
+                                firstname : props.firstname,
+                                lastname : props.lastname,
+                                phone : props.phone ,
+                                role : props.role
+                            })
+                        };
                     }} />
                 </View>
                 <Footer navigation={props.navigation} />
@@ -136,4 +157,4 @@ const OTP = (props) => {
     )
 }
 
-export default OTP
+export default connector(OTP)

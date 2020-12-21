@@ -3,10 +3,18 @@ import React, { useState } from 'react'
 
 import Footer from '../../components/Registor/Footer'
 import { registor, color } from '../../stylesheet'
+import { setRole } from '../../store/actions/regAction'
 
 import Feather from 'react-native-vector-icons/Feather'
 
 import { Text, SafeAreaView, View, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => ({
+    
+})
+
+const connector = connect(mapStateToProps , {setRole})
 
 const SelectRole = (props) => {
     // const [role , setRole] = useState('')
@@ -22,7 +30,10 @@ const SelectRole = (props) => {
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity
                             style={registor.selectBtn}
-                            onPress={ () => props.navigation.navigate('reg_phone')}
+                            onPress={ () => {
+                                props.setRole('user')
+                                props.navigation.navigate('reg_phone')
+                            }}
                         >
                             <Feather name='user' style={registor.selectIcon} />
                             <Text style={registor.selectText}>
@@ -46,4 +57,4 @@ const SelectRole = (props) => {
     )
 }
 
-export default SelectRole
+export default connector(SelectRole)

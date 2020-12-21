@@ -25,17 +25,22 @@ const PhoneNumber = (props) => {
     const phoneRef = useRef()
     const [phoneStatus, setPhoneStatus] = useState(null)
 
-    const hanndlePhoneNumber = () => {
-        const check = /^0/.test(props.phone)
-
+    const hanndlePhoneNumber = (val) => {
+        const check = /^0/.test(val)
         if (check) {
-            setPhoneStatus(/[\d]{10}$/.test(props.phone))
-            return /[\d]{10}$/.test(props.phone)
+            setPhoneStatus(/[\d]{10}$/.test(val))
+            if(val.length > 1) props.setPhoneNumber(val.slice(1,val.length))
+            else props.setPhoneNumber(val)
+            status = /[\d]{9}$/.test(val)
+            if (status) Keyboard.dismiss()
+            return status
         }
         else {
-            if (props.phone.length != 0) props.setPhoneNumber('0' + props.phone)
-            setPhoneStatus(/[\d]{9}/.test(props.phone))
-            return /[\d]{9}/.test(props.phone)
+            props.setPhoneNumber(val)
+            setPhoneStatus(/[\d]{9}/.test(val))
+            status = /[\d]{9}$/.test(val)
+            if (status) Keyboard.dismiss()
+            return status
         }
 
     }
@@ -50,7 +55,7 @@ const PhoneNumber = (props) => {
                         </Text>
                     </View>
                     <View style={[registor.phoneInputContainer, phoneStatus !== null && !phoneStatus ? inputStyles.borderRed : null]}>
-                        <View style={{ borderRightWidth: 2, borderRightColor: phoneStatus ? color.BLUE_3 : color.RED_3 , marginRight: 5 }}>
+                        <View style={{ borderRightWidth: 2, borderRightColor: phoneStatus !== null && phoneStatus ? color.BLUE_3 : color.RED_3 , marginRight: 5 }}>
                             <Text style={[registor.regionNumber, phoneStatus !== null && !phoneStatus ? inputStyles.textRed : null]}>
                                 +66
                             </Text>
@@ -59,18 +64,13 @@ const PhoneNumber = (props) => {
                             placeholder=''
                             style={[registor.phoneInput , phoneStatus !== null && !phoneStatus ? inputStyles.textRed : null]}
                             autoFocus
+                            ref = {phoneRef}
                             keyboardType='phone-pad'
                             value={props.phone}
                             onChangeText={(val) => {
-                                if (val.length == 10) {
-                                    Keyboard.dismiss()
-                                }
-                                props.setPhoneNumber(val)
-                            }
-                            }
-                            onBlur={() => hanndlePhoneNumber()}
-                            maxLength={10}
-
+                                hanndlePhoneNumber(val)
+                            }}
+                            maxLength={9}
                         />
                         {
                             !phoneStatus 
@@ -82,7 +82,7 @@ const PhoneNumber = (props) => {
                     <MyButton
                         title='ถัดไป'
                         onPress={() => {
-                            if (hanndlePhoneNumber()) props.navigation.navigate('reg_otp')
+                            if ( hanndlePhoneNumber(props.phone) ) props.navigation.navigate('reg_otp')
                         }} />
                 </View>
                 <Footer navigation={props.navigation} />
