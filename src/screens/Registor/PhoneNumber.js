@@ -55,7 +55,7 @@ const PhoneNumber = (props) => {
                         </Text>
                     </View>
                     <View style={[registor.phoneInputContainer, phoneStatus !== null && !phoneStatus ? inputStyles.borderRed : null]}>
-                        <View style={{ borderRightWidth: 2, borderRightColor: phoneStatus !== null && phoneStatus ? color.BLUE_3 : color.RED_3 , marginRight: 5 }}>
+                        <View style={{ borderRightWidth: 2, borderRightColor: phoneStatus !== null && !phoneStatus ? color.RED_3 : color.BLUE_3 , marginRight: 5 }}>
                             <Text style={[registor.regionNumber, phoneStatus !== null && !phoneStatus ? inputStyles.textRed : null]}>
                                 +66
                             </Text>

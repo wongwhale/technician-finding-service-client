@@ -1,15 +1,13 @@
 import React, { useState, useRef } from 'react'
 
-import { Text, SafeAreaView, Button, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, SafeAreaView, Button, View, TextInput, TouchableOpacity, StyleSheet, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import { login } from '../store/actions/authAction'
-import MyTextInput from '../components/MyTextInput'
 import MyButton from '../components/MyButton'
 import Footer from '../components/Login/Footer'
 import { color } from '../stylesheet'
 import { inputStyles } from '../components/MyTextInput'
 import Feather from 'react-native-vector-icons/Feather'
-import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
 const mapStateToProps = (state) => ({
 
@@ -55,6 +53,7 @@ const Login = (props) => {
                             blurOnSubmit={false}
                             ref = {pwss_ref}
                             onSubmitEditing={() => {
+                                Keyboard.dismiss()
                                 props.login(username, password)
                             }}
                             value={password}
@@ -70,7 +69,10 @@ const Login = (props) => {
                             </TouchableOpacity>
                         }
                     </View>
-                    <MyButton title='Sign in' onPress={() => props.login(username, password)} />
+                    <MyButton title='Sign in' onPress={() => {
+                        Keyboard.dismiss()
+                        props.login(username, password)
+                    }} />
                     <View style={styles.btnContainer}>
                         <View style={styles.header}>
                             <View style={styles.line} />
