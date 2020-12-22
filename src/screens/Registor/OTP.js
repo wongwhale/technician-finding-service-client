@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 
 
 import Footer from '../../components/Registor/Footer'
@@ -6,20 +6,24 @@ import { registor, color } from '../../stylesheet'
 import { registor_success } from '../../store/actions/regAction'
 import MyButton from '../../components/MyButton'
 
-import { Text, SafeAreaView, View, TouchableOpacity , Keyboard} from 'react-native'
+import { Text, SafeAreaView, View, TouchableOpacity, Keyboard } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
 
+
+import WEB_URL from '../../misc/web_url'
+import axios from 'axios'
+
 const mapStateToProps = (state) => ({
-    username : state.reg.username,
-    password : state.reg.password,
-    firstname : state.reg.firstname,
-    lastname : state.reg.lastname,
-    phone : state.reg.phone,
-    role : state.reg.role
+    username: state.reg.username,
+    password: state.reg.password,
+    firstname: state.reg.firstname,
+    lastname: state.reg.lastname,
+    phone: state.reg.phone,
+    role: state.reg.role
 })
 
-const connector = connect(mapStateToProps , {registor_success})
+const connector = connect(mapStateToProps, { registor_success })
 
 const OTP = (props) => {
     const pin1_ref = useRef()
@@ -36,15 +40,38 @@ const OTP = (props) => {
     const [pin5, setPin5] = useState('')
     const [pin6, setPin6] = useState('')
 
+    const [confirmOTP ,setConfirmOTP] = useState('')
+    const [status ,setStatus] = useState('')
+
     const handleOTP = () => {
-        if( pin1.length === 1 && pin2.length === 1 && pin3.length === 1 
-            && pin4.length === 1 && pin5.length === 1 && pin6.length === 1 ) {
-                return true
-            }
+        if (pin1.length === 1 && pin2.length === 1 && pin3.length === 1
+            && pin4.length === 1 && pin5.length === 1 && pin6.length === 1) {
+            return true
+        }
         else {
             return false
         }
     }
+
+    useEffect(() => {
+        axios({
+            url: `${WEB_URL}/api/otp`,
+            method: 'post',
+            data: {
+                query:
+                    `mutation{
+                    sendOTP(phone:"${props.phone}"){
+                        code
+                        status
+                    }
+                }`
+            }
+        }).then(res => {
+            console.log(res.data);
+            setConfirmOTP(res.data.data.sendOTP.code)
+            setStatus(res.data.data.sendOTP.status)
+        })
+    },[])
 
     return (
         <>
@@ -64,11 +91,11 @@ const OTP = (props) => {
                             maxLength={1}
                             ref={pin1_ref}
                             value={pin1}
-                            onChangeText={ (val) => {
+                            onChangeText={(val) => {
                                 setPin1(val)
                                 pin1 == '' ? pin2_ref.current.focus() : null
                             }}
-                            onFocus={ () => setPin1('')}
+                            onFocus={() => setPin1('')}
                             selectionColor={color.BLUE_3}
                         />
                         <TextInput
@@ -78,11 +105,11 @@ const OTP = (props) => {
                             maxLength={1}
                             value={pin2}
                             ref={pin2_ref}
-                            onChangeText={ (val) => {
+                            onChangeText={(val) => {
                                 setPin2(val)
                                 pin2 == '' ? pin3_ref.current.focus() : null
                             }}
-                            onFocus={ () => setPin2('')}
+                            onFocus={() => setPin2('')}
                             selectionColor={color.BLUE_3}
                         />
                         <TextInput
@@ -91,11 +118,11 @@ const OTP = (props) => {
                             keyboardType='phone-pad'
                             maxLength={1}
                             ref={pin3_ref}
-                            onChangeText={ (val) => {
+                            onChangeText={(val) => {
                                 setPin3(val)
                                 pin3 == '' ? pin4_ref.current.focus() : null
                             }}
-                            onFocus={ () => setPin3('')}
+                            onFocus={() => setPin3('')}
                             selectionColor={color.BLUE_3}
                         />
                         <TextInput
@@ -104,11 +131,11 @@ const OTP = (props) => {
                             keyboardType='phone-pad'
                             maxLength={1}
                             ref={pin4_ref}
-                            onChangeText={ (val) => {
+                            onChangeText={(val) => {
                                 setPin4(val)
                                 pin4 == '' ? pin5_ref.current.focus() : null
                             }}
-                            onFocus={ () => setPin4('')}
+                            onFocus={() => setPin4('')}
                             selectionColor={color.BLUE_3}
                         />
                         <TextInput
@@ -117,11 +144,11 @@ const OTP = (props) => {
                             keyboardType='phone-pad'
                             maxLength={1}
                             ref={pin5_ref}
-                            onChangeText={ (val) => {
+                            onChangeText={(val) => {
                                 setPin5(val)
                                 pin5 == '' ? pin6_ref.current.focus() : null
                             }}
-                            onFocus={ () => setPin5('')}
+                            onFocus={() => setPin5('')}
                             selectionColor={color.BLUE_3}
                         />
                         <TextInput
@@ -130,25 +157,29 @@ const OTP = (props) => {
                             keyboardType='phone-pad'
                             maxLength={1}
                             ref={pin6_ref}
-                            onChangeText={ (val) => {
+                            onChangeText={(val) => {
                                 setPin6(val)
                                 pin6 == '' ? Keyboard.dismiss() : null
                             }}
-                            onFocus={ () => setPin6('')}
+                            onFocus={() => setPin6('')}
                             selectionColor={color.BLUE_3}
                         />
                     </View>
-                    <MyButton title='ยืนยัน' onPress={ () => {
-                        if(handleOTP()) {
-                            props.registor_success({
-                                username : props.username ,
-                                password : props.password ,
-                                firstname : props.firstname,
-                                lastname : props.lastname,
-                                phone : props.phone ,
-                                role : props.role
-                            })
-                        };
+                    <MyButton title='ยืนยัน' onPress={() => {
+                        if (handleOTP()) {
+                            var otp = pin1.concat(pin2).concat(pin3).concat(pin4).concat(pin5).concat(pin6)
+                            console.log(otp);
+                        }
+                        // if(handleOTP()) {
+                        //     props.registor_success({
+                        //         username : props.username ,
+                        //         password : props.password ,
+                        //         firstname : props.firstname,
+                        //         lastname : props.lastname,
+                        //         phone : props.phone ,
+                        //         role : props.role
+                        //     })
+                        // };
                     }} />
                 </View>
                 <Footer navigation={props.navigation} />

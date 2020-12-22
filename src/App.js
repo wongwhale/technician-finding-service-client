@@ -25,6 +25,7 @@ import { connect } from 'react-redux';
 
 import { color } from './stylesheet'
 
+
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth
 })
