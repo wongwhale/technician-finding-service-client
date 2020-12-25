@@ -1,9 +1,8 @@
-import React , {} from 'react'
+import React , { useEffect } from 'react'
 
 import { SafeAreaView, Button } from 'react-native'
 import { connect } from 'react-redux'
 import { logout } from '../store/actions/authAction'
-import useSocket from '../misc/socket'
 
 const mapStateToProps = (state) => ({
     
@@ -13,8 +12,6 @@ const connector = connect(mapStateToProps , {logout})
 
 const User = (props) => {
 
-    const {disconnect} = useSocket()
-
     return(
         <>
             <SafeAreaView>
@@ -22,7 +19,6 @@ const User = (props) => {
                     title='Log out' 
                     onPress={ () => {
                         props.logout()
-                        disconnect()
                     }} 
                 />
             </SafeAreaView>

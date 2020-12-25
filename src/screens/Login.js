@@ -1,19 +1,21 @@
 import React, { useState, useRef } from 'react'
 
 import { Text, SafeAreaView, Button, View, TextInput, TouchableOpacity, StyleSheet, Keyboard } from 'react-native'
-import { connect } from 'react-redux'
-import { login } from '../store/actions/authAction'
 import MyButton from '../components/MyButton'
 import Footer from '../components/Login/Footer'
 import { color } from '../stylesheet'
 import { inputStyles } from '../components/MyTextInput'
 import Feather from 'react-native-vector-icons/Feather'
 
+import { connect } from 'react-redux'
+import { login } from '../store/actions/authAction'
+import { connection } from '../store/actions/socketAction'
+
 const mapStateToProps = (state) => ({
 
 })
 
-const connector = connect(mapStateToProps, { login })
+const connector = connect(mapStateToProps, { login, connection })
 
 const Login = (props) => {
     const uname_ref = useRef()
@@ -21,6 +23,14 @@ const Login = (props) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [secure, setSecure] = useState(true)
+
+    const handleLogin = () => {
+        props.login(username , password)
+        // .then(data => {
+        //     if(data.status) props.connection(data.uid)
+        // })
+    }
+    
 
     return (
         <>
@@ -34,7 +44,7 @@ const Login = (props) => {
                             placeholder='Username'
                             placeholderTextColor={color.BLUE_2}
                             blurOnSubmit={false}
-                            ref = {uname_ref}
+                            ref={uname_ref}
                             onSubmitEditing={() => {
                                 pwss_ref.current.focus()
                             }}
@@ -51,10 +61,11 @@ const Login = (props) => {
                             placeholder='Password'
                             placeholderTextColor={color.BLUE_2}
                             blurOnSubmit={false}
-                            ref = {pwss_ref}
+                            ref={pwss_ref}
                             onSubmitEditing={() => {
                                 Keyboard.dismiss()
-                                props.login(username, password)
+                                // props.login(username, password)
+                                handleLogin()
                             }}
                             value={password}
                             onChangeText={(val) => setPassword(val)}
@@ -71,7 +82,12 @@ const Login = (props) => {
                     </View>
                     <MyButton title='Sign in' onPress={() => {
                         Keyboard.dismiss()
-                        props.login(username, password)
+                        handleLogin()
+                        // props.login(username, password).then((status , firstname) => {
+                        //     // if(status) props.connection(firstname)
+                        //     console.log(status);
+                        //     // console.log(data);
+                        // })
                     }} />
                     <View style={styles.btnContainer}>
                         <View style={styles.header}>

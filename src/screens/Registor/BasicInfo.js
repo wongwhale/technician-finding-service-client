@@ -28,7 +28,7 @@ const BasicInfo = (props) => {
 
     const handleUsername = async (username) => {
         const check = await axios({
-            url: `${WEB_URL}/api/user`,
+            url: `${WEB_URL}/api/grahpql`,
             method: 'post',
             data: {
                 query: `

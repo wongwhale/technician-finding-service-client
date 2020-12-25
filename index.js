@@ -7,11 +7,17 @@ import App from './src/App';
 import {name as appName} from './app.json';
 import {Provider} from 'react-redux'
 import store from './src/store'
+import { ApolloProvider } from '@apollo/client'
+import { client } from './src/misc/apllo';
+
+
 
 const ReduxApp = () => {
     return(
         <Provider store={store}>
-            <App />
+            <ApolloProvider client={client}>
+                <App />
+            </ApolloProvider>
         </Provider>
     )
 }

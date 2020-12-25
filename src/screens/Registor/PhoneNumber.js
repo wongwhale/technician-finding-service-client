@@ -12,6 +12,8 @@ import { Text, SafeAreaView, View, TouchableOpacity, Keyboard } from 'react-nati
 import { TextInput } from 'react-native-gesture-handler'
 import MyButton from '../../components/MyButton'
 import { connect } from 'react-redux'
+import WEB_URL from '../../misc/web_url'
+import axios from 'axios'
 
 const mapStateToProps = (state) => ({
     phone: state.reg.phone
@@ -82,7 +84,21 @@ const PhoneNumber = (props) => {
                         title='ถัดไป'
                         onPress={() => {
                             if (hanndlePhoneNumber(props.phone)) {
-                                props.navigation.navigate('reg_otp')
+                                axios({
+                                    url: `${WEB_URL}/api/otp`,
+                                    method: 'post',
+                                    data: {
+                                        query:
+                                            `query{
+                                                phoneCheck(phone:"${props.phone}")
+                                            }`
+                                    }
+                                }).then(res => {
+                                    if(res.data.data.phoneCheck) props.navigation.navigate('reg_otp')
+                                    else {
+                                        setPhoneStatus(false)
+                                    }
+                                })
                             }
                         }} />
                 </View>

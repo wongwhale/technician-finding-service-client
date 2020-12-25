@@ -10,7 +10,8 @@ const initialState = {
     userInfo : {
         firstname : '',
         lastname : '',
-        role : ''
+        role : '',
+        uid : ''
     }
 }
 
@@ -33,7 +34,8 @@ export default authReducer = (state = initialState , action) => {
             return{
                 ...state,
                 isLoading: false,
-                isAuth : false
+                isAuth : false,
+                userInfo : initialState.userInfo
             }
         case authType.LOADING :
             return{

@@ -18,11 +18,15 @@ const useSocket = () => {
         socketRef.current.emit('testSend' , {msg})
     }
 
+    const connection = () => {
+        socketRef.current.join('api')
+    }
+
     const disconnect = () => {
         socketRef.current.disconnect()
     }
 
-    return {sendTest , disconnect}
+    return {sendTest , connection , disconnect}
 }
 
 export default useSocket

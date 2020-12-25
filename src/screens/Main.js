@@ -3,12 +3,10 @@ import React from 'react';
 import {
     Text,
     View,
+    Button,
     SafeAreaView,
     ScrollView
 } from 'react-native';
-
-import { createStackNavigator } from '@react-navigation/stack'
-const Stack = createStackNavigator()
 
 
 import MainMenu from '../components/MainMenu'
@@ -16,13 +14,14 @@ import UserInfo from '../components/UserInfo'
 import Header from '../components/Header'
 import { connect } from 'react-redux';
 
+import { connection } from '../store/actions/socketAction'
+
 const mapStateToProps = (state) => ({
     count: state.counter.count,
     userInfo: state.auth.userInfo
 })
 
-const connector = connect(mapStateToProps, {})
-
+const connector = connect(mapStateToProps, {connection})
 
 const Main = (props) => {
     return (
@@ -38,6 +37,11 @@ const Main = (props) => {
                     <MainMenu navigation={(screen) => {
                         props.navigation.navigate(screen)
                     }} />
+                    <Button title='test' 
+                        onPress={ () => {
+                            props.connection()
+                        }} 
+                    />
                 </ScrollView>
             </SafeAreaView>
 
