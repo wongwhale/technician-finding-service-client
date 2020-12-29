@@ -17,33 +17,38 @@ import TechnicianInfo from './TechnicianInfo'
 
 import { color } from '../stylesheet'
 import { connect } from 'react-redux';
-import { leave , connection } from '../store/actions/socketAction';
+import { leave, connection } from '../store/actions/socketAction';
+import { CLOSE_DATE_PICKER_MODAL } from '../store/actions/modalAction';
 
 import Feather from 'react-native-vector-icons/Feather'
+import Modal from 'react-native-modalbox'
+import { View ,Text } from 'react-native'
 
 const mapStateToProps = (state) => ({
-    uid : state.auth.userInfo.uid,
+  uid: state.auth.userInfo.uid,
+  date_picker: state.modal.date_picker
 })
 
-const connector = connect(mapStateToProps, {leave , connection})
+const connector = connect(mapStateToProps, { leave, connection , CLOSE_DATE_PICKER_MODAL })
 
 const TabScreen = (props) => {
 
-    return (
+  return (
+    <>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             let iconSize;
-  
+
             if (route.name === 'menu') {
               iconName = focused ? 'home' : 'home';
               iconSize = focused ? 30 : 25
-  
+
             } else if (route.name === 'notification') {
               iconName = focused ? 'bell' : 'bell';
               iconSize = focused ? 30 : 25
-  
+
             }
             return <Feather name={iconName} size={iconSize} color={color} />;
           },
@@ -57,40 +62,76 @@ const TabScreen = (props) => {
         <Tab.Screen name="menu" component={StackScreen} y='hi' />
         <Tab.Screen name="notification" component={Notification} />
       </Tab.Navigator>
-    )
-  }
+
+    </>
+  )
+}
 
 const StackScreen = (props) => {
-    return (
-        <>
-            <Stack.Navigator>
-                <Stack.Screen name='menu' component={Main} options={{ headerShown: false }} />
-                <Stack.Screen name='search' component={SearchScreen} options={{ headerShown: false }} />
-                <Stack.Screen name='nearme' component={NearMeScreen} options={{ headerShown: false }} />
-                <Stack.Screen name='post' component={PostScreen} options={{ headerShown: false }} />
-                <Stack.Screen name='message' component={Message} options={{ headerShown: false }} />
-                <Stack.Screen name='userInfo' component={User} options={{ headerShown: false }} />
-            </Stack.Navigator>
-        </>
-    )
+  return (
+    <>
+      <Stack.Navigator>
+        <Stack.Screen name='menu' component={Main} options={{ headerShown: false }} />
+        <Stack.Screen name='search' component={SearchScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='nearme' component={NearMeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='post' component={PostScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='message' component={Message} options={{ headerShown: false }} />
+        <Stack.Screen name='userInfo' component={User} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    </>
+  )
 }
 
 const Index = (props) => {
-    props.connection(props.uid)
-    useEffect( () => {
-        return () => {
-            props.leave(props.uid)
-        }
-    },[])
-    return (
-        <>
-            <Stack.Navigator>
-              <Stack.Screen name='tab' component={TabScreen} options={{ headerShown: false }} />
-              <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
-              <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
-            </Stack.Navigator>
-        </>
-    );
+  props.connection(props.uid)
+  useEffect(() => {
+    return () => {
+      props.leave(props.uid)
+    }
+  }, [])
+  return (
+    <>
+      <Stack.Navigator>
+        <Stack.Screen name='tab' component={TabScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
+        <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
+      </Stack.Navigator>
+      <Modal
+        position='bottom'
+        isOpen={props.date_picker}
+        onClosed={() => props.CLOSE_DATE_PICKER_MODAL() }
+        style={{
+          height: '30%',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 25,
+          backgroundColor: '#e6e6e6'
+        }}
+      >
+        <View
+          style={{
+            height: 30,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 25,
+            backgroundColor: '#e6e6e6',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <View
+            style={{
+              height: 5,
+              width: 40,
+              backgroundColor: '#aaa',
+              borderRadius: 5
+            }}
+          >
+
+          </View>
+        </View>
+        <Text>Test ON INDEX</Text>
+      </Modal>
+    </>
+  );
 };
 
 export default connector(Index)

@@ -18,6 +18,7 @@ const MyTextInput = ({ placeholder, onChangeText, value,
                     placeholder={placeholder}
                     placeholderTextColor={!status && status !== null ? color.RED_0 : color.BLUE_2}
                     secureTextEntry={secure}
+                    textContentType={"none"}
                     blurOnSubmit={false}
                     onSubmitEditing={() => Keyboard.dismiss()}
                     value={value}

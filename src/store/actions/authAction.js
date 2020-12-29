@@ -26,6 +26,7 @@ export const login = (username, password) => (dispatch) => {
             "Content-Type": "application/json",
         },
     }).then((result) => {
+        console.log(result.data.data);
         const data = result.data.data.login
         if (data.status) {
             dispatch({

@@ -49,7 +49,7 @@ export const content = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 25,
-        paddingVertical: 10
+        paddingVertical: 10,
     }
 })
 
@@ -530,7 +530,7 @@ export const datePicker = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 20,
         backgroundColor: 'white',
-        borderRadius: 20,
+        borderRadius: 10,
         // borderWidth:1,
         // borderColor:color.BLUE_0,
         shadowColor: color.GREEN_5,

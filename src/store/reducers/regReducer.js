@@ -21,7 +21,7 @@ const initialState = {
 }
 
 
-export default regReducer = (state = initialState, action) => {
+export default function regReducer (state = initialState, action) {
     switch (action.type) {
         case regType.SET_USERNAME_PASSWORD:
             return {

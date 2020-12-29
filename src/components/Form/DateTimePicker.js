@@ -43,7 +43,7 @@ const DateTimePicker = () => {
     return (
         <>
             {/* <Button title='test' onPress={() => console.log(date_.toTimeString())} /> */}
-            <View style={posting.halfContainer}>
+            <View style={[posting.halfContainer]}>
                 <View style={{ flex: 3 }}>
                     <Text style={posting.halfHeader}>วันที่</Text>
                     <TouchableOpacity style={posting.halfInput} onPress={() => setDatePickerVisibility(true)} >
