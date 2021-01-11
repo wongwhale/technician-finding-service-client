@@ -3,11 +3,17 @@ import React, { } from 'react'
 import { View, Text } from 'react-native'
 import { message } from '../../stylesheet'
 
-const DateShow = ({date}) => {
+const DateShow = ({date , current_date}) => {
     return(
         <View style={message.newDateContainer}>
             <Text style={message.newDateText}>
-                {date.toDateString()}
+                {
+                    date.toDateString() === current_date.toDateString() ? (
+                        date.toTimeString().slice(0,8)
+                    )    : (
+                        date.toDateString()
+                    )
+                }
             </Text>
         </View>
     )
@@ -15,11 +21,10 @@ const DateShow = ({date}) => {
 
 const ChatBubble = ({ sender, text, name, time, isLast, isFirst ,isNewDate }) => {
     const current_date = new Date()
-
     return (
         <>
             {
-                isNewDate ? <DateShow date={time} /> : null
+                isNewDate ? <DateShow date={time} current_date={current_date} /> : null
             }
             
             <View style={[message.bubbleContainer, sender ? message.rightContainer : message.leftContainer]}>

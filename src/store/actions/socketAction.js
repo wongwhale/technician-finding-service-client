@@ -4,7 +4,7 @@ import { socketType } from '../reducers/socketReducer'
 const socket = io.connect(`${WEB_URL}`)
 
 socket.on('join' , (id) => {
-    console.log(id);
+    console.log('join' , id);
 })
 
 export const leave = (uid) => dispatch => {

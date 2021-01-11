@@ -1,4 +1,4 @@
-import React, { useEffect }  from 'react';
+import React, { useEffect } from 'react';
 
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,23 +19,25 @@ import OTP from './screens/Registor/OTP'
 import Index from './screens/index'
 
 import { connect } from 'react-redux';
-import { disconnect , leave } from './store/actions/socketAction'
+import { disconnect, leave } from './store/actions/socketAction'
+import { checkToken } from './store/actions/authAction'
 
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
-  uid : state.auth.userInfo.uid,
+  uid: state.auth.userInfo.uid,
 })
 
-const connector = connect(mapStateToProps, {disconnect , leave})
+const connector = connect(mapStateToProps, { disconnect, leave, checkToken })
 
 
 const Router = (props) => {
   useEffect(() => {
+    props.checkToken()
     return () => {
       props.disconnect(props.uid)
     }
-  },[])
+  }, [])
   return (
     <>
       <NavigationContainer >

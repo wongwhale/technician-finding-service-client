@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
-import { Text , View , TextInput } from 'react-native'
+import { Text , View , TextInput, Keyboard } from 'react-native'
 
-import { posting } from '../../stylesheet'
+import { posting, color } from '../../stylesheet'
 
 const DetailInput = () => {
 
@@ -18,14 +18,17 @@ const DetailInput = () => {
                     multiline={true} 
                     numberOfLines={4} 
                     value={detail_}
-                    maxLength={150} style={posting.detailInput} 
+                    maxLength={150} 
+                    style={[posting.detailInput , {backgroundColor:color.BLUE_5}]} 
                     placeholder="รายละเอียด" 
+                    placeholderTextColor={color.BLUE_3}
                     onChangeText={(val) => {
                         setDetail_(val)
                     }}
+                    onSubmitEditing={ () => Keyboard.dismiss()}
                 />
                 <View style={posting.detailLength}>
-                    <Text style={{color:'#595959'}}>{`${detail_.length}/150`}</Text>
+                    <Text style={{color:color.BLUE_4}}>{`${detail_.length}/150`}</Text>
                 </View>
             </View>
         </>

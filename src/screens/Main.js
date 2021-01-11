@@ -5,30 +5,36 @@ import {
     View,
     Button,
     SafeAreaView,
-    ScrollView
+    ScrollView,
+    Image,
+    TouchableOpacity,
+    Platform,
 } from 'react-native';
 
-import Modal from 'react-native-modalbox'
+import { mainScreen, color } from '../stylesheet'
 
-import MainMenu from '../components/MainMenu'
+import Feather from 'react-native-vector-icons/Feather'
+
 import UserInfo from '../components/UserInfo'
 import Header from '../components/Header'
 import { connect } from 'react-redux';
 
-import { connection } from '../store/actions/socketAction'
-import { OPEN_DATE_PICKER_MODAL } from '../store/actions/modalAction'
+import { OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL } from '../store/actions/modalAction'
+import { SET_FILE } from '../store/actions/formAction'
+import ImagePicker from 'react-native-image-crop-picker'
+
 
 const mapStateToProps = (state) => ({
     count: state.counter.count,
-    userInfo: state.auth.userInfo
+    userInfo: state.auth.userInfo,
+    file : state.form.file
 })
 
-const connector = connect(mapStateToProps, { connection ,OPEN_DATE_PICKER_MODAL })
+const connector = connect(mapStateToProps, { OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL , SET_FILE })
 
 const Main = (props) => {
 
-    const [isOpen, setOpen] = useState(false)
-    const modal_ref = useRef()
+    const [imageURI, setImageURI] = useState(null)
 
     return (
         <>
@@ -40,54 +46,99 @@ const Main = (props) => {
                     navigation={props.navigation}
                 />
                 <ScrollView>
-                    <MainMenu navigation={(screen) => {
-                        props.navigation.navigate(screen)
-                    }} />
-                    <Button title='test'
-                        onPress={() => {
-                            // props.connection()
-                            // modal_ref.current.open()
-                            // setOpen(true)
+                    <View style={mainScreen.container}>
+                        <View style={mainScreen.menuLayout}>
+                            <TouchableOpacity style={mainScreen.halfBox}
+                                onPress={() => {
+                                    // console.log('test');
+                                    props.navigation.navigate('search')
+                                }}
+                            >
+                                <Feather name='search' size={50} color={color.BLUE_1} />
+                                <Text style={mainScreen.menuTextHalf}>
+                                    ค้นหา
+                        </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={mainScreen.halfBox}
+                                onPress={() => {
+                                    props.navigation.navigate('nearme')
+                                }}
+                            >
+                                <Feather name='map' size={50} color={color.BLUE_1} />
+                                <Text style={mainScreen.menuTextHalf}>
+                                    ใกล้ฉัน
+                            </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={mainScreen.menuLayout}>
+                            <TouchableOpacity style={mainScreen.fullBox}
+                                onPress={() => {
+                                    // props.OPEN_POST_MODAL()
+                                    props.navigation.navigate('post')
+                                }}
+                            >
+                                <Feather name='edit' size={50} color={color.BLUE_5} />
+                                <Text style={mainScreen.menuTextFull}>
+                                    บอกอาการ
+                        </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    {/* <Button title='test'
+                        onPress={ async () => {
+                            props.OPEN_POST_MODAL()
+                        }}
+                    />
+                    <Button 
+                        title='open modal'
+                        onPress={ () => {
                             props.OPEN_DATE_PICKER_MODAL()
                         }}
+                    /> */}
+                    <Button 
+                        title='test image send'
+                        onPress={ () => {
+                            ImagePicker.openPicker({
+                                multiple:true,  
+                                maxFiles:5 
+                            })
+                            .then( res => {
+                                console.log(res);
+                            }).catch( err => {
+                                console.log(err);
+                            })
+                        }}
+                        // onPress={ () => {
+                        //     launchImageLibrary({
+                        //         maxWidth:500,
+                        //         maxHeight:500,
+                        //         quality:0.2,
+                        //     } , (res) => {
+                        //         props.SET_FILE(res) 
+                        //         // console.log(res);
+                        //         if(!res.didCancel){
+                        //             var form = new FormData()
+                        //             form.append('formImage' , {
+                        //                 name : res.fileName,
+                        //                 type : res.type,
+                        //                 uri : Platform.OS === 'android' ?  res.uri : res.uri.replace('file://' , '')
+                        //             })
+                        //             axios({
+                        //                 url : `${WEB_URL}/api/uploadImage`,
+                        //                 method:'post',
+                        //                 data : form,
+                        //                 headers: {
+                        //                     "Content-Type" : "mutipart/form-data"
+                        //                 }
+                        //             }).then(res => {
+                        //                 console.log(res.data);
+                        //             })
+                        //         }
+                        //     })
+                        // }}
                     />
                 </ScrollView>
             </SafeAreaView>
-            <Modal
-                position='bottom'
-                isOpen={isOpen}
-                onClosed={ () => setOpen(false)}
-                style={{
-                    height: '30%',
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 25,
-                    backgroundColor: '#e6e6e6'
-                }}
-            >
-                <View
-                    style={{
-                        height: 30,
-                        borderTopLeftRadius: 20,
-                        borderTopRightRadius: 25,
-                        backgroundColor: '#e6e6e6',
-                        justifyContent:'center',
-                        alignItems:'center',
-                    }}
-                >
-                    <View
-                        style={{
-                            height:5,
-                            width:40,
-                            backgroundColor:'#aaa',
-                            borderRadius:5
-                        }}
-                    >
-
-                    </View>
-                </View>
-                <Text>test</Text>
-            </Modal>
-
         </>
     )
 }

@@ -4,11 +4,11 @@ import { View, Text, Image , TouchableOpacity } from 'react-native'
 
 import { message } from '../../stylesheet'
 
-const MessageList = ({ status, name, lastMessage, badges , navigation}) => {
+const MessageList = ({ status, name, lastMessage, badges , onPress}) => {
 
     return (
         <>
-            <TouchableOpacity style={message.listContainer } onPress={ () => navigation.navigate('chat')}>
+            <TouchableOpacity style={message.listContainer } onPress={ () => onPress()}>
                 <View style={message.imageContainer}>
                     {/* image */}
                     <Image style={message.image} source={require('../UserNotification/test.jpg')} />

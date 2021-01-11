@@ -73,7 +73,7 @@ export const mainScreen = StyleSheet.create({
         aspectRatio: 1,
     },
     fullBox: {
-        backgroundColor: color.GREEN_5,
+        backgroundColor: color.BLUE_1,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
@@ -287,7 +287,6 @@ export const searchScreen = StyleSheet.create({
 
 export const userNotification = StyleSheet.create({
     container: {
-        // backgroundColor:'tomato',
         paddingHorizontal: 15,
         paddingVertical: 5,
         borderRadius: 10,
@@ -380,27 +379,25 @@ export const posting = StyleSheet.create({
     halfContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom:10
     },
     halfHeader: {
         textAlign: 'center',
         fontSize: 16,
-        color: color.BLUE_0
+        color: color.BLUE_3
     },
     halfInput: {
         alignItems: 'center',
         justifyContent: 'space-around',
         marginTop: 5,
-        marginHorizontal: 5,
         borderRadius: 10,
-        // borderWidth: 2,
-        // borderColor: color.BLUE_0,
         backgroundColor: color.BLUE_5,
         height: 35,
         flexDirection: 'row',
     },
     fullContainer: {
-        padding: 5,
+        paddingBottom:5,
         paddingTop: 0
     },
     fullHeader: {
@@ -414,8 +411,6 @@ export const posting = StyleSheet.create({
         paddingHorizontal: 15,
         borderRadius: 10,
         justifyContent: 'center',
-        // borderWidth: 2,
-        // borderColor: color.BLUE_0,
         backgroundColor: color.BLUE_5,
         height: 35,
         flexDirection: 'row',
@@ -423,7 +418,6 @@ export const posting = StyleSheet.create({
     },
     inputText: {
         color: color.BLUE_1,
-        // textDecorationLine: 'underline',
         fontSize: 16
     },
     detailInput: {
@@ -433,7 +427,6 @@ export const posting = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         borderColor: color.BLUE_5,
-        // borderColor: color.BLUE_0,
         lineHeight: 20,
     },
     detailLength: {
@@ -455,7 +448,7 @@ export const posting = StyleSheet.create({
     },
     descLine: {
         height: 1,
-        borderBottomColor: color.BLUE_5,
+        borderBottomColor: color.BLUE_3,
         borderBottomWidth: 1,
         flex: 1,
     },
@@ -466,7 +459,7 @@ export const posting = StyleSheet.create({
     },
     descText: {
         marginHorizontal: 10,
-        color: color.BLUE_0
+        color: color.BLUE_3
     },
     mt: {
         marginTop: 15
@@ -485,13 +478,9 @@ export const datePicker = StyleSheet.create({
         bottom: 0
     },
     contentContainer: {
-        // backgroundColor:'red'
-        padding: 20,
-        marginHorizontal: 20,
-        backgroundColor: 'white',
+        paddingHorizontal: 20,
         borderRadius: 20,
-        // borderWidth:1,
-        // borderColor:color.BLUE_0,
+        backgroundColor:color.WHITE,
         shadowColor: color.GREEN_5,
         shadowRadius: 7,
         shadowOffset: {
@@ -500,39 +489,41 @@ export const datePicker = StyleSheet.create({
         },
         shadowOpacity: 0.23,
         zIndex: 2,
+        flex:1
     },
     headerContainer: {
         justifyContent: 'center',
         alignContent: 'center',
+        height:50
     },
     headerText: {
-        fontSize: 20,
+        fontSize: 16,
+        fontWeight:'bold',
         textAlign: 'center',
         color: color.BLUE_0
     },
     pickerContainer: {
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     dayContainer: {
-        flex: 1
+        flex: 1,
     },
     monthContainer: {
         flex: 2
     },
     yearContainer: {
-        flex: 2
+        flex: 2,
+        justifyContent:'center',
     },
     closeContainer: {
+        height:60,
         marginVertical: 20,
         padding: 15,
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        marginHorizontal: 20,
         backgroundColor: 'white',
-        borderRadius: 10,
-        // borderWidth:1,
-        // borderColor:color.BLUE_0,
+        borderRadius: 20,
         shadowColor: color.GREEN_5,
         shadowRadius: 7,
         shadowOffset: {
@@ -596,7 +587,7 @@ export const message = StyleSheet.create({
     },
     text: {
         fontSize: 14,
-        color: color.BLUE_0,
+        color: color.BLUE_3,
         fontWeight: 'normal'
     },
     unreadMessage: {
@@ -635,18 +626,15 @@ export const message = StyleSheet.create({
     },
     chatInputContainer: {
         flexDirection: 'row',
-        borderTopColor: '#666',
-        borderTopWidth: 0.3,
         paddingVertical: 5
     },
     textInput: {
-        borderWidth: 2,
-        borderColor: '#a6a6a6',
+        backgroundColor:color.BLUE_5,
         paddingVertical: 10,
         paddingHorizontal: 20,
         marginHorizontal: 10,
         flex: 1,
-        borderRadius: 25,
+        borderRadius: 10,
         height: 'auto',
         lineHeight: 20,
         textAlignVertical: 'center'

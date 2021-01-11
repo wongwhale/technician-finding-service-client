@@ -1,133 +1,51 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { } from 'react'
 
-import {
-    View,
-    Text,
-    Button,
-    SafeAreaView,
-    TouchableOpacity,
-    ScrollView,
-    Animated,
-    StyleSheet
-} from 'react-native'
-
-import Modal from 'react-native-modalbox'
-import Feather from 'react-native-vector-icons/Feather'
-import { content, posting, datePicker, color } from '../stylesheet'
+import { SafeAreaView, View, ScrollView } from 'react-native'
 
 import Header from '../components/Header'
-
 import DateTimePicker from '../components/Form/DateTimePicker'
-import ProcessBar from '../components/Form/ProcessBar'
+import Line from '../components/Form/Line'
+import DetailInput from '../components/Form/DetailInput'
+import ImagePicker from '../components/Form/ImagePicker'
+import LocationPicker from '../components/Form/LocationPicker'
+import TypePicker from '../components/Form/TypePicker'
+import MyButton from '../components/MyButton'
 
-const PostScreen = ({ navigation }) => {
+import { connect } from 'react-redux'
 
-    const [process, setProcess] = useState(1)
-    const [isOpen , setOpen] = useState(false)
+const mapStateToProps = () => ({
 
+})
 
+const connector = connect(mapStateToProps, {})
+
+const PostScreen = (props) => {
     return (
         <>
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-                <Header page="บอกอาการ" back={true} navigation={navigation} />
-                <View style={content.container}>
-                    <ProcessBar process={process} setProcess={setProcess} />
-                    <ScrollView>
-                        <View style={{ marginTop: 50 }}>
-                            {
-                                process === 1 ? (
-                                    <>
-                                        <DateTimePicker />
-                                    </>
-                                ) : (
-                                        <>
-                                            <Text>2</Text>
-                                        </>
-                                    )
-                            }
-                            {
-                                process === 1 ? (
-                                    <View style={[styles.container, { justifyContent: 'flex-end' }]}>
-                                        <TouchableOpacity
-                                            style={styles.button}
-                                            onPress={() => {
-                                                setProcess(process + 1)
-                                            }}
-                                        >
-                                            <Feather name="chevron-right" style={styles.text} />
-                                        </TouchableOpacity>
-                                    </View>
-                                ) :
-                                    null
-                            }
-                        </View>
-                        <Button 
-                            title='test'
-                            onPress={ () => setOpen(true)}
-                        />
-                        {/* <Form /> */}
-
-                    </ScrollView>
-                </View>
-            </SafeAreaView>
-            <Modal
-                position='bottom'
-                isOpen={isOpen}
-                onClosed={ () => setOpen(false)}
-                style={{
-                    height: '30%',
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 25,
-                    backgroundColor: '#e6e6e6'
-                }}
-            >
-                <View
-                    style={{
-                        height: 30,
-                        borderTopLeftRadius: 20,
-                        borderTopRightRadius: 25,
-                        backgroundColor: '#e6e6e6',
-                        justifyContent:'center',
-                        alignItems:'center',
-                    }}
-                >
-                    <View
-                        style={{
-                            height:5,
-                            width:40,
-                            backgroundColor:'#aaa',
-                            borderRadius:5
+            <SafeAreaView style={{ flex: 1 , }}>
+                <Header page='บอกอาการ' back={true} navigation={props.navigation} chat={false} />
+                <ScrollView style={{ paddingHorizontal: '8%'}}>
+                    <Line text='ระบุเวลา' mt />
+                    <DateTimePicker />
+                    <Line text='ระบุรายละเอียด' mt />
+                    <TypePicker />
+                    <DetailInput />
+                    <ImagePicker />
+                    <Line text='ระบุสถานที่' mt />
+                    <LocationPicker />
+                    <View style={{marginBottom: 10}} />
+                    <MyButton title='ยืนยัน' 
+                        onPress={ () => {
+                            //todo
                         }}
-                    >
+                    />
+                    <View style={{marginBottom:25}} />
+                </ScrollView>
 
-                    </View>
-                </View>
-                <Text>test</Text>
-            </Modal>
 
+            </SafeAreaView>
         </>
     )
 }
 
-export default PostScreen
-
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        flex: 1,
-        marginTop:20,
-        padding:10
-    },
-    button: {
-        backgroundColor:color.BLUE_3,
-        height:30,
-        justifyContent:'center',
-        alignItems:'center',
-        paddingHorizontal:5,
-        borderRadius:10
-    },
-    text: {
-        color:color.BLUE_5,
-        fontSize:25
-    }
-})
+export default connector(PostScreen)

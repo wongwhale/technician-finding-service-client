@@ -4,9 +4,17 @@ import { Text, TextInput, View, TouchableOpacity, KeyboardAvoidingView, Platform
 
 import { message } from '../../stylesheet'
 
+import Feather from 'react-native-vector-icons/Feather'
 
+import { SEND_MESSAGE } from '../../store/actions/chatAction'
 
-const ChatInput = ({ sendMessage }) => {
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => ({
+    uid : state.auth.userInfo.uid
+})
+
+const ChatInput = (props) => {
     const [msg, setMsg] = useState('')
     return (
         <>
@@ -15,8 +23,8 @@ const ChatInput = ({ sendMessage }) => {
                     <TextInput value={msg} onChangeText={(val) => setMsg(val)} multiline style={message.textInput} placeholder='Aa' />
                     <TouchableOpacity style={message.sendButton}
                         onPress={() => {
-                            sendMessage(msg)
-                            setMsg('')
+                            if (msg.length === 0) Keyboard.dismiss()
+                            else props.SEND_MESSAGE(msg, props.uid)
                         }} >
                         <Text>Send</Text>
                     </TouchableOpacity>
@@ -26,4 +34,4 @@ const ChatInput = ({ sendMessage }) => {
     )
 }
 
-export default ChatInput
+export default connect(mapStateToProps, {SEND_MESSAGE})(ChatInput)

@@ -7,29 +7,30 @@ const Stack = createStackNavigator()
 
 import SearchScreen from './Search'
 import NearMeScreen from './NearMe'
-import PostScreen from './Post'
 import Message from './Message';
 import User from './User'
 import Main from './Main'
 import Chat from './Chat'
 import Notification from './Notification'
 import TechnicianInfo from './TechnicianInfo'
+import Post from './Post'
+
+import PostModal from '../components/Modal/PostModal'
 
 import { color } from '../stylesheet'
 import { connect } from 'react-redux';
 import { leave, connection } from '../store/actions/socketAction';
 import { CLOSE_DATE_PICKER_MODAL } from '../store/actions/modalAction';
+import { INITIAL_HISTORY_LIST } from '../store/actions/chatAction';
 
 import Feather from 'react-native-vector-icons/Feather'
-import Modal from 'react-native-modalbox'
-import { View ,Text } from 'react-native'
 
 const mapStateToProps = (state) => ({
   uid: state.auth.userInfo.uid,
   date_picker: state.modal.date_picker
 })
 
-const connector = connect(mapStateToProps, { leave, connection , CLOSE_DATE_PICKER_MODAL })
+const connector = connect(mapStateToProps, { leave, connection , CLOSE_DATE_PICKER_MODAL , INITIAL_HISTORY_LIST })
 
 const TabScreen = (props) => {
 
@@ -59,7 +60,7 @@ const TabScreen = (props) => {
           showLabel: false
         }}
       >
-        <Tab.Screen name="menu" component={StackScreen} y='hi' />
+        <Tab.Screen name="menu" component={StackScreen} />
         <Tab.Screen name="notification" component={Notification} />
       </Tab.Navigator>
 
@@ -74,9 +75,9 @@ const StackScreen = (props) => {
         <Stack.Screen name='menu' component={Main} options={{ headerShown: false }} />
         <Stack.Screen name='search' component={SearchScreen} options={{ headerShown: false }} />
         <Stack.Screen name='nearme' component={NearMeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name='post' component={PostScreen} options={{ headerShown: false }} />
         <Stack.Screen name='message' component={Message} options={{ headerShown: false }} />
         <Stack.Screen name='userInfo' component={User} options={{ headerShown: false }} />
+        <Stack.Screen name='post' component={Post} options={{ headerShown: false }} />
       </Stack.Navigator>
     </>
   )
@@ -84,11 +85,14 @@ const StackScreen = (props) => {
 
 const Index = (props) => {
   props.connection(props.uid)
+  props.INITIAL_HISTORY_LIST(props.uid)
+  
   useEffect(() => {
     return () => {
       props.leave(props.uid)
     }
   }, [])
+
   return (
     <>
       <Stack.Navigator>
@@ -96,40 +100,7 @@ const Index = (props) => {
         <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
         <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
       </Stack.Navigator>
-      <Modal
-        position='bottom'
-        isOpen={props.date_picker}
-        onClosed={() => props.CLOSE_DATE_PICKER_MODAL() }
-        style={{
-          height: '30%',
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 25,
-          backgroundColor: '#e6e6e6'
-        }}
-      >
-        <View
-          style={{
-            height: 30,
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 25,
-            backgroundColor: '#e6e6e6',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <View
-            style={{
-              height: 5,
-              width: 40,
-              backgroundColor: '#aaa',
-              borderRadius: 5
-            }}
-          >
-
-          </View>
-        </View>
-        <Text>Test ON INDEX</Text>
-      </Modal>
+      <PostModal />
     </>
   );
 };

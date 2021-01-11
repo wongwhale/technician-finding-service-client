@@ -210,7 +210,8 @@ export const processBarStyle = StyleSheet.create({
         color: '#000'
     },
     desc: {
-        color: color.BLUE_0
+        color: color.BLUE_5,
+        fontSize:14
     },
     icon: {
         color: color.BLUE_0,
