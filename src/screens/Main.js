@@ -23,6 +23,7 @@ import { OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL } from 
 import { SET_FILE } from '../store/actions/formAction'
 import ImagePicker from 'react-native-image-crop-picker'
 
+import storage from '@react-native-firebase/storage'
 
 const mapStateToProps = (state) => ({
     count: state.counter.count,
@@ -36,15 +37,12 @@ const Main = (props) => {
 
     const [imageURI, setImageURI] = useState(null)
 
+
     return (
         <>
             <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
                 <Header page='หน้าหลัก' back={false} navigation={props.navigation} />
-                <UserInfo
-                    name={`${props.userInfo.firstname} ${props.userInfo.lastname}`}
-                    type={props.userInfo.role}
-                    navigation={props.navigation}
-                />
+                <UserInfo  navigation={props.navigation} />
                 <ScrollView>
                     <View style={mainScreen.container}>
                         <View style={mainScreen.menuLayout}>
@@ -100,10 +98,14 @@ const Main = (props) => {
                         onPress={ () => {
                             ImagePicker.openPicker({
                                 multiple:true,  
-                                maxFiles:5 
                             })
                             .then( res => {
-                                console.log(res);
+                                res.map( async (item) => {
+                                    const imageRef = storage().ref('posting').child(item.filename)
+                                    await imageRef.putFile(item.sourceURL.replace('file://',''))
+                                    await imageRef.getDownloadURL().then( url => console.log(url))
+                                    
+                                })
                             }).catch( err => {
                                 console.log(err);
                             })

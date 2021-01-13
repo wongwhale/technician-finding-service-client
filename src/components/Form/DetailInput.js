@@ -19,7 +19,7 @@ const DetailInput = () => {
                     numberOfLines={4} 
                     value={detail_}
                     maxLength={150} 
-                    style={[posting.detailInput , {backgroundColor:color.BLUE_5}]} 
+                    style={[posting.detailInput , ]} 
                     placeholder="รายละเอียด" 
                     placeholderTextColor={color.BLUE_3}
                     onChangeText={(val) => {

@@ -46,11 +46,11 @@ const ImagePickerComponent = (props) => {
                                             props.file.length < 5 ? (
                                                 <>
                                                     {
-                                                        props.file.map((item, index) => {
+                                                        props.file.map((item) => {
                                                             return (
                                                                 <>
                                                                     <Image
-                                                                        key={index}
+                                                                        key={item.filename}
                                                                         source={{ uri: item.sourceURL }}
                                                                         style={{
                                                                             width: 100,
@@ -64,7 +64,8 @@ const ImagePickerComponent = (props) => {
                                                             )
                                                         })
                                                     }
-                                                    <View style={{
+                                                    <View 
+                                                        style={{
                                                         width: 100,
                                                         height: 100,
                                                         margin: 3,
@@ -83,11 +84,11 @@ const ImagePickerComponent = (props) => {
                                             ) : (
                                                     <>
                                                         {
-                                                            props.file.map((item, index) => {
+                                                            props.file.map((item) => {
                                                                 return (
                                                                     <>
                                                                         <Image
-                                                                            key={index}
+                                                                            key={item.filename}
                                                                             source={{ uri: item.sourceURL }}
                                                                             style={{
                                                                                 width: 100,

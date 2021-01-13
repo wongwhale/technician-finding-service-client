@@ -16,11 +16,13 @@ import Name from './screens/Registor/Name'
 import SelectRole from './screens/Registor/SelectRole'
 import PhoneNumber from './screens/Registor/PhoneNumber'
 import OTP from './screens/Registor/OTP'
-import Index from './screens/index'
+import IsAuth from './screens/index'
+import UnAuth from './screens/Registor';
 
 import { connect } from 'react-redux';
 import { disconnect, leave } from './store/actions/socketAction'
 import { checkToken } from './store/actions/authAction'
+import ImageProfile from './screens/Registor/ImageProfile';
 
 
 const mapStateToProps = (state) => ({
@@ -43,17 +45,12 @@ const Router = (props) => {
       <NavigationContainer >
         {
           props.isAuth ? (
-            <Index />
-          ) : (
-              <Stack.Navigator>
-                <Stack.Screen name='login' component={Login} options={{ headerShown: false }} />
-                <Stack.Screen name='reg_basic' component={BasicInfo} options={{ headerShown: false }} />
-                <Stack.Screen name='reg_name' component={Name} options={{ headerShown: false }} />
-                <Stack.Screen name='reg_select' component={SelectRole} options={{ headerShown: false }} />
-                <Stack.Screen name='reg_phone' component={PhoneNumber} options={{ headerShown: false }} />
-                <Stack.Screen name='reg_otp' component={OTP} options={{ headerShown: false }} />
-              </Stack.Navigator>
-            )
+            <IsAuth />
+          )
+          :
+          (
+            <UnAuth />
+          )
         }
       </NavigationContainer>
     </>

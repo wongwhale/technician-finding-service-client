@@ -52,10 +52,7 @@ const Chat = (props) => {
                 >
                     <ChatBox message={props.messages} />
                 </ScrollView>
-                <ChatInput sendMessage={(msg) => {
-                    if (msg.length === 0) Keyboard.dismiss()
-                    else props.SEND_MESSAGE(msg, props.uid)
-                }} />
+                <ChatInput />
             </SafeAreaView>
         </>
     )

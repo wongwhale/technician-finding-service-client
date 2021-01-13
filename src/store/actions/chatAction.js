@@ -10,7 +10,7 @@ export const ENTER_PRIVATE_CHAT = ( uid , tid ) => dispatch => {
     })
     return new Promise((resolve , reject) => {
         axios({
-            url : `${WEB_URL}/api/graphql`,
+            url : `${WEB_URL}`,
             method:'post',
             headers:{
                 "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export const LEAVE_PRIVATE_CHAT = () => dispatch => {
 
 export const INITIAL_HISTORY_LIST = (uid) => dispatch => {
     axios({
-        url: `${WEB_URL}/api/graphql`,
+        url: `${WEB_URL}`,
         method: 'post',
         headers: {
             "Content-Type": "application/json",
@@ -106,7 +106,7 @@ export const INITIAL_HISTORY_LIST = (uid) => dispatch => {
                 `
         }
     }).then(res => {
-        // console.log(res.data.data.getChatRoom);
+        console.log(res.data.data.getChatRoom);
         dispatch({
             type: chatType.INITIAL_HISTORY_LIST,
             payload: {

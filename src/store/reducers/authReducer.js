@@ -12,7 +12,8 @@ const initialState = {
         firstname: '',
         lastname: '',
         role: '',
-        uid: ''
+        uid: '',
+        avatar : ''
     }
 }
 

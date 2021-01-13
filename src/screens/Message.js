@@ -18,8 +18,6 @@ const mapStateToProps = (state) => ({
 const connector = connect(mapStateToProps , {ENTER_PRIVATE_CHAT})
 
 const Message = (props) => {
-
-
     return (
         <>
             <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>

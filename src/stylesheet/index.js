@@ -183,7 +183,8 @@ export const global = StyleSheet.create({
 export const userInfo = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        marginVertical: 10
+        marginVertical: 10,
+        paddingHorizontal:25
     },
     subContainer: {
         flexDirection: 'column',
@@ -206,8 +207,8 @@ export const userInfo = StyleSheet.create({
         width: 50,
         backgroundColor: color.BLUE_5,
         borderRadius: 25,
-        marginLeft: 25
-    }
+        marginLeft: 10
+    },
 })
 
 export const searchScreen = StyleSheet.create({
@@ -425,14 +426,16 @@ export const posting = StyleSheet.create({
         marginTop: 5,
         padding: 15,
         borderRadius: 10,
-        borderWidth: 1,
-        borderColor: color.BLUE_5,
+        borderWidth: 0.5,
+        fontSize:16,
+        borderColor: color.BLUE_4,
         lineHeight: 20,
     },
     detailLength: {
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-        paddingRight: 5
+        paddingRight: 5,
+        marginBottom:5,
     },
     chevronDown: {
         color: color.BLUE_0,
@@ -626,7 +629,6 @@ export const message = StyleSheet.create({
     },
     chatInputContainer: {
         flexDirection: 'row',
-        paddingVertical: 5
     },
     textInput: {
         backgroundColor:color.BLUE_5,
@@ -636,8 +638,8 @@ export const message = StyleSheet.create({
         flex: 1,
         borderRadius: 10,
         height: 'auto',
-        lineHeight: 20,
-        textAlignVertical: 'center'
+        textAlignVertical: 'center',
+        fontSize:16
     },
     sendButton: {
         marginRight: 10,
@@ -842,7 +844,6 @@ export const registor = StyleSheet.create({
     container: {
         flex: 1, 
         justifyContent: 'flex-start', 
-        alignItems: 'flex-start', 
         paddingHorizontal: '10%', 
         marginTop: '20%',
     },

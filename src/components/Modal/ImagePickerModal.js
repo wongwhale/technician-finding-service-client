@@ -35,37 +35,22 @@ const ImagePickerModal = (props) => {
                     <TouchableOpacity
                         style={styles.btn}
                         onPress={ () => {
-                            ImagePicker.openCamera({
-                                
-                            }).then(res => {
-                                console.log(res);
-                                props.SET_FILE(res)
-                                props.CLOSE_IMAGE_PICKER_MODAL()
-                            }).catch(err => {
-                                console.log(err);
-                            })
+                            props.camFunc()
                         }}
                     >
                         <Text style={styles.text}>
                             ถ่ายรูป
                             </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity 
+                        style={styles.btn}
+                        onPress={ () => {
+                            props.libFunc()
+                        }}
+                    >
                         <Text
                             style={styles.text}
-                            onPress={() => {
-                                ImagePicker.openPicker({
-                                    maxFiles:5,
-                                    multiple:true,
-                                    compressImageQuality:0.5
-                                }).then(res => {
-                                    console.log(res);
-                                    props.SET_FILE(res)
-                                    props.CLOSE_IMAGE_PICKER_MODAL()
-                                }).catch( err => {
-                                    console.log(err);
-                                })
-                            }}
+                            
                         >
                             เลือกจาก Library
                             </Text>

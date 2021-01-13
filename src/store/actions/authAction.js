@@ -8,7 +8,7 @@ export const login = (username, password) => (dispatch) => {
         type: authType.LOADING
     })
     const data = axios({
-        url: "http://localhost:9999/api/graphql",
+        url: WEB_URL,
         method: "post",
         data: {
             query: `
@@ -20,6 +20,7 @@ export const login = (username, password) => (dispatch) => {
                   lastname
                   role
                   userID
+                  avatar
                 }
               }
                 `,
@@ -28,8 +29,8 @@ export const login = (username, password) => (dispatch) => {
             "Content-Type": "application/json",
         },
     }).then(async (result) => {
-        // console.log(result.data.data);
         const data = result.data.data.login
+        console.log(data);
         if (data.status) {
             AsyncStorage.setItem('token', `${data.token}`)
             dispatch({
@@ -39,6 +40,7 @@ export const login = (username, password) => (dispatch) => {
                     lastname: data.lastname,
                     role: data.role,
                     uid: data.userID,
+                    avatar : data.avatar
                 },
             })
         }
@@ -64,9 +66,8 @@ export const checkToken = () => async (dispatch) => {
         type: authType.LOADING
     })
     const token = await AsyncStorage.getItem('token')
-    console.log(token);
     axios({
-        url: `${WEB_URL}/api/graphql`,
+        url: `${WEB_URL}`,
         method: "post",
         data: {
             query: `
@@ -81,15 +82,18 @@ export const checkToken = () => async (dispatch) => {
                         lastname
                         role
                         userID
+                        avatar
                     }
                   }
                     `,
         },
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
     }).then(res => {
         const data = res.data.data.tokenCheck
+        console.log(data);
         if (data.status) {
             dispatch({
                 type: authType.LOGIN_SUCCESS,
@@ -98,6 +102,7 @@ export const checkToken = () => async (dispatch) => {
                     lastname: data.lastname,
                     role: data.role,
                     uid: data.userID,
+                    avatar : data.avatar
                 }
             })
         }

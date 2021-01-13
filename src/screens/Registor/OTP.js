@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import Footer from '../../components/Registor/Footer'
 import { registor, color } from '../../stylesheet'
 import { registor_success } from '../../store/actions/regAction'
+import { checkToken } from '../../store/actions/authAction'
 import MyButton from '../../components/MyButton'
 
 import { Text, SafeAreaView, View, TouchableOpacity, Keyboard } from 'react-native'
@@ -20,10 +21,11 @@ const mapStateToProps = (state) => ({
     firstname: state.reg.firstname,
     lastname: state.reg.lastname,
     phone: state.reg.phone,
-    role: state.reg.role
+    avatar : state.reg.avatar,
+    avatar_status : state.reg.avatar_status
 })
 
-const connector = connect(mapStateToProps, { registor_success })
+const connector = connect(mapStateToProps, { registor_success , checkToken })
 
 const OTP = (props) => {
     const pin1_ref = useRef()
@@ -74,7 +76,7 @@ const OTP = (props) => {
 
     useEffect(() => {
         axios({
-            url: `${WEB_URL}/api/otp`,
+            url: `${WEB_URL}/api/graphql`,
             method: 'post',
             data: {
                 query:
@@ -182,20 +184,21 @@ const OTP = (props) => {
                     <MyButton title='ยืนยัน' onPress={() => {
                         if (handleOTP()) {
                             var otp = pin1.concat(pin2).concat(pin3).concat(pin4).concat(pin5).concat(pin6)
-                            // console.log(otp);
-                            if(checkOTP(otp)) console.log('pass');
+                            if(checkOTP(otp)) {
+                                props.registor_success({
+                                    username : props.username,
+                                    password : props.password,
+                                    firstname : props.firstname,
+                                    lastname : props.lastname,
+                                    phone : props.phone,
+                                    avatar : props.avatar,
+                                    avatar_status : props.avatar_status
+                                }).then( () => {
+                                    props.checkToken()
+                                })
+                            }
                             else console.log('false');
                         }
-                        // if(handleOTP()) {
-                        //     props.registor_success({
-                        //         username : props.username ,
-                        //         password : props.password ,
-                        //         firstname : props.firstname,
-                        //         lastname : props.lastname,
-                        //         phone : props.phone ,
-                        //         role : props.role
-                        //     })
-                        // };
                     }} />
                 </View>
                 <Footer navigation={props.navigation} />

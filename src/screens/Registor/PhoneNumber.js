@@ -85,7 +85,7 @@ const PhoneNumber = (props) => {
                         onPress={() => {
                             if (hanndlePhoneNumber(props.phone)) {
                                 axios({
-                                    url: `${WEB_URL}/api/otp`,
+                                    url: `${WEB_URL}/api/graphql`,
                                     method: 'post',
                                     data: {
                                         query:

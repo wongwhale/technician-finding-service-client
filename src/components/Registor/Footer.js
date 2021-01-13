@@ -3,13 +3,22 @@ import React, { } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 
 import { color } from '../../stylesheet'
+import { connect } from 'react-redux'
 
-const Footer = ({ navigation }) => {
+import {clear } from '../../store/actions/regAction'
+
+const mapStateToProps = (state) => ({
+    
+})
+
+const Footer = (props) => {
     return (
         <>
             <View style={styles.container}>
                 <View style={styles.row}>
-                    <TouchableOpacity onPress={() => navigation.navigate('login')}>
+                    <TouchableOpacity onPress={() => {
+                        props.navigation.navigate('login')
+                    }}>
                         <Text style={styles.text}>Already have an accout?</Text>
                     </TouchableOpacity>
                 </View>
@@ -18,7 +27,7 @@ const Footer = ({ navigation }) => {
     )
 }
 
-export default Footer
+export default connect(mapStateToProps , {})(Footer)
 
 const styles = StyleSheet.create({
     container: {

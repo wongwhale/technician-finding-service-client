@@ -79,7 +79,13 @@ const BasicInfo = (props) => {
                         onBlur={() => handleUsername(props.username)}
                         status={unameStatus}
                     />
-                    <Text style={registor.descText}>
+                    <Text
+                        style={[registor.descText,
+                        unameStatus !== null ?
+                            !unameStatus ? { color: color.RED_0 } : { color: color.GREEN_2 }
+                            : null
+                        ]}
+                    >
                         {'- ใช้ตัวอักษรภาษาอังกฤษและตัวเลขเท่านั้น \n-  มีความยาวมากกว่า 4 ตัวอักษร'}
                     </Text>
                     <MyTextInput
@@ -91,7 +97,13 @@ const BasicInfo = (props) => {
                         onBlur={() => handlePassword(props.password)}
                         status={passwordStatus}
                     />
-                    <Text style={registor.descText}>
+                    <Text
+                        style={[registor.descText,
+                        passwordStatus !== null ?
+                            !passwordStatus ? { color: color.RED_0 } : { color: color.GREEN_2 }
+                            : null
+                        ]}
+                    >
                         {'- ใช้อักขระ 8 ตัวขึ้นไปที่มีทั้ง ตัวเลข ตัวอักษรพิมเล็กและพิมใหญ่'}
                     </Text>
                     <MyTextInput

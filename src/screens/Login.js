@@ -25,18 +25,27 @@ const Login = (props) => {
     const [secure, setSecure] = useState(true)
 
     const handleLogin = () => {
-        props.login(username , password)
+        props.login(username, password)
         // .then(data => {
         //     if(data.status) props.connection(data.uid)
         // })
     }
-    
+
 
     return (
         <>
             <SafeAreaView style={styles.container}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: '10%' }}>
-                    <View style={{ width: 100, height: 100, backgroundColor: color.BLUE_4, marginBottom: 15, borderRadius: 50 }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' , marginBottom:40 }}>
+                        <View style={{ width: 100, height: 100, backgroundColor: color.BLUE_4, borderRadius: 50 , marginRight:10 }} />
+                        {/* <View>
+                            <Text style={{fontSize:35}}>
+                                NAME
+                            </Text>
+                            <Text>
+                                Technician Finding application
+                            </Text>
+                        </View> */}
                     </View>
                     <View style={[inputStyles.container]}>
                         <TextInput
