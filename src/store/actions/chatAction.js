@@ -3,6 +3,7 @@ import axios from "axios"
 import WEB_URL from "../../misc/web_url"
 import { authType } from "../reducers/authReducer"
 import store from '../'
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export const ENTER_PRIVATE_CHAT = ( uid , tid ) => dispatch => {
     dispatch({
@@ -77,44 +78,47 @@ export const LEAVE_PRIVATE_CHAT = () => dispatch => {
 }
 
 export const INITIAL_HISTORY_LIST = (uid) => dispatch => {
-    axios({
-        url: `${WEB_URL}`,
-        method: 'post',
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            query:
-                `
-                query{
-                    getChatRoom(
-                        userID : "${uid}"
-                    ) {
-                      userID
-                      userName
-                      technicianID
-                      technicianName
-                      status
-                        recentMessage {
-                          sender
-                          message
-                          date
+    AsyncStorage.getItem('token').then( (token) => {
+        axios({
+            url: `${WEB_URL}`,
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `${token}`
+            },
+            data: {
+                query:
+                    `
+                    query{
+                        getChatRoom(
+                            userID : "${uid}"
+                        ) {
+                          userID
+                          userName
+                          technicianID
+                          technicianName
+                          status
+                            recentMessage {
+                              sender
+                              message
+                              date
+                            }
                         }
+                    
                     }
-                
-                }
-                `
-        }
-    }).then(res => {
-        console.log(res.data.data.getChatRoom);
-        dispatch({
-            type: chatType.INITIAL_HISTORY_LIST,
-            payload: {
-                list: res.data.data.getChatRoom
+                    `
             }
+        }).then(res => {
+            console.log('chat history' , res.data.data.getChatRoom);
+            dispatch({
+                type: chatType.INITIAL_HISTORY_LIST,
+                payload: {
+                    list: res.data.data.getChatRoom
+                }
+            })
+        }).catch(err => {
+            console.log(err);
         })
-    }).catch(err => {
-        console.log(err);
     })
     
 }

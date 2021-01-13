@@ -7,6 +7,7 @@ import socketReducer from './socketReducer'
 import modalReducer from './modalReducer'
 import chatReducer from './chatReducer'
 import formReducer from './formReducer'
+import technicianReducer from './technicianReducer'
 
 export default combineReducers({
     counter : counterReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
     socket : socketReducer,
     modal : modalReducer,
     chat : chatReducer,
-    form : formReducer
+    form : formReducer,
+    tech : technicianReducer
 })

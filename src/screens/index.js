@@ -86,7 +86,6 @@ const StackScreen = (props) => {
 const Index = (props) => {
   props.connection(props.uid)
   props.INITIAL_HISTORY_LIST(props.uid)
-  
   useEffect(() => {
     return () => {
       props.leave(props.uid)
