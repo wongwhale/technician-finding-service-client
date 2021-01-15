@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
-import { View, Text, SafeAreaView } from 'react-native'
+import { View, Text, SafeAreaView , Keyboard } from 'react-native'
 
 import ChatHeader from '../components/Chat/ChatHeader'
 import ChatInput from '../components/Chat/ChatInput'
@@ -8,37 +8,54 @@ import ChatBox from '../components/Chat/ChatBox'
 
 import { ScrollView } from 'react-native-gesture-handler'
 import { color } from '../stylesheet'
+import { connect } from 'react-redux'
+import { SEND_MESSAGE , LEAVE_PRIVATE_CHAT } from '../store/actions/chatAction'
 
-const Chat = ({ navigation }) => {
+const mapStateToProps = (state) => ({
+    cid: state.chat.cid,
+    uid: state.auth.userInfo.uid
+})
 
+const connector = connect(mapStateToProps, { SEND_MESSAGE , LEAVE_PRIVATE_CHAT })
 
-    const [message, setMessage] = useState([
-        { text: 'จ๊ะเอ๋ ตัวเอง', sender: false, name: 'ปริญญา สีตะวัน', time: new Date('December 1, 2020 13:32:54') } ,
-        { text: 'ตึงโป๊ะ ตึกตึก', sender: false, name: 'ปริญญา สีตะวัน', time: new Date('December 1, 2020 13:32:54') } ,
-        { text: 'สวัสดีครับ', sender: true, name: 'ปริญญากร เตจ๊ะเสาร์', time: new Date('December 1, 2020 13:15:21') },
-        { text: '..', sender: true, name: 'ปริญญากร เตจ๊ะเสาร์', time: new Date('December 1, 2020 13:16:32') },
-        { text: 'ว่าไงครับ', sender: false, name: 'ปริญญา สีตะวัน', time: new Date('December 1, 2020 13:18:37') },
-    ])
+const Chat = (props) => {
+
+    const scrollView_ref = useRef()
+
+    useEffect(() => {
+        Keyboard.addListener('keyboardDidShow', _keyboardDidShow)
+        Keyboard.addListener('keyboardDidHide', _keyboardDidHide)
+        return () => {
+            Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
+            Keyboard.removeListener("keyboardDidHide", _keyboardDidHide);
+        }
+    },[])
+
+    const _keyboardDidShow = () => {
+        scrollView_ref.current.scrollToEnd({ animated: true })
+    }
+
+    const _keyboardDidHide = () => {
+        scrollView_ref.current.scrollToEnd({ animated: true })
+    }
+
 
     return (
         <>
             <SafeAreaView style={{ flex: 1, backgroundColor: color.WHITE }}>
-                <ChatHeader navigation={navigation} />
-                <ScrollView>
-                    <ChatBox message={message} />
+                <ChatHeader navigation={props.navigation} />
+                <ScrollView
+                    ref={scrollView_ref}
+                    onContentSizeChange={() => {
+                        scrollView_ref.current.scrollToEnd({ animated: true })
+                    }}
+                >
+                    <ChatBox message={props.messages} />
                 </ScrollView>
-                <ChatInput sendMessage={(msg) => {
-                    console.log(msg);
-                    setMessage([...message, {
-                        text: msg,
-                        sender: true,
-                        name: 'ปริญญากร เตจ๊ะเสาร์',
-                        time: new Date()
-                    }])
-                }} />
+                <ChatInput />
             </SafeAreaView>
         </>
     )
 }
 
-export default Chat
+export default connector(Chat)

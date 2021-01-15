@@ -2,35 +2,51 @@ import React, { } from 'react'
 
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 
-import { Rating } from 'react-native-ratings'
+import { Rating  } from 'react-native-ratings'
 
 import { searchScreen } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
-const ListBox = ({ name, distance, star, id, navigation }) => {
+import { connect } from 'react-redux'
+import { SET_TID  , GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
+
+const mapStateToProps = (state) => ({
+
+})
+
+const ListBox = (props) => {
+
     return (
         <>
-            <TouchableOpacity style={searchScreen.listContainer} onPress={() => navigation.navigate('techInfo')} >
+            <TouchableOpacity 
+                style={searchScreen.listContainer} 
+                onPress={ () => {
+                    props.GET_TECHNICIAN_INFO(props.tid)
+                    .then( () => {
+                        props.navigation.navigate('techInfo')
+                    })
+                }} 
+            >
                 <View style={searchScreen.imageContainer}>
-                    <View>
-                        <Image style={searchScreen.techImage} />
-                    </View>
+                        <Image style={searchScreen.techImage} source={{uri:props.avatar}} />
                 </View>
                 <View style={searchScreen.infoContainer}>
                     <View style={searchScreen.listRowContainer}>
                         <Text style={searchScreen.nameText}>
-                            {name}
+                            {props.name}
                         </Text>
-                        <View style={searchScreen.listRowContainer}>
-                            <Rating startingValue={star} imageSize={14} />
+                        <View style={[searchScreen.listRowContainer , {backgroundColor:'red'}]}>
+                            <Rating startingValue={props.star} imageSize={14}  readonly={true} />
                         </View>
                     </View>
                     <View style={[searchScreen.listRowContainer, { justifyContent: 'space-between' }]}>
                         <Text style={searchScreen.distanceText}>
-                            ห่างจากคุณ: {distance} กม.
+                            ห่างจากคุณ: {props.distance} กม.
                         </Text>
-                        <TouchableOpacity style={[searchScreen.detailbtnContainer]}>
+                        <TouchableOpacity 
+                            style={[searchScreen.detailbtnContainer]}
+                        >
                             <Text style={searchScreen.detailbtnText}>
                                 กดเพื่อดูรายละเอียด
                             </Text>
@@ -43,4 +59,4 @@ const ListBox = ({ name, distance, star, id, navigation }) => {
     )
 }
 
-export default ListBox
+export default connect(mapStateToProps , {SET_TID , GET_TECHNICIAN_INFO})(ListBox)

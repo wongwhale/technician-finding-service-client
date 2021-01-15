@@ -70,7 +70,7 @@ const Name = (props) => {
                     <MyButton title='ถัดไป'
                         onPress={() => {
                             if (handleFirstname() && handleLastname()) {
-                                props.navigation.navigate('reg_select')
+                                props.navigation.navigate('reg_image')
                             }
                             else (
                                 console.log('not pass')

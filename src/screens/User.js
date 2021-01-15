@@ -1,4 +1,4 @@
-import React , {} from 'react'
+import React , { useEffect } from 'react'
 
 import { SafeAreaView, Button } from 'react-native'
 import { connect } from 'react-redux'
@@ -11,10 +11,16 @@ const mapStateToProps = (state) => ({
 const connector = connect(mapStateToProps , {logout})
 
 const User = (props) => {
+
     return(
         <>
             <SafeAreaView>
-                <Button title='Log out' onPress={ () => props.logout() } />
+                <Button 
+                    title='Log out' 
+                    onPress={ () => {
+                        props.logout()
+                    }} 
+                />
             </SafeAreaView>
         </>
     )

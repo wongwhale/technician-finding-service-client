@@ -10,6 +10,7 @@ regType.SET_ROLE = 'SET_ROLE'
 regType.SET_PHONE = 'SET_PHONE'
 regType.CLEAR = 'CLEAR'
 regType.REGISTOR_SUCCESS = 'REGISTOR_SUCCESS'
+regType.SET_IMAGE_PROFILE = 'SET_IMAGE_PROFILE'
 
 const initialState = {
     username: '',
@@ -17,11 +18,13 @@ const initialState = {
     firstname: '',
     lastname: '',
     role: '',
-    phone: ''
+    phone: '',
+    avatar : {},
+    avatar_status : false
 }
 
 
-export default regReducer = (state = initialState, action) => {
+export default function regReducer (state = initialState, action) {
     switch (action.type) {
         case regType.SET_USERNAME_PASSWORD:
             return {
@@ -64,6 +67,12 @@ export default regReducer = (state = initialState, action) => {
         case regType.REGISTOR_SUCCESS:
             return {
                 ...state
+            }
+        case regType.SET_IMAGE_PROFILE:
+            return{
+                ...state,
+                avatar : action.payload.avatar,
+                avatar_status : true
             }
         default:
             return state

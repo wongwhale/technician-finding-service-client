@@ -12,24 +12,29 @@ import {
 import { global } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
+import { connect } from 'react-redux';
 
-const ChatHeader = ({ navigation }) => {
+const mapStateToProps = (state) => ({
+    interlocutor : state.chat.interlocutor
+})
+
+const ChatHeader = (props) => {
     const badgesNum = 1
     return (
         <>
             <View style={[global.header]}>
                 <View >
-                    <Image style={global.interlocutorImage} source={require('../UserNotification/test.jpg')} />
+                    <Image style={global.interlocutorImage} source={{uri:props.interlocutor.avatar}} />
                 </View>
-                <TouchableOpacity style={global.nameContainer} onPress={ () => navigation.navigate('techInfo')}>
+                <TouchableOpacity style={global.nameContainer} onPress={ () => props.navigation.navigate('techInfo')}>
                     <Text style={global.interlocutorName}>
-                        ปริญญา สีตะวัน
+                        {props.interlocutor.name}
                     </Text>
                     <Feather name="chevron-right" style={global.rightIcon} />
                 </TouchableOpacity>
                 <TouchableOpacity style={global.backIconContainer}
                     onPress={() => {
-                        navigation.goBack()
+                        props.navigation.goBack()
                     }}
                 >
                     <Feather name="chevron-left" style={global.backIcon} />
@@ -40,4 +45,4 @@ const ChatHeader = ({ navigation }) => {
     )
 }
 
-export default ChatHeader
+export default connect(mapStateToProps , {})(ChatHeader)

@@ -1,23 +1,35 @@
 import React, { } from 'react'
 
-import { View, Text , TouchableOpacity} from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
 
 import { userInfo } from '../stylesheet'
+import { connect } from 'react-redux'
 
-const UserInfo = ({ name, type , navigation }) => {
+const mapStateToProps = (state) => ({
+    firstname: state.auth.userInfo.firstname,
+    lastname: state.auth.userInfo.lastname,
+    avatar: state.auth.userInfo.avatar,
+    role: state.auth.userInfo.role
+})
+
+const UserInfo = (props) => {
     return (
         <>
-            <TouchableOpacity style={userInfo.container} onPress={ () => navigation.navigate('userInfo')}>
-                <View style={userInfo.userImage}>
-                </View>
+            <TouchableOpacity style={userInfo.container} onPress={() => props.navigation.navigate('userInfo')}>
+                <Image
+                    style={userInfo.userImage}
+                    source={{ uri: props.avatar }}
+                />
+
+
                 <View style={userInfo.subContainer}>
                     <Text style={userInfo.name}>
-                        {name}
+                        {`${props.firstname} ${props.lastname}`}
                     </Text>
                     <Text style={userInfo.type}>
-                        {type}
+                        {props.role}
                     </Text>
                 </View>
             </TouchableOpacity>
@@ -25,4 +37,4 @@ const UserInfo = ({ name, type , navigation }) => {
     )
 }
 
-export default UserInfo
+export default connect(mapStateToProps, {})(UserInfo)

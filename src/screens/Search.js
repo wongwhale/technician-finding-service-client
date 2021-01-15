@@ -15,25 +15,33 @@ import { searchScreen, content, color } from '../stylesheet'
 
 import Header from '../components/Header'
 import ListBox from '../components/Search/ListBox'
+import { connect } from 'react-redux'
 
-const SearchScreen = ({ navigation }) => {
+import { SET_SEARCH_KEY_WORD , SEARCH_BY_KEY_WORD } from '../store/actions/techAction'
+
+
+const mapStateToProps = (state) => ({
+    keyword : state.tech.keyword,
+    search_list : state.tech.search_list
+})
+
+
+const SearchScreen = (props) => {
     const list = [
-        { name: 'ปริญญากร สีตะวัน', distance: 2.3, star: 3.5, id: 'akchq1240a' },
+        { name: 'ปริญญา สีตะวัน', distance: 2.3, star: 3.5, id: 'akchq1240a' },
         { name: 'นนทวัต อุตพรม', distance: 2.1, star: 2.1, id: 'qweuxn1232' },
     ]
-
-    const [searchText, setSearchText] = useState('')
 
     return (
         <>
             <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
 
-                <Header page="ค้นหา" back={true} navigation={navigation} />
+                <Header page="ค้นหา" back={true} navigation={props.navigation} />
                 <View style={{ flex: 1, paddingTop: 10 }}>
                     <View style={searchScreen.textInputContainer}>
                         {
-                            searchText.length != 0 ? (
-                                <TouchableOpacity onPress={() => setSearchText('')}>
+                            props.keyword.length != 0 ? (
+                                <TouchableOpacity onPress={() => props.SET_SEARCH_KEY_WORD('')}>
                                     <Feather name='x' size={25} color={color.BLUE_0} />
                                 </TouchableOpacity>
                             ) : null
@@ -44,8 +52,11 @@ const SearchScreen = ({ navigation }) => {
                             placeholderTextColor={color.BLUE_4}
                             style={searchScreen.textInput}
                             autoCorrect={false}
-                            onChangeText={(val) => setSearchText(val)}
-                            value={searchText}
+                            onChangeText={(val) => props.SET_SEARCH_KEY_WORD(val)}
+                            value={props.keyword}
+                            onSubmitEditing={ () => {
+                                props.SEARCH_BY_KEY_WORD(props.keyword)
+                            }}
                         />
                                 <View style={searchScreen.searchIconContainer}>
                                     <Feather name='search' style={searchScreen.searchIcon} />
@@ -53,8 +64,16 @@ const SearchScreen = ({ navigation }) => {
                     </View>
                     <ScrollView style={content.container}>
                         {
-                            list.map(item => {
-                                return <ListBox key={item.id} name={item.name} star={item.star} distance={item.distance} id={item.id} navigation={navigation} />
+                            props.search_list.map((item , index) => {
+                                return <ListBox 
+                                    key={index} 
+                                    name={`${item.userInfoID.firstname} ${item.userInfoID.lastname}`} 
+                                    star={item.star} 
+                                    distance={23} 
+                                    tid={item._id} 
+                                    avatar={item.userInfoID.avatar}
+                                    navigation={props.navigation} 
+                                />
                             })
                         }
                     </ScrollView>
@@ -66,4 +85,4 @@ const SearchScreen = ({ navigation }) => {
     )
 }
 
-export default SearchScreen
+export default connect(mapStateToProps , {SET_SEARCH_KEY_WORD , SEARCH_BY_KEY_WORD})(SearchScreen)

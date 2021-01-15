@@ -1,25 +1,31 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 
 
 import Footer from '../../components/Registor/Footer'
 import { registor, color } from '../../stylesheet'
 import { registor_success } from '../../store/actions/regAction'
+import { checkToken } from '../../store/actions/authAction'
 import MyButton from '../../components/MyButton'
 
-import { Text, SafeAreaView, View, TouchableOpacity , Keyboard} from 'react-native'
+import { Text, SafeAreaView, View, TouchableOpacity, Keyboard } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
 
+
+import WEB_URL from '../../misc/web_url'
+import axios from 'axios'
+
 const mapStateToProps = (state) => ({
-    username : state.reg.username,
-    password : state.reg.password,
-    firstname : state.reg.firstname,
-    lastname : state.reg.lastname,
-    phone : state.reg.phone,
-    role : state.reg.role
+    username: state.reg.username,
+    password: state.reg.password,
+    firstname: state.reg.firstname,
+    lastname: state.reg.lastname,
+    phone: state.reg.phone,
+    avatar : state.reg.avatar,
+    avatar_status : state.reg.avatar_status
 })
 
-const connector = connect(mapStateToProps , {registor_success})
+const connector = connect(mapStateToProps, { registor_success , checkToken })
 
 const OTP = (props) => {
     const pin1_ref = useRef()
@@ -36,15 +42,53 @@ const OTP = (props) => {
     const [pin5, setPin5] = useState('')
     const [pin6, setPin6] = useState('')
 
+    const [confirmOTP ,setConfirmOTP] = useState('')
+    const [status ,setStatus] = useState('')
+
     const handleOTP = () => {
-        if( pin1.length === 1 && pin2.length === 1 && pin3.length === 1 
-            && pin4.length === 1 && pin5.length === 1 && pin6.length === 1 ) {
-                return true
-            }
+        if (pin1.length === 1 && pin2.length === 1 && pin3.length === 1
+            && pin4.length === 1 && pin5.length === 1 && pin6.length === 1) {
+            return true
+        }
         else {
             return false
         }
+        
     }
+
+    const checkOTP = (otp) => {
+        console.log(confirmOTP , otp);
+        if (otp === confirmOTP){
+            return true
+        }else {
+            return false
+        }
+    }
+
+    const handleInput = (val , set , pin_ref) => {
+        if(val !== '') {
+            set(val)
+            pin_ref.current.focus()
+        }else {
+            set('')
+        }
+    }
+
+    useEffect(() => {
+        axios({
+            url: `${WEB_URL}/api/graphql`,
+            method: 'post',
+            data: {
+                query:
+                    `query{
+                    sendOTP(phone:"${props.phone}")
+                }`
+            }
+        }).then(res => {
+            console.log(res.data);
+            setConfirmOTP(res.data.data.sendOTP)
+        })
+    },[])
 
     return (
         <>
@@ -60,95 +104,101 @@ const OTP = (props) => {
                             autoFocus
                             placeholder=''
                             style={registor.otpInput}
-                            keyboardType='phone-pad'
+                            keyboardType='number-pad'
                             maxLength={1}
                             ref={pin1_ref}
                             value={pin1}
-                            onChangeText={ (val) => {
-                                setPin1(val)
-                                pin1 == '' ? pin2_ref.current.focus() : null
+                            onChangeText={(val) => {
+                                handleInput(val , setPin1 , pin2_ref)
                             }}
-                            onFocus={ () => setPin1('')}
+                            onFocus={() => setPin1('')}
                             selectionColor={color.BLUE_3}
                         />
                         <TextInput
                             placeholder=''
                             style={registor.otpInput}
-                            keyboardType='phone-pad'
+                            keyboardType='number-pad'
                             maxLength={1}
                             value={pin2}
                             ref={pin2_ref}
-                            onChangeText={ (val) => {
-                                setPin2(val)
-                                pin2 == '' ? pin3_ref.current.focus() : null
+                            onChangeText={ async (val) => {
+                                handleInput(val , setPin2 , pin3_ref)
                             }}
-                            onFocus={ () => setPin2('')}
+                            onFocus={() => setPin2('')}
                             selectionColor={color.BLUE_3}
                         />
                         <TextInput
                             placeholder=''
                             style={registor.otpInput}
-                            keyboardType='phone-pad'
+                            keyboardType='number-pad'
                             maxLength={1}
+                            value={pin3}
                             ref={pin3_ref}
-                            onChangeText={ (val) => {
-                                setPin3(val)
-                                pin3 == '' ? pin4_ref.current.focus() : null
+                            onChangeText={ async (val) => {
+                                handleInput(val , setPin3 , pin4_ref)
                             }}
-                            onFocus={ () => setPin3('')}
+                            onFocus={() => setPin3('')}
                             selectionColor={color.BLUE_3}
                         />
                         <TextInput
                             placeholder=''
                             style={registor.otpInput}
-                            keyboardType='phone-pad'
+                            keyboardType='number-pad'
                             maxLength={1}
+                            value={pin4}
                             ref={pin4_ref}
                             onChangeText={ (val) => {
-                                setPin4(val)
-                                pin4 == '' ? pin5_ref.current.focus() : null
+                                handleInput(val , setPin4 , pin5_ref)
                             }}
-                            onFocus={ () => setPin4('')}
+                            onFocus={() => setPin4('')}
                             selectionColor={color.BLUE_3}
                         />
                         <TextInput
                             placeholder=''
                             style={registor.otpInput}
-                            keyboardType='phone-pad'
+                            keyboardType='number-pad'
                             maxLength={1}
+                            value={pin5}
                             ref={pin5_ref}
                             onChangeText={ (val) => {
-                                setPin5(val)
-                                pin5 == '' ? pin6_ref.current.focus() : null
+                                handleInput(val , setPin5 , pin6_ref)
                             }}
-                            onFocus={ () => setPin5('')}
+                            onFocus={() => setPin5('')}
                             selectionColor={color.BLUE_3}
                         />
                         <TextInput
                             placeholder=''
                             style={registor.otpInput}
-                            keyboardType='phone-pad'
+                            keyboardType='number-pad'
                             maxLength={1}
+                            value={pin6}
                             ref={pin6_ref}
-                            onChangeText={ (val) => {
+                            onChangeText={(val) => {
                                 setPin6(val)
-                                pin6 == '' ? Keyboard.dismiss() : null
+                                Keyboard.dismiss()
                             }}
-                            onFocus={ () => setPin6('')}
+                            onFocus={() => setPin6('')}
                             selectionColor={color.BLUE_3}
                         />
                     </View>
-                    <MyButton title='ยืนยัน' onPress={ () => {
-                        if(handleOTP()) {
-                            props.registor_success({
-                                username : props.username ,
-                                password : props.password ,
-                                firstname : props.firstname,
-                                lastname : props.lastname,
-                                phone : props.phone ,
-                                role : props.role
-                            })
-                        };
+                    <MyButton title='ยืนยัน' onPress={() => {
+                        if (handleOTP()) {
+                            var otp = pin1.concat(pin2).concat(pin3).concat(pin4).concat(pin5).concat(pin6)
+                            if(checkOTP(otp)) {
+                                props.registor_success({
+                                    username : props.username,
+                                    password : props.password,
+                                    firstname : props.firstname,
+                                    lastname : props.lastname,
+                                    phone : props.phone,
+                                    avatar : props.avatar,
+                                    avatar_status : props.avatar_status
+                                }).then( () => {
+                                    props.checkToken()
+                                })
+                            }
+                            else console.log('false');
+                        }
                     }} />
                 </View>
                 <Footer navigation={props.navigation} />

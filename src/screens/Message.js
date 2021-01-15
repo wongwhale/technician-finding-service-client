@@ -1,4 +1,4 @@
-import React, { } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { SafeAreaView, View, Text, ScrollView } from 'react-native'
 
@@ -6,20 +6,68 @@ import Header from '../components/Header'
 import MessageList from '../components/Message/MessageList'
 
 import { content } from '../stylesheet'
+import { connect } from 'react-redux'
 
+import { ENTER_PRIVATE_CHAT , INITIAL_HISTORY_LIST , SET_INTERLOCUTOR_ID } from '../store/actions/chatAction'
 
-const Message = ({ navigation }) => {
+const mapStateToProps = (state) => ({
+    uid : state.auth.userInfo.uid,
+    chat_history : state.chat.lists
+})
+
+const connector = connect(mapStateToProps , {SET_INTERLOCUTOR_ID , ENTER_PRIVATE_CHAT , INITIAL_HISTORY_LIST})
+
+const Message = (props) => {
+
+    const [lists , setLists] = useState([])
+
+    useEffect(() => {
+        props.INITIAL_HISTORY_LIST(props.uid)
+        .then( res => {
+            setLists(res)
+        })
+        .catch( err => {
+            setLists([])
+        } )
+    },[])
+
     return (
         <>
             <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-                <Header page='กล่องข้อความ' navigation={navigation} back={true} chat={true} />
+                <Header page='กล่องข้อความ' navigation={props.navigation} back={true} chat={true} />
                 <ScrollView style={content.container}>
-                    <MessageList status={true} name='ปริญญา สีตะวัน' lastMessage='สวัสดีครับ' status={false} badges={1} navigation={navigation} />
-                    <MessageList status={true} name='ธีรภัทร์ รัตนพิกุล  ' lastMessage='นวดไหมครับ' status={true} badges={0} navigation={navigation} />
+                    {
+                        lists.lenght !== 0 ? (
+                            lists.map((item , index) => {
+                                return <MessageList 
+                                    key={index}
+                                    status={true} 
+                                    name={ item.technicianID !== props.uid ? item.technicianName : item.userName }
+                                    avatar = {item.technicianID !== props.uid ? item.technicianAvatar : item.userAvatar} 
+                                    lastMessage={item.recentMessage.message} 
+                                    status={true} 
+                                    badges={0} 
+                                    onPress={ () => {
+                                        // props.navigation.navigate('chat')
+                                        if(props.uid !== item.technicianID){
+                                            props.SET_INTERLOCUTOR_ID(item.technicianID)
+                                            .then( () => {
+                                                props.navigation.navigate('chat')
+                                            })
+                                        }else{
+                                            props.SET_INTERLOCUTOR_ID(item.userID)
+                                            .then( () => {
+                                                props.navigation.navigate('chat')
+                                            })
+                                        }
+                                    }} />
+                            })
+                        ) : null
+                    }
                 </ScrollView>
             </SafeAreaView>
         </>
     )
 }
 
-export default Message
+export default connector(Message)

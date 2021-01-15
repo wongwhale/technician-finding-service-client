@@ -11,8 +11,9 @@ import { setPhoneNumber } from '../../store/actions/regAction'
 import { Text, SafeAreaView, View, TouchableOpacity, Keyboard } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import MyButton from '../../components/MyButton'
-
 import { connect } from 'react-redux'
+import WEB_URL from '../../misc/web_url'
+import axios from 'axios'
 
 const mapStateToProps = (state) => ({
     phone: state.reg.phone
@@ -29,7 +30,7 @@ const PhoneNumber = (props) => {
         const check = /^0/.test(val)
         if (check) {
             setPhoneStatus(/[\d]{10}$/.test(val))
-            if(val.length > 1) props.setPhoneNumber(val.slice(1,val.length))
+            if (val.length > 1) props.setPhoneNumber(val.slice(1, val.length))
             else props.setPhoneNumber(val)
             status = /[\d]{9}$/.test(val)
             if (status) Keyboard.dismiss()
@@ -55,16 +56,16 @@ const PhoneNumber = (props) => {
                         </Text>
                     </View>
                     <View style={[registor.phoneInputContainer, phoneStatus !== null && !phoneStatus ? inputStyles.borderRed : null]}>
-                        <View style={{ borderRightWidth: 2, borderRightColor: phoneStatus !== null && !phoneStatus ? color.RED_3 : color.BLUE_3 , marginRight: 5 }}>
+                        <View style={{ borderRightWidth: 2, borderRightColor: phoneStatus !== null && !phoneStatus ? color.RED_3 : color.BLUE_3, marginRight: 5 }}>
                             <Text style={[registor.regionNumber, phoneStatus !== null && !phoneStatus ? inputStyles.textRed : null]}>
                                 +66
                             </Text>
                         </View>
                         <TextInput
                             placeholder=''
-                            style={[registor.phoneInput , phoneStatus !== null && !phoneStatus ? inputStyles.textRed : null]}
+                            style={[registor.phoneInput, phoneStatus !== null && !phoneStatus ? inputStyles.textRed : null]}
                             autoFocus
-                            ref = {phoneRef}
+                            ref={phoneRef}
                             keyboardType='phone-pad'
                             value={props.phone}
                             onChangeText={(val) => {
@@ -73,16 +74,32 @@ const PhoneNumber = (props) => {
                             maxLength={9}
                         />
                         {
-                            !phoneStatus 
+                            !phoneStatus
                                 ? <Feather name='x' style={[inputStyles.icon, phoneStatus !== null && !phoneStatus ? inputStyles.textRed : null]} />
                                 : null
                         }
-                        
+
                     </View>
                     <MyButton
                         title='ถัดไป'
                         onPress={() => {
-                            if ( hanndlePhoneNumber(props.phone) ) props.navigation.navigate('reg_otp')
+                            if (hanndlePhoneNumber(props.phone)) {
+                                axios({
+                                    url: `${WEB_URL}/api/graphql`,
+                                    method: 'post',
+                                    data: {
+                                        query:
+                                            `query{
+                                                phoneCheck(phone:"${props.phone}")
+                                            }`
+                                    }
+                                }).then(res => {
+                                    if(res.data.data.phoneCheck) props.navigation.navigate('reg_otp')
+                                    else {
+                                        setPhoneStatus(false)
+                                    }
+                                })
+                            }
                         }} />
                 </View>
                 <Footer navigation={props.navigation} />

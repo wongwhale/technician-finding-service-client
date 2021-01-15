@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -9,22 +9,36 @@ import Name from './Name'
 import SelectRole from './SelectRole'
 import PhoneNumber from './PhoneNumber'
 import OTP from './OTP'
+import ImageProfile from './ImageProfile'
+import Login from '../Login'
 
-const Registor = (props) => {
+import { clear } from '../../store/actions/regAction'
+import { connect } from 'react-redux'
 
+const mapStateToProps = (state) => ({
+    
+})
+
+const UnAuth = (props) => {
+    useEffect(() => {
+        return () => {
+            props.clear()
+        }
+    })
     return (
         <>
-
             <Stack.Navigator>
-                <Stack.Screen name='basic' component={BasicInfo} options={{ headerShown: false }} />
-                <Stack.Screen name='name' component={Name} options={{ headerShown: false }} />
-                <Stack.Screen name='select' component={SelectRole} options={{ headerShown: false }} />
-                <Stack.Screen name='phone' component={PhoneNumber} options={{ headerShown: false }} />
-                <Stack.Screen name='otp' component={OTP} options={{ headerShown: false }} />
+                <Stack.Screen name='login' component={Login} options={{headerShown: false}} />
+                <Stack.Screen name='reg_basic' component={BasicInfo} options={{ headerShown: false }} />
+                <Stack.Screen name='reg_name' component={Name} options={{ headerShown: false }} />
+                <Stack.Screen name='reg_select' component={SelectRole} options={{ headerShown: false }} />
+                <Stack.Screen name='reg_phone' component={PhoneNumber} options={{ headerShown: false }} />
+                <Stack.Screen name='reg_otp' component={OTP} options={{ headerShown: false }} />
+                <Stack.Screen name='reg_image' component={ImageProfile} options={{ headerShown: false }} />
             </Stack.Navigator>
         </>
 
     )
 }
 
-export default Registor
+export default connect(mapStateToProps , {clear})(UnAuth)

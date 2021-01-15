@@ -1,17 +1,17 @@
 import React, { } from 'react'
 
-import { View, Text, Image , TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 
 import { message } from '../../stylesheet'
 
-const MessageList = ({ status, name, lastMessage, badges , navigation}) => {
+const MessageList = ({ status, name, lastMessage, badges, onPress, avatar }) => {
 
     return (
         <>
-            <TouchableOpacity style={message.listContainer } onPress={ () => navigation.navigate('chat')}>
+            <TouchableOpacity style={message.listContainer} onPress={() => onPress()}>
                 <View style={message.imageContainer}>
                     {/* image */}
-                    <Image style={message.image} source={require('../UserNotification/test.jpg')} />
+                    <Image style={message.image} source={{ uri: avatar }} />
                     {
                         badges !== 0 ? (
                             <View style={message.badges}>
@@ -28,9 +28,11 @@ const MessageList = ({ status, name, lastMessage, badges , navigation}) => {
                     <Text style={[message.name, !status ? message.unreadName : null]}>
                         {name}
                     </Text>
-                    <Text style={[message.text, !status ? message.unreadMessage : null]}>
-                        {lastMessage}
-                    </Text>
+                    <View style={{flexDirection:'row'}}>
+                        <Text style={[message.text, !status ? message.unreadMessage : null]}>
+                            {lastMessage}
+                        </Text>
+                    </View>
                 </View>
             </TouchableOpacity>
         </>
