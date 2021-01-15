@@ -24,7 +24,7 @@ const ChatHeader = (props) => {
         <>
             <View style={[global.header]}>
                 <View >
-                    <Image style={global.interlocutorImage} source={require('../UserNotification/test.jpg')} />
+                    <Image style={global.interlocutorImage} source={{uri:props.interlocutor.avatar}} />
                 </View>
                 <TouchableOpacity style={global.nameContainer} onPress={ () => props.navigation.navigate('techInfo')}>
                     <Text style={global.interlocutorName}>

@@ -156,7 +156,8 @@ export const global = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 25,
-        marginVertical: 5
+        marginVertical: 5,
+        backgroundColor:color.GREEN_4
     },
     interlocutorName: {
         fontSize: 14,
@@ -429,6 +430,7 @@ export const posting = StyleSheet.create({
         borderWidth: 0.5,
         fontSize:16,
         borderColor: color.BLUE_4,
+        color:color.BLUE_2,
         lineHeight: 20,
     },
     detailLength: {
@@ -548,7 +550,7 @@ export const message = StyleSheet.create({
         borderBottomColor: color.LIGHT_GREY,
         borderBottomWidth: 0.3,
         paddingHorizontal: 5,
-        paddingBottom: 15
+        paddingBottom: 15,
     },
     imageContainer: {
         aspectRatio: 1,
@@ -557,6 +559,7 @@ export const message = StyleSheet.create({
         backgroundColor: color.BLUE_5,
         borderRadius: 25,
         marginHorizontal: 15,
+
     },
     image: {
         height: 50,
@@ -578,7 +581,8 @@ export const message = StyleSheet.create({
     },
     listContent: {
         justifyContent: 'space-between',
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        flex:1
     },
     name: {
         fontSize: 18,
@@ -591,7 +595,8 @@ export const message = StyleSheet.create({
     text: {
         fontSize: 14,
         color: color.BLUE_3,
-        fontWeight: 'normal'
+        fontWeight: 'normal',
+        flexShrink:1,
     },
     unreadMessage: {
         fontWeight: 'bold'
@@ -612,10 +617,10 @@ export const message = StyleSheet.create({
     },
     rightBubble: {
         // borderBottomRightRadius: 0,
-        backgroundColor: color.BLUE_1
+        backgroundColor: color.BLUE_3
     },
     rightText: {
-        color: '#fff'
+        color: color.WHITE
     },
     leftContainer: {
         alignItems: 'flex-start'
@@ -629,6 +634,7 @@ export const message = StyleSheet.create({
     },
     chatInputContainer: {
         flexDirection: 'row',
+        marginBottom:5,
     },
     textInput: {
         backgroundColor:color.BLUE_5,
@@ -680,6 +686,23 @@ export const message = StyleSheet.create({
     newDateText: {
         color: '#666',
         fontSize: 12
+    },
+    bubleImage : {
+        width: '75%',
+        minHeight:200 , 
+        maxHeight:500 
+    },
+    rightImageBubble:{
+        borderTopLeftRadius:25,
+        borderBottomLeftRadius:25,
+        borderTopRightRadius:10,
+        borderBottomRightRadius:10
+    },
+    leftImageBubble : {
+        borderTopLeftRadius:10,
+        borderBottomLeftRadius:10,
+        borderTopRightRadius:25,
+        borderBottomRightRadius:25
     }
 })
 
@@ -700,6 +723,7 @@ export const technician = StyleSheet.create({
         height: 80,
         aspectRatio: 1,
         borderRadius: 50,
+        backgroundColor:color.GREEN_4
     },
     textContainer: {
         // backgroundColor:'yellow',

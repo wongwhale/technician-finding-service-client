@@ -9,14 +9,14 @@ import ChatBox from '../components/Chat/ChatBox'
 import { ScrollView } from 'react-native-gesture-handler'
 import { color } from '../stylesheet'
 import { connect } from 'react-redux'
-import { SEND_MESSAGE } from '../store/actions/chatAction'
+import { SEND_MESSAGE , LEAVE_PRIVATE_CHAT } from '../store/actions/chatAction'
 
 const mapStateToProps = (state) => ({
     cid: state.chat.cid,
     uid: state.auth.userInfo.uid
 })
 
-const connector = connect(mapStateToProps, { SEND_MESSAGE })
+const connector = connect(mapStateToProps, { SEND_MESSAGE , LEAVE_PRIVATE_CHAT })
 
 const Chat = (props) => {
 

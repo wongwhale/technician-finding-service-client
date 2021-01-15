@@ -15,14 +15,19 @@ import Notification from './Notification'
 import TechnicianInfo from './TechnicianInfo'
 import Post from './Post'
 
-import PostModal from '../components/Modal/PostModal'
+import ImagePickerModal from '../components/Modal/ImagePickerModal'
+import DatePickerModal from '../components/Modal/DatePickerModal'
+import TimePickerModal from '../components/Modal/TimePickerModal'
+import SelectTypePickerModal from '../components/Modal/SelectTypePickerModal'
 
 import { color } from '../stylesheet'
 import { connect } from 'react-redux';
 import { leave, connection } from '../store/actions/socketAction';
 import { CLOSE_DATE_PICKER_MODAL } from '../store/actions/modalAction';
 import { INITIAL_HISTORY_LIST } from '../store/actions/chatAction';
+import { SET_FILE } from '../store/actions/formAction';
 
+import ImagePicker from 'react-native-image-crop-picker'
 import Feather from 'react-native-vector-icons/Feather'
 
 const mapStateToProps = (state) => ({
@@ -30,7 +35,7 @@ const mapStateToProps = (state) => ({
   date_picker: state.modal.date_picker
 })
 
-const connector = connect(mapStateToProps, { leave, connection , CLOSE_DATE_PICKER_MODAL , INITIAL_HISTORY_LIST })
+const connector = connect(mapStateToProps, { leave, connection , CLOSE_DATE_PICKER_MODAL , INITIAL_HISTORY_LIST , SET_FILE })
 
 const TabScreen = (props) => {
 
@@ -85,7 +90,6 @@ const StackScreen = (props) => {
 
 const Index = (props) => {
   props.connection(props.uid)
-  props.INITIAL_HISTORY_LIST(props.uid)
   useEffect(() => {
     return () => {
       props.leave(props.uid)
@@ -99,7 +103,17 @@ const Index = (props) => {
         <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
         <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
       </Stack.Navigator>
-      <PostModal />
+      <DatePickerModal />
+      <TimePickerModal />
+      <SelectTypePickerModal />
+      <ImagePickerModal libFunc={ () => {
+          ImagePicker.openPicker({
+            multiple : true,
+            maxFiles: 5
+          }).then( (img) => {
+            props.SET_FILE(img)
+          })
+      }} />
     </>
   );
 };

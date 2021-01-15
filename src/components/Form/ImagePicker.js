@@ -46,11 +46,11 @@ const ImagePickerComponent = (props) => {
                                             props.file.length < 5 ? (
                                                 <>
                                                     {
-                                                        props.file.map((item) => {
+                                                        props.file.map((item,index) => {
                                                             return (
                                                                 <>
                                                                     <Image
-                                                                        key={item.filename}
+                                                                        key={index}
                                                                         source={{ uri: item.sourceURL }}
                                                                         style={{
                                                                             width: 100,
@@ -84,11 +84,11 @@ const ImagePickerComponent = (props) => {
                                             ) : (
                                                     <>
                                                         {
-                                                            props.file.map((item) => {
+                                                            props.file.map((item,index) => {
                                                                 return (
                                                                     <>
                                                                         <Image
-                                                                            key={item.filename}
+                                                                            key={index}
                                                                             source={{ uri: item.sourceURL }}
                                                                             style={{
                                                                                 width: 100,

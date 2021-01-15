@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 
-import { Text , View , TextInput, Keyboard } from 'react-native'
+import { Text, View, TextInput, Keyboard } from 'react-native'
 
 import { posting, color } from '../../stylesheet'
 
-const DetailInput = () => {
+import { connect } from 'react-redux'
 
-    const [detail_, setDetail_] = useState('')
+import { SET_DETAIL } from '../../store/actions/formAction'
+
+const mapStateToProps = (state) => ({
+    detail : state.form.detail
+})
+
+const DetailInput = (props) => {
 
     return (
         <>
@@ -14,25 +20,24 @@ const DetailInput = () => {
                 {/* <Text style={posting.fullHeader}>
                     ลายละเอียด
                 </Text> */}
-                <TextInput 
-                    multiline={true} 
-                    numberOfLines={4} 
-                    value={detail_}
-                    maxLength={150} 
-                    style={[posting.detailInput , ]} 
-                    placeholder="รายละเอียด" 
+                <TextInput
+                    multiline={true}
+                    numberOfLines={4}
+                    value={props.detail}
+                    maxLength={150}
+                    style={[posting.detailInput,]}
+                    placeholder="รายละเอียด"
                     placeholderTextColor={color.BLUE_3}
                     onChangeText={(val) => {
-                        setDetail_(val)
+                        props.SET_DETAIL(val)
                     }}
-                    onSubmitEditing={ () => Keyboard.dismiss()}
                 />
                 <View style={posting.detailLength}>
-                    <Text style={{color:color.BLUE_4}}>{`${detail_.length}/150`}</Text>
+                    <Text style={{ color: color.BLUE_4 }}>{`${props.detail.length}/150`}</Text>
                 </View>
             </View>
         </>
     )
 }
 
-export default DetailInput
+export default connect(mapStateToProps, { SET_DETAIL })(DetailInput)

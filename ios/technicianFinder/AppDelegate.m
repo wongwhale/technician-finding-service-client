@@ -11,7 +11,6 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
-#import <React/RCTLinkingManager.h>
 #import <Firebase.h>
 
 static void InitializeFlipper(UIApplication *application) {
@@ -55,9 +54,6 @@ static void InitializeFlipper(UIApplication *application) {
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
 
-  if ([RCTLinkingManager application:app openURL:url options:options]) {
-    return YES;
-  }
 
   return NO;
 }

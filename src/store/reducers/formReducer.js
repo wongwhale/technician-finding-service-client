@@ -5,6 +5,8 @@ formType.SET_MONTH = 'SET_MONTH'
 formType.SET_YEAR = 'SET_YEAR'
 formType.SET_URI = 'SET_URI'
 formType.SET_FILE = 'SET_FILE'
+formType.SET_TYPE = 'SET_TYPE'
+formType.SET_DETAIL = 'SET_DETAIL'
 
 const initialState = {
     date_count : 30,
@@ -14,7 +16,9 @@ const initialState = {
     hour : 0,
     minute : 0,
     uri : '',
+    type : '',
     file : [] ,
+    detail : ''
 }
 
 export default function formReducer(state = initialState , action){
@@ -39,6 +43,11 @@ export default function formReducer(state = initialState , action){
                 ...state,
                 year : action.payload.year
             }
+        case formType.SET_TYPE:
+            return{
+                ...state,
+                type : action.payload.type
+            }
         case formType.SET_URI :
             return{
                 ...state,
@@ -49,7 +58,11 @@ export default function formReducer(state = initialState , action){
                 ...state,
                 file : action.payload.file
             }
-    
+        case formType.SET_DETAIL:
+            return{
+                ...state,
+                detail : action.payload.detail
+            }
         default:
             return state
     }

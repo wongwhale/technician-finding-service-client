@@ -2,15 +2,27 @@ import React, { useEffect } from 'react'
 
 import ChatBubble from '../Chat/ChatBubble'
 import { connect } from 'react-redux'
+import { ENTER_PRIVATE_CHAT , LEAVE_PRIVATE_CHAT } from '../../store/actions/chatAction'
 
 const mapStateToProps = (state) => ({
     uid: state.auth.userInfo.uid,
+    tid: state.chat.interlocutor.id,
     messages: state.chat.messages
 })
 
-const connector = connect(mapStateToProps, {})
+const connector = connect(mapStateToProps, {ENTER_PRIVATE_CHAT , LEAVE_PRIVATE_CHAT} )
 
 const ChatBox = (props) => {
+
+    useEffect( () => {
+        props.ENTER_PRIVATE_CHAT(props.uid , props.tid)
+        .then( () => {
+
+        })
+        return () => {
+            props.LEAVE_PRIVATE_CHAT()
+        }
+    },[])
 
     return (
         <>
@@ -76,6 +88,7 @@ const ChatBox = (props) => {
                                     isFirst={isFirst}
                                     isLast={isLast}
                                     isNewDate={isNewDate}
+                                    type={item.msgType}
                                 />
                             })
                         }

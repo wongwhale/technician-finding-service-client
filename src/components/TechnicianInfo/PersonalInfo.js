@@ -1,54 +1,54 @@
 import React, { } from 'react'
 
-import { View , Text ,Image , TouchableOpacity , ScrollView } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 
 import { technician } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
-const PersonalInfo = ({navigation}) => {
+const PersonalInfo = (props) => {
     return (
         <>
             <View style={technician.infoContainer}>
                 <View style={technician.imageContainer}>
                     <Image
                         style={technician.image}
-                        source={require('../UserNotification/test.jpg')} />
-                    <TouchableOpacity style={technician.chatBtn} onPress={ () => navigation.navigate('chat')}>
+                        source={{ uri: props.info.avatar }} />
+                    <TouchableOpacity
+                        style={technician.chatBtn}
+                        onPress={() => props.navigation.navigate('chat')}>
                         <Text style={technician.chatText}>
                             ติดต่อสอบถาม
-                                </Text>
+                        </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={technician.textContainer}>
                     <View style={technician.lineContainer}>
                         <Text style={technician.nameText}>
-                            ปริญญา สีตะวัน
-                                </Text>
+                            {`${props.info.firstname} ${props.info.lastname}`}
+                        </Text>
                     </View>
                     <View style={technician.aptitudeContainer}>
-                        <View style={technician.aptitude}>
-                            <Text style={technician.aptitudeText}>ช่างไฟ</Text>
-                        </View>
-                        <View style={technician.aptitude}>
-                            <Text style={technician.aptitudeText}>ช่างปะปา</Text>
-                        </View>
-                        <View style={technician.aptitude}>
-                            <Text style={technician.aptitudeText}>ช่างซ่อมรถ</Text>
-                        </View>
-                        <View style={technician.aptitude}>
-                            <Text style={technician.aptitudeText}>นวด</Text>
-                        </View>
+                        {
+                            props.aptitude.map((item, index) => {
+                                return (
+                                    <View key={index} style={technician.aptitude}>
+                                        <Text style={technician.aptitudeText}>{item.aptitude}</Text>
+                                    </View>
+                                )
+                            })
+                        }
                     </View>
                     <View style={technician.lineContainer}>
-                        <View style={technician.onsiteContainer}>
-                            <Text style={technician.onsiteText}>บริการนอกสถานที่</Text>
-                        </View>
+                        {
+                            props.info.onSite ? (
+                                <View style={technician.onsiteContainer}>
+                                    <Text style={technician.onsiteText}>บริการนอกสถานที่</Text>
+                                </View>
+                            ) : null
+                        }
                     </View>
                     <View style={[technician.lineContainer]}>
-                        <Text style={technician.telText}>
-                            เบอร์โทร
-                                </Text>
                         <TouchableOpacity style={technician.telBtn}>
                             <Feather name="phone" style={technician.telNum} />
                             <Text style={technician.telNum}>
