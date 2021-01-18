@@ -12,11 +12,11 @@ socket.on('join', (id) => {
     console.log('join', id);
 })
 
-socket.on('send_post_req', ( order ) => {
+socket.on('send_post_req', (order) => {
     console.log(order);
     store.dispatch({
-        type : notiType.ADD_TECH_ORDER,
-        payload : order
+        type: notiType.ADD_TECH_ORDER,
+        payload: order
     })
 })
 
@@ -47,26 +47,31 @@ export const disconnect = (uid) => dispatch => {
     })
 }
 
-export const sendPostReq = ({ name , uid, date, type, file, detail, location }) => dispatch => {
+export const sendPostReq = ({ name, uid, date, type, file, detail, location }) => dispatch => {
     // console.log('file' , file);
     var image = []
-    Promise.all(file.map(async (item) => {
-        const reference = firebase().ref('post').child(`${item.creationDate}-${item.filename}`)
-        await reference.putFile(item.path)
-        await reference.getDownloadURL().then(url => {
-            image.push(url)
-        })
-    })).then( () => {
-        socket.emit('send_post_req', {
-            senderName : name,
-            senderID : uid,
-            date: date,
-            techType: type,
-            image: image,
-            detail: detail,
-            location: location
+    return new Promise((resovle, reject) => {
+        Promise.all(file.map(async (item) => {
+            const reference = firebase().ref('post').child(`${item.creationDate}-${item.filename}`)
+            await reference.putFile(item.path)
+            await reference.getDownloadURL().then(url => {
+                image.push(url)
+            })
+        })).then(() => {
+            socket.emit('send_post_req', {
+                senderName: name,
+                senderID: uid,
+                date: date,
+                techType: type,
+                image: image,
+                detail: detail,
+                location: location
+            })
+            resovle()
+        }).catch( () => {
+            reject()
         })
     })
     // console.log(date , type , detail , location);
-    
+
 }

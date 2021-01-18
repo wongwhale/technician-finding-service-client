@@ -25,6 +25,7 @@ import { SET_FILE } from '../store/actions/formAction'
 import { CLOSE_IMAGE_PICKER_MODAL } from '../store/actions/modalAction'
 
 import { connect } from 'react-redux'
+import { content } from '../stylesheet'
 
 const mapStateToProps = (state) => ({
     firstname : state.auth.userInfo.firstname,
@@ -49,7 +50,7 @@ const PostScreen = (props) => {
         <>
             <SafeAreaView style={{ flex: 1, }}>
                 <Header page='บอกอาการ' back={true} navigation={props.navigation} chat={false} />
-                <ScrollView style={{ paddingHorizontal: '8%' }}>
+                <ScrollView style={content.container}>
                     <Line text='ระบุเวลา' mt />
                     <DateTimePicker />
                     <Line text='ระบุรายละเอียด' mt />
@@ -74,6 +75,8 @@ const PostScreen = (props) => {
                                     lat: props.lat,
                                     lon: props.lng
                                 }
+                            }).then( res => {
+                                props.navigation.navigate('notification')
                             })
                         }}
                     />
