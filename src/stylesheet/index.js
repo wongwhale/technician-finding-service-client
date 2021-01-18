@@ -377,6 +377,97 @@ export const userNotification = StyleSheet.create({
     }
 })
 
+export const techNotification = StyleSheet.create({
+    container: {
+        paddingHorizontal: 15,
+        paddingVertical: 5,
+        borderRadius: 10,
+        backgroundColor:color.BLUE_2
+    },
+    headerContainer: {
+        borderBottomColor: color.BLUE_5,
+        borderBottomWidth: 0.3,
+        paddingHorizontal: 5,
+        paddingVertical: 10
+    },
+    headerText: {
+        fontSize: 20,
+        color: color.WHITE
+    },
+    headerID: {
+        fontSize: 14,
+        color: color.BLUE_5
+    },
+    content: {
+        // borderBottomWidth: 0.6,
+        // borderBottomColor: color.BLUE_5 ,
+        padding: 5,
+    },
+    abstractContainer: {
+        flexDirection: 'row',
+        paddingVertical: 5
+    },
+    abstractBottomBorder: {
+        borderBottomWidth: 0.5,
+        borderColor: color.BLUE_5
+    },
+    imageContainer: {
+        width: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    image: {
+        width: 50,
+        aspectRatio: 1,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: color.BLUE_5,
+    },
+    detailContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        paddingLeft: 10,
+    },
+    buttonContainer: {
+        // backgroundColor:'grey',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    button: {
+        padding: 5,
+        width: 75,
+        height: 30,
+        alignItems: 'center',
+        justifyContent:'center',
+        borderRadius: 25,
+        marginVertical:2
+    },
+    contactButton: {
+        backgroundColor: color.YELLOW_1,
+    },
+    acceptButton: {
+        backgroundColor: color.GREEN_2,
+    },
+    buttonText: {
+        fontSize:12,
+        color: color.WHITE
+    },
+    star: {
+        // backgroundColor:color.YELLOW
+        fontSize: 14,
+        color: color.YELLOW
+    },
+    text: {
+        color: color.WHITE
+    },
+    nameText:{
+        fontSize:14
+    },
+    detailText:{
+        fontSize:12
+    }
+})
+
 export const posting = StyleSheet.create({
     halfContainer: {
         flexDirection: 'row',

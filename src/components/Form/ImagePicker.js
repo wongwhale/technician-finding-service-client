@@ -65,6 +65,7 @@ const ImagePickerComponent = (props) => {
                                                         })
                                                     }
                                                     <View 
+                                                        key={`add_new_image`}
                                                         style={{
                                                         width: 100,
                                                         height: 100,

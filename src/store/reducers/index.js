@@ -8,6 +8,7 @@ import modalReducer from './modalReducer'
 import chatReducer from './chatReducer'
 import formReducer from './formReducer'
 import technicianReducer from './technicianReducer'
+import notificationReducer from './notificationReducer'
 
 export default combineReducers({
     counter : counterReducer,
@@ -17,5 +18,6 @@ export default combineReducers({
     modal : modalReducer,
     chat : chatReducer,
     form : formReducer,
-    tech : technicianReducer
+    tech : technicianReducer,
+    noti : notificationReducer,
 })

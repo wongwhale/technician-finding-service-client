@@ -59,3 +59,15 @@ export const CLOSE_IMAGE_PICKER_MODAL = () => dispatch => {
         type : modalType.CLOSE_IMAGE_PICKER_MODAL
     })
 }
+
+export const OPEN_LOCATION_PICKER_MODAL = () => dispatch => {
+    dispatch({
+        type : modalType.OPEN_LOCATION_PICKER_MODAL
+    })
+}
+
+export const CLOSE_LOCATION_PICKER_MODAL = () => dispatch => {
+    dispatch({
+        type : modalType.CLOSE_LOCATION_PICKER_MODAL
+    })
+}

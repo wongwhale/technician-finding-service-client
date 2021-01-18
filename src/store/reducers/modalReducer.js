@@ -9,6 +9,8 @@ modalType.OPEN_SELECT_TYPE_MODAL = 'OPEN_SELECT_TYPE_MODAL'
 modalType.CLOSE_SELECT_TYPE_MODAL = 'CLOSE_SELECT_TYPE_MODAL'
 modalType.OPEN_IMAGE_PICKER_MODAL = 'OPEN_IMAGE_PICKER_MODAL'
 modalType.CLOSE_IMAGE_PICKER_MODAL = 'CLOSE_IMAGE_PICKER_MODAL'
+modalType.OPEN_LOCATION_PICKER_MODAL = 'OPEN_LOCATION_PICKER_MODAL'
+modalType.CLOSE_LOCATION_PICKER_MODAL = 'CLOSE_LOCATION_PICKER_MODAL'
 
 const initialState = {
     post_modal: false,
@@ -17,6 +19,7 @@ const initialState = {
     select_type_modal: false,
     date_picker_modal : false,
     image_picker_modal : false,
+    location_picker_modal : false
 }
 
 export default function (state = initialState, action) {
@@ -70,6 +73,16 @@ export default function (state = initialState, action) {
             return{
                 ...state,
                 image_picker_modal : false
+            }
+        case modalType.OPEN_LOCATION_PICKER_MODAL:
+            return{
+                ...state,
+                location_picker_modal : true
+            }
+        case modalType.CLOSE_LOCATION_PICKER_MODAL:
+            return{
+                ...state,
+                location_picker_modal: false
             }
         default:
             return state

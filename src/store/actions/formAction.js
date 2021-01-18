@@ -45,7 +45,7 @@ export const SET_MONTH = (month) => dispatch => {
             })
         }
     }
-    else if(month === 0 || month === 2 || month === 4 || month === 7 || month === 9 || month === 11){
+    else if (month === 0 || month === 2 || month === 4 || month === 7 || month === 9 || month === 11) {
         if (form.date > 31) {
             dispatch({
                 type: formType.SET_DATE,
@@ -60,7 +60,7 @@ export const SET_MONTH = (month) => dispatch => {
                 date_count: 31
             }
         })
-    }else{
+    } else {
         if (form.date > 30) {
             dispatch({
                 type: formType.SET_DATE,
@@ -106,7 +106,7 @@ export const SET_YEAR = (year) => dispatch => {
         }
     } else {
         if (form.month === 1) {
-            if(form.date > 28){
+            if (form.date > 28) {
                 dispatch({
                     type: formType.SET_DATE,
                     payload: {
@@ -132,9 +132,9 @@ export const SET_YEAR = (year) => dispatch => {
 
 export const SET_URI = (uri) => dispatch => {
     dispatch({
-        type : formType.SET_URI,
-        payload : {
-            uri : uri
+        type: formType.SET_URI,
+        payload: {
+            uri: uri
         }
     })
 }
@@ -142,26 +142,56 @@ export const SET_URI = (uri) => dispatch => {
 export const SET_FILE = (file) => dispatch => {
     dispatch({
         type: formType.SET_FILE,
-        payload:{
-            file : file
+        payload: {
+            file: file
         }
     })
 }
 
 export const SET_DETAIL = (detail) => dispatch => {
     dispatch({
-        type : formType.SET_DETAIL,
+        type: formType.SET_DETAIL,
         payload: {
-            detail : detail
+            detail: detail
         }
     })
-} 
+}
 
 export const SET_TYPE = (type) => dispatch => {
     dispatch({
-        type : formType.SET_TYPE,
-        payload:{
-            type : type
+        type: formType.SET_TYPE,
+        payload: {
+            type: type
+        }
+    })
+}
+
+export const SET_LOCATION = (lat, lng) => dispatch => {
+    dispatch({
+        type: formType.SET_LOCATION,
+        payload: {
+            location: {
+                latitude: lat,
+                longitude: lng,
+            }
+        }
+    })
+}
+
+export const SET_HOUR = (hour) => dispatch => {
+    dispatch({
+        type: formType.SET_HOUR,
+        payload: {
+            hour: hour
+        }
+    })
+}
+
+export const SET_MINUTE = (minute) => dispatch => {
+    dispatch({
+        type: formType.SET_MINUTE,
+        payload: {
+            minute: minute
         }
     })
 }

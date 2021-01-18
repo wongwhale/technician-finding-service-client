@@ -8,23 +8,24 @@ import { posting, datePicker } from '../../stylesheet'
 import { modalStyle } from './PostModal'
 import Feather from 'react-native-vector-icons/Feather'
 import { CLOSE_TIME_PICKER_MODAL } from '../../store/actions/modalAction'
+import { SET_MINUTE , SET_HOUR } from '../../store/actions/formAction'
 
 const mapStateToProps = (state) => ({
-    time_picker : state.modal.time_picker
+    time_picker : state.modal.time_picker,
+    hour : state.form.hour,
+    minute : state.form.minute
 })
 
-const connector = connect(mapStateToProps, { CLOSE_TIME_PICKER_MODAL })
+const connector = connect(mapStateToProps, { CLOSE_TIME_PICKER_MODAL , SET_MINUTE , SET_HOUR })
 
 const TimePickerModal = (props) => {
-
-    const [hour, setHour] = useState('')
-    const [minute, setMinute] = useState('')
 
     const date_ = new Date
 
     useEffect(() => {
-        setHour(date_.toTimeString().slice(0, 2))
-        setMinute(date_.toTimeString().slice(3, 5))
+        console.log(date_.toISOString());
+        props.SET_HOUR(date_.toTimeString().slice(0, 2))
+        props.SET_MINUTE(date_.toTimeString().slice(3, 5))
     }, [])
 
     return (
@@ -43,10 +44,10 @@ const TimePickerModal = (props) => {
                     <View style={datePicker.pickerContainer}>
                         <View style={datePicker.dayContainer}>
                             <Picker
-                                selectedValue={`${hour}`}
+                                selectedValue={`${props.hour}`}
                                 itemStyle={{height:150}}
                                 onValueChange={(val) => {
-                                    setHour(val)
+                                    props.SET_HOUR(val)
                                 }}
                             >
                                 {
@@ -56,9 +57,9 @@ const TimePickerModal = (props) => {
                         </View>
                         <View style={datePicker.dayContainer}>
                             <Picker
-                                selectedValue={`${minute}`}
+                                selectedValue={`${props.minute}`}
                                 itemStyle={{height:150}}
-                                onValueChange={(val) => setMinute(val)}
+                                onValueChange={(val) => props.SET_MINUTE(val)}
                             >
                                 {
                                     [...Array(60)].map((item, index) => <Picker.Item key={index} label={`${index}`} value={`${index}`} />)
