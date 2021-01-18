@@ -1,18 +1,21 @@
-import { StyleSheet , Dimensions , PixelRatio } from 'react-native'
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native'
 
 export const widthToDp = percent => {
     const swidth = Dimensions.get('window').width
     const elemWidth = parseFloat(percent)
 
-    return PixelRatio.roundToNearestPixel( swidth * elemWidth / 100)
+    return PixelRatio.roundToNearestPixel(swidth * elemWidth / 100)
 }
 
 export const heightToDp = percent => {
     const sheight = Dimensions.get('window').height
     const elemHeight = parseFloat(percent)
 
-    return PixelRatio.roundToNearestPixel( sheight * elemHeight / 100)
+    return PixelRatio.roundToNearestPixel(sheight * elemHeight / 100)
 }
+
+export const buttonRadiusDp = widthToDp('2')
+export const modalRadiusDp = widthToDp('3')
 
 export const color = {}
 // color.BLUE_0 = '#325288'
@@ -87,7 +90,7 @@ export const mainScreen = StyleSheet.create({
     },
     fullBox: {
         backgroundColor: color.BLUE_1,
-        width:'100%',
+        width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
@@ -124,33 +127,33 @@ export const global = StyleSheet.create({
         right: widthToDp('8'),
     },
     chatIcon: {
-        fontSize: 30,
+        fontSize: heightToDp('3'),
         color: color.BLUE_2,
     },
     badges: {
         aspectRatio: 1,
-        width: 20,
+        width: heightToDp('2'),
         backgroundColor: color.YELLOW,
-        borderRadius: 10,
+        borderRadius: heightToDp('1'),
         position: 'absolute',
-        right: -5,
-        top: -5,
+        right: -(widthToDp('1')),
+        top: -(heightToDp(0.5)),
         justifyContent: 'center',
         alignItems: 'center'
     },
     badgesText: {
         color: color.BLUE_2,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: heightToDp('1.5')
     },
     backIconContainer: {
         position: 'absolute',
-        left: 10,
+        left: widthToDp('5'),
         flexDirection: 'row',
-        paddingHorizontal: 10,
         zIndex: 2
     },
     backIcon: {
-        fontSize: 30,
+        fontSize: heightToDp('3'),
         color: color.BLUE_2,
     },
     backTextContainer: {
@@ -165,20 +168,20 @@ export const global = StyleSheet.create({
         fontWeight: 'bold'
     },
     interlocutorImage: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        marginVertical: 5,
+        height: heightToDp('5'),
+        aspectRatio: 1,
+        borderRadius: heightToDp('2.5'),
+        marginVertical: heightToDp('1'),
         backgroundColor: color.GREEN_4
     },
     interlocutorName: {
-        fontSize: 14,
+        fontSize: heightToDp('1.5'),
         color: '#444'
     },
     bbt: {
         borderBottomWidth: 0.3,
         borderBottomColor: color.BLUE_5,
-        paddingBottom: 15,
+        paddingBottom: heightToDp('1'),
     },
     nameContainer: {
         flexDirection: 'row',
@@ -186,7 +189,7 @@ export const global = StyleSheet.create({
         alignItems: 'flex-end'
     },
     rightIcon: {
-        fontSize: 14,
+        fontSize: heightToDp('1.5'),
         color: '#444',
         marginLeft: 5,
     }
@@ -196,65 +199,69 @@ export const global = StyleSheet.create({
 export const userInfo = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        marginVertical: 10,
-        paddingHorizontal: 25
+        marginVertical: heightToDp('2'),
+        paddingHorizontal: widthToDp('8'),
     },
     subContainer: {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        paddingLeft: 10,
+        paddingLeft: widthToDp('3'),
     },
     name: {
         color: color.BLUE_2,
-        fontSize: 16,
-        fontWeight: '600'
+        fontSize: heightToDp('2'),
+        fontWeight: '500'
     },
     type: {
         color: color.BLUE_4,
-        fontSize: 14,
+        fontSize: heightToDp('1.6'),
         fontWeight: 'normal'
     },
     userImage: {
         aspectRatio: 1,
-        width: 50,
+        height: heightToDp('6'),
+        borderRadius: heightToDp('3'),
+        marginLeft: heightToDp('1'),
         backgroundColor: color.BLUE_5,
-        borderRadius: 25,
-        marginLeft: 10
     },
 })
 
 export const searchScreen = StyleSheet.create({
     textInputContainer: {
-        borderRadius: 10,
-        padding: 10,
-        paddingLeft: 20,
-        marginHorizontal: 25,
+        borderRadius: widthToDp('2'),
+        padding: widthToDp('2'),
+        // height : heightToDp('5') ,
         flexDirection: 'row-reverse',
         backgroundColor: color.BLUE_5,
         justifyContent: 'space-between'
     },
     textInput: {
         flex: 1,
-        fontSize: 18,
+        fontSize: heightToDp('2'),
         color: color.BLUE_1,
     },
     searchIconContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: 50,
+        width: widthToDp('10'),
     },
     searchIcon: {
-        fontSize: 25,
+        fontSize: widthToDp('5'),
         color: color.BLUE_1,
+    },
+    xIcon: {
+        color: color.BLUE_2,
+        fontSize: widthToDp('4')
     },
     listContainer: {
         alignItems: 'flex-start',
         flexDirection: 'row',
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        borderBottomWidth: 0.3,
+        justifyContent:'space-between',
+        paddingVertical: heightToDp('1.5'),
+        borderBottomWidth: heightToDp('0.1'),
         borderBottomColor: color.BLUE_5,
+        paddingLeft:widthToDp('3')
     },
     listRowContainer: {
         alignItems: 'flex-start',
@@ -262,30 +269,31 @@ export const searchScreen = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end',
-
+        
     },
     distanceText: {
         color: color.BLUE_2,
-        fontSize: 14
+        fontSize: widthToDp('3')
     },
     nameText: {
         color: color.BLUE_1,
-        fontSize: 16
+        fontSize: widthToDp('4')
     },
     infoContainer: {
-        justifyContent: 'space-between',
-        height: 50,
-        paddingLeft: 25,
-        flex: 1,
+        justifyContent: 'space-evenly',
+        height: heightToDp('6'),
+        flex:1,
+        paddingLeft:widthToDp('3'),
     },
     imageContainer: {
         justifyContent: 'center',
         alignItems: 'center',
+        height: heightToDp('6'),
     },
     techImage: {
-        width: 50,
-        height: 50,
-        borderRadius: 30,
+        height: heightToDp('6'),
+        aspectRatio : 1,
+        borderRadius: heightToDp('3'),
         backgroundColor: color.GREEN_4
     },
     detailbtnContainer: {
@@ -295,60 +303,57 @@ export const searchScreen = StyleSheet.create({
     },
     detailbtnText: {
         color: color.BLUE_3,
-        fontSize: 12
-    }
+        fontSize: widthToDp('2.5')
+    },
 })
 
 export const userNotification = StyleSheet.create({
     container: {
-        paddingHorizontal: 15,
-        paddingVertical: 5,
-        borderRadius: 10,
+        paddingHorizontal: widthToDp('2'),
+        paddingVertical: heightToDp('1'),
+        borderRadius: heightToDp('1.5'),
         backgroundColor: color.BLUE_5
     },
     headerContainer: {
         borderBottomColor: color.BLUE_4,
-        borderBottomWidth: 0.3,
-        paddingHorizontal: 5,
-        paddingVertical: 10
+        borderBottomWidth: heightToDp('0.05'),
+        paddingHorizontal: widthToDp('2'),
+        paddingVertical: heightToDp('1')
     },
     headerText: {
-        fontSize: 20,
+        fontSize: widthToDp('4'),
         color: color.BLUE_2
     },
     headerID: {
-        fontSize: 14,
+        fontSize: widthToDp('3'),
         color: color.BLUE_4
     },
     content: {
-        // borderBottomWidth: 0.6,
-        // borderBottomColor: color.BLUE_5 ,
-        padding: 5,
+        padding: widthToDp('1'),
     },
     abstractContainer: {
         flexDirection: 'row',
-        paddingVertical: 5
+        paddingVertical: heightToDp('0.7')
     },
     abstractBottomBorder: {
-        borderBottomWidth: 0.5,
+        borderBottomWidth: heightToDp('0.05'),
         borderColor: color.BLUE_4
     },
     imageContainer: {
-        width: 75,
+        width: widthToDp('12'),
         justifyContent: 'center',
         alignItems: 'flex-start',
     },
     image: {
-        width: 60,
-        aspectRatio: 1,
-        height: 60,
-        borderRadius: 30,
+        width: widthToDp('12'),
+        height: widthToDp('12'),
+        borderRadius: widthToDp('6'),
         backgroundColor: color.YELLOW_4,
     },
     detailContainer: {
         flex: 1,
         justifyContent: 'center',
-        paddingLeft: 10,
+        paddingLeft: widthToDp('3'),
     },
     buttonContainer: {
         // backgroundColor:'grey',
@@ -357,12 +362,12 @@ export const userNotification = StyleSheet.create({
     },
     button: {
         padding: 5,
-        width: 75,
-        height: 30,
+        width: widthToDp('15'),
+        height: widthToDp('6'),
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 25,
-        marginVertical: 2
+        borderRadius: widthToDp('3'),
+        marginVertical: widthToDp('0.2')
     },
     contactButton: {
         backgroundColor: color.BLUE_3,
@@ -371,75 +376,73 @@ export const userNotification = StyleSheet.create({
         backgroundColor: color.GREEN_2,
     },
     buttonText: {
-        fontSize: 12,
+        fontSize: widthToDp('2.6'),
         color: color.WHITE
     },
     star: {
         // backgroundColor:color.YELLOW
-        fontSize: 14,
+        fontSize: widthToDp('2'),
         color: color.YELLOW
     },
     text: {
         color: color.BLUE_2
     },
     nameText: {
-        fontSize: 16
+        fontSize: widthToDp('4'),
+        fontWeight:'bold'
     },
     detailText: {
-        fontSize: 12
-    }
+        fontSize: widthToDp('3')
+    },
 })
 
 export const techNotification = StyleSheet.create({
     container: {
-        paddingHorizontal: 15,
-        paddingVertical: 5,
-        borderRadius: 10,
+        paddingHorizontal: widthToDp('2'),
+        paddingVertical: heightToDp('1'),
+        borderRadius: heightToDp('1.5'),
         backgroundColor: color.BLUE_2
     },
     headerContainer: {
         borderBottomColor: color.BLUE_5,
-        borderBottomWidth: 0.3,
-        paddingHorizontal: 5,
-        paddingVertical: 10
+        borderBottomWidth: heightToDp('0.05'),
+        paddingHorizontal: widthToDp('2'),
+        paddingVertical: heightToDp('1')
     },
     headerText: {
-        fontSize: 20,
+        fontSize: widthToDp('4'),
         color: color.WHITE
     },
     headerID: {
-        fontSize: 14,
+        fontSize: widthToDp('3'),
         color: color.BLUE_5
     },
     content: {
-        // borderBottomWidth: 0.6,
-        // borderBottomColor: color.BLUE_5 ,
-        padding: 5,
+        padding: widthToDp('1'),
     },
     abstractContainer: {
         flexDirection: 'row',
-        paddingVertical: 5
+        paddingVertical: heightToDp('0.7')
     },
     abstractBottomBorder: {
-        borderBottomWidth: 0.5,
+        borderBottomWidth: heightToDp('0.1'),
         borderColor: color.BLUE_5
     },
     imageContainer: {
-        width: 75,
+        width: widthToDp('12'),
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-start',
     },
     image: {
-        width: 60,
-        aspectRatio: 1,
-        height: 60,
-        borderRadius: 30,
-        backgroundColor: color.BLUE_5,
+        width: widthToDp('12'),
+        height: widthToDp('12'),
+        borderRadius: widthToDp('6'),
+        backgroundColor: color.YELLOW_4,
     },
     detailContainer: {
         flex: 1,
         justifyContent: 'center',
-        paddingLeft: 10,
+        paddingLeft: widthToDp('3'),
     },
     buttonContainer: {
         // backgroundColor:'grey',
@@ -448,37 +451,38 @@ export const techNotification = StyleSheet.create({
     },
     button: {
         padding: 5,
-        width: 75,
-        height: 30,
+        width: widthToDp('15'),
+        height: widthToDp('6'),
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 25,
-        marginVertical: 2
+        borderRadius: widthToDp('3'),
+        marginVertical: widthToDp('0.2')
     },
     contactButton: {
-        backgroundColor: color.YELLOW_1,
+        backgroundColor: color.BLUE_3,
     },
     acceptButton: {
         backgroundColor: color.GREEN_2,
     },
     buttonText: {
-        fontSize: 12,
+        fontSize: widthToDp('2.6'),
         color: color.WHITE
     },
     star: {
         // backgroundColor:color.YELLOW
-        fontSize: 14,
+        fontSize: widthToDp('2'),
         color: color.YELLOW
     },
     text: {
         color: color.WHITE
     },
     nameText: {
-        fontSize: 16
+        fontSize: widthToDp('4'),
+        fontWeight:'bold'
     },
     detailText: {
-        fontSize: 12
-    }
+        fontSize: widthToDp('3')
+    },
 })
 
 export const posting = StyleSheet.create({
@@ -486,24 +490,24 @@ export const posting = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        marginBottom: 10
+        marginBottom: heightToDp('1')
     },
     halfHeader: {
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: widthToDp('4'),
         color: color.BLUE_3
     },
     halfInput: {
         alignItems: 'center',
         justifyContent: 'space-around',
-        marginTop: 5,
-        borderRadius: 10,
+        marginTop: heightToDp('0.5'),
+        borderRadius: widthToDp('2'),
         backgroundColor: color.BLUE_5,
-        height: 35,
+        height: heightToDp('4.5'),
         flexDirection: 'row',
     },
     fullContainer: {
-        paddingBottom: 5,
+        marginBottom: heightToDp('1'),
         paddingTop: 0
     },
     fullHeader: {
@@ -512,53 +516,53 @@ export const posting = StyleSheet.create({
         color: color.BLUE_0
     },
     fullSelector: {
-        marginTop: 5,
-        padding: 5,
+        marginTop: heightToDp('0.5'),
         paddingHorizontal: 15,
-        borderRadius: 10,
+        borderRadius: widthToDp('2'),
         justifyContent: 'center',
         backgroundColor: color.BLUE_5,
-        height: 35,
+        height: heightToDp('4.5'),
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        alignItems:'center'
     },
     inputText: {
         color: color.BLUE_1,
-        fontSize: 16
+        fontSize: widthToDp('3.5')
     },
     detailInput: {
-        height: 100,
-        marginTop: 5,
-        padding: 15,
-        borderRadius: 10,
-        borderWidth: 0.5,
-        fontSize: 16,
+        height: heightToDp('15'),
+        marginTop: heightToDp('0.5'),
+        padding: widthToDp('3'),
+        borderRadius: widthToDp('2'),
+        borderWidth: widthToDp('0.1'),
+        fontSize: widthToDp('3.5'),
         borderColor: color.BLUE_4,
         color: color.BLUE_2,
-        lineHeight: 20,
+        lineHeight: widthToDp('4'),
     },
     detailLength: {
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-        paddingRight: 5,
+        paddingRight: widthToDp('1'),
         marginBottom: 5,
     },
     chevronDown: {
+        fontSize : widthToDp('5'),
         color: color.BLUE_0,
-        width: 20,
-        height: 20,
     },
     mapContainer: {
-        aspectRatio: 1,
+        height : heightToDp('30'),
         width: '100%',
         backgroundColor: color.BLUE_5,
         marginTop: 5,
-        borderRadius: 10
+        borderRadius: widthToDp('2'),
     },
     descLine: {
         height: 1,
-        borderBottomColor: color.BLUE_3,
-        borderBottomWidth: 1,
+        // borderBottomColor: color.BLUE_3,
+        // borderBottomWidth: 1,
+        backgroundColor: color.BLUE_3,
         flex: 1,
     },
     descContainer: {
@@ -568,10 +572,11 @@ export const posting = StyleSheet.create({
     },
     descText: {
         marginHorizontal: 10,
-        color: color.BLUE_3
+        color: color.BLUE_2,
+        fontSize: widthToDp('3.5')
     },
     mt: {
-        marginTop: 15
+        marginTop: heightToDp('2')
     }
 })
 
@@ -587,8 +592,8 @@ export const datePicker = StyleSheet.create({
         bottom: 0
     },
     contentContainer: {
-        paddingHorizontal: 20,
-        borderRadius: 20,
+        paddingHorizontal: widthToDp('4'),
+        borderRadius: modalRadiusDp,
         backgroundColor: color.WHITE,
         shadowColor: color.GREEN_5,
         shadowRadius: 7,
@@ -603,10 +608,10 @@ export const datePicker = StyleSheet.create({
     headerContainer: {
         justifyContent: 'center',
         alignContent: 'center',
-        height: 50
+        height: heightToDp('5'),
     },
     headerText: {
-        fontSize: 16,
+        fontSize: widthToDp('4'),
         fontWeight: 'bold',
         textAlign: 'center',
         color: color.BLUE_0
@@ -625,14 +630,15 @@ export const datePicker = StyleSheet.create({
         justifyContent: 'center',
     },
     closeContainer: {
-        height: 60,
-        marginVertical: 20,
-        padding: 15,
+        height: heightToDp('6'),
+        marginBottom: heightToDp('2'),
+        marginTop: heightToDp('1.5'),
+        padding: heightToDp('1'),
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        borderRadius: 20,
+        borderRadius: modalRadiusDp,
         shadowColor: color.GREEN_5,
         shadowRadius: 7,
         shadowOffset: {
@@ -642,7 +648,7 @@ export const datePicker = StyleSheet.create({
         shadowOpacity: 0.23
     },
     closeBtnText: {
-        fontSize: 16,
+        fontSize: widthToDp('4'),
         color: color.GREEN_5
     }
 })
@@ -650,25 +656,22 @@ export const datePicker = StyleSheet.create({
 export const message = StyleSheet.create({
     listContainer: {
         flexDirection: 'row',
-        marginVertical: 10,
         borderBottomColor: color.LIGHT_GREY,
         borderBottomWidth: 0.3,
         paddingHorizontal: 5,
-        paddingBottom: 15,
+        paddingVertical: heightToDp('1'),
     },
     imageContainer: {
-        aspectRatio: 1,
-        width: 50,
-        height: 50,
+        width: widthToDp('12'),
+        height: widthToDp('12'),
         backgroundColor: color.BLUE_5,
-        borderRadius: 25,
-        marginHorizontal: 15,
-
+        borderRadius: widthToDp('6'),
+        marginHorizontal: widthToDp('2')
     },
     image: {
-        height: 50,
-        width: 50,
-        borderRadius: 25
+        height: widthToDp('12'),
+        width: widthToDp('12'),
+        borderRadius: widthToDp('6')
     },
     badges: {
         aspectRatio: 1,
@@ -685,11 +688,11 @@ export const message = StyleSheet.create({
     },
     listContent: {
         justifyContent: 'space-between',
-        paddingHorizontal: 10,
-        flex: 1
+        paddingHorizontal: widthToDp('3'),
+        flex: 1,
     },
     name: {
-        fontSize: 18,
+        fontSize: widthToDp('4'),
         color: color.BLUE_0,
         fontWeight: 'normal'
     },
@@ -697,7 +700,7 @@ export const message = StyleSheet.create({
         fontWeight: 'bold',
     },
     text: {
-        fontSize: 14,
+        fontSize: widthToDp('3'),
         color: color.BLUE_3,
         fontWeight: 'normal',
         flexShrink: 1,
@@ -706,22 +709,22 @@ export const message = StyleSheet.create({
         fontWeight: 'bold'
     },
     bubbleContainer: {
-        paddingVertical: 2,
-        paddingHorizontal: 20,
+        paddingVertical: heightToDp('0.2'),
+        paddingHorizontal: widthToDp('5'),
         justifyContent: 'center',
     },
     rightContainer: {
         alignItems: 'flex-end'
     },
     bubble: {
-        paddingVertical: 7,
-        paddingHorizontal: 15,
-        borderRadius: 25,
+        paddingVertical: heightToDp('0.7'),
+        paddingHorizontal: widthToDp('3'),
+        borderRadius: heightToDp('2'),
         maxWidth: '75%'
     },
     rightBubble: {
-        // borderBottomRightRadius: 0,
-        backgroundColor: color.BLUE_3
+        backgroundColor: color.BLUE_3,
+
     },
     rightText: {
         color: color.WHITE
@@ -738,27 +741,27 @@ export const message = StyleSheet.create({
     },
     chatInputContainer: {
         flexDirection: 'row',
-        marginBottom: 5,
+        marginBottom: heightToDp('1'),
     },
     textInput: {
-        backgroundColor: color.BLUE_5,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        marginHorizontal: 10,
         flex: 1,
-        borderRadius: 10,
+        backgroundColor: color.BLUE_5,
+        paddingHorizontal: widthToDp('3'),
+        marginHorizontal: widthToDp('2'),
+        paddingVertical: widthToDp('1'),
+        lineHeight:widthToDp('5'),
+        borderRadius: buttonRadiusDp,
         height: 'auto',
-        textAlignVertical: 'center',
-        fontSize: 16
+        fontSize: widthToDp('4'),
     },
     sendButton: {
-        marginRight: 10,
+        marginRight: widthToDp('3'),
         justifyContent: 'center',
         alignItems: 'center'
     },
     nameContainer: {
         marginTop: 10,
-        marginBottom: 3
+        marginBottom: 3,
     },
     rightNameContainer: {
         marginRight: 15
@@ -779,34 +782,34 @@ export const message = StyleSheet.create({
 
     },
     dateTimeText: {
-        color: '#666',
-        fontSize: 12
+        color: color.BLUE_0,
+        fontSize: widthToDp('2.7')
     },
     newDateContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20
+        marginTop: heightToDp('1')
     },
     newDateText: {
-        color: '#666',
+        color: color.BLUE_0,
         fontSize: 12
     },
     bubleImage: {
-        width: '75%',
-        minHeight: 200,
-        maxHeight: 500
+        width: widthToDp('60'),
+        minHeight: widthToDp('30'),
+        maxHeight: widthToDp('50'),
     },
     rightImageBubble: {
-        borderTopLeftRadius: 25,
-        borderBottomLeftRadius: 25,
-        borderTopRightRadius: 10,
-        borderBottomRightRadius: 10
+        borderTopLeftRadius: widthToDp('4'),
+        borderBottomLeftRadius: widthToDp('4'),
+        borderTopRightRadius: widthToDp('2'),
+        borderBottomRightRadius: widthToDp('2')
     },
     leftImageBubble: {
-        borderTopLeftRadius: 10,
-        borderBottomLeftRadius: 10,
-        borderTopRightRadius: 25,
-        borderBottomRightRadius: 25
+        borderTopLeftRadius: widthToDp('2'),
+        borderBottomLeftRadius: widthToDp('2'),
+        borderTopRightRadius: widthToDp('4'),
+        borderBottomRightRadius: widthToDp('4')
     }
 })
 

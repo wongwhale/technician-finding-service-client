@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 
 import { Rating  } from 'react-native-ratings'
 
-import { searchScreen } from '../../stylesheet'
+import { searchScreen , widthToDp , color } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
@@ -37,7 +37,7 @@ const ListBox = (props) => {
                             {props.name}
                         </Text>
                         <View style={[searchScreen.listRowContainer , {backgroundColor:'red'}]}>
-                            <Rating startingValue={props.star} imageSize={14}  readonly={true} />
+                            <Rating type='custom' startingValue={props.star} imageSize={widthToDp('3')} ratingBackgroundColor={color.BLUE_4} readonly={true} />
                         </View>
                     </View>
                     <View style={[searchScreen.listRowContainer, { justifyContent: 'space-between' }]}>
