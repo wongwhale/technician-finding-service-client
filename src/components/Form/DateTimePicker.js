@@ -15,31 +15,19 @@ import { OPEN_DATE_PICKER_MODAL , OPEN_TIME_PICKER_MODAL } from '../../store/act
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => ({
-
+    date : state.form.date,
+    month: state.form.month,
+    year: state.form.year,
+    hour : state.form.hour,
+    minute : state.form.minute,
 })
 
 const connector = connect(mapStateToProps , {OPEN_DATE_PICKER_MODAL , OPEN_TIME_PICKER_MODAL })
 
 const DateTimePicker = (props) => {
 
-
-    const [day, setDay] = useState('')
-    const [month, setMonth] = useState('')
-    const [year, setYear] = useState('')
-
-    const [hour, setHour] = useState('')
-    const [minute, setMinute] = useState('')
-
     const month_ = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
-    const date_ = new Date
-
-    useEffect(() => {
-        setDay(date_.getDate())
-        setMonth(month_[date_.getMonth()])
-        setYear(date_.getFullYear())
-        setHour(date_.toTimeString().slice(0, 2))
-        setMinute(date_.toTimeString().slice(3, 5))
-    }, [])
+    
 
     return (
         <>
@@ -48,9 +36,7 @@ const DateTimePicker = (props) => {
                     <Text style={posting.halfHeader}>วันที่</Text>
                     <TouchableOpacity style={posting.halfInput} onPress={() => props.OPEN_DATE_PICKER_MODAL()} >
                             <Text style={posting.inputText}>{
-                                day === '' && month === '' && year === '' 
-                                ? `เลือกวันที่`
-                                :  `${day} ${month} ${year}`
+                                `${("0" + props.date).slice(-2)} ${month_[props.month-1]} ${props.year+543}`
                             }</Text>
                         <Feather name='calendar' style={posting.inputText} />
                     </TouchableOpacity>
@@ -58,7 +44,7 @@ const DateTimePicker = (props) => {
                 <View style={{ flex: 2 , marginLeft:10 }}>
                     <Text style={posting.halfHeader}>เวลา</Text>
                     <TouchableOpacity style={posting.halfInput} onPress={() => props.OPEN_TIME_PICKER_MODAL()} >
-                        <Text style={posting.inputText}>{`${hour} : ${minute} น.`}</Text>
+                        <Text style={posting.inputText}>{`${("0" + props.hour).slice(-2)} : ${("0" + props.minute).slice(-2)} น.`}</Text>
                         <Feather name='clock' style={posting.inputText} />
                     </TouchableOpacity>
                 </View>

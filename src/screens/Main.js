@@ -19,9 +19,9 @@ import UserInfo from '../components/UserInfo'
 import Header from '../components/Header'
 import { connect } from 'react-redux';
 
-import { OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL } from '../store/actions/modalAction'
+import { OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL , OPEN_LOCATION_PICKER_MODAL } from '../store/actions/modalAction'
 import { SET_FILE } from '../store/actions/formAction'
-import ImagePicker from 'react-native-image-crop-picker'
+
 
 import storage from '@react-native-firebase/storage'
 
@@ -31,7 +31,7 @@ const mapStateToProps = (state) => ({
     file : state.form.file
 })
 
-const connector = connect(mapStateToProps, { OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL , SET_FILE })
+const connector = connect(mapStateToProps, { OPEN_LOCATION_PICKER_MODAL , OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL , SET_FILE })
 
 const Main = (props) => {
 
@@ -94,21 +94,9 @@ const Main = (props) => {
                         }}
                     /> */}
                     <Button 
-                        title='test image send'
+                        title='open location picker modal'
                         onPress={ () => {
-                            ImagePicker.openPicker({
-                                multiple:true,  
-                            })
-                            .then( res => {
-                                res.map( async (item) => {
-                                    const imageRef = storage().ref('posting').child(item.filename)
-                                    await imageRef.putFile(item.sourceURL.replace('file://',''))
-                                    await imageRef.getDownloadURL().then( url => console.log(url))
-                                    
-                                })
-                            }).catch( err => {
-                                console.log(err);
-                            })
+                            props.OPEN_LOCATION_PICKER_MODAL()
                         }}
                         // onPress={ () => {
                         //     launchImageLibrary({

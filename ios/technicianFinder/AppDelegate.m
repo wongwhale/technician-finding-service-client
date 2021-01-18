@@ -12,6 +12,7 @@
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
 #import <Firebase.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -28,6 +29,9 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
+  [GMSServices provideAPIKey:@"AIzaSyCzMTggS7pV-Gg5aTtTwqLrMKg3psZYF5U"];
+  
   if ([FIRApp defaultApp] == nil) {
         [FIRApp configure];
       }
@@ -67,16 +71,3 @@ static void InitializeFlipper(UIApplication *application) {
 }
 
 @end
-//[[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions]; return YES; }
-
-
-// Objective-C // // SceneDelegate.m #import <FBSDKCoreKit/FBSDKCoreKit.h> @import FacebookCore; @interface SceneDelegate () @end @implementation SceneDelegate - (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts { UIOpenURLContext *context = URLContexts.allObjects.firstObject; [FBSDKApplicationDelegate.sharedInstance application:UIApplication.sharedApplication openURL:context.URL sourceApplication:context.options.sourceApplication annotation:context.options.annotation]; }
-    
-
-// Swift // // SceneDelegate.swift func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) { guard let url = URLContexts.first?.url else { return } ApplicationDelegate.shared.application( UIApplication.shared, open: url, sourceApplication: nil, annotation: [UIApplication.OpenURLOptionsKey.annotation] ) }
-
-
-// Objective-C // // AppDelegate.m @implementation AppDelegate - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions { [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions]; return YES; } - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options { [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options]; return YES; }
-
-
-// Swift // // AppDelegate.swift import UIKit import FBSDKCoreKit @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate { func application( _ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? ) -> Bool { ApplicationDelegate.shared.application( application, didFinishLaunchingWithOptions: launchOptions ) return true } func application( _ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:] ) -> Bool { ApplicationDelegate.shared.application( app, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplication.OpenURLOptionsKey.annotation] ) } }

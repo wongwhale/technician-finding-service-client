@@ -1,4 +1,18 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet , Dimensions , PixelRatio } from 'react-native'
+
+export const widthToDp = percent => {
+    const swidth = Dimensions.get('window').width
+    const elemWidth = parseFloat(percent)
+
+    return PixelRatio.roundToNearestPixel( swidth * elemWidth / 100)
+}
+
+export const heightToDp = percent => {
+    const sheight = Dimensions.get('window').height
+    const elemHeight = parseFloat(percent)
+
+    return PixelRatio.roundToNearestPixel( sheight * elemHeight / 100)
+}
 
 export const color = {}
 // color.BLUE_0 = '#325288'
@@ -48,18 +62,17 @@ color.GREY = '#999999'
 export const content = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 25,
+        paddingHorizontal: widthToDp('8'),
         paddingVertical: 10,
     }
 })
 
 export const mainScreen = StyleSheet.create({
     container: {
-        height: '100%',
         flex: 1
     },
     menuLayout: {
-        paddingHorizontal: 25,
+        paddingHorizontal: widthToDp('8'),
         paddingVertical: 5,
         flexDirection: 'row'
     },
@@ -74,7 +87,7 @@ export const mainScreen = StyleSheet.create({
     },
     fullBox: {
         backgroundColor: color.BLUE_1,
-        width: '100%',
+        width:'100%',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
@@ -99,17 +112,16 @@ export const global = StyleSheet.create({
         paddingVertical: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        height: 80
+        height: heightToDp('10')
     },
     headerText: {
         color: color.BLUE_2,
-        fontSize: 30,
+        fontSize: heightToDp('3'),
         fontWeight: '600',
     },
     chatIconContainer: {
         position: 'absolute',
-        right: 30,
-        // backgroundColor:'black'
+        right: widthToDp('8'),
     },
     chatIcon: {
         fontSize: 30,
@@ -157,7 +169,7 @@ export const global = StyleSheet.create({
         height: 50,
         borderRadius: 25,
         marginVertical: 5,
-        backgroundColor:color.GREEN_4
+        backgroundColor: color.GREEN_4
     },
     interlocutorName: {
         fontSize: 14,
@@ -185,7 +197,7 @@ export const userInfo = StyleSheet.create({
     container: {
         flexDirection: 'row',
         marginVertical: 10,
-        paddingHorizontal:25
+        paddingHorizontal: 25
     },
     subContainer: {
         flexDirection: 'column',
@@ -254,15 +266,15 @@ export const searchScreen = StyleSheet.create({
     },
     distanceText: {
         color: color.BLUE_2,
-        fontSize:14
+        fontSize: 14
     },
     nameText: {
         color: color.BLUE_1,
-        fontSize:16
+        fontSize: 16
     },
     infoContainer: {
-        justifyContent:'space-between',
-        height:50,
+        justifyContent: 'space-between',
+        height: 50,
         paddingLeft: 25,
         flex: 1,
     },
@@ -292,9 +304,10 @@ export const userNotification = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 5,
         borderRadius: 10,
+        backgroundColor: color.BLUE_5
     },
     headerContainer: {
-        borderBottomColor: color.LIGHT_GREY,
+        borderBottomColor: color.BLUE_4,
         borderBottomWidth: 0.3,
         paddingHorizontal: 5,
         paddingVertical: 10
@@ -305,11 +318,102 @@ export const userNotification = StyleSheet.create({
     },
     headerID: {
         fontSize: 14,
-        color: '#666'
+        color: color.BLUE_4
     },
     content: {
-        borderBottomWidth: 0.6,
-        borderBottomColor: color.BLUE_5 ,
+        // borderBottomWidth: 0.6,
+        // borderBottomColor: color.BLUE_5 ,
+        padding: 5,
+    },
+    abstractContainer: {
+        flexDirection: 'row',
+        paddingVertical: 5
+    },
+    abstractBottomBorder: {
+        borderBottomWidth: 0.5,
+        borderColor: color.BLUE_4
+    },
+    imageContainer: {
+        width: 75,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+    },
+    image: {
+        width: 60,
+        aspectRatio: 1,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: color.YELLOW_4,
+    },
+    detailContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        paddingLeft: 10,
+    },
+    buttonContainer: {
+        // backgroundColor:'grey',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    button: {
+        padding: 5,
+        width: 75,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 25,
+        marginVertical: 2
+    },
+    contactButton: {
+        backgroundColor: color.BLUE_3,
+    },
+    acceptButton: {
+        backgroundColor: color.GREEN_2,
+    },
+    buttonText: {
+        fontSize: 12,
+        color: color.WHITE
+    },
+    star: {
+        // backgroundColor:color.YELLOW
+        fontSize: 14,
+        color: color.YELLOW
+    },
+    text: {
+        color: color.BLUE_2
+    },
+    nameText: {
+        fontSize: 16
+    },
+    detailText: {
+        fontSize: 12
+    }
+})
+
+export const techNotification = StyleSheet.create({
+    container: {
+        paddingHorizontal: 15,
+        paddingVertical: 5,
+        borderRadius: 10,
+        backgroundColor: color.BLUE_2
+    },
+    headerContainer: {
+        borderBottomColor: color.BLUE_5,
+        borderBottomWidth: 0.3,
+        paddingHorizontal: 5,
+        paddingVertical: 10
+    },
+    headerText: {
+        fontSize: 20,
+        color: color.WHITE
+    },
+    headerID: {
+        fontSize: 14,
+        color: color.BLUE_5
+    },
+    content: {
+        // borderBottomWidth: 0.6,
+        // borderBottomColor: color.BLUE_5 ,
         padding: 5,
     },
     abstractContainer: {
@@ -326,10 +430,10 @@ export const userNotification = StyleSheet.create({
         alignItems: 'center',
     },
     image: {
-        width: 50,
+        width: 60,
         aspectRatio: 1,
-        height: 50,
-        borderRadius: 25,
+        height: 60,
+        borderRadius: 30,
         backgroundColor: color.BLUE_5,
     },
     detailContainer: {
@@ -339,7 +443,7 @@ export const userNotification = StyleSheet.create({
     },
     buttonContainer: {
         // backgroundColor:'grey',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
     },
     button: {
@@ -347,18 +451,18 @@ export const userNotification = StyleSheet.create({
         width: 75,
         height: 30,
         alignItems: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
         borderRadius: 25,
-        marginVertical:2
+        marginVertical: 2
     },
     contactButton: {
-        backgroundColor: color.BLUE_2,
+        backgroundColor: color.YELLOW_1,
     },
     acceptButton: {
         backgroundColor: color.GREEN_2,
     },
     buttonText: {
-        fontSize:12,
+        fontSize: 12,
         color: color.WHITE
     },
     star: {
@@ -367,13 +471,13 @@ export const userNotification = StyleSheet.create({
         color: color.YELLOW
     },
     text: {
-        color: color.BLUE_2
+        color: color.WHITE
     },
-    nameText:{
-        fontSize:14
+    nameText: {
+        fontSize: 16
     },
-    detailText:{
-        fontSize:12
+    detailText: {
+        fontSize: 12
     }
 })
 
@@ -382,7 +486,7 @@ export const posting = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        marginBottom:10
+        marginBottom: 10
     },
     halfHeader: {
         textAlign: 'center',
@@ -399,7 +503,7 @@ export const posting = StyleSheet.create({
         flexDirection: 'row',
     },
     fullContainer: {
-        paddingBottom:5,
+        paddingBottom: 5,
         paddingTop: 0
     },
     fullHeader: {
@@ -428,16 +532,16 @@ export const posting = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         borderWidth: 0.5,
-        fontSize:16,
+        fontSize: 16,
         borderColor: color.BLUE_4,
-        color:color.BLUE_2,
+        color: color.BLUE_2,
         lineHeight: 20,
     },
     detailLength: {
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
         paddingRight: 5,
-        marginBottom:5,
+        marginBottom: 5,
     },
     chevronDown: {
         color: color.BLUE_0,
@@ -485,7 +589,7 @@ export const datePicker = StyleSheet.create({
     contentContainer: {
         paddingHorizontal: 20,
         borderRadius: 20,
-        backgroundColor:color.WHITE,
+        backgroundColor: color.WHITE,
         shadowColor: color.GREEN_5,
         shadowRadius: 7,
         shadowOffset: {
@@ -494,16 +598,16 @@ export const datePicker = StyleSheet.create({
         },
         shadowOpacity: 0.23,
         zIndex: 2,
-        flex:1
+        flex: 1
     },
     headerContainer: {
         justifyContent: 'center',
         alignContent: 'center',
-        height:50
+        height: 50
     },
     headerText: {
         fontSize: 16,
-        fontWeight:'bold',
+        fontWeight: 'bold',
         textAlign: 'center',
         color: color.BLUE_0
     },
@@ -518,10 +622,10 @@ export const datePicker = StyleSheet.create({
     },
     yearContainer: {
         flex: 2,
-        justifyContent:'center',
+        justifyContent: 'center',
     },
     closeContainer: {
-        height:60,
+        height: 60,
         marginVertical: 20,
         padding: 15,
         textAlign: 'center',
@@ -582,7 +686,7 @@ export const message = StyleSheet.create({
     listContent: {
         justifyContent: 'space-between',
         paddingHorizontal: 10,
-        flex:1
+        flex: 1
     },
     name: {
         fontSize: 18,
@@ -596,7 +700,7 @@ export const message = StyleSheet.create({
         fontSize: 14,
         color: color.BLUE_3,
         fontWeight: 'normal',
-        flexShrink:1,
+        flexShrink: 1,
     },
     unreadMessage: {
         fontWeight: 'bold'
@@ -634,10 +738,10 @@ export const message = StyleSheet.create({
     },
     chatInputContainer: {
         flexDirection: 'row',
-        marginBottom:5,
+        marginBottom: 5,
     },
     textInput: {
-        backgroundColor:color.BLUE_5,
+        backgroundColor: color.BLUE_5,
         paddingVertical: 10,
         paddingHorizontal: 20,
         marginHorizontal: 10,
@@ -645,7 +749,7 @@ export const message = StyleSheet.create({
         borderRadius: 10,
         height: 'auto',
         textAlignVertical: 'center',
-        fontSize:16
+        fontSize: 16
     },
     sendButton: {
         marginRight: 10,
@@ -687,22 +791,22 @@ export const message = StyleSheet.create({
         color: '#666',
         fontSize: 12
     },
-    bubleImage : {
+    bubleImage: {
         width: '75%',
-        minHeight:200 , 
-        maxHeight:500 
+        minHeight: 200,
+        maxHeight: 500
     },
-    rightImageBubble:{
-        borderTopLeftRadius:25,
-        borderBottomLeftRadius:25,
-        borderTopRightRadius:10,
-        borderBottomRightRadius:10
+    rightImageBubble: {
+        borderTopLeftRadius: 25,
+        borderBottomLeftRadius: 25,
+        borderTopRightRadius: 10,
+        borderBottomRightRadius: 10
     },
-    leftImageBubble : {
-        borderTopLeftRadius:10,
-        borderBottomLeftRadius:10,
-        borderTopRightRadius:25,
-        borderBottomRightRadius:25
+    leftImageBubble: {
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10,
+        borderTopRightRadius: 25,
+        borderBottomRightRadius: 25
     }
 })
 
@@ -723,7 +827,7 @@ export const technician = StyleSheet.create({
         height: 80,
         aspectRatio: 1,
         borderRadius: 50,
-        backgroundColor:color.GREEN_4
+        backgroundColor: color.GREEN_4
     },
     textContainer: {
         // backgroundColor:'yellow',
@@ -866,82 +970,82 @@ export const technician = StyleSheet.create({
 
 export const registor = StyleSheet.create({
     container: {
-        flex: 1, 
-        justifyContent: 'flex-start', 
-        paddingHorizontal: '10%', 
+        flex: 1,
+        justifyContent: 'flex-start',
+        paddingHorizontal: '10%',
         marginTop: '20%',
     },
-    descText:{
-        color:color.GREY,
-        marginLeft:15,
-        marginBottom:15
+    descText: {
+        color: color.GREY,
+        marginLeft: 15,
+        marginBottom: 15
     },
-    whaturname:{
-        fontSize:20,
-        color:color.BLUE_0
+    whaturname: {
+        fontSize: 20,
+        color: color.BLUE_0
     },
-    selectBtn:{
-        flex:1,
-        backgroundColor:color.GREY_BLUE,
-        aspectRatio:1,
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius:10,
-        margin:3
+    selectBtn: {
+        flex: 1,
+        backgroundColor: color.GREY_BLUE,
+        aspectRatio: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        margin: 3
     },
-    selectIcon:{
-        fontSize:40,
-        color:color.WHITE
+    selectIcon: {
+        fontSize: 40,
+        color: color.WHITE
     },
-    selectText:{
-        color:color.WHITE,
-        fontSize:18,
-        marginTop:10
+    selectText: {
+        color: color.WHITE,
+        fontSize: 18,
+        marginTop: 10
     },
-    phoneInput:{
+    phoneInput: {
         // backgroundColor:'red',
-        marginHorizontal:5,
-        flex:1,
-        fontSize:20,
-        color:color.BLUE_0,
-        letterSpacing:1
+        marginHorizontal: 5,
+        flex: 1,
+        fontSize: 20,
+        color: color.BLUE_0,
+        letterSpacing: 1
     },
-    regionNumber:{
-        fontSize:20,
-        color:color.BLUE_0,
-        marginHorizontal:5,
+    regionNumber: {
+        fontSize: 20,
+        color: color.BLUE_0,
+        marginHorizontal: 5,
     },
-    phoneInputContainer:{
-        flexDirection:'row',
-        padding:10,
-        backgroundColor:color.BLUE_5,
-        borderRadius:10,
-        marginBottom:5
+    phoneInputContainer: {
+        flexDirection: 'row',
+        padding: 10,
+        backgroundColor: color.BLUE_5,
+        borderRadius: 10,
+        marginBottom: 5
     },
-    otpContainer:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-        marginBottom:5
+    otpContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 5
     },
-    otpInput:{
+    otpInput: {
         // borderBottomColor:color.BLUE_0,
         // borderBottomWidth:1,
-        flex:1,
-        marginHorizontal:5,
-        justifyContent:'center',
-        alignItems:'center',
-        textAlign:'center',
-        paddingHorizontal:5,
-        paddingVertical:10,
-        borderRadius:10,
-        fontSize:20,
-        color:color.BLUE_0,
-        backgroundColor:color.BLUE_5
+        flex: 1,
+        marginHorizontal: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        paddingHorizontal: 5,
+        paddingVertical: 10,
+        borderRadius: 10,
+        fontSize: 20,
+        color: color.BLUE_0,
+        backgroundColor: color.BLUE_5
     },
     borderRed: {
         backgroundColor: color.RED_4
     },
-    textRed:{
-        color:color.RED_0
+    textRed: {
+        color: color.RED_0
     }
 })
