@@ -37,12 +37,12 @@ const SearchScreen = (props) => {
             <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
 
                 <Header page="ค้นหา" back={true} navigation={props.navigation} />
-                <View style={{ flex: 1, paddingTop: 10 }}>
+                <View style={content.container}>
                     <View style={searchScreen.textInputContainer}>
                         {
                             props.keyword.length != 0 ? (
-                                <TouchableOpacity onPress={() => props.SET_SEARCH_KEY_WORD('')}>
-                                    <Feather name='x' size={25} color={color.BLUE_0} />
+                                <TouchableOpacity style={{justifyContent:'center'}} onPress={() => props.SET_SEARCH_KEY_WORD('')}>
+                                    <Feather name='x' style={searchScreen.xIcon} />
                                 </TouchableOpacity>
                             ) : null
                             
@@ -62,7 +62,7 @@ const SearchScreen = (props) => {
                                     <Feather name='search' style={searchScreen.searchIcon} />
                                 </View>
                     </View>
-                    <ScrollView style={content.container}>
+                    <ScrollView>
                         {
                             props.search_list.map((item , index) => {
                                 return <ListBox 
