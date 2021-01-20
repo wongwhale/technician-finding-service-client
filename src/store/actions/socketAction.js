@@ -13,14 +13,22 @@ socket.on('join', (id) => {
 })
 
 socket.on('send_post_req', (order) => {
-    console.log(order);
+    console.log('send post req', order);
     store.dispatch({
         type: notiType.ADD_TECH_ORDER,
         payload: order
     })
 })
 
-socket.on('accept_req' , ( order ) => {
+
+socket.on('accepted_req', (payload) => {
+    store.dispatch({
+        type: notiType.ADD_ACCECTED_TECH,
+        payload: payload
+    })
+})
+
+socket.on('accept_req', (order) => {
 
 })
 
@@ -54,7 +62,7 @@ export const disconnect = (uid) => dispatch => {
 export const sendPostReq = ({ name, uid, date, type, file, detail, location }) => dispatch => {
     // console.log('file' , file);
     var image = []
-    const _id = `${parseInt(Math.random()*1000000)}`
+    const _id = `${parseInt(Math.random() * 1000000)}`
     return new Promise((resovle, reject) => {
         Promise.all(file.map(async (item) => {
             const reference = firebase().ref('post').child(`${item.creationDate}-${item.filename}`)
@@ -64,7 +72,7 @@ export const sendPostReq = ({ name, uid, date, type, file, detail, location }) =
             })
         })).then(() => {
             socket.emit('send_post_req', {
-                _id : _id,
+                _id: _id,
                 senderName: name,
                 senderID: uid,
                 date: date,
@@ -74,14 +82,14 @@ export const sendPostReq = ({ name, uid, date, type, file, detail, location }) =
                 location: location
             })
             resovle({
-                _id : _id,
-                detail : detail,
-                techType : type,
-                image : image,
-                location : location,
-                acceptedTech : []
+                _id: _id,
+                detail: detail,
+                techType: type,
+                image: image,
+                location: location,
+                acceptedTech: []
             })
-        }).catch( () => {
+        }).catch(() => {
             reject()
         })
     })
@@ -89,6 +97,13 @@ export const sendPostReq = ({ name, uid, date, type, file, detail, location }) =
 
 }
 
-export const acceptReq = () => dispatch => {
+export const acceptedReq = (sendTo, payload) => dispatch => {
     // console.log();
+    socket.emit('accepted_req', { sendTo, payload })
+    dispatch({
+        type: notiType.REMOVE_TECH_ORDER,
+        payload: {
+            _id: payload._id
+        }
+    })
 }

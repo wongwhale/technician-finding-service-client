@@ -16,6 +16,7 @@ import { ENTER_PRIVATE_CHAT } from '../store/actions/chatAction'
 const mapStateToProps = (state) => ({
     info: state.tech.info,
     uid: state.auth.userInfo.uid,
+    role: state.auth.userInfo.role,
     firstname: state.auth.userInfo.firstname,
     lastname: state.auth.userInfo.lastname,
     avatar: state.auth.userInfo.avatar,
@@ -32,11 +33,11 @@ const UserInfo = (props) => {
             >
                 <Feather name="chevron-left" style={global.backIcon} />
             </TouchableOpacity>
-            <ScrollView>
-                <View style={styles.coverImage} >
-                    <View style={styles.headerContainer}>
+            <ScrollView style={{ backgroundColor: color.WHITE }}>
+                <View style={infoStyles.coverImage} >
+                    <View style={infoStyles.headerContainer}>
                         <Image
-                            style={styles.profileImage}
+                            style={infoStyles.profileImage}
                             source={{ uri: props.avatar }}
                         />
                         <View style={{ marginLeft: widthToDp('5') }}>
@@ -46,94 +47,105 @@ const UserInfo = (props) => {
                         </View>
                     </View>
                 </View>
-                <View style={content.container}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                        <View style={styles.onside}>
-                            <Feather name='x' style={[styles.onsideIcon, styles.xColor]} />
-                            <Text style={[styles.onsideText, styles.xColor]}>
-                                หน้าร้าน
-                            </Text>
-                        </View>
-                        <View style={styles.onside}>
-                            <Feather name='check' style={[styles.onsideIcon, styles.checkColor]} />
-                            <Text style={[styles.onsideText, styles.checkColor]}>
-                                บริการนอกสถานที่
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.infoContainer}>
-                        <View style={styles.infoRow}>
-                            <View style={styles.infoTopic}>
-                                <Text style={styles.topicText}>
-                                    ความถนัด
-                                </Text>
-                            </View>
-                            <View style={[styles.infoDetail, { justifyContent: "flex-end" }]}>
-                                {
-                                    props.info.aptitude.map((item, index) => {
-                                        return (
-                                            <View style={styles.aptitude}>
-                                                <Text key={index} style={styles.aptitudeText}>{item.aptitude}</Text>
-                                            </View>
-                                        )
-                                    })
-                                }
+                <View style={[content.container]}>
+                    {
+                        props.role === 'user' ? (
+                            <>
 
-                            </View>
-                        </View>
-                        <View style={styles.infoRow}>
-                            <View style={styles.infoTopic}>
-                                <Text style={styles.topicText}>
-                                    รูปภาพ
+                            </>
+                        ) :
+                            props.role === 'technician' ? (
+                                <>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                                        <View style={infoStyles.onside}>
+                                            <Feather name='x' style={[infoStyles.onsideIcon, infoStyles.xColor]} />
+                                            <Text style={[infoStyles.onsideText, infoStyles.xColor]}>
+                                                หน้าร้าน
+                            </Text>
+                                        </View>
+                                        <View style={infoStyles.onside}>
+                                            <Feather name='check' style={[infoStyles.onsideIcon, infoStyles.checkColor]} />
+                                            <Text style={[infoStyles.onsideText, infoStyles.checkColor]}>
+                                                บริการนอกสถานที่
+                            </Text>
+                                        </View>
+                                    </View>
+                                    <View style={infoStyles.infoContainer}>
+                                        <View style={infoStyles.infoRow}>
+                                            <View style={infoStyles.infoTopic}>
+                                                <Text style={infoStyles.topicText}>
+                                                    ความถนัด
                                 </Text>
-                            </View>
-                        </View>
-                        <View style={styles.infoRow}>
-                            <View style={styles.imageContainer}>
-                                <Image style={styles.image} />
-                                <Image style={styles.image} />
-                                <Image style={styles.image} />
-                                <Image style={styles.image} />
-                                <Image style={styles.image} />
-                                <Image style={styles.image} />
-                            </View>
-                        </View>
-                        <TouchableOpacity
-                            style={[styles.infoRow, styles.ratingContainer]}
-                            onPress={() => {
-                                console.log(props.info);
-                            }}
-                        >
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                <Feather name='map-pin' style={[styles.topicText, { paddingHorizontal: widthToDp('1') }]} />
-                                <Text style={styles.topicText}>แผนที่</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                <Feather name='chevron-right' style={styles.topicText} />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.infoRow, styles.ratingContainer]}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                <Feather name='star' style={[styles.topicText, { paddingHorizontal: widthToDp('1') }]} />
-                                <Text style={styles.topicText}>เรทติ้ง</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={styles.topicText}>{`${props.info.star}/5  (25 ครั้ง)`}</Text>
-                                <Feather name='chevron-right' style={styles.topicText} />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity 
-                            style={[styles.infoRow, styles.ratingContainer, { backgroundColor: color.RED_4 }]}
-                            onPress={ () => {
-                                props.logout()
-                            }}    
-                        >
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                <Feather name='log-out' style={[styles.topicText, { paddingHorizontal: widthToDp('1'), color: color.RED_1 }]} />
-                                <Text style={[styles.topicText, { color: color.RED_1 }]}>ออกจากระบบ</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+                                            </View>
+                                            <View style={[infoStyles.infoDetail, { justifyContent: "flex-end" }]}>
+                                                {
+                                                    props.info.aptitude.map((item, index) => {
+                                                        return (
+                                                            <View style={infoStyles.aptitude}>
+                                                                <Text key={index} style={infoStyles.aptitudeText}>{item.aptitude}</Text>
+                                                            </View>
+                                                        )
+                                                    })
+                                                }
+
+                                            </View>
+                                        </View>
+                                        <View style={infoStyles.infoRow}>
+                                            <View style={infoStyles.infoTopic}>
+                                                <Text style={infoStyles.topicText}>
+                                                    รูปภาพ
+                                </Text>
+                                            </View>
+                                        </View>
+                                        <View style={infoStyles.infoRow}>
+                                            <View style={infoStyles.imageContainer}>
+                                                <Image style={infoStyles.image} />
+                                                <Image style={infoStyles.image} />
+                                                <Image style={infoStyles.image} />
+                                                <Image style={infoStyles.image} />
+                                                <Image style={infoStyles.image} />
+                                                <Image style={infoStyles.image} />
+                                            </View>
+                                        </View>
+                                        <TouchableOpacity
+                                            style={[infoStyles.infoRow, infoStyles.ratingContainer]}
+                                            onPress={() => {
+                                                console.log(props.info);
+                                            }}
+                                        >
+                                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                                <Feather name='map-pin' style={[infoStyles.btnText, { paddingHorizontal: widthToDp('1') }]} />
+                                                <Text style={infoStyles.btnText}>แผนที่</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                                <Feather name='chevron-right' style={infoStyles.btnText} />
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={[infoStyles.infoRow, infoStyles.ratingContainer]}>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                                <Feather name='star' style={[infoStyles.btnText, { paddingHorizontal: widthToDp('1') }]} />
+                                                <Text style={infoStyles.btnText}>เรทติ้ง</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                                <Text style={infoStyles.btnText}>{`${props.info.star}/5  (25 ครั้ง)`}</Text>
+                                                <Feather name='chevron-right' style={infoStyles.btnText} />
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            style={[infoStyles.infoRow, infoStyles.ratingContainer, { backgroundColor: color.RED_4 }]}
+                                            onPress={() => {
+                                                props.logout()
+                                            }}
+                                        >
+                                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                                <Feather name='log-out' style={[infoStyles.topicText, { paddingHorizontal: widthToDp('1'), color: color.RED_1 }]} />
+                                                <Text style={[infoStyles.topicText, { color: color.RED_1 }]}>ออกจากระบบ</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    </View>
+                                </>
+                            ) : null
+                    }
                 </View>
             </ScrollView>
         </>
@@ -142,9 +154,9 @@ const UserInfo = (props) => {
 
 export default connect(mapStateToProps, { ENTER_PRIVATE_CHAT, GET_TECHNICIAN_INFO, logout })(UserInfo)
 
-const styles = StyleSheet.create({
+export const infoStyles = StyleSheet.create({
     coverImage: {
-        backgroundColor: color.BLUE_5,
+        backgroundColor: color.BLUE_4,
         height: heightToDp('20')
     },
     headerContainer: {
@@ -169,7 +181,7 @@ const styles = StyleSheet.create({
         height: widthToDp('6')
     },
     contactColor: {
-        backgroundColor: color.BLUE_4,
+        backgroundColor: color.BLUE_5,
     },
     callColor: {
         backgroundColor: color.GREEN_4
@@ -209,7 +221,10 @@ const styles = StyleSheet.create({
     infoRow: {
         flexDirection: 'row',
         marginVertical: widthToDp('1'),
-        paddingHorizontal: widthToDp('3')
+        paddingHorizontal: widthToDp('3'),
+        backgroundColor: '#fff',
+        paddingVertical: widthToDp('2'),
+        borderRadius: widthToDp('1')
     },
     bottomBorder: {
         borderBottomColor: color.BLUE_3,
@@ -219,7 +234,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     topicText: {
-        fontSize: widthToDp('4'),
+        fontSize: widthToDp('3.5'),
         color: color.BLUE_1
     },
     infoDetail: {
@@ -243,7 +258,8 @@ const styles = StyleSheet.create({
     imageContainer: {
         flex: 1,
         flexWrap: 'wrap',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
     image: {
         width: widthToDp('23'),
@@ -259,5 +275,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
+    btnText: {
+        color: color.BLUE_1,
+        fontSize: widthToDp('3.5')
+    }
 
 })

@@ -422,7 +422,8 @@ export const techNotification = StyleSheet.create({
     },
     abstractContainer: {
         flexDirection: 'row',
-        paddingVertical: heightToDp('0.7')
+        paddingVertical: heightToDp('0.7'),
+        height: widthToDp('23')
     },
     abstractBottomBorder: {
         borderBottomWidth: heightToDp('0.1'),

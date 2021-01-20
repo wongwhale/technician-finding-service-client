@@ -1,10 +1,10 @@
 export const notiType = {
-    ADD_TECH_ORDER : 'ADD_TECH_ORDER',
-    REMOVE_TECH_ORDER : 'REMOVE_TECH_ORDER',
-    ADD_USER_RESPONSE : 'ADD_USER_RESPONSE',
-    REMOVE_USER_RESPONSE : 'REMOVE_USER_RESPONSE',
-    ADD_ACCECTED_TECH : 'ADD_ACCECTED',
-    REMOVE_ACCECTED_TECH : 'REMOVE_ACCECTED_TECH',
+    ADD_TECH_ORDER: 'ADD_TECH_ORDER',
+    REMOVE_TECH_ORDER: 'REMOVE_TECH_ORDER',
+    ADD_USER_RESPONSE: 'ADD_USER_RESPONSE',
+    REMOVE_USER_RESPONSE: 'REMOVE_USER_RESPONSE',
+    ADD_ACCECTED_TECH: 'ADD_ACCECTED',
+    REMOVE_ACCECTED_TECH: 'REMOVE_ACCECTED_TECH',
 }
 
 // interface userResponse = {
@@ -20,58 +20,63 @@ export const notiType = {
 // }
 
 const initialState = {
-    techOrder : [
+    techOrder: [
 
     ],
-    userResponse : [
+    userResponse: [
 
     ],
-    badge : 0,
+    badge: 0,
 }
 
-export default function notificationReducer (
+export default function notificationReducer(
     state = initialState,
     action
 ) {
     switch (action.type) {
         case notiType.ADD_TECH_ORDER:
-            return{
+            return {
                 ...state,
-                techOrder : [...state.techOrder , action.payload]
+                techOrder: [...state.techOrder, action.payload]
             }
         case notiType.REMOVE_TECH_ORDER:
-            return{
+            return {
                 ...state,
-                techOrder : state.techOrder.filter( (val) => {
+                techOrder: state.techOrder.filter((val) => {
                     return val._id !== action.payload._id
                 })
             }
         case notiType.ADD_USER_RESPONSE:
-            return{
+            return {
                 ...state,
-                userResponse : [...state.userResponse , action.payload]
+                userResponse: [...state.userResponse, action.payload]
             }
-        case notiType.REMOVE_USER_RESPONSE :
-            return{
+        case notiType.REMOVE_USER_RESPONSE:
+            return {
                 ...state,
-                userResponse : state.userResponse.filter( val => {
+                userResponse: state.userResponse.filter(val => {
                     return val._id !== action.payload._id
                 })
             }
         case notiType.ADD_ACCECTED_TECH:
-            return{
+            return {
                 ...state,
-                userResponse : {
-                    ...state.userResponse,
-                    accected_tech : [...state.userResponse.accected_tech , action.payload]
-                }
+                userResponse: state.userResponse.map(val => {
+                    if (action.payload._id === val._id) {
+                        return {
+                            ...val,
+                            acceptedTech: val.acceptedTech.concat('1')
+                        }
+                    }
+                    else return val
+                })
             }
         case notiType.REMOVE_ACCECTED_TECH:
-            return{
+            return {
                 ...state,
-                userResponse : {
+                userResponse: {
                     ...state.userResponse,
-                    accected_tech : state.accected_tech.filter( val => {
+                    acceptedTech: state.acceptedTech.filter(val => {
                         return val._id !== action.payload._id
                     })
                 }

@@ -1,6 +1,6 @@
-import React, { useEffect} from 'react'
+import React from 'react'
 
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, View, TouchableOpacity, Button } from 'react-native'
 
 import { techNotification, color, widthToDp } from '../../stylesheet'
 
@@ -17,6 +17,8 @@ const mapDispatchToProps = {
 
 const TechnicianNotification = (props) => {
     const month = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฏาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
+    
+
     return (
         <>
             <View style={techNotification.container}>

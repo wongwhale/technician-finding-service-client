@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, View, TouchableOpacity, Button } from 'react-native'
 
 import { userNotification, widthToDp, color } from '../../stylesheet'
 
@@ -33,20 +33,30 @@ const UserNotification = (props) => {
                 </View>
                 <View style={userNotification.content}>
                     {
-                        props.acceptedTech.length !== 0 ? (
-                            props.acceptedTech.map((item, index) => {
-                                return <Abstract
-                                    key={index}
-                                    name='as;dlf asdl;fkj'
-                                    star={2.5}
-                                    distance='2.21'
-                                    price='100 - 20000'
-                                    last={item.index === props.userResponse.length}
-                                />
-                            })
+                        props.acceptedTech !== undefined ? (
+                            props.acceptedTech.length !== 0 ? (
+                                props.acceptedTech.map((item, index) => {
+                                    return <Abstract
+                                        key={index}
+                                        name='as;dlf asdl;fkj'
+                                        star={2.5}
+                                        distance='2.21'
+                                        price='100 - 20000'
+                                        last={item.index === props.acceptedTech.length}
+                                    />
+                                })
+                            ) : (
+                                    <>
+                                        <View style={{ padding: widthToDp('1.5') }}>
+                                            <Text style={{ fontSize: widthToDp('3.5'), color: color.BLUE_2 }}>
+                                                ยังไม่มีการตอบรับ
+                                        </Text>
+                                        </View>
+                                    </>
+                                )
                         ) : (
                                 <>
-                                    <View style={{padding:widthToDp('1.5')}}>
+                                    <View style={{ padding: widthToDp('1.5') }}>
                                         <Text style={{ fontSize: widthToDp('3.5'), color: color.BLUE_2 }}>
                                             ยังไม่มีการตอบรับ
                                         </Text>
