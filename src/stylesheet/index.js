@@ -67,6 +67,10 @@ export const content = StyleSheet.create({
         flex: 1,
         paddingHorizontal: widthToDp('8'),
         paddingVertical: 10,
+    },
+    safearray : {
+        flex : 1,
+        backgroundColor : '#fff'
     }
 })
 

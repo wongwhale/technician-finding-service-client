@@ -33,7 +33,7 @@ const Message = (props) => {
 
     return (
         <>
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <SafeAreaView style={content.safearray}>
                 <Header page='กล่องข้อความ' navigation={props.navigation} back={true} chat={true} />
                 <ScrollView style={content.container}>
                     {

@@ -11,7 +11,7 @@ import {
     Platform,
 } from 'react-native';
 
-import { mainScreen, color } from '../../stylesheet'
+import { mainScreen, color, content } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
@@ -38,7 +38,7 @@ const Main = (props) => {
 
     return (
         <>
-            <SafeAreaView style={{ flex: 1, backgroundColor: color.WHITE }}>
+            <SafeAreaView style={content.safearray}>
                 <Header page='หน้าหลัก' back={false} navigation={props.navigation} />
                 <UserInfo  navigation={props.navigation} />
                 <ScrollView>

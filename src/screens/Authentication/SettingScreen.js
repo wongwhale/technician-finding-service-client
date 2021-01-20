@@ -1,10 +1,14 @@
 import React from 'react'
 
-import {} from 'react-native'
+import { SafeAreaView } from 'react-native'
+import { content } from '../../stylesheet'
 
 const SettingScreen = () => {
     return (
         <>
+            <SafeAreaView style={content.safearray}>
+
+            </SafeAreaView>
         </>
     )
 }

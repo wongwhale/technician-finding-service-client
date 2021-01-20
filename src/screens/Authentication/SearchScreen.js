@@ -35,7 +35,7 @@ const SearchScreen = (props) => {
 
     return (
         <>
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <SafeAreaView style={content.safearray}>
 
                 <Header page="ค้นหา" back={true} navigation={props.navigation} />
                 <View style={content.container}>

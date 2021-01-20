@@ -24,7 +24,7 @@ const UserInfo = (props) => {
 
     return (
         <>
-            <SafeAreaView style={{ flex: 1, backgroundColor: color.WHITE }}>
+            <SafeAreaView style={content.safearray}>
                 <View style={global.header}>
                     <Image
                         style={infoStyles.profileImage}
@@ -62,7 +62,6 @@ const UserInfo = (props) => {
                                 {`${props.firstname} ${props.lastname}`}
                             </Text>
                         </View>
-
                     </View>
                     <View style={[content.container]}>
                         {

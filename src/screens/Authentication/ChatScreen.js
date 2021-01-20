@@ -7,7 +7,7 @@ import ChatInput from '../../components/Chat/ChatInput'
 import ChatBox from '../../components/Chat/ChatBox'
 
 import { ScrollView } from 'react-native-gesture-handler'
-import { color } from '../../stylesheet'
+import { color , content} from '../../stylesheet'
 import { connect } from 'react-redux'
 import { SEND_MESSAGE , LEAVE_PRIVATE_CHAT } from '../../store/actions/chatAction'
 
@@ -42,7 +42,7 @@ const Chat = (props) => {
 
     return (
         <>
-            <SafeAreaView style={{ flex: 1, backgroundColor: color.WHITE }}>
+            <SafeAreaView style={content.safearray}>
                 <ChatHeader navigation={props.navigation} />
                 <ScrollView
                     ref={scrollView_ref}

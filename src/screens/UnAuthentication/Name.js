@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Footer from '../../components/Registor/Footer'
 import MyButton from '../../components/MyButton'
 import MyTextInput from '../../components/MyTextInput'
-import { registor, color } from '../../stylesheet'
+import { registor, color, content } from '../../stylesheet'
 
 
 import { Text, SafeAreaView, View } from 'react-native'
@@ -38,7 +38,7 @@ const Name = (props) => {
 
     return (
         <>
-            <SafeAreaView style={{ backgroundColor: color.WHITE, flex: 1 }}>
+            <SafeAreaView style={content.safearray}>
                 <View style={[registor.container]}>
                     <View style={{ marginBottom: 15, width: '100%', alignItems: 'center' }}>
                         <Text style={registor.whaturname}>

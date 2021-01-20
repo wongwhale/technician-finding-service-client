@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 
 
 import Footer from '../../components/Registor/Footer'
-import { registor, color } from '../../stylesheet'
+import { registor, color, content } from '../../stylesheet'
 import { inputStyles } from '../../components/MyTextInput'
 import Feather from 'react-native-vector-icons/Feather'
 
@@ -49,7 +49,7 @@ const PhoneNumber = (props) => {
 
     return (
         <>
-            <SafeAreaView style={{ backgroundColor: color.WHITE, flex: 1 }}>
+            <SafeAreaView style={content.safearray}>
                 <View style={registor.container}>
                     <View style={{ marginBottom: 15, width: '100%', alignItems: 'center' }}>
                         <Text style={[registor.whaturname, phoneStatus !== null && !phoneStatus ? inputStyles.textRed : null]}>

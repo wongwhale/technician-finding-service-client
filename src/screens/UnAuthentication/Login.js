@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react'
 
 import { Text, SafeAreaView, Button, View, TextInput, TouchableOpacity, StyleSheet, Keyboard } from 'react-native'
 import MyButton from '../../components/MyButton'
-import Footer from '../../components/Registor/Footer'
-import { color } from '../../stylesheet'
+import Footer from '../../components/Login/Footer'
+import { color, content } from '../../stylesheet'
 import { inputStyles } from '../../components/MyTextInput'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -32,7 +32,7 @@ const Login = (props) => {
 
     return (
         <>
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={content.safearray}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: '10%' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' , marginBottom:40 }}>
                         <View style={{ width: 100, height: 100, backgroundColor: color.BLUE_4, borderRadius: 50 , marginRight:10 }} />
