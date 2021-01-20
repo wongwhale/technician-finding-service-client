@@ -12,8 +12,9 @@ import { Text, SafeAreaView, View, TouchableOpacity, Keyboard } from 'react-nati
 import { TextInput } from 'react-native-gesture-handler'
 import MyButton from '../../components/MyButton'
 import { connect } from 'react-redux'
-import WEB_URL from '../../misc/web_url'
+
 import axios from 'axios'
+import WEB_URL from '../../misc/web_url'
 
 const mapStateToProps = (state) => ({
     phone: state.reg.phone

@@ -11,19 +11,17 @@ import {
     Platform,
 } from 'react-native';
 
-import { mainScreen, color } from '../stylesheet'
+import { mainScreen, color } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
-import UserInfo from '../components/UserInfo'
-import Header from '../components/Header'
+import UserInfo from '../../components/UserInfo'
+import Header from '../../components/Header'
 import { connect } from 'react-redux';
 
-import { OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL , OPEN_LOCATION_PICKER_MODAL } from '../store/actions/modalAction'
-import { SET_FILE } from '../store/actions/formAction'
+import { OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL , OPEN_LOCATION_PICKER_MODAL } from '../../store/actions/modalAction'
+import { SET_FILE } from '../../store/actions/formAction'
 
-
-import storage from '@react-native-firebase/storage'
 
 const mapStateToProps = (state) => ({
     count: state.counter.count,
@@ -40,7 +38,7 @@ const Main = (props) => {
 
     return (
         <>
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: color.WHITE }}>
                 <Header page='หน้าหลัก' back={false} navigation={props.navigation} />
                 <UserInfo  navigation={props.navigation} />
                 <ScrollView>

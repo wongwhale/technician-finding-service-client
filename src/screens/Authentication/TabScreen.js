@@ -2,7 +2,7 @@ import React from 'react'
 
 import {connect} from 'react-redux'
 
-import Main from './Main'
+import Main from './MainScreen'
 import Notification from './Notification'
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator()
 
 import Feather from 'react-native-vector-icons/Feather'
 
-import { color } from '../stylesheet'
+import { color } from '../../stylesheet'
 
 const mapStateToProps = (state) => ({
     badge : state.noti.badge,

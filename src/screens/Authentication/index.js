@@ -5,24 +5,21 @@ import { createStackNavigator } from '@react-navigation/stack'
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
-import SearchScreen from './Search'
-import NearMeScreen from './NearMe'
-import Message from './Message';
-import User from './User'
-import Chat from './Chat'
-import TechnicianInfo from './TechnicianInfo'
-import Post from './Post'
+import SearchScreen from './SearchScreen'
+import NearMeScreen from './NearMeScreen'
+import Message from './MessageScreen';
+import User from './UserInfoScreen'
+import Chat from './ChatScreen'
+import TechnicianInfo from './TechnicianInfoScreen'
+import Post from './PostScreen'
 import TabScreen from './TabScreen';
 
-import PriceInputModal from '../components/Modal/PriceInputModal'
-
-import { leave, connection } from '../store/actions/socketAction';
-import { CLOSE_DATE_PICKER_MODAL } from '../store/actions/modalAction';
-import { INITIAL_HISTORY_LIST } from '../store/actions/chatAction';
-import { SET_FILE } from '../store/actions/formAction';
+import { leave, connection } from '../../store/actions/socketAction';
+import { CLOSE_DATE_PICKER_MODAL } from '../../store/actions/modalAction';
+import { INITIAL_HISTORY_LIST } from '../../store/actions/chatAction';
+import { SET_FILE } from '../../store/actions/formAction';
 
 import { connect } from 'react-redux';
-import { userInfo } from '../stylesheet';
 
 const mapStateToProps = (state) => ({
   uid: state.auth.userInfo.uid,
@@ -54,7 +51,6 @@ const Index = (props) => {
         <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
         <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
       </Stack.Navigator>
-      <PriceInputModal />
     </>
   );
 };

@@ -12,17 +12,17 @@ import {
 
 import Feather from 'react-native-vector-icons/Feather'
 
-import Header from '../../components/Header'
+import Header from '../../../components/Header'
 
-import { content } from '../../stylesheet'
+import { content } from '../../../stylesheet'
 
-import UserNotification from '../../components/UserNotification'
-import TechnicianNotification from '../../components/TechnicianNotification'
+import UserNotification from '../../../components/UserNotification'
+import TechnicianNotification from '../../../components/TechnicianNotification'
 import { connect } from 'react-redux'
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import Search from '../Search'
-import NewOrder from './NewOrder'
+import Search from '../SearchScreen'
+import NewOrder from './NewOrderTab'
 
 const TopTab = createMaterialTopTabNavigator()
 

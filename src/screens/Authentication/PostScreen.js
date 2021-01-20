@@ -2,30 +2,30 @@ import React from 'react'
 
 import { SafeAreaView, View, ScrollView } from 'react-native'
 
-import Header from '../components/Header'
-import DateTimePicker from '../components/Form/DateTimePicker'
-import Line from '../components/Form/Line'
-import DetailInput from '../components/Form/DetailInput'
-import ImagePicker from '../components/Form/ImagePicker'
-import LocationPicker from '../components/Form/LocationPicker'
-import TypePicker from '../components/Form/TypePicker'
-import MyButton from '../components/MyButton'
+import Header from '../../components/Header'
+import DateTimePicker from '../../components/Form/DateTimePicker'
+import Line from '../../components/Form/Line'
+import DetailInput from '../../components/Form/DetailInput'
+import ImagePicker from '../../components/Form/ImagePicker'
+import LocationPicker from '../../components/Form/LocationPicker'
+import TypePicker from '../../components/Form/TypePicker'
+import MyButton from '../../components/MyButton'
 
-import DatePickerModal from '../components/Modal/DatePickerModal'
-import TimePickerModal from '../components/Modal/TimePickerModal'
-import ImagePickerModal from '../components/Modal/ImagePickerModal'
-import SelectTypePickerModal from '../components/Modal/SelectTypePickerModal'
-import LocationPickerModal from '../components/Modal/LocationPickerModal'
+import DatePickerModal from '../../components/Modal/DatePickerModal'
+import TimePickerModal from '../../components/Modal/TimePickerModal'
+import ImagePickerModal from '../../components/Modal/ImagePickerModal'
+import SelectTypePickerModal from '../../components/Modal/SelectTypePickerModal'
+import LocationPickerModal from '../../components/Modal/LocationPickerModal'
 
 import ImagePickerManager from 'react-native-image-crop-picker'
 
-import { sendPostReq } from '../store/actions/socketAction'
-import { addNewResponse } from '../store/actions/notiAction'
-import { SET_FILE, SET_LOCATION } from '../store/actions/formAction'
-import { CLOSE_IMAGE_PICKER_MODAL } from '../store/actions/modalAction'
+import { sendPostReq } from '../../store/actions/socketAction'
+import { addNewResponse } from '../../store/actions/notiAction'
+import { SET_FILE, SET_LOCATION } from '../../store/actions/formAction'
+import { CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
 
 import { connect } from 'react-redux'
-import { content } from '../stylesheet'
+import { content } from '../../stylesheet'
 
 const mapStateToProps = (state) => ({
     firstname: state.auth.userInfo.firstname,

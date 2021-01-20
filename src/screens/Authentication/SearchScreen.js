@@ -11,13 +11,14 @@ import {
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
-import { searchScreen, content, color } from '../stylesheet'
+import { searchScreen, content, color } from '../../stylesheet'
 
-import Header from '../components/Header'
-import ListBox from '../components/Search/ListBox'
+import Header from '../../components/Header'
+import ListBox from '../../components/Search/ListBox'
+
 import { connect } from 'react-redux'
 
-import { SET_SEARCH_KEY_WORD , SEARCH_BY_KEY_WORD } from '../store/actions/techAction'
+import { SET_SEARCH_KEY_WORD , SEARCH_BY_KEY_WORD } from '../../store/actions/techAction'
 
 
 const mapStateToProps = (state) => ({

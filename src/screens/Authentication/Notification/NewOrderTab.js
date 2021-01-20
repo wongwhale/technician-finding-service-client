@@ -10,10 +10,10 @@ import {
     ScrollView
 } from 'react-native'
 
-import { content } from '../../stylesheet'
+import { content } from '../../../stylesheet'
 
-import UserNotification from '../../components/UserNotification'
-import TechnicianNotification from '../../components/TechnicianNotification'
+import UserNotification from '../../../components/UserNotification'
+import TechnicianNotification from '../../../components/TechnicianNotification'
 import { connect } from 'react-redux'
 
 

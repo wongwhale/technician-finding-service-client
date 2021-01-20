@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 
 import { SafeAreaView, View, Text, ScrollView } from 'react-native'
 
-import Header from '../components/Header'
-import MessageList from '../components/Message/MessageList'
+import Header from '../../components/Header'
+import MessageList from '../../components/Message/MessageList'
 
-import { content } from '../stylesheet'
+import { content } from '../../stylesheet'
 import { connect } from 'react-redux'
 
-import { ENTER_PRIVATE_CHAT , INITIAL_HISTORY_LIST , SET_INTERLOCUTOR_ID } from '../store/actions/chatAction'
+import { ENTER_PRIVATE_CHAT , INITIAL_HISTORY_LIST , SET_INTERLOCUTOR_ID } from '../../store/actions/chatAction'
 
 const mapStateToProps = (state) => ({
     uid : state.auth.userInfo.uid,

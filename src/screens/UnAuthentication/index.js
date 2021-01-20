@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React from 'react'
 
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -10,7 +10,7 @@ import SelectRole from './SelectRole'
 import PhoneNumber from './PhoneNumber'
 import OTP from './OTP'
 import ImageProfile from './ImageProfile'
-import Login from '../Login'
+import Login from './Login'
 
 import { clear } from '../../store/actions/regAction'
 import { connect } from 'react-redux'
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => ({
 })
 
 const UnAuth = (props) => {
-    useEffect(() => {
+    React.useEffect(() => {
         return () => {
             props.clear()
         }

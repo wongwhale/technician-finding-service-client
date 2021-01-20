@@ -1,4 +1,4 @@
-import React , {} from 'react'
+import React  from 'react'
 
 import {
     View,
@@ -9,10 +9,7 @@ import {
     TouchableOpacity,
 } from 'react-native'
 
-import Feather from 'react-native-vector-icons/Feather'
-import {searchScreen} from '../stylesheet'
-
-import Header from '../components/Header'
+import Header from '../../components/Header'
 
 const NearMeScreen = ({navigation}) => {
     return (
