@@ -82,51 +82,6 @@ const Main = (props) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    {/* <Button title='test'
-                        onPress={ async () => {
-                            props.OPEN_POST_MODAL()
-                        }}
-                    />
-                    <Button 
-                        title='open modal'
-                        onPress={ () => {
-                            props.OPEN_DATE_PICKER_MODAL()
-                        }}
-                    /> */}
-                    <Button 
-                        title='open location picker modal'
-                        onPress={ () => {
-                            props.OPEN_LOCATION_PICKER_MODAL()
-                        }}
-                        // onPress={ () => {
-                        //     launchImageLibrary({
-                        //         maxWidth:500,
-                        //         maxHeight:500,
-                        //         quality:0.2,
-                        //     } , (res) => {
-                        //         props.SET_FILE(res) 
-                        //         // console.log(res);
-                        //         if(!res.didCancel){
-                        //             var form = new FormData()
-                        //             form.append('formImage' , {
-                        //                 name : res.fileName,
-                        //                 type : res.type,
-                        //                 uri : Platform.OS === 'android' ?  res.uri : res.uri.replace('file://' , '')
-                        //             })
-                        //             axios({
-                        //                 url : `${WEB_URL}/api/uploadImage`,
-                        //                 method:'post',
-                        //                 data : form,
-                        //                 headers: {
-                        //                     "Content-Type" : "mutipart/form-data"
-                        //                 }
-                        //             }).then(res => {
-                        //                 console.log(res.data);
-                        //             })
-                        //         }
-                        //     })
-                        // }}
-                    />
                 </ScrollView>
             </SafeAreaView>
         </>

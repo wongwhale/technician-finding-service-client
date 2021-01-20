@@ -4,7 +4,7 @@ import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
 
 import Modal from 'react-native-modalbox'
 
-import { datePicker, color } from '../../stylesheet'
+import { datePicker, color , widthToDp , heightToDp , modalRadiusDp , buttonRadiusDp } from '../../stylesheet'
 import { modalStyle } from './PostModal'
 
 
@@ -24,7 +24,7 @@ const ImagePickerModal = (props) => {
             <Modal
                 isOpen={props.isOpen}
                 onClosed={() => props.CLOSE_IMAGE_PICKER_MODAL()}
-                style={[modalStyle.subcontainer, { height: 250, backgroundColor: 'transparent' }]}
+                style={[modalStyle.subcontainer, { height: heightToDp('24.6'), backgroundColor: 'transparent' }]}
                 position='bottom'
                 swipeToClose={false}
             >
@@ -70,14 +70,14 @@ export default connect(mapStateToProps, { CLOSE_IMAGE_PICKER_MODAL , SET_URI , S
 
 const styles = StyleSheet.create({
     btn: {
-        height: 50,
+        height: heightToDp('5'),
         justifyContent: 'center',
         alignItems: 'center',
         borderTopColor: color.BLUE_4,
-        borderTopWidth: 1
+        borderTopWidth: heightToDp('0.1'),
     },
     text: {
-        fontSize: 18,
+        fontSize: widthToDp('4'),
         color: color.BLUE_1
     }
 })

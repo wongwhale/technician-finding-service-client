@@ -17,11 +17,12 @@ import Header from '../components/Header'
 import { content, technician } from '../stylesheet'
 
 import UserNotification from '../components/UserNotification'
-import TechnicianInfo from '../components/TechnicianNotification'
+import TechnicianNotification from '../components/TechnicianNotification'
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => ({
-    role: state.auth.userInfo.role
+    role: state.auth.userInfo.role,
+    userResponse: state.noti.userResponse
 })
 
 const mapDispatchToProps = {
@@ -37,13 +38,22 @@ const Notification = (props) => {
                     {
                         props.role === 'technician' ? (
                             <View style={content.container}>
-                                <TechnicianInfo />
+                                <TechnicianNotification />
                             </View>
                         ) : null
                     }
-                    <View style={content.container}>
-                        <UserNotification />
-                    </View>
+                    {
+                        props.userResponse.length !== 0 ? (
+                            props.userResponse.map((item) => {
+                                console.log(item);
+                                return (
+                                    <View key={item._id} style={content.container}>
+                                        <UserNotification orderID={item._id} acceptedTech={item.acceptedTech} />
+                                    </View>
+                                )
+                            })
+                        ) : null
+                    }
                 </ScrollView>
             </SafeAreaView>
 

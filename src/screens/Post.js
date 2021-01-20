@@ -1,4 +1,4 @@
-import React, { } from 'react'
+import React from 'react'
 
 import { SafeAreaView, View, ScrollView } from 'react-native'
 
@@ -20,17 +20,17 @@ import LocationPickerModal from '../components/Modal/LocationPickerModal'
 import ImagePickerManager from 'react-native-image-crop-picker'
 
 import { sendPostReq } from '../store/actions/socketAction'
-
-import { SET_FILE } from '../store/actions/formAction'
+import { addNewResponse } from '../store/actions/notiAction'
+import { SET_FILE, SET_LOCATION } from '../store/actions/formAction'
 import { CLOSE_IMAGE_PICKER_MODAL } from '../store/actions/modalAction'
 
 import { connect } from 'react-redux'
 import { content } from '../stylesheet'
 
 const mapStateToProps = (state) => ({
-    firstname : state.auth.userInfo.firstname,
-    lastname : state.auth.userInfo.lastname,
-    uid : state.auth.userInfo.uid,
+    firstname: state.auth.userInfo.firstname,
+    lastname: state.auth.userInfo.lastname,
+    uid: state.auth.userInfo.uid,
     date: state.form.date,
     month: state.form.month,
     year: state.form.year,
@@ -43,9 +43,12 @@ const mapStateToProps = (state) => ({
     type: state.form.type
 })
 
-const connector = connect(mapStateToProps, { sendPostReq , SET_FILE , CLOSE_IMAGE_PICKER_MODAL })
+const connector = connect(mapStateToProps, { addNewResponse, SET_LOCATION, sendPostReq, SET_FILE, CLOSE_IMAGE_PICKER_MODAL })
 
 const PostScreen = (props) => {
+    React.useEffect(() => {
+        props.SET_LOCATION(18.795924746501605, 98.95296894013882)
+    }, [])
     return (
         <>
             <SafeAreaView style={{ flex: 1, }}>
@@ -65,8 +68,8 @@ const PostScreen = (props) => {
                             const date = `${props.year}-${("0" + (props.month)).slice(-2)}-${("0" + (props.date)).slice(-2)}T${("0" + (props.hour)).slice(-2)}:${("0" + (props.minute)).slice(-2)}:00Z`
                             const name = `${props.firstname} ${props.lastname}`
                             props.sendPostReq({
-                                name : name,
-                                uid : props.uid,
+                                name: name,
+                                uid: props.uid,
                                 date: date,
                                 type: props.type,
                                 file: props.file,
@@ -75,8 +78,15 @@ const PostScreen = (props) => {
                                     lat: props.lat,
                                     lon: props.lng
                                 }
-                            }).then( res => {
-                                props.navigation.navigate('notification')
+                            }).then(res => {
+                                props.addNewResponse(res)
+                                    .then(() => {
+                                        props.navigation.navigate('notification')
+                                    })
+                                    .catch((err) => {
+                                        alert('error')
+                                        console.log(err);
+                                    })
                             })
                         }}
                     />
@@ -85,7 +95,7 @@ const PostScreen = (props) => {
                 <DatePickerModal />
                 <TimePickerModal />
                 <SelectTypePickerModal />
-                <LocationPickerModal />
+                {/* <LocationPickerModal /> */}
                 <ImagePickerModal libFunc={() => {
                     ImagePickerManager.openPicker({
                         multiple: true,

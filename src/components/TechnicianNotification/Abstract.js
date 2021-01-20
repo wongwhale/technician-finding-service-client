@@ -5,20 +5,25 @@ import { Text, View, TouchableOpacity, Image } from 'react-native'
 import { techNotification } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
+
+import { removeOrder } from '../../store/actions/notiAction'
+
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => ({
-
+    uid : state.auth.userInfo.uid,
+    firstname : state.auth.userInfo.firstname,
+    lastname : state.auth.userInfo.lastname
 })
 
 const mapDispatchToProps = {
-
+    removeOrder
 }
 
-const Abstract = ({ name, distance, last, date, detail }) => {
+const Abstract = (props) => {
     return (
         <>
-            <View style={!last ? [techNotification.abstractContainer, techNotification.abstractBottomBorder] : techNotification.abstractContainer}>
+            <View style={!props.last ? [techNotification.abstractContainer, techNotification.abstractBottomBorder] : techNotification.abstractContainer}>
                 <View style={techNotification.imageContainer}>
                     <TouchableOpacity style={techNotification.image}>
                         <Image
@@ -31,7 +36,7 @@ const Abstract = ({ name, distance, last, date, detail }) => {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: '' }}>
                         <View style={{flexWrap:'nowrap'}}>
                             <Text style={[techNotification.text, techNotification.nameText]}>
-                                {`${name}`}
+                                {`${props.order.senderName}`}
                             </Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -42,22 +47,42 @@ const Abstract = ({ name, distance, last, date, detail }) => {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
                             <Text style={[techNotification.text, techNotification.detailText]}>
-                                {`ห่างจากคุณ : ${distance} กม. `}
+                                {`ห่างจากคุณ : ${props.distance} กม. `}
                             </Text>
                             <Text style={[techNotification.text, techNotification.detailText]}>
-                                {`วันที่: ${date}`}
+                                {`วันที่: ${props.date}`}
                             </Text>
                             <Text style={[techNotification.text, techNotification.detailText]}>
-                                {`รายละเอียด: ${detail}`}
+                                {`รายละเอียด: ${props.order.detail}`}
                             </Text>
                         </View>
                         <View style={techNotification.buttonContainer}>
-                            <TouchableOpacity style={[techNotification.acceptButton, techNotification.button]}>
+                            <TouchableOpacity 
+                                style={[techNotification.acceptButton, techNotification.button]}
+                                onPress={ () => {
+                                    const payload = {
+                                        _id : props.order._id,
+                                        date : props.order.date,
+                                        detail : props.order.detail,
+                                        image : props.order.image,
+                                        tname : `${props.firstname} ${props.lastname}`,
+                                        tid : props.uid,
+                                        customerID : props.order.senderID,
+                                        
+                                    }
+                                    console.log(payload);
+                                }}
+                            >
                                 <Text style={techNotification.buttonText}>
                                     ตอบรับ
                         </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[techNotification.contactButton, techNotification.button]}>
+                            <TouchableOpacity 
+                                style={[techNotification.contactButton, techNotification.button]}
+                                onPress={ () => {
+                                    props.removeOrder(props.order._id)
+                                }}
+                            >
                                 <Text style={techNotification.buttonText}>
                                     ไม่สนใจ
                         </Text>
@@ -65,18 +90,6 @@ const Abstract = ({ name, distance, last, date, detail }) => {
                         </View>
                     </View>
                 </TouchableOpacity>
-                {/* <View style={techNotification.buttonContainer}>
-                    <TouchableOpacity style={[techNotification.acceptButton, techNotification.button]}>
-                        <Text style={techNotification.buttonText}>
-                            ตอบรับ
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[techNotification.contactButton, techNotification.button]}>
-                        <Text style={techNotification.buttonText}>
-                            ไม่สนใจ
-                        </Text>
-                    </TouchableOpacity>
-                </View> */}
             </View>
         </>
     )

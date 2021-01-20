@@ -14,7 +14,7 @@ import { color } from '../stylesheet'
 
 const mapStateToProps = (state) => ({
     badge : state.noti.badge,
-    tech_order : state.noti.tech_order
+    techOrder : state.noti.techOrder
 })
 
 const mapDispatchToProps = {
@@ -49,7 +49,7 @@ const TabScreen = (props) => {
                 }}
             >
                 <Tab.Screen name="menu" component={Main} />
-                <Tab.Screen name="notification" component={Notification} options={props.tech_order.length > 0 ? {tabBarBadge : props.tech_order.length} : null} />
+                <Tab.Screen name="notification" component={Notification} options={props.techOrder.length > 0 ? {tabBarBadge : props.techOrder.length} : null} />
             </Tab.Navigator>
 
         </>

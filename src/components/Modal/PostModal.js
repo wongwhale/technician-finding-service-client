@@ -4,7 +4,7 @@ import {
     StyleSheet
 } from 'react-native'
 
-import { color } from '../../stylesheet'
+import { color , widthToDp , heightToDp , modalRadiusDp , buttonRadiusDp } from '../../stylesheet'
 
 export const modalStyle = StyleSheet.create({
     continaer: {

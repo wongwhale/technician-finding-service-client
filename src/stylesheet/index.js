@@ -459,7 +459,7 @@ export const techNotification = StyleSheet.create({
         marginVertical: widthToDp('0.2')
     },
     contactButton: {
-        backgroundColor: color.BLUE_3,
+        backgroundColor: color.YELLOW_2,
     },
     acceptButton: {
         backgroundColor: color.GREEN_2,
