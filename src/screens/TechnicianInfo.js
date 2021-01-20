@@ -1,34 +1,148 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-import { SafeAreaView, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
 
-import Header from '../components/Header'
-import { content, technician } from '../stylesheet'
+import { content, technician, heightToDp, global, widthToDp, color } from '../stylesheet'
+import { infoStyles as styles } from './User'
 
 import Feather from 'react-native-vector-icons/Feather'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import PersonalInfo from '../components/TechnicianInfo/PersonalInfo'
-import Location from '../components/TechnicianInfo/Location'
-import Review from '../components/TechnicianInfo/Review'
 
 import { connect } from 'react-redux'
 import { GET_TECHNICIAN_INFO } from '../store/actions/techAction'
 import { ENTER_PRIVATE_CHAT } from '../store/actions/chatAction'
 
 const mapStateToProps = (state) => ({
-    info : state.tech.info,
-    uid : state.auth.userInfo.uid
+    info: state.tech.info,
+    uid: state.auth.userInfo.uid
 })
 
 const TechnicianInfo = (props) => {
 
     return (
         <>
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-                <Header back={true} page="รายละเอียดช่าง" navigation={props.navigation} />
-                <ScrollView style={content.container}>
-                    {/* <PersonalInfo navigation={props.navigation} info={techInfo.userInfoID} aptitude={aptitude} /> */}
-                    <View style={technician.infoContainer}>
+            <TouchableOpacity style={[global.backIconContainer, { top: heightToDp('5') }]}
+                onPress={() => {
+                    props.navigation.goBack()
+                }}
+            >
+                <Feather name="chevron-left" style={global.backIcon} />
+            </TouchableOpacity>
+            <ScrollView style={{backgroundColor:color.BLUE_5}}>
+                <View style={styles.coverImage} >
+                    <View style={styles.headerContainer}>
+                        <Image
+                            style={styles.profileImage}
+                            source={{ uri: props.info.personalInfo.avatar }}
+                        />
+                        <View style={{ marginLeft: widthToDp('5') }}>
+                            <Text style={{ fontSize: widthToDp('5'), fontWeight: 'bold' }}>
+                                {`${props.info.personalInfo.firstname} ${props.info.personalInfo.lastname}`}
+                            </Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <TouchableOpacity style={[styles.headerButton, styles.contactColor, { marginRight: widthToDp('1') }]}>
+                                    <Ionicons style={styles.contactText} name='chatbubble-outline' />
+                                    <Text style={styles.contactText}>
+                                        สอบถาม
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.headerButton, styles.callColor]}>
+                                    <Feather style={styles.callText} name='phone' />
+                                    <Text style={styles.callText}>
+                                        โทร
+                                </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={content.container}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                        <View style={styles.onside}>
+                            <Feather name='x' style={[styles.onsideIcon, styles.xColor]} />
+                            <Text style={[styles.onsideText, styles.xColor]}>
+                                หน้าร้าน
+                            </Text>
+                        </View>
+                        <View style={styles.onside}>
+                            <Feather name='check' style={[styles.onsideIcon, styles.checkColor]} />
+                            <Text style={[styles.onsideText, styles.checkColor]}>
+                                บริการนอกสถานที่
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <View style={styles.infoRow}>
+                            <View style={styles.infoTopic}>
+                                <Text style={styles.topicText}>
+                                    ความถนัด
+                                </Text>
+                            </View>
+                            <View style={[styles.infoDetail , {justifyContent:"flex-end"}]}>
+                                {
+                                    props.info.aptitude.map((item, index) => {
+                                        return (
+                                            <View key={item.aptitude} style={styles.aptitude}>
+                                                <Text  style={styles.aptitudeText}>{item.aptitude}</Text>
+                                            </View>
+                                        )
+                                    })
+                                }
+
+                            </View>
+                        </View>
+                        <View style={styles.infoRow}>
+                            <View style={styles.infoTopic}>
+                                <Text style={styles.topicText}>
+                                    รูปภาพ
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={styles.infoRow}>
+                            <View style={styles.imageContainer}>
+                                <Image style={styles.image} />
+                                <Image style={styles.image} />
+                                <Image style={styles.image} />
+                                <Image style={styles.image} />
+                                <Image style={styles.image} />
+                                <Image style={styles.image} />
+                            </View>
+                        </View>
+                        <TouchableOpacity 
+                            style={[styles.infoRow, styles.ratingContainer]}
+                            onPress={ () => {
+                                console.log(props.info);
+                            }}
+                        >
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                <Feather name='map-pin' style={[styles.btnText, { paddingHorizontal: widthToDp('1') }]} />
+                                <Text style={styles.btnText}>แผนที่</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                <Feather name='chevron-right' style={styles.btnText} />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.infoRow, styles.ratingContainer]}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                <Feather name='star' style={[styles.btnText, { paddingHorizontal: widthToDp('1') }]} />
+                                <Text style={styles.btnText}>เรทติ้ง</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={styles.btnText}>{`${props.info.star}/5  (25 ครั้ง)`}</Text>
+                                <Feather name='chevron-right' style={styles.btnText} />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </ScrollView>
+        </>
+    )
+}
+
+export default connect(mapStateToProps, { ENTER_PRIVATE_CHAT, GET_TECHNICIAN_INFO })(TechnicianInfo)
+
+{/* <View style={technician.infoContainer}>
                         <View style={technician.imageContainer}>
                             <Image
                                 style={technician.image}
@@ -89,11 +203,4 @@ const TechnicianInfo = (props) => {
                     </View>
 
                     <Location />
-                    <Review />
-                </ScrollView>
-            </SafeAreaView>
-        </>
-    )
-}
-
-export default connect(mapStateToProps, { ENTER_PRIVATE_CHAT, GET_TECHNICIAN_INFO })(TechnicianInfo)
+                    <Review /> */}

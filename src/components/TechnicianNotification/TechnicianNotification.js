@@ -1,14 +1,14 @@
-import React, { useEffect} from 'react'
+import React from 'react'
 
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, View, TouchableOpacity, Button } from 'react-native'
 
-import { techNotification, color } from '../../stylesheet'
+import { techNotification, color, widthToDp } from '../../stylesheet'
 
 import Abstract from './Abstract'
 import { connect } from 'react-redux'
 
 const mapStateToProps =(state) => ({
-    tech_order : state.noti.tech_order
+    techOrder : state.noti.techOrder
 })
 
 const mapDispatchToProps = {
@@ -16,8 +16,9 @@ const mapDispatchToProps = {
 }
 
 const TechnicianNotification = (props) => {
-    const orderID = '#12312as'
     const month = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฏาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
+    
+
     return (
         <>
             <View style={techNotification.container}>
@@ -30,20 +31,19 @@ const TechnicianNotification = (props) => {
                 </View>
                 <View style={techNotification.content}>
                     {
-                        props.tech_order.length !== 0 ? (
-                            props.tech_order.map( (item , index) => {
+                        props.techOrder.length !== 0 ? (
+                            props.techOrder.map( (item , index) => {
                                 const date_ = new Date(item.date)
                                 return <Abstract key={index} 
-                                    name={item.senderName} 
+                                    order={item}
                                     distance="2.21" 
                                     date={`${date_.getDate()} ${month[date_.getMonth()]} ${date_.getFullYear() + 543}`} 
-                                    detail={item.detail} 
-                                    last={props.tech_order.length === index+1 ? true : false} 
+                                    last={props.techOrder.length === index+1 ? true : false}
                                 />
                             })
                         ) : (
-                            <View>
-                                    <Text style={{fontSize:16 , color : color.BLUE_5}}>
+                            <View style={{padding:widthToDp('1.5')}}>
+                                    <Text style={{fontSize:widthToDp('3.5') , color : color.BLUE_5}}>
                                         ไม่มีออเดอร์ใหม่
                                     </Text>
                             </View>

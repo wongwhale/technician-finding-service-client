@@ -14,15 +14,19 @@ import TechnicianInfo from './TechnicianInfo'
 import Post from './Post'
 import TabScreen from './TabScreen';
 
+import PriceInputModal from '../components/Modal/PriceInputModal'
+
 import { leave, connection } from '../store/actions/socketAction';
 import { CLOSE_DATE_PICKER_MODAL } from '../store/actions/modalAction';
 import { INITIAL_HISTORY_LIST } from '../store/actions/chatAction';
 import { SET_FILE } from '../store/actions/formAction';
 
 import { connect } from 'react-redux';
+import { userInfo } from '../stylesheet';
 
 const mapStateToProps = (state) => ({
   uid: state.auth.userInfo.uid,
+  role : state.auth.userInfo.role,
   date_picker: state.modal.date_picker,
   badge : state.noti.badge
 })
@@ -50,6 +54,7 @@ const Index = (props) => {
         <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
         <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
       </Stack.Navigator>
+      <PriceInputModal />
     </>
   );
 };

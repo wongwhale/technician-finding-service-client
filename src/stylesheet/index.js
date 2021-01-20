@@ -422,7 +422,8 @@ export const techNotification = StyleSheet.create({
     },
     abstractContainer: {
         flexDirection: 'row',
-        paddingVertical: heightToDp('0.7')
+        paddingVertical: heightToDp('0.7'),
+        height: widthToDp('23')
     },
     abstractBottomBorder: {
         borderBottomWidth: heightToDp('0.1'),
@@ -459,7 +460,7 @@ export const techNotification = StyleSheet.create({
         marginVertical: widthToDp('0.2')
     },
     contactButton: {
-        backgroundColor: color.BLUE_3,
+        backgroundColor: color.YELLOW_2,
     },
     acceptButton: {
         backgroundColor: color.GREEN_2,
