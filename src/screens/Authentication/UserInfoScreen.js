@@ -24,6 +24,7 @@ const UserInfo = (props) => {
 
     return (
         <>
+            <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray}>
                 <View style={global.header}>
                     <Image
@@ -42,7 +43,11 @@ const UserInfo = (props) => {
                             </Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity >
+                        <TouchableOpacity 
+                            onPress={ () => {
+                                props.navigation.navigate('setting')
+                            }}
+                        >
                             <Feather name="settings" style={global.chatIcon} />
                         </TouchableOpacity>
                     </View>
@@ -80,17 +85,6 @@ const UserInfo = (props) => {
                         }
                     </View>
                 </ScrollView>
-                <TouchableOpacity
-                    style={[infoStyles.infoRow, infoStyles.ratingContainer, { backgroundColor: color.RED_4 }]}
-                    onPress={() => {
-                        props.logout()
-                    }}
-                >
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                        <Feather name='log-out' style={[infoStyles.topicText, { paddingHorizontal: widthToDp('1'), color: color.RED_1 }]} />
-                        <Text style={[infoStyles.topicText, { color: color.RED_1 }]}>ออกจากระบบ</Text>
-                    </View>
-                </TouchableOpacity>
             </SafeAreaView>
         </>
     )

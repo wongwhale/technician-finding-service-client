@@ -23,6 +23,7 @@ const TechnicianInfo = (props) => {
 
     return (
         <>
+            <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray}>
                 <View style={global.header}>
                     <Image

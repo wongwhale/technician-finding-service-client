@@ -1,4 +1,4 @@
-import React  from 'react'
+import React from 'react'
 
 import {
     View,
@@ -12,16 +12,18 @@ import {
 import Header from '../../components/Header'
 import { content } from '../../stylesheet'
 
-const NearMeScreen = ({navigation}) => {
+const NearMeScreen = ({ navigation }) => {
     return (
         <>
+            {/* <SafeAreaView style={content.safearray}> */}
+            <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray}>
-                <Header page="ใกล้ฉัน"  back={true} navigation={navigation} />
-                <View style={{flex:1 , backgroundColor:'#E5E5ED'}}>
+                <Header page="ใกล้ฉัน" back={true} navigation={navigation} />
+                <View style={{ flex: 1 , backgroundColor:'#e5e5e5'}}>
                     {/* Map */}
                 </View>
             </SafeAreaView>
-            
+
         </>
     )
 }

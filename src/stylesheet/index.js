@@ -70,7 +70,11 @@ export const content = StyleSheet.create({
     },
     safearray : {
         flex : 1,
-        backgroundColor : '#fff'
+        backgroundColor : color.WHITE
+    },
+    topsafearray : {
+        flex : 0,
+        backgroundColor: color.WHITE
     }
 })
 
@@ -116,10 +120,10 @@ export const mainScreen = StyleSheet.create({
 
 export const global = StyleSheet.create({
     header: {
-        paddingVertical: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        height: heightToDp('10')
+        height: heightToDp('7'),
+        backgroundColor:color.WHITE,
     },
     headerText: {
         color: color.BLUE_2,

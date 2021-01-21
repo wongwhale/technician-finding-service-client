@@ -39,7 +39,8 @@ const mapDispatchToProps = {
 const Notification = (props) => {
     return (
         <>
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <SafeAreaView style={content.topsafearray} />
+            <SafeAreaView style={content.topsafearray}>
                 <Header page="การแจ้งเตือน" navigation={props.navigation} />
                 {
                     props.role === 'technician' ? (

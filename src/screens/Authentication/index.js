@@ -13,6 +13,7 @@ import Chat from './ChatScreen'
 import TechnicianInfo from './TechnicianInfoScreen'
 import Post from './PostScreen'
 import TabScreen from './TabScreen';
+import SettingScreen from './SettingScreen';
 
 import { leave, connection } from '../../store/actions/socketAction';
 import { CLOSE_DATE_PICKER_MODAL } from '../../store/actions/modalAction';
@@ -50,6 +51,7 @@ const Index = (props) => {
         <Stack.Screen name='post' component={Post} options={{ headerShown: false }} />
         <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
         <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
+        <Stack.Screen name='setting' component={SettingScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </>
   );

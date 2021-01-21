@@ -51,6 +51,7 @@ const PostScreen = (props) => {
     }, [])
     return (
         <>
+            <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray}>
                 <Header page='บอกอาการ' back={true} navigation={props.navigation} chat={false} />
                 <ScrollView style={content.container}>

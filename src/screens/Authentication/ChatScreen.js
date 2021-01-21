@@ -42,6 +42,7 @@ const Chat = (props) => {
 
     return (
         <>
+            <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray}>
                 <ChatHeader navigation={props.navigation} />
                 <ScrollView

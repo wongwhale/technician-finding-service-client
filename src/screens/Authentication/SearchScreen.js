@@ -28,13 +28,10 @@ const mapStateToProps = (state) => ({
 
 
 const SearchScreen = (props) => {
-    const list = [
-        { name: 'ปริญญา สีตะวัน', distance: 2.3, star: 3.5, id: 'akchq1240a' },
-        { name: 'นนทวัต อุตพรม', distance: 2.1, star: 2.1, id: 'qweuxn1232' },
-    ]
 
     return (
         <>
+            <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray}>
 
                 <Header page="ค้นหา" back={true} navigation={props.navigation} />

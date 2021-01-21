@@ -38,6 +38,7 @@ const Main = (props) => {
 
     return (
         <>
+            <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray}>
                 <Header page='หน้าหลัก' back={false} navigation={props.navigation} />
                 <UserInfo  navigation={props.navigation} />
