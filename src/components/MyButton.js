@@ -1,7 +1,7 @@
 import React , {} from 'react'
 
 import { TouchableOpacity , View , Text, StyleSheet } from 'react-native'
-import { color } from '../stylesheet'
+import { color, widthToDp } from '../stylesheet'
 
 const MyButton = ({onPress , title}) => {
     return(
@@ -19,18 +19,17 @@ export default MyButton
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:color.BLUE_2,
-        paddingVertical:10,
-        paddingHorizontal:15,
-        borderRadius:10,
+        backgroundColor:color.BLUE_3,
+        borderRadius:widthToDp('2'),
         marginVertical:5,
-        height:45,
+        height:widthToDp('10'),
         width:'100%',
         justifyContent:'center',
         alignItems:'center'
     },
     text:{
         color:color.WHITE,
-        fontSize:18
+        fontSize:widthToDp('4'),
+        fontWeight:'bold'
     }
 })

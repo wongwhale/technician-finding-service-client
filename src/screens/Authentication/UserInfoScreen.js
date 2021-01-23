@@ -24,9 +24,9 @@ const UserInfo = (props) => {
 
     return (
         <>
-            <SafeAreaView style={content.topsafearray} />
+            <SafeAreaView style={[content.topsafearray]} />
             <SafeAreaView style={content.safearray}>
-                <View style={global.header}>
+                <View style={[global.header]}>
                     <Image
                         style={infoStyles.profileImage}
                         source={{ uri: props.avatar }}
@@ -43,8 +43,8 @@ const UserInfo = (props) => {
                             </Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity 
-                            onPress={ () => {
+                        <TouchableOpacity
+                            onPress={() => {
                                 props.navigation.navigate('setting')
                             }}
                         >
@@ -60,14 +60,21 @@ const UserInfo = (props) => {
                         <Feather name="chevron-left" style={global.backIcon} />
                     </TouchableOpacity>
                 </View>
-                <ScrollView >
-                    <View style={infoStyles.headerContainer}>
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ fontSize: widthToDp('5'), fontWeight: 'bold' }}>
-                                {`${props.firstname} ${props.lastname}`}
-                            </Text>
-                        </View>
+                <View style={[infoStyles.headerContainer, { backgroundColor: '#fff' }]}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ fontSize: widthToDp('5'), color: '#333' }}>
+                            {`${props.firstname} ${props.lastname}`}
+                        </Text>
                     </View>
+                </View>
+                <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8, backgroundColor: '#fff' }}>
+                    <TouchableOpacity
+                        style={{ width: widthToDp('70'), backgroundColor: color.BLUE_3, borderRadius: widthToDp('1'), borderWidth: 2, borderColor: `${color.BLUE_3}66`, justifyContent: 'center', alignItems: 'center', height: widthToDp('7') }}
+                    >
+                        <Text style={{ color: color.WHITE, fontSize: widthToDp('3.5'), fontWeight: 'bold' }}>แก้ไขข้อมูลส่วนตัว</Text>
+                    </TouchableOpacity>
+                </View>
+                <ScrollView >
                     <View style={[content.container]}>
                         {
                             props.role === 'user' ? (

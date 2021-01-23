@@ -5,7 +5,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { message } from '../../stylesheet'
 
 const MessageList = ({ status, name, lastMessage, badges, onPress, avatar }) => {
-
+    
     return (
         <>
             <TouchableOpacity style={message.listContainer} onPress={() => onPress()}>

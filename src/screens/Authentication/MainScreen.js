@@ -45,18 +45,17 @@ const Main = (props) => {
                 <ScrollView>
                     <View style={mainScreen.container}>
                         <View style={mainScreen.menuLayout}>
-                            <TouchableOpacity style={mainScreen.halfBox}
+                            <TouchableOpacity style={[mainScreen.halfBox , {marginRight:5}]}
                                 onPress={() => {
-                                    // console.log('test');
                                     props.navigation.navigate('search')
                                 }}
                             >
                                 <Feather name='search' size={50} color={color.BLUE_1} />
                                 <Text style={mainScreen.menuTextHalf}>
                                     ค้นหา
-                        </Text>
+                                </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={mainScreen.halfBox}
+                            <TouchableOpacity style={[mainScreen.halfBox , {marginLeft:5}]}
                                 onPress={() => {
                                     props.navigation.navigate('nearme')
                                 }}

@@ -21,6 +21,7 @@ import { INITIAL_HISTORY_LIST } from '../../store/actions/chatAction';
 import { SET_FILE } from '../../store/actions/formAction';
 
 import { connect } from 'react-redux';
+import TechnicianRegisterScreen from './TechnicianRegisterScreen';
 
 const mapStateToProps = (state) => ({
   uid: state.auth.userInfo.uid,
@@ -52,6 +53,7 @@ const Index = (props) => {
         <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
         <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
         <Stack.Screen name='setting' component={SettingScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='regTech' component={TechnicianRegisterScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </>
   );

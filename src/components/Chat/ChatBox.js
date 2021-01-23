@@ -27,7 +27,7 @@ const ChatBox = (props) => {
     return (
         <>
             {
-                props.messages !== undefined && props.messages !== null ? (
+                props.messages !== undefined ? (
                     <>
                         {
                             props.messages.map((item, index) => {

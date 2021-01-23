@@ -9,6 +9,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 const Tab = createBottomTabNavigator()
 
 import Feather from 'react-native-vector-icons/Feather'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { color } from '../../stylesheet'
 
@@ -32,15 +33,19 @@ const TabScreen = (props) => {
                         let iconSize;
 
                         if (route.name === 'menu') {
-                            iconName = focused ? 'home' : 'home';
-                            iconSize = focused ? 30 : 25
+                            // iconName = focused ? 'home' : 'home';
+                            // iconSize = focused ? 30 : 25
+                            iconName = focused ? 'home' : 'home-outline'
+                            iconSize = 25
 
                         } else if (route.name === 'notification') {
-                            iconName = focused ? 'bell' : 'bell';
-                            iconSize = focused ? 30 : 25
+                            // iconName = focused ? 'bell' : 'bell';
+                            // iconSize = focused ? 30 : 25
+                            iconName = focused ? 'notifications' : 'notifications-outline';
+                            iconSize = 25
 
                         }
-                        return <Feather name={iconName} size={iconSize} color={color} />;
+                        return <Ionicons name={iconName} size={iconSize} color={color} />;
                     },
                 })}
                 tabBarOptions={{
@@ -54,7 +59,7 @@ const TabScreen = (props) => {
                     name="notification" component={Notification} 
                     options={
                         props.techOrder.length > 0 
-                        ? {tabBarBadge : props.techOrder.length } 
+                        ? {tabBarBadge : props.techOrder.length + 1} 
                         : null} 
                     />
             </Tab.Navigator>

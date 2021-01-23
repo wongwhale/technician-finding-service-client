@@ -2,10 +2,10 @@ import React, { } from 'react'
 
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 
-import Feather from 'react-native-vector-icons/Feather'
-
 import { userInfo } from '../stylesheet'
 import { connect } from 'react-redux'
+
+import Feather from 'react-native-vector-icons/Feather'
 
 const mapStateToProps = (state) => ({
     firstname: state.auth.userInfo.firstname,
@@ -22,8 +22,6 @@ const UserInfo = (props) => {
                     style={userInfo.userImage}
                     source={{ uri: props.avatar }}
                 />
-
-
                 <View style={userInfo.subContainer}>
                     <Text style={userInfo.name}>
                         {`${props.firstname} ${props.lastname}`}

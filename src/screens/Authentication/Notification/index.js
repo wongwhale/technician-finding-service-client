@@ -7,7 +7,7 @@ import {
     SafeAreaView,
     TextInput,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -20,9 +20,9 @@ import UserNotification from '../../../components/UserNotification'
 import TechnicianNotification from '../../../components/TechnicianNotification'
 import { connect } from 'react-redux'
 
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import Search from '../SearchScreen'
-import NewOrder from './NewOrderTab'
+import { createMaterialTopTabNavigator  } from '@react-navigation/material-top-tabs'
+import NewOrderTab from './NewOrderTab'
+
 
 const TopTab = createMaterialTopTabNavigator()
 
@@ -36,26 +36,26 @@ const mapDispatchToProps = {
 }
 
 
-const Notification = (props) => {
+const Notification = ({navigation , role , userResponse }) => {
     return (
         <>
             <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.topsafearray}>
-                <Header page="การแจ้งเตือน" navigation={props.navigation} />
+                <Header page="การแจ้งเตือน" navigation={navigation} />
                 {
-                    props.role === 'technician' ? (
-                        <TopTab.Navigator>
-                            <TopTab.Screen name="ออเดอร์ใหม่" component={NewOrder} />
-                            <TopTab.Screen name="ยืนยัน" component={NewOrder} />
-                            <TopTab.Screen name="รอการยืนยัน" component={NewOrder} />
-                            {/* <TopTab.Screen name="Settings" component={Search} /> */}
-                        </TopTab.Navigator>
+                    role === 'technician' ? (
+                        <>
+                            {/* <TopTab.Navigator>
+                                 <TopTab.Screen name='newOrder' component={NewOrderTab} />
+                                 <TopTab.Screen name='accepted' component={NewOrderTab} />
+                             </TopTab.Navigator> */}
+                        </>
                     ) :
-                        props.role === 'user' ? (
+                        role === 'user' ? (
                             <ScrollView>
                                 {
-                                    props.userResponse.length !== 0 ? (
-                                        props.userResponse.map((item) => {
+                                    userResponse.length !== 0 ? (
+                                        userResponse.map((item) => {
                                             console.log('user test noti', item);
                                             return (
                                                 <View key={item._id} style={content.container}>
@@ -66,9 +66,17 @@ const Notification = (props) => {
                                     ) : null
                                 }
                             </ScrollView>
-                        ) : null
+                        ) : (
+                            <>
+                                <View>
+                                    <Text>
+                                        ไม่มีการแจ้งเตือน
+                                    </Text>
+                                </View>
+                            </>
+                        )
                 }
-
+            </SafeAreaView>
                 {/* <ScrollView>
                     {
                         props.role === 'technician' ? (
@@ -90,7 +98,6 @@ const Notification = (props) => {
                         ) : null
                     }
                 </ScrollView> */}
-            </SafeAreaView>
 
         </>
     )
