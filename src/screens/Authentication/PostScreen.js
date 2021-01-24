@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SafeAreaView, View, ScrollView } from 'react-native'
+import { SafeAreaView, View, ScrollView, Text } from 'react-native'
 
 import Header from '../../components/Header'
 import DateTimePicker from '../../components/Form/DateTimePicker'
@@ -25,7 +25,7 @@ import { SET_FILE, SET_LOCATION } from '../../store/actions/formAction'
 import { CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
 
 import { connect } from 'react-redux'
-import { content } from '../../stylesheet'
+import { content, color, card } from '../../stylesheet'
 
 const mapStateToProps = (state) => ({
     firstname: state.auth.userInfo.firstname,
@@ -52,18 +52,41 @@ const PostScreen = (props) => {
     return (
         <>
             <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={content.safearray}>
+            <SafeAreaView style={[content.safearray, { backgroundColor: color.WHITE }]}>
                 <Header page='บอกอาการ' back={true} navigation={props.navigation} chat={false} />
                 <ScrollView style={content.container}>
-                    <Line text='ระบุเวลา' />
-                    <DateTimePicker />
-                    <Line text='ระบุรายละเอียด' mt />
-                    <TypePicker />
-                    <DetailInput />
-                    <ImagePicker />
-                    <Line text='ระบุสถานที่' mt />
-                    <LocationPicker />
-                    <View style={{ marginBottom: 10 }} />
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>
+                                ระบุเวลานัด
+                            </Text>
+                        </View>
+                        <View style={card.cardContainer}>
+                            <DateTimePicker />
+                        </View>
+                    </View>
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>
+                                ระบุรายละเอียด
+                            </Text>
+                        </View>
+                        <View style={card.cardContainer}>
+                            <TypePicker />
+                            <DetailInput />
+                            <ImagePicker />
+                        </View>
+                    </View>
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>
+                                ระบุสถานที่
+                            </Text>
+                        </View>
+                        <View style={card.cardContainer}>
+                            <LocationPicker />
+                        </View>
+                    </View>
                     <MyButton title='ยืนยัน'
                         onPress={() => {
                             const date = `${props.year}-${("0" + (props.month)).slice(-2)}-${("0" + (props.date)).slice(-2)}T${("0" + (props.hour)).slice(-2)}:${("0" + (props.minute)).slice(-2)}:00Z`

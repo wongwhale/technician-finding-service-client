@@ -14,14 +14,15 @@ import Feather from 'react-native-vector-icons/Feather'
 
 import Header from '../../../components/Header'
 
-import { content } from '../../../stylesheet'
+import { content, widthToDp, color } from '../../../stylesheet'
 
 import UserNotification from '../../../components/UserNotification'
-import TechnicianNotification from '../../../components/TechnicianNotification'
 import { connect } from 'react-redux'
 
-import { createMaterialTopTabNavigator  } from '@react-navigation/material-top-tabs'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+
 import NewOrderTab from './NewOrderTab'
+import AcceptedOrderTab from './AcceptedOrderTab'
 
 
 const TopTab = createMaterialTopTabNavigator()
@@ -36,19 +37,54 @@ const mapDispatchToProps = {
 }
 
 
-const Notification = ({navigation , role , userResponse }) => {
+const Notification = ({ navigation, role, userResponse }) => {
     return (
         <>
             <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={content.topsafearray}>
+            <SafeAreaView style={content.safearray}>
                 <Header page="การแจ้งเตือน" navigation={navigation} />
                 {
                     role === 'technician' ? (
                         <>
-                            {/* <TopTab.Navigator>
-                                 <TopTab.Screen name='newOrder' component={NewOrderTab} />
-                                 <TopTab.Screen name='accepted' component={NewOrderTab} />
-                             </TopTab.Navigator> */}
+                            <TopTab.Navigator lazy tabBarPosition='top'
+                                tabBarOptions={{
+                                    labelStyle : { fontSize : widthToDp('3.6') , fontWeight : 'bold'},
+                                    indicatorStyle : { backgroundColor : color.BLUE_1 }
+                                }}
+                                screenOptions = { ({route}) => ({
+                                    tabBarLabel : ({focused}) => {
+                                        let name 
+                                        let weight
+                                        let fontColor
+                                        if(route.name === 'newOrderTab'){
+                                            name = 'ออเดอร์ใหม่'
+                                            weight = focused ? 'bold' : 'normal' 
+                                            fontColor = focused ? color.BLUE_0 : color.BLUE_4
+                                        }else if (route.name === 'acceptedOrderTab'){
+                                            name = 'ยืนยันแล้ว'
+                                            weight = focused ? 'bold' : 'normal' 
+                                            fontColor = focused ? color.BLUE_0 : color.BLUE_4
+                                        }
+                                        return <Text style={{fontWeight : weight , color : fontColor , fontSize : widthToDp('4') }}>{name}</Text>
+                                    },
+                                    
+                                })}
+                            >
+                                <TopTab.Screen name='newOrderTab' component={NewOrderTab} />
+                                <TopTab.Screen name='acceptedOrderTab' component={AcceptedOrderTab} />
+                            </TopTab.Navigator>
+                            {/* <View style={{ flex: 1 }}>
+                                <View style={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }}>
+                                    <View style={{ flexDirection: 'row' , justifyContent : 'space-evenly' }}>
+                                        <TouchableOpacity>
+                                            <Text>New Order</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity>
+                                            <Text>Accepted Order</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View> */}
                         </>
                     ) :
                         role === 'user' ? (
@@ -67,38 +103,16 @@ const Notification = ({navigation , role , userResponse }) => {
                                 }
                             </ScrollView>
                         ) : (
-                            <>
-                                <View>
-                                    <Text>
-                                        ไม่มีการแจ้งเตือน
+                                <>
+                                    <View>
+                                        <Text>
+                                            ไม่มีการแจ้งเตือน
                                     </Text>
-                                </View>
-                            </>
-                        )
+                                    </View>
+                                </>
+                            )
                 }
             </SafeAreaView>
-                {/* <ScrollView>
-                    {
-                        props.role === 'technician' ? (
-                            <View style={content.container}>
-                                <TechnicianNotification />
-                            </View>
-                        ) : null
-                    }
-                    {
-                        props.userResponse.length !== 0 ? (
-                            props.userResponse.map((item) => {
-                                console.log('user test noti' , item);
-                                return (
-                                    <View key={item._id} style={content.container}>
-                                        <UserNotification orderID={item._id} acceptedTech={item.acceptedTech} />
-                                    </View>
-                                )
-                            })
-                        ) : null
-                    }
-                </ScrollView> */}
-
         </>
     )
 }

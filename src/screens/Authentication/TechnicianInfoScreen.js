@@ -24,7 +24,7 @@ const TechnicianInfo = (props) => {
     return (
         <>
             <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={content.safearray}>
+            <SafeAreaView style={[content.safearray, { backgroundColor: '#fff' }]}>
                 <View style={global.header}>
                     <Image
                         style={infoStyles.profileImage}
@@ -52,14 +52,14 @@ const TechnicianInfo = (props) => {
                         <Feather name="chevron-left" style={global.backIcon} />
                     </TouchableOpacity>
                 </View>
-                <ScrollView style={{ backgroundColor: color.WHITE }}>
-                    <View style={infoStyles.headerContainer}>
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ fontSize: widthToDp('5'), fontWeight: 'bold' }}>
-                                {`${props.info.personalInfo.firstname} ${props.info.personalInfo.lastname}`}
-                            </Text>
-                        </View>
+                <View style={[infoStyles.headerContainer , {padding:8}]}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ fontSize: widthToDp('5'), fontWeight: 'bold' }}>
+                            {`${props.info.personalInfo.firstname} ${props.info.personalInfo.lastname}`}
+                        </Text>
                     </View>
+                </View>
+                <ScrollView>
                     <View style={content.container}>
                         <TechnicianInfoComponent info={props.info} />
                     </View>

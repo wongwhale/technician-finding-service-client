@@ -69,7 +69,7 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                     query:
                         `
                         query{
-                            getTechnicianInfo(_id :"${tid}") {
+                            getTechnicianInfo( userID :"${tid}") {
                               onSite
                               star
                               amount
@@ -106,6 +106,9 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                     }
                 })
                 resolve()
+            }).catch( err => {
+                // alert(err)
+                console.log(err);
             })
         })
     })

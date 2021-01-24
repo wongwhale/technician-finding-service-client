@@ -39,5 +39,23 @@ export const styles = StyleSheet.create({
     checkIcon: {
         fontSize:widthToDp('4'),
         color:color.WHITE
+    },
+    topicText:{
+        fontSize:widthToDp('4.5'),
+        color : color.BLUE_0
+    },
+    card:{
+        backgroundColor: '#fff',
+        borderRadius : widthToDp('2'),
+        marginBottom : 15
+    },
+    cardHeader : {
+        borderBottomColor : color.WHITE,
+        paddingHorizontal : widthToDp('4'),
+        paddingVertical : widthToDp('2'),
+        borderBottomWidth : 1
+    },
+    cardContainer : {
+        padding : widthToDp('2'),
     }
 })

@@ -25,6 +25,7 @@ const Message = (props) => {
         props.INITIAL_HISTORY_LIST(props.uid)
         .then( res => {
             setLists(res)
+            console.log(res);
         })
         .catch( err => {
             setLists([])
@@ -48,6 +49,7 @@ const Message = (props) => {
                                     lastMessage={item.recentMessage.message} 
                                     status={true} 
                                     badges={0} 
+                                    msgType = {item.recentMessage.msgType}
                                     onPress={ () => {
                                         // props.navigation.navigate('chat')
                                         if(props.uid !== item.technicianID){

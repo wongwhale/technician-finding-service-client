@@ -128,6 +128,7 @@ export const INITIAL_HISTORY_LIST = (uid) => dispatch => {
                                   sender
                                   message
                                   date
+                                  msgType
                                 }
                             }
                         

@@ -58,14 +58,39 @@ color.IOS_BLUE = '#0461e9'
 color.LIGHT_BLUE = '#97B3D0'
 // color.GREY_BLUE = '#539D'
 color.SKIN = '#F0EEE8'
-color.WHITE = '#F6F6F6'
+color.WHITE = '#e6e6e6'
 color.GREY = '#999999'
 
+export const card = StyleSheet.create({
+    card: {
+        backgroundColor: '#fff',
+        borderRadius: widthToDp('2'),
+        marginBottom: 15
+    },
+    cardHeader: {
+        borderBottomColor: color.WHITE,
+        paddingHorizontal: widthToDp('4'),
+        paddingVertical: widthToDp('2'),
+        borderBottomWidth: 1
+    },
+    cardContainer: {
+        paddingHorizontal: widthToDp('4'),
+        paddingVertical:widthToDp('2')
+    },
+    headerText: {
+        fontSize: widthToDp('4.5'),
+        color: color.BLUE_0
+    },
+    topBorder : {
+        borderTopColor : color.WHITE,
+        borderTopWidth:1
+    },
+})
 
 export const content = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: widthToDp('8'),
+        paddingHorizontal: widthToDp('7'),
         paddingVertical: 10,
     },
     safearray: {
@@ -128,8 +153,8 @@ export const global = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: heightToDp('7'),
-        backgroundColor: color.WHITE,
-        paddingBottom : heightToDp('1')
+        backgroundColor: '#fff',
+        paddingBottom: heightToDp('1')
     },
     headerText: {
         color: color.BLUE_2,
@@ -244,7 +269,7 @@ export const userInfo = StyleSheet.create({
 export const searchScreen = StyleSheet.create({
     textInputContainer: {
         borderRadius: widthToDp('5'),
-        backgroundColor: color.BLUE_5,
+        backgroundColor: '#fff',
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
         flex: 1,
@@ -342,66 +367,8 @@ export const searchScreen = StyleSheet.create({
 })
 
 export const userNotification = StyleSheet.create({
-    container: {
-        paddingHorizontal: widthToDp('2'),
-        paddingVertical: heightToDp('1'),
-        borderRadius: heightToDp('1.5'),
-        backgroundColor: color.BLUE_5
-    },
-    headerContainer: {
-        borderBottomColor: color.BLUE_4,
-        borderBottomWidth: heightToDp('0.05'),
-        paddingHorizontal: widthToDp('2'),
-        paddingVertical: heightToDp('1')
-    },
-    headerText: {
-        fontSize: widthToDp('4'),
-        color: color.BLUE_2
-    },
-    headerID: {
-        fontSize: widthToDp('3'),
-        color: color.BLUE_4
-    },
-    content: {
-        padding: widthToDp('1'),
-    },
-    abstractContainer: {
-        flexDirection: 'row',
-        paddingVertical: heightToDp('0.7')
-    },
-    abstractBottomBorder: {
-        borderBottomWidth: heightToDp('0.05'),
-        borderColor: color.BLUE_4
-    },
-    imageContainer: {
-        width: widthToDp('12'),
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-    },
-    image: {
-        width: widthToDp('12'),
-        height: widthToDp('12'),
-        borderRadius: widthToDp('6'),
-        backgroundColor: color.YELLOW_4,
-    },
-    detailContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        paddingLeft: widthToDp('3'),
-    },
-    buttonContainer: {
-        // backgroundColor:'grey',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    button: {
-        padding: 5,
-        width: widthToDp('15'),
-        height: widthToDp('6'),
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: widthToDp('3'),
-        marginVertical: widthToDp('0.2')
+    bg : {
+        backgroundColor : color.BLUE_5
     },
     contactButton: {
         backgroundColor: color.BLUE_3,
@@ -428,31 +395,32 @@ export const userNotification = StyleSheet.create({
     detailText: {
         fontSize: widthToDp('3')
     },
+    headerText: {
+        color : color.BLUE_0
+    },
 })
 
-export const techNotification = StyleSheet.create({
+export const notification = StyleSheet.create({
     container: {
-        paddingHorizontal: widthToDp('2'),
         paddingVertical: heightToDp('1'),
         borderRadius: heightToDp('1.5'),
-        backgroundColor: color.BLUE_2
     },
     headerContainer: {
-        borderBottomColor: color.BLUE_5,
+        borderBottomColor: color.WHITE,
         borderBottomWidth: heightToDp('0.05'),
-        paddingHorizontal: widthToDp('2'),
+        paddingHorizontal: widthToDp('4'),
         paddingVertical: heightToDp('1')
     },
     headerText: {
         fontSize: widthToDp('4'),
-        color: color.WHITE
     },
     headerID: {
         fontSize: widthToDp('3'),
         color: color.BLUE_5
     },
     content: {
-        padding: widthToDp('1'),
+        paddingHorizontal:widthToDp('4'),
+        paddingVertical : widthToDp('1')
     },
     abstractContainer: {
         flexDirection: 'row',
@@ -461,7 +429,7 @@ export const techNotification = StyleSheet.create({
     },
     abstractBottomBorder: {
         borderBottomWidth: heightToDp('0.1'),
-        borderColor: color.BLUE_5
+        borderColor: color.WHITE
     },
     imageContainer: {
         width: widthToDp('12'),
@@ -493,6 +461,20 @@ export const techNotification = StyleSheet.create({
         borderRadius: widthToDp('3'),
         marginVertical: widthToDp('0.2')
     },
+    nameText: {
+        fontSize: widthToDp('4'),
+        fontWeight: 'bold'
+    },
+    detailText: {
+        fontSize: widthToDp('3')
+    },
+})
+
+
+export const newOrder = StyleSheet.create({
+    bg : {
+        backgroundColor : color.BLUE_2
+    },
     contactButton: {
         backgroundColor: color.YELLOW_2,
     },
@@ -511,12 +493,35 @@ export const techNotification = StyleSheet.create({
     text: {
         color: color.WHITE
     },
-    nameText: {
-        fontSize: widthToDp('4'),
-        fontWeight: 'bold'
+    headerText:{
+        color : color.WHITE
     },
-    detailText: {
-        fontSize: widthToDp('3')
+})
+
+export const  acceptedOrder = StyleSheet.create({
+    bg : {
+        backgroundColor : color.GREEN_2
+    },
+    contactButton: {
+        backgroundColor: color.YELLOW_2,
+    },
+    acceptButton: {
+        backgroundColor: color.BLUE_2,
+    },
+    buttonText: {
+        fontSize: widthToDp('2.6'),
+        color: color.WHITE
+    },
+    star: {
+        // backgroundColor:color.YELLOW
+        fontSize: widthToDp('2'),
+        color: color.YELLOW
+    },
+    text: {
+        color: color.WHITE
+    },
+    headerText:{
+        color : color.WHITE
     },
 })
 
@@ -564,16 +569,16 @@ export const posting = StyleSheet.create({
     inputText: {
         color: color.BLUE_1,
         fontSize: widthToDp('3.5'),
-        
+
     },
     detailInput: {
         height: widthToDp('25'),
         marginTop: heightToDp('0.5'),
         padding: widthToDp('3'),
         borderRadius: widthToDp('2'),
-        borderWidth: widthToDp('0.1'),
+        borderWidth: 1,
         fontSize: widthToDp('4'),
-        borderColor: color.BLUE_4,
+        borderColor: color.BLUE_5,
         color: color.BLUE_1,
         lineHeight: widthToDp('4'),
     },

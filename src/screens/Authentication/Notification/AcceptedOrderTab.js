@@ -1,12 +1,12 @@
 import React from 'react'
 
 import {
-    View
+    View,
 } from 'react-native'
 
 import { content } from '../../../stylesheet'
 
-import NewOrderNotification from '../../../components/TechnicianNotification/NewOrderNotification'
+import AcceptedNotification from '../../../components/TechnicianNotification/AcceptedNotification'
 import { connect } from 'react-redux'
 
 
@@ -18,14 +18,14 @@ const mapDispatchToProps = {
 
 }
 
-const NewOrder = () => {
+const AcceptedOrderTab = () => {
     return (
         <>
             <View style={content.container}>
-                <NewOrderNotification />
+                <AcceptedNotification />
             </View>
         </>
     )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewOrder)
+export default connect(mapStateToProps, mapDispatchToProps)(AcceptedOrderTab)

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { SafeAreaView, View, Text, TouchableOpacity, Button } from 'react-native'
-import { content, widthToDp, color, global, posting, datePicker, heightToDp } from '../../stylesheet'
+import { content, widthToDp, color, global, posting, datePicker, heightToDp, card } from '../../stylesheet'
 
 import Header from '../../components/Setting/Header'
 import { styles } from '../../components/Setting/styles'
@@ -21,7 +21,7 @@ import { SET_LOCATION } from '../../store/actions/formAction'
 
 import MyButton from '../../components/MyButton'
 
-const CheckBox = ({ title, status, onPress }) => {
+export const CheckBox = ({ title, status, onPress }) => {
     return (
         <>
             <TouchableOpacity
@@ -57,7 +57,7 @@ const TechnicianRegisterScreen = (props) => {
     const [day, setDay] = React.useState({
         title: ['วันจันทร์', 'วันอังคาร', 'วันพุธ', 'วันพฤหัสบดี', 'วันศุกร์', 'วันเสาร์', 'วันอาทิตย์'],
         status: [false, false, false, false, false, false, false],
-        no : [1,2,3,4,5,6,0]
+        no: [1, 2, 3, 4, 5, 6, 0]
     })
     const [starTimeVisible, setStartTimeVisible] = React.useState(false)
     const [endTimeVisible, setEndTimeVisible] = React.useState(false)
@@ -77,7 +77,7 @@ const TechnicianRegisterScreen = (props) => {
         status: [...aptitudeType].map((item) => false)
     })
 
-    const [detail , setDetail] = React.useState('')
+    const [detail, setDetail] = React.useState('')
 
     React.useEffect(() => {
         props.SET_LOCATION(18.795924746501605, 98.95296894013882)
@@ -86,116 +86,136 @@ const TechnicianRegisterScreen = (props) => {
     return (
         <>
             <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={content.safearray}>
+            <SafeAreaView style={[content.safearray, { backgroundColor: color.WHITE }]}>
                 <Header navigation={props.navigation} title='สมัครเป็นช่าง' />
                 <ScrollView style={content.container}>
-                    <Text>
-                        วันทำงาน
-                    </Text>
-                    {
-                        day.title.map((item, index) => {
-                            return <CheckBox
-                                key={item}
-                                title={item}
-                                status={day.status[index]}
-                                onPress={() => {
-                                    let status = [...day.status]
-                                    status[index] = !status[index]
-                                    setDay({ ...day, status: status })
-                                }}
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>
+                                วันทำงาน
+                            </Text>
+                        </View>
+                        <View style={card.cardContainer}>
+                            {
+                                day.title.map((item, index) => {
+                                    return <CheckBox
+                                        key={item}
+                                        title={item}
+                                        status={day.status[index]}
+                                        onPress={() => {
+                                            let status = [...day.status]
+                                            status[index] = !status[index]
+                                            setDay({ ...day, status: status })
+                                        }}
+                                    />
+                                })
+                            }
+                        </View>
+                    </View>
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>เวลาทำงาน</Text>
+                        </View>
+                        <View style={card.cardContainer}>
+                            <View style={[posting.halfContainer]}>
+                                <View style={{ flex: 1 }}>
+                                    <Text style={posting.halfHeader}>เวลาเริ่มงาน</Text>
+                                    <TouchableOpacity
+                                        style={[posting.halfInput, { marginRight: widthToDp('1') }]}
+                                        onPress={() => {
+                                            setStartTimeVisible(true)
+                                        }}
+                                    >
+                                        <Text style={posting.inputText}>{`${("0" + time.start.hour).slice(-2)} : ${("0" + time.start.minute).slice(-2)} น`}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flex: 1 }}>
+                                    <Text style={posting.halfHeader}>เวลาเสร็จงาน</Text>
+                                    <TouchableOpacity
+                                        style={[posting.halfInput, { marginLeft: widthToDp('1') }]}
+                                        onPress={() => setEndTimeVisible(true)}
+                                    >
+                                        <Text style={posting.inputText}>{`${("0" + time.end.hour).slice(-2)} : ${("0" + time.end.minute).slice(-2)} น`}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>ความถนัด</Text>
+                        </View>
+                        <View style={card.cardContainer}>
+                            {
+                                aptitude.type.map((item, index) => {
+                                    return <CheckBox
+                                        title={item}
+                                        onPress={() => {
+                                            let status = [...aptitude.status]
+                                            status[index] = !status[index]
+                                            setAbtitude({ ...aptitude, status: status })
+
+                                        }}
+                                        status={aptitude.status[index]}
+                                        key={item}
+
+                                    />
+                                })
+                            }
+                        </View>
+                    </View>
+                    <View style={card.card}>
+                        <View style={card.cardHeader} >
+                            <Text style={card.headerText}>ที่อยู่</Text>
+                        </View>
+                        <View style={card.cardContainer}>
+                            <TextInput
+                                multiline
+                                style={[posting.detailInput, { marginBottom: 5 }]}
+                                placeholder='ที่อยู่'
+                                value={detail}
+                                onChangeText={(val) => setDetail(val)}
                             />
-                        })
-                    }
-                    <Text>เวลาทำงาน</Text>
-                    <View style={[posting.halfContainer]}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={posting.halfHeader}>เวลาเริ่มงาน</Text>
-                            <TouchableOpacity
-                                style={[posting.halfInput, { marginRight: widthToDp('1') }]}
-                                onPress={() => {
-                                    setStartTimeVisible(true)
+                            <MapView
+                                style={{ width: '100%', aspectRatio: 1, justifyContent: 'center', alignItems: 'center', borderRadius: widthToDp('2') }}
+                                provider={PROVIDER_GOOGLE}
+                                region={{
+                                    latitude: props.location.latitude,
+                                    longitude: props.location.longitude,
+                                    latitudeDelta: 0.005,
+                                    longitudeDelta: 0.005
                                 }}
+                                showsUserLocation
                             >
-                                <Text style={posting.inputText}>{`${("0" + time.start.hour).slice(-2)} : ${("0" + time.start.minute).slice(-2)} น`}</Text>
-                            </TouchableOpacity>
+                                <Ionicons name='ios-pin' size={50} style={{ top: -20, right: -2, color: 'red' }} />
+
+                            </MapView>
                         </View>
-                        <View style={{ flex: 1 }}>
-                            <Text style={posting.halfHeader}>เวลาเสร็จงาน</Text>
-                            <TouchableOpacity
-                                style={[posting.halfInput, { marginLeft: widthToDp('1') }]}
-                                onPress={() => setEndTimeVisible(true)}
-                            >
-                                <Text style={posting.inputText}>{`${("0" + time.end.hour).slice(-2)} : ${("0" + time.end.minute).slice(-2)} น`}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View>
-                        <Text>ความถนัด</Text>
-                        {
-                            aptitude.type.map((item, index) => {
-                                return <CheckBox
-                                    title={item}
-                                    onPress={() => {
-                                        let status = [...aptitude.status]
-                                        status[index] = !status[index]
-                                        setAbtitude({ ...aptitude, status: status })
-
-                                    }}
-                                    status={aptitude.status[index]}
-                                    key={item}
-
-                                />
-                            })
-                        }
-                    </View>
-                    <View>
-                        <Text>ที่อยู่</Text>
-                        <TextInput
-                            multiline
-                            style={[posting.detailInput, { marginBottom: 5 }]}
-                            placeholder='ที่อยู่'
-                            value={detail}
-                            onChangeText={ (val) => setDetail(val)}
-                        />
-                        <MapView
-                            style={{ width: '100%', aspectRatio: 1, justifyContent: 'center', alignItems: 'center', borderRadius: widthToDp('2') }}
-                            provider={PROVIDER_GOOGLE}
-                            region={{
-                                latitude: props.location.latitude,
-                                longitude: props.location.longitude,
-                                latitudeDelta: 0.005,
-                                longitudeDelta: 0.005
-                            }}
-                            showsUserLocation
-                        >
-                            <Ionicons name='ios-pin' size={50} style={{ top: -20, right: -2, color: 'red' }} />
-
-                        </MapView>
                     </View>
                     <MyButton
-                        title='test'
+                        title='ยืนยัน'
                         onPress={() => {
                             const selectedAptitude = aptitude.type.filter((val, index) => {
                                 return aptitude.status[index]
                             })
-                            const selectedDay = day.no.filter( (val , index) => {
+                            const selectedDay = day.no.filter((val, index) => {
                                 return day.status[index]
                             })
                             const info = {
-                                workDay : selectedDay,
-                                workTime : time,
-                                aptitude : selectedAptitude,
-                                address : {
-                                    lat : 1,
-                                    lon : 1
+                                workDay: selectedDay,
+                                workTime: time,
+                                aptitude: selectedAptitude,
+                                address: {
+                                    lat: 1,
+                                    lon: 1
                                 },
-                                description : detail
+                                description: detail
 
                             }
                             console.log(info);
                         }}
                     />
-                    <View style={{marginBottom:15}} />
+                    <View style={{ marginBottom: 15 }} />
                 </ScrollView>
 
 

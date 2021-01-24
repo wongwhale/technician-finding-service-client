@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { Text, View, TouchableOpacity, Image, Button, StyleSheet } from 'react-native'
 
-import { techNotification, color, widthToDp } from '../../stylesheet'
+import { newOrder, color, widthToDp , notification } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
@@ -36,42 +36,42 @@ const Abstract = (props) => {
             {
                 !isAccepted ? (
                     <>
-                        <View style={!props.last ? [techNotification.abstractContainer, techNotification.abstractBottomBorder] : techNotification.abstractContainer}>
-                            <View style={techNotification.imageContainer}>
-                                <TouchableOpacity style={techNotification.image}>
+                        <View style={!props.last ? [notification.abstractContainer, notification.abstractBottomBorder] : notification.abstractContainer}>
+                            <View style={notification.imageContainer}>
+                                <TouchableOpacity style={notification.image}>
                                     <Image
-                                        style={techNotification.image}
+                                        style={notification.image}
                                         source={require('./test.jpg')}
                                     />
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity style={techNotification.detailContainer}>
+                            <TouchableOpacity style={notification.detailContainer}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: '' }}>
                                     <View style={{ flexWrap: 'nowrap' }}>
-                                        <Text style={[techNotification.text, techNotification.nameText]}>
+                                        <Text style={[newOrder.text, notification.nameText]}>
                                             {`${props.order.senderName}`}
                                         </Text>
                                     </View>
                                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                        <Text style={[techNotification.text, techNotification.detailText]}> ดูรายละเอียด</Text>
-                                        <Feather name='chevron-right' style={[techNotification.text, techNotification.detailText]} />
+                                        <Text style={[newOrder.text, notification.detailText]}> ดูรายละเอียด</Text>
+                                        <Feather name='chevron-right' style={[newOrder.text, notification.detailText]} />
                                     </View>
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
-                                        <Text style={[techNotification.text, techNotification.detailText]}>
+                                        <Text style={[newOrder.text, notification.detailText]}>
                                             {`ห่างจากคุณ : ${props.distance} กม. `}
                                         </Text>
-                                        <Text style={[techNotification.text, techNotification.detailText]}>
+                                        <Text style={[newOrder.text, notification.detailText]}>
                                             {`วันที่: ${props.date}`}
                                         </Text>
-                                        <Text style={[techNotification.text, techNotification.detailText]}>
+                                        <Text style={[newOrder.text, notification.detailText]}>
                                             {`รายละเอียด: ${props.order.detail}`}
                                         </Text>
                                     </View>
-                                    <View style={techNotification.buttonContainer}>
+                                    <View style={notification.buttonContainer}>
                                         <TouchableOpacity
-                                            style={[techNotification.acceptButton, techNotification.button]}
+                                            style={[newOrder.acceptButton, notification.button]}
                                             onPress={() => {
                                                 const payload = {
                                                     _id: props.order._id,
@@ -88,17 +88,17 @@ const Abstract = (props) => {
                                                 // props.acceptedReq( props.order.senderID, payload)
                                             }}
                                         >
-                                            <Text style={techNotification.buttonText}>
+                                            <Text style={newOrder.buttonText}>
                                                 ตอบรับ
                                             </Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity
-                                            style={[techNotification.contactButton, techNotification.button]}
+                                            style={[newOrder.contactButton, notification.button]}
                                             onPress={() => {
                                                 props.removeOrder(props.order._id)
                                             }}
                                         >
-                                            <Text style={techNotification.buttonText}>
+                                            <Text style={newOrder.buttonText}>
                                                 ไม่สนใจ
                                             </Text>
                                         </TouchableOpacity>
@@ -109,7 +109,7 @@ const Abstract = (props) => {
                     </>
                 ) : (
                         <>
-                            <View style={[techNotification.abstractContainer, { backgroundColor: color.BLUE_5, borderRadius: widthToDp('1') }]}>
+                            <View style={[notification.abstractContainer, { backgroundColor: color.BLUE_5, borderRadius: widthToDp('1') }]}>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={priceInput.headerText}>ระบุราคาโดยประมาณ</Text>
                                     <View style={{ flexDirection: 'row' , alignItems:'center' }}>

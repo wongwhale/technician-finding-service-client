@@ -70,6 +70,9 @@ const UserInfo = (props) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8, backgroundColor: '#fff' }}>
                     <TouchableOpacity
                         style={{ width: widthToDp('70'), backgroundColor: color.BLUE_3, borderRadius: widthToDp('1'), borderWidth: 2, borderColor: `${color.BLUE_3}66`, justifyContent: 'center', alignItems: 'center', height: widthToDp('7') }}
+                        onPress={ () => {
+                            props.navigation.navigate('editInfo')
+                        }}
                     >
                         <Text style={{ color: color.WHITE, fontSize: widthToDp('3.5'), fontWeight: 'bold' }}>แก้ไขข้อมูลส่วนตัว</Text>
                     </TouchableOpacity>
