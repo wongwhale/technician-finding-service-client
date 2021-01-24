@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 
 
 import Footer from '../../components/Registor/Footer'
-import { registor, color } from '../../stylesheet'
+import { registor, color, content } from '../../stylesheet'
 import { registor_success } from '../../store/actions/regAction'
 import { checkToken } from '../../store/actions/authAction'
 import MyButton from '../../components/MyButton'
@@ -92,7 +92,7 @@ const OTP = (props) => {
 
     return (
         <>
-            <SafeAreaView style={{ backgroundColor: color.WHITE, flex: 1 }}>
+            <SafeAreaView style={content.safearray}>
                 <View style={registor.container}>
                     <View style={{ marginBottom: 15, width: '100%', alignItems: 'center' }}>
                         <Text style={registor.whaturname}>

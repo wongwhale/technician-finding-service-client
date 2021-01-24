@@ -4,8 +4,8 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 
 import { message } from '../../stylesheet'
 
-const MessageList = ({ status, name, lastMessage, badges, onPress, avatar }) => {
-
+const MessageList = ({ status, name, lastMessage, badges, onPress, avatar , msgType  }) => {
+    
     return (
         <>
             <TouchableOpacity style={message.listContainer} onPress={() => onPress()}>
@@ -30,7 +30,11 @@ const MessageList = ({ status, name, lastMessage, badges, onPress, avatar }) => 
                     </Text>
                     <View style={{flexDirection:'row'}}>
                         <Text style={[message.text, !status ? message.unreadMessage : null]}>
-                            {lastMessage}
+                            {
+                                msgType === 'image' ? `${name} ได้ส่งรูปภาพ` :
+                                msgType === "text" ? lastMessage
+                                : null
+                            }
                         </Text>
                     </View>
                 </View>

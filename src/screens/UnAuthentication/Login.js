@@ -1,15 +1,16 @@
 import React, { useState, useRef } from 'react'
 
 import { Text, SafeAreaView, Button, View, TextInput, TouchableOpacity, StyleSheet, Keyboard } from 'react-native'
-import MyButton from '../components/MyButton'
-import Footer from '../components/Login/Footer'
-import { color } from '../stylesheet'
-import { inputStyles } from '../components/MyTextInput'
+import MyButton from '../../components/MyButton'
+import Footer from '../../components/Login/Footer'
+import { color, content } from '../../stylesheet'
+import { inputStyles } from '../../components/MyTextInput'
+
 import Feather from 'react-native-vector-icons/Feather'
 
 import { connect } from 'react-redux'
-import { login } from '../store/actions/authAction'
-import { connection } from '../store/actions/socketAction'
+import { login } from '../../store/actions/authAction'
+import { connection } from '../../store/actions/socketAction'
 
 const mapStateToProps = (state) => ({
 
@@ -26,26 +27,15 @@ const Login = (props) => {
 
     const handleLogin = () => {
         props.login(username, password)
-        // .then(data => {
-        //     if(data.status) props.connection(data.uid)
-        // })
     }
 
 
     return (
         <>
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={content.safearray}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: '10%' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' , marginBottom:40 }}>
                         <View style={{ width: 100, height: 100, backgroundColor: color.BLUE_4, borderRadius: 50 , marginRight:10 }} />
-                        {/* <View>
-                            <Text style={{fontSize:35}}>
-                                NAME
-                            </Text>
-                            <Text>
-                                Technician Finding application
-                            </Text>
-                        </View> */}
                     </View>
                     <View style={[inputStyles.container]}>
                         <TextInput
@@ -92,11 +82,6 @@ const Login = (props) => {
                     <MyButton title='Sign in' onPress={() => {
                         Keyboard.dismiss()
                         handleLogin()
-                        // props.login(username, password).then((status , firstname) => {
-                        //     // if(status) props.connection(firstname)
-                        //     console.log(status);
-                        //     // console.log(data);
-                        // })
                     }} />
                     <View style={styles.btnContainer}>
                         <View style={styles.header}>

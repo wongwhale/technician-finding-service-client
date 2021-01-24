@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Text, View, TouchableOpacity, Button } from 'react-native'
 
-import { techNotification, color, widthToDp } from '../../stylesheet'
+import { notification, color, widthToDp, newOrder } from '../../stylesheet'
 
 import Abstract from './Abstract'
 import { connect } from 'react-redux'
@@ -15,21 +15,21 @@ const mapDispatchToProps = {
 
 }
 
-const TechnicianNotification = (props) => {
+const NewOrderNotification = (props) => {
     const month = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฏาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
     
 
     return (
         <>
-            <View style={techNotification.container}>
-                <View style={techNotification.headerContainer}>
+            <View style={[notification.container , newOrder.bg]}>
+                <View style={notification.headerContainer}>
                     <Text>
-                        <Text style={techNotification.headerText}>
+                        <Text style={[ newOrder.headerText , notification.headerText]}>
                             ออเดอร์ใหม่
                         </Text>
                     </Text>
                 </View>
-                <View style={techNotification.content}>
+                <View style={notification.content}>
                     {
                         props.techOrder.length !== 0 ? (
                             props.techOrder.map( (item , index) => {
@@ -55,4 +55,4 @@ const TechnicianNotification = (props) => {
     )
 }
 
-export default connect(mapStateToProps , mapDispatchToProps)(TechnicianNotification)
+export default connect(mapStateToProps , mapDispatchToProps)(NewOrderNotification)

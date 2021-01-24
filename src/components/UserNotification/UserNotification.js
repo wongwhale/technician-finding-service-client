@@ -2,9 +2,7 @@ import React, { useEffect } from 'react'
 
 import { Text, View, TouchableOpacity, Button } from 'react-native'
 
-import { userNotification, widthToDp, color } from '../../stylesheet'
-
-import { Rating } from 'react-native-ratings';
+import { userNotification , notification , widthToDp, color } from '../../stylesheet'
 
 import Abstract from './Abstract'
 import { connect } from 'react-redux';
@@ -20,18 +18,18 @@ const mapDispatchToProps = {
 const UserNotification = (props) => {
     return (
         <>
-            <View style={userNotification.container}>
-                <View style={userNotification.headerContainer}>
+            <View style={[notification.container , userNotification.bg]}>
+                <View style={notification.headerContainer}>
                     <Text>
-                        <Text style={userNotification.headerText}>
+                        <Text style={[ notification.headerText,userNotification.headerText]}>
                             {`การตอบรับของ `}
                         </Text>
-                        <Text style={userNotification.headerID}>
+                        <Text style={notification.headerID}>
                             {`#${props.orderID}`}
                         </Text>
                     </Text>
                 </View>
-                <View style={userNotification.content}>
+                <View style={notification.content}>
                     {
                         props.acceptedTech !== undefined ? (
                             props.acceptedTech.length !== 0 ? (

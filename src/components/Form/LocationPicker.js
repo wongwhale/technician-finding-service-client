@@ -14,7 +14,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const mapStateToProps = (state) => ({
     location: state.form.location,
-    
 })
 
 const LocationPicker = (props) => {

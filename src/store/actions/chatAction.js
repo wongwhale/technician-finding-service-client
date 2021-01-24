@@ -128,6 +128,7 @@ export const INITIAL_HISTORY_LIST = (uid) => dispatch => {
                                   sender
                                   message
                                   date
+                                  msgType
                                 }
                             }
                         
@@ -135,7 +136,6 @@ export const INITIAL_HISTORY_LIST = (uid) => dispatch => {
                         `
                 }
             }).then(res => {
-                console.log('chat history' , res.data.data.getChatRoom);
                 dispatch({
                     type: chatType.INITIAL_HISTORY_LIST,
                     payload: {

@@ -58,15 +58,48 @@ color.IOS_BLUE = '#0461e9'
 color.LIGHT_BLUE = '#97B3D0'
 // color.GREY_BLUE = '#539D'
 color.SKIN = '#F0EEE8'
-color.WHITE = '#F6F6F6'
+color.WHITE = '#e6e6e6'
 color.GREY = '#999999'
 
+export const card = StyleSheet.create({
+    card: {
+        backgroundColor: '#fff',
+        borderRadius: widthToDp('2'),
+        marginBottom: 15
+    },
+    cardHeader: {
+        borderBottomColor: color.WHITE,
+        paddingHorizontal: widthToDp('4'),
+        paddingVertical: widthToDp('2'),
+        borderBottomWidth: 1
+    },
+    cardContainer: {
+        paddingHorizontal: widthToDp('4'),
+        paddingVertical:widthToDp('2')
+    },
+    headerText: {
+        fontSize: widthToDp('4.5'),
+        color: color.BLUE_0
+    },
+    topBorder : {
+        borderTopColor : color.WHITE,
+        borderTopWidth:1
+    },
+})
 
 export const content = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: widthToDp('8'),
+        paddingHorizontal: widthToDp('7'),
         paddingVertical: 10,
+    },
+    safearray: {
+        flex: 1,
+        backgroundColor: '#fff'
+    },
+    topsafearray: {
+        flex: 0,
+        backgroundColor: '#fff'
     }
 })
 
@@ -84,7 +117,6 @@ export const mainScreen = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: color.BLUE_5,
-        marginHorizontal: 2.5,
         borderRadius: 10,
         aspectRatio: 1,
     },
@@ -112,10 +144,17 @@ export const mainScreen = StyleSheet.create({
 
 export const global = StyleSheet.create({
     header: {
-        paddingVertical: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        height: heightToDp('10')
+        height: heightToDp('7'),
+        backgroundColor: '#fff',
+    },
+    chatHeader: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: heightToDp('7'),
+        backgroundColor: '#fff',
+        paddingBottom: heightToDp('1')
     },
     headerText: {
         color: color.BLUE_2,
@@ -204,7 +243,7 @@ export const userInfo = StyleSheet.create({
     },
     subContainer: {
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         alignItems: 'flex-start',
         paddingLeft: widthToDp('3'),
     },
@@ -229,12 +268,14 @@ export const userInfo = StyleSheet.create({
 
 export const searchScreen = StyleSheet.create({
     textInputContainer: {
-        borderRadius: widthToDp('2'),
-        padding: widthToDp('2'),
-        // height : heightToDp('5') ,
+        borderRadius: widthToDp('5'),
+        backgroundColor: '#fff',
         flexDirection: 'row-reverse',
-        backgroundColor: color.BLUE_5,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        flex: 1,
+        height: widthToDp('10'),
+        paddingHorizontal: widthToDp('1'),
+        marginBottom: heightToDp('1')
     },
     textInput: {
         flex: 1,
@@ -245,23 +286,29 @@ export const searchScreen = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: widthToDp('10'),
+        aspectRatio: 1
     },
     searchIcon: {
         fontSize: widthToDp('5'),
         color: color.BLUE_1,
     },
+    xIconContainer: {
+        marginRight: widthToDp('2'),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     xIcon: {
         color: color.BLUE_2,
-        fontSize: widthToDp('4')
+        fontSize: widthToDp('4'),
     },
     listContainer: {
         alignItems: 'flex-start',
         flexDirection: 'row',
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
         paddingVertical: heightToDp('1.5'),
         borderBottomWidth: heightToDp('0.1'),
         borderBottomColor: color.BLUE_5,
-        paddingLeft:widthToDp('3')
+        paddingLeft: widthToDp('3')
     },
     listRowContainer: {
         alignItems: 'flex-start',
@@ -269,7 +316,6 @@ export const searchScreen = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end',
-        
     },
     distanceText: {
         color: color.BLUE_2,
@@ -282,8 +328,8 @@ export const searchScreen = StyleSheet.create({
     infoContainer: {
         justifyContent: 'space-evenly',
         height: heightToDp('6'),
-        flex:1,
-        paddingLeft:widthToDp('3'),
+        flex: 1,
+        paddingLeft: widthToDp('3'),
     },
     imageContainer: {
         justifyContent: 'center',
@@ -292,7 +338,7 @@ export const searchScreen = StyleSheet.create({
     },
     techImage: {
         height: heightToDp('6'),
-        aspectRatio : 1,
+        aspectRatio: 1,
         borderRadius: heightToDp('3'),
         backgroundColor: color.GREEN_4
     },
@@ -305,69 +351,24 @@ export const searchScreen = StyleSheet.create({
         color: color.BLUE_3,
         fontSize: widthToDp('2.5')
     },
+    filterBtn: {
+        backgroundColor: color.WHITE,
+        marginLeft: widthToDp('1'),
+        justifyContent: 'center',
+        alignItems: 'center',
+        aspectRatio: 1,
+        height: widthToDp('10'),
+        borderRadius: widthToDp('1')
+    },
+    filterIcon: {
+        fontSize: widthToDp('4'),
+        color: color.BLUE_2
+    }
 })
 
 export const userNotification = StyleSheet.create({
-    container: {
-        paddingHorizontal: widthToDp('2'),
-        paddingVertical: heightToDp('1'),
-        borderRadius: heightToDp('1.5'),
-        backgroundColor: color.BLUE_5
-    },
-    headerContainer: {
-        borderBottomColor: color.BLUE_4,
-        borderBottomWidth: heightToDp('0.05'),
-        paddingHorizontal: widthToDp('2'),
-        paddingVertical: heightToDp('1')
-    },
-    headerText: {
-        fontSize: widthToDp('4'),
-        color: color.BLUE_2
-    },
-    headerID: {
-        fontSize: widthToDp('3'),
-        color: color.BLUE_4
-    },
-    content: {
-        padding: widthToDp('1'),
-    },
-    abstractContainer: {
-        flexDirection: 'row',
-        paddingVertical: heightToDp('0.7')
-    },
-    abstractBottomBorder: {
-        borderBottomWidth: heightToDp('0.05'),
-        borderColor: color.BLUE_4
-    },
-    imageContainer: {
-        width: widthToDp('12'),
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-    },
-    image: {
-        width: widthToDp('12'),
-        height: widthToDp('12'),
-        borderRadius: widthToDp('6'),
-        backgroundColor: color.YELLOW_4,
-    },
-    detailContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        paddingLeft: widthToDp('3'),
-    },
-    buttonContainer: {
-        // backgroundColor:'grey',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    button: {
-        padding: 5,
-        width: widthToDp('15'),
-        height: widthToDp('6'),
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: widthToDp('3'),
-        marginVertical: widthToDp('0.2')
+    bg : {
+        backgroundColor : color.BLUE_5
     },
     contactButton: {
         backgroundColor: color.BLUE_3,
@@ -389,36 +390,37 @@ export const userNotification = StyleSheet.create({
     },
     nameText: {
         fontSize: widthToDp('4'),
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
     detailText: {
         fontSize: widthToDp('3')
     },
+    headerText: {
+        color : color.BLUE_0
+    },
 })
 
-export const techNotification = StyleSheet.create({
+export const notification = StyleSheet.create({
     container: {
-        paddingHorizontal: widthToDp('2'),
         paddingVertical: heightToDp('1'),
         borderRadius: heightToDp('1.5'),
-        backgroundColor: color.BLUE_2
     },
     headerContainer: {
-        borderBottomColor: color.BLUE_5,
+        borderBottomColor: color.WHITE,
         borderBottomWidth: heightToDp('0.05'),
-        paddingHorizontal: widthToDp('2'),
+        paddingHorizontal: widthToDp('4'),
         paddingVertical: heightToDp('1')
     },
     headerText: {
         fontSize: widthToDp('4'),
-        color: color.WHITE
     },
     headerID: {
         fontSize: widthToDp('3'),
         color: color.BLUE_5
     },
     content: {
-        padding: widthToDp('1'),
+        paddingHorizontal:widthToDp('4'),
+        paddingVertical : widthToDp('1')
     },
     abstractContainer: {
         flexDirection: 'row',
@@ -427,7 +429,7 @@ export const techNotification = StyleSheet.create({
     },
     abstractBottomBorder: {
         borderBottomWidth: heightToDp('0.1'),
-        borderColor: color.BLUE_5
+        borderColor: color.WHITE
     },
     imageContainer: {
         width: widthToDp('12'),
@@ -459,6 +461,20 @@ export const techNotification = StyleSheet.create({
         borderRadius: widthToDp('3'),
         marginVertical: widthToDp('0.2')
     },
+    nameText: {
+        fontSize: widthToDp('4'),
+        fontWeight: 'bold'
+    },
+    detailText: {
+        fontSize: widthToDp('3')
+    },
+})
+
+
+export const newOrder = StyleSheet.create({
+    bg : {
+        backgroundColor : color.BLUE_2
+    },
     contactButton: {
         backgroundColor: color.YELLOW_2,
     },
@@ -477,12 +493,35 @@ export const techNotification = StyleSheet.create({
     text: {
         color: color.WHITE
     },
-    nameText: {
-        fontSize: widthToDp('4'),
-        fontWeight:'bold'
+    headerText:{
+        color : color.WHITE
     },
-    detailText: {
-        fontSize: widthToDp('3')
+})
+
+export const  acceptedOrder = StyleSheet.create({
+    bg : {
+        backgroundColor : color.GREEN_2
+    },
+    contactButton: {
+        backgroundColor: color.YELLOW_2,
+    },
+    acceptButton: {
+        backgroundColor: color.BLUE_2,
+    },
+    buttonText: {
+        fontSize: widthToDp('2.6'),
+        color: color.WHITE
+    },
+    star: {
+        // backgroundColor:color.YELLOW
+        fontSize: widthToDp('2'),
+        color: color.YELLOW
+    },
+    text: {
+        color: color.WHITE
+    },
+    headerText:{
+        color : color.WHITE
     },
 })
 
@@ -496,7 +535,7 @@ export const posting = StyleSheet.create({
     halfHeader: {
         textAlign: 'center',
         fontSize: widthToDp('4'),
-        color: color.BLUE_3
+        color: color.BLUE_0
     },
     halfInput: {
         alignItems: 'center',
@@ -525,21 +564,22 @@ export const posting = StyleSheet.create({
         height: heightToDp('4.5'),
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems:'center'
+        alignItems: 'center'
     },
     inputText: {
         color: color.BLUE_1,
-        fontSize: widthToDp('3.5')
+        fontSize: widthToDp('3.5'),
+
     },
     detailInput: {
-        height: heightToDp('15'),
+        height: widthToDp('25'),
         marginTop: heightToDp('0.5'),
         padding: widthToDp('3'),
         borderRadius: widthToDp('2'),
-        borderWidth: widthToDp('0.1'),
-        fontSize: widthToDp('3.5'),
-        borderColor: color.BLUE_4,
-        color: color.BLUE_2,
+        borderWidth: 1,
+        fontSize: widthToDp('4'),
+        borderColor: color.BLUE_5,
+        color: color.BLUE_1,
         lineHeight: widthToDp('4'),
     },
     detailLength: {
@@ -549,11 +589,11 @@ export const posting = StyleSheet.create({
         marginBottom: 5,
     },
     chevronDown: {
-        fontSize : widthToDp('5'),
+        fontSize: widthToDp('5'),
         color: color.BLUE_0,
     },
     mapContainer: {
-        height : heightToDp('30'),
+        height: heightToDp('30'),
         width: '100%',
         backgroundColor: color.BLUE_5,
         marginTop: 5,
@@ -750,7 +790,7 @@ export const message = StyleSheet.create({
         paddingHorizontal: widthToDp('3'),
         marginHorizontal: widthToDp('2'),
         paddingVertical: widthToDp('1'),
-        lineHeight:widthToDp('5'),
+        lineHeight: widthToDp('5'),
         borderRadius: buttonRadiusDp,
         height: 'auto',
         fontSize: widthToDp('4'),

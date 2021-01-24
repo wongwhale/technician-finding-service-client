@@ -22,7 +22,7 @@ const ChatHeader = (props) => {
     const badgesNum = 1
     return (
         <>
-            <View style={[global.header]}>
+            <View style={[global.chatHeader]}>
                 <View >
                     <Image style={global.interlocutorImage} source={{uri:props.interlocutor.avatar}} />
                 </View>

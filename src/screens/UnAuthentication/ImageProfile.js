@@ -13,7 +13,7 @@ import { SET_IMAGE_PROFILE } from '../../store/actions/regAction'
 
 import { connect } from 'react-redux';
 import MyButton from '../../components/MyButton';
-import { registor, color } from '../../stylesheet';
+import { registor, color, content } from '../../stylesheet';
 import Footer from '../../components/Registor/Footer';
 
 const mapStateToProps = (state) => ({
@@ -34,7 +34,7 @@ const ImageProfile = (props) => {
 
     return (
         <>
-            <SafeAreaView style={{ backgroundColor: color.WHITE, flex: 1 }}>
+            <SafeAreaView style={content.safearray}>
                 <View style={[registor.container, { alignItems: 'center' }]}>
                     <View style={{ marginBottom: 15, width: '100%', alignItems: 'center' }}>
                         <Text style={registor.whaturname}>

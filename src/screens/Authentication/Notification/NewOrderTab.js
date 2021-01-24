@@ -1,19 +1,12 @@
 import React from 'react'
 
 import {
-    View,
-    Text,
-    Button,
-    SafeAreaView,
-    TextInput,
-    TouchableOpacity,
-    ScrollView
+    View
 } from 'react-native'
 
-import { content } from '../../stylesheet'
+import { content } from '../../../stylesheet'
 
-import UserNotification from '../../components/UserNotification'
-import TechnicianNotification from '../../components/TechnicianNotification'
+import NewOrderNotification from '../../../components/TechnicianNotification/NewOrderNotification'
 import { connect } from 'react-redux'
 
 
@@ -29,7 +22,7 @@ const NewOrder = () => {
     return (
         <>
             <View style={content.container}>
-                <TechnicianNotification />
+                <NewOrderNotification />
             </View>
         </>
     )
