@@ -32,3 +32,19 @@ export const removeCandidateTech = (_id) => dispatch => {
         payload : _id
     })
 }
+
+export const addAcceptedOrder = (order) => dispatch => {
+    dispatch({
+        type : notiType.ADD_ACCECTED_TECH_ORDER,
+        payload : order
+    })
+} 
+
+export const removeAcceptedOrder = (_id) => dispatch => {
+    dispatch ({
+        type : notiType.REMOVE_ACCECTED_TECH_ORDER,
+        payload : {
+            _id : _id
+        }
+    })
+}
