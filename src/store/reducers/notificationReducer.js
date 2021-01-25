@@ -5,6 +5,9 @@ export const notiType = {
     REMOVE_USER_RESPONSE: 'REMOVE_USER_RESPONSE',
     ADD_ACCECTED_TECH: 'ADD_ACCECTED',
     REMOVE_ACCECTED_TECH: 'REMOVE_ACCECTED_TECH',
+    ADD_ACCECTED_TECH_ORDER: 'ADD_ACCECTED_TECH_ORDER',
+    REMOVE_ACCECTED_TECH_ORDER: 'REMOVE_ACCECTED_TECH_ORDER',
+    CLEAR : 'NOTIFICATION_REDUCER_CLEAR',
 }
 
 // interface userResponse = {
@@ -24,6 +27,9 @@ const initialState = {
 
     ],
     userResponse: [
+
+    ],
+    techAcceptedOrder : [
 
     ],
     badge: 0,
@@ -81,6 +87,20 @@ export default function notificationReducer(
                     })
                 }
             }
+        case notiType.ADD_ACCECTED_TECH_ORDER :
+            return {
+                ...state,
+                techAcceptedOrder : [...state.techAcceptedOrder , action.payload]
+            }
+        case notiType.REMOVE_ACCECTED_TECH_ORDER :
+            return{
+                ...state,
+                techAcceptedOrder : state.techAcceptedOrder.filter( val => {
+                    return val._id !== action.payload._id
+                })
+            }
+        case notiType.CLEAR:
+            return state = initialState
         default:
             return state
     }

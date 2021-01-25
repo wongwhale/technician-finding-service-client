@@ -5,6 +5,7 @@ chatType.APPEND_MESSAGE = 'APPEND_MESSAGE'
 chatType.INITIAL_HISTORY_LIST = 'INITIAL_HISTORY_LIST'
 chatType.SET_INTERLOCUTOR_ID = 'SET_INTERLOCUTOR_ID'
 chatType.DISCONNECT = 'DISCONNECT'
+chatType.CLEAR = 'CHAT_REDUCER_CLEAR'
 
 const initialState = {
     interlocutor : {
@@ -49,9 +50,9 @@ export default function chatReducer(state=initialState , action){
                 }
             }
         case chatType.DISCONNECT :
-            return {
-                state : initialState
-            }
+            return state = initialState
+        case chatType.CLEAR:
+            return state = initialState
         default:    
             return state
     }

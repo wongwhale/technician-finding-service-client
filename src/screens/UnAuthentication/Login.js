@@ -3,20 +3,21 @@ import React, { useState, useRef } from 'react'
 import { Text, SafeAreaView, Button, View, TextInput, TouchableOpacity, StyleSheet, Keyboard } from 'react-native'
 import MyButton from '../../components/MyButton'
 import Footer from '../../components/Login/Footer'
-import { color, content } from '../../stylesheet'
+import { color, content, widthToDp } from '../../stylesheet'
 import { inputStyles } from '../../components/MyTextInput'
 
 import Feather from 'react-native-vector-icons/Feather'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { connect } from 'react-redux'
-import { login } from '../../store/actions/authAction'
+import { login , logout , checkToken } from '../../store/actions/authAction'
 import { connection } from '../../store/actions/socketAction'
 
 const mapStateToProps = (state) => ({
 
 })
 
-const connector = connect(mapStateToProps, { login, connection })
+const connector = connect(mapStateToProps, { login , logout , connection , checkToken })
 
 const Login = (props) => {
     const uname_ref = useRef()
@@ -27,6 +28,13 @@ const Login = (props) => {
 
     const handleLogin = () => {
         props.login(username, password)
+        .then( (res) => {
+            if(res.status){
+                props.checkToken()
+            }else {
+                props.logout()
+            }
+        })
     }
 
 
@@ -40,7 +48,7 @@ const Login = (props) => {
                     <View style={[inputStyles.container]}>
                         <TextInput
                             style={[inputStyles.textInput]}
-                            placeholder='Username'
+                            placeholder='ชื่อผู้ใช้'
                             placeholderTextColor={color.BLUE_2}
                             blurOnSubmit={false}
                             ref={uname_ref}
@@ -57,7 +65,7 @@ const Login = (props) => {
                     <View style={[inputStyles.container]}>
                         <TextInput
                             style={[inputStyles.textInput]}
-                            placeholder='Password'
+                            placeholder='รหัสผ่าน'
                             placeholderTextColor={color.BLUE_2}
                             blurOnSubmit={false}
                             ref={pwss_ref}
@@ -79,7 +87,7 @@ const Login = (props) => {
                             </TouchableOpacity>
                         }
                     </View>
-                    <MyButton title='Sign in' onPress={() => {
+                    <MyButton title='เข้าสู่ระบบ' onPress={() => {
                         Keyboard.dismiss()
                         handleLogin()
                     }} />
@@ -87,12 +95,12 @@ const Login = (props) => {
                         <View style={styles.header}>
                             <View style={styles.line} />
                             <Text style={styles.headerText}>
-                                or connect with
+                                เข้าสู่ระบบโดยวิธีอื่น
                             </Text>
                             <View style={styles.line} />
                         </View>
-                        <TouchableOpacity style={styles.facebookButton}>
-                            <Feather name='facebook' style={styles.facebookIcon} />
+                        <TouchableOpacity >
+                            <Ionicons name='logo-facebook' style={styles.facebookIcon} />
                         </TouchableOpacity>
 
                     </View>
@@ -117,8 +125,8 @@ const styles = StyleSheet.create({
     facebookIcon: {
         marginTop: 5,
         marginRight: 5,
-        fontSize: 25,
-        color: color.WHITE
+        fontSize: widthToDp('10'),
+        color: color.FACEBOOK,
     },
     container: {
         flex: 1,

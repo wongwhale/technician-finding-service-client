@@ -27,10 +27,6 @@ const Abstract = ({ name, star, distance, price, last }) => {
                                 {`${name}`}
                             </Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                            <Text style={[userNotification.text, notification.detailText]}> ดูรายละเอียด</Text>
-                            <Feather name='chevron-right' style={[userNotification.text, notification.detailText]} />
-                        </View>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'column' }}>

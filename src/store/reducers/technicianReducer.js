@@ -3,6 +3,7 @@ techType.SET_SEARCH_KEY_WORD = 'SET_SEARCH_KEY_WORD'
 techType.SET_SEARCH_LIST = 'SET_SEARCH_LIST'
 techType.SET_TECHNICIAN_INFO = 'SET_TECHNICIAN_INFO'
 techType.SET_TID = 'SET_TID'
+techType.CLEAR = 'TECHNICIAN_REDUCER_CLEAR'
 
 const initialState = {
     keyword : '',
@@ -43,6 +44,8 @@ export default function technicianReducer (state = initialState , action) {
                     star : action.payload.star
                 }
             }
+        case techType.CLEAR :
+            return state = initialState
         default:
             return state;
     }

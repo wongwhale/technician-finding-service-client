@@ -416,15 +416,13 @@ export const notification = StyleSheet.create({
     },
     headerID: {
         fontSize: widthToDp('3'),
-        color: color.BLUE_5
+        color: color.BLUE_4
     },
     content: {
-        paddingHorizontal:widthToDp('4'),
-        paddingVertical : widthToDp('1')
+        
     },
     abstractContainer: {
         flexDirection: 'row',
-        paddingVertical: heightToDp('0.7'),
         height: widthToDp('23')
     },
     abstractBottomBorder: {
@@ -433,6 +431,8 @@ export const notification = StyleSheet.create({
     },
     imageContainer: {
         width: widthToDp('12'),
+        marginRight :widthToDp('2') ,
+        marginLeft : widthToDp('4'), 
         justifyContent: 'center',
         alignItems: 'flex-start',
     },
@@ -446,6 +446,7 @@ export const notification = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         paddingLeft: widthToDp('3'),
+        marginRight : widthToDp('4')
     },
     buttonContainer: {
         // backgroundColor:'grey',

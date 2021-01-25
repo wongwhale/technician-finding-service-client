@@ -6,6 +6,7 @@ import {
     TextInput,
     TouchableOpacity,
     ScrollView,
+    Button,
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -17,7 +18,9 @@ import ListBox from '../../components/Search/ListBox'
 import { connect } from 'react-redux'
 
 import { SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD } from '../../store/actions/techAction'
-
+import { GOOGLE_API } from '../../misc/google_api'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapViewDirections from 'react-native-maps-directions'
 
 const mapStateToProps = (state) => ({
     keyword: state.tech.keyword,
@@ -27,10 +30,50 @@ const mapStateToProps = (state) => ({
 
 const SearchScreen = (props) => {
 
+    const [listsWithDistance, setListsWithDistance] = React.useState([])
+
+    const getDistanceOneToOne = async (lat1, lng1, lat2, lng2) => {
+        const Location1Str = lat1 + "," + lng1;
+        const Location2Str = lat2 + "," + lng2;
+
+        let ApiURL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
+
+        let params = `origins=${Location1Str}&destinations=${Location2Str}&key=${GOOGLE_API}`; // you need to get a key
+        let finalApiURL = `${ApiURL}${encodeURI(params)}`;
+
+        let fetchResult = await fetch(finalApiURL); // call API
+        let Result = await fetchResult.json(); // extract json
+        return Result.rows[0].elements[0].distance.value
+    }
+
+    const handleDistance = (lists) => {
+        let temp_lists = []
+        Promise.all(
+        lists.map(async (tech) => {
+            const distance = await getDistanceOneToOne(
+                18.795924746501605,
+                98.95296894013882,
+                tech.address.lat,
+                tech.address.lon
+            )
+            temp_lists.push({
+                ...tech,
+                distance : distance
+            })
+        })
+        )
+        .then( () => {
+            setListsWithDistance(temp_lists.sort( (a,b) => {
+                return a.distance - b.distance
+            }))
+        })
+
+    }
+
     return (
         <>
             <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={[content.safearray , {backgroundColor:color.WHITE}]}>
+            <SafeAreaView style={[content.safearray, { backgroundColor: color.WHITE }]}>
 
                 <Header page="ค้นหา" back={true} navigation={props.navigation} />
                 <View style={[content.container, { backgroundColor: color.WHITE }]}>
@@ -53,6 +96,9 @@ const SearchScreen = (props) => {
                                 value={props.keyword}
                                 onSubmitEditing={() => {
                                     props.SEARCH_BY_KEY_WORD(props.keyword)
+                                        .then((res) => {
+                                            handleDistance(res)
+                                        })
                                 }}
                             />
                             <View style={searchScreen.searchIconContainer}>
@@ -65,13 +111,14 @@ const SearchScreen = (props) => {
                     </View>
                     <ScrollView >
                         {
-                            props.search_list.map((item, index) => {
+
+                            listsWithDistance.map((item, index) => {
                                 return <ListBox
                                     key={index}
                                     name={`${item.userInfoID.firstname} ${item.userInfoID.lastname}`}
                                     star={item.star}
-                                    distance={23}
-                                    tid={item._id}
+                                    distance={parseFloat(item.distance/1000).toFixed(2)}
+                                    tid={item.userID}
                                     avatar={item.userInfoID.avatar}
                                     navigation={props.navigation}
                                 />

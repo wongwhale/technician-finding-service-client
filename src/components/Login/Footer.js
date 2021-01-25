@@ -9,9 +9,9 @@ const Footer = ({navigation}) => {
         <>
             <View style={styles.container}>
                     <View style={[styles.row]}>
-                        <Text style={{color:color.BLUE}}>Create your account? </Text>
+                        <Text style={{color:color.BLUE}}>หากคุณยังไม่มีบัญชีผู้ใช้งาน? </Text>
                         <TouchableOpacity onPress={ () => navigation.navigate('reg_basic')}>
-                            <Text style={styles.text}>Sign up</Text>
+                            <Text style={styles.text}>สร้างบัญชีผู้ใช้งาน</Text>
                         </TouchableOpacity>
                     </View>
             </View>

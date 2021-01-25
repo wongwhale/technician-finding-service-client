@@ -8,9 +8,9 @@ regType.SET_FIRSTNAME = 'SET_FIRSTNAME'
 regType.SET_LASTNAME = 'SET_LASTNAME'
 regType.SET_ROLE = 'SET_ROLE'
 regType.SET_PHONE = 'SET_PHONE'
-regType.CLEAR = 'CLEAR'
 regType.REGISTOR_SUCCESS = 'REGISTOR_SUCCESS'
 regType.SET_IMAGE_PROFILE = 'SET_IMAGE_PROFILE'
+regType.CLEAR = 'REG_REDUCER_CLEAR'
 
 const initialState = {
     username: '',

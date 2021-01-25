@@ -83,3 +83,16 @@ export const CLOSE_PRICE_INPUT_MODAL = () => dispatch => {
         type : modalType.CLOSE_PRICE_INPUT_MODAL
     })
 }
+
+export const OPEN_DETAIL_MODAL = () => dispatch => {
+    dispatch({
+        type : modalType.OPEN_DETAIL_MODAL
+    })
+}
+
+
+export const CLOSE_DETAIL_MODAL = () => dispatch => {
+    dispatch({
+        type : modalType.CLOSE_DETAIL_MODAL
+    })
+}

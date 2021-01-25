@@ -23,6 +23,7 @@ import { SET_FILE } from '../../store/actions/formAction';
 import { connect } from 'react-redux';
 import TechnicianRegisterScreen from './TechnicianRegisterScreen';
 import UserInfoEditScreen from './UserInfoEditScreen';
+import OrderDetailModal from '../../components/Modal/OrderDetailModal'
 
 const mapStateToProps = (state) => ({
   uid: state.auth.userInfo.uid,
@@ -57,6 +58,7 @@ const Index = (props) => {
         <Stack.Screen name='regTech' component={TechnicianRegisterScreen} options={{ headerShown: false }} />
         <Stack.Screen name='editInfo' component={UserInfoEditScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
+      <OrderDetailModal />
     </>
   );
 };

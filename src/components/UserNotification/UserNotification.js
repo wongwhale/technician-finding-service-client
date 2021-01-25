@@ -45,7 +45,7 @@ const UserNotification = (props) => {
                                 })
                             ) : (
                                     <>
-                                        <View style={{ padding: widthToDp('1.5') }}>
+                                        <View style={{ padding: widthToDp('1.5') , paddingHorizontal:widthToDp('4') }}>
                                             <Text style={{ fontSize: widthToDp('3.5'), color: color.BLUE_2 }}>
                                                 ยังไม่มีการตอบรับ
                                         </Text>

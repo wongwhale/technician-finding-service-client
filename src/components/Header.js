@@ -12,7 +12,18 @@ import { global } from '../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
-const Header = ({ page, back, navigation, chat }) => {
+import { INITIAL_HISTORY_LIST } from '../store/actions/chatAction'
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => ({
+    uid : state.auth.userInfo.uid
+})
+
+const mapDispatchToProsp = {
+    INITIAL_HISTORY_LIST
+}
+
+const Header = ({ page, back, navigation, chat , INITIAL_HISTORY_LIST , uid }) => {
     const badgesNum = 1
     return (
         <>
@@ -22,7 +33,16 @@ const Header = ({ page, back, navigation, chat }) => {
                 </Text>
                 {
                     !chat ? (
-                        <TouchableOpacity onPress={() => navigation.navigate('message')} style={global.chatIconContainer}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                INITIAL_HISTORY_LIST(uid).then( () => {
+                                    navigation.navigate('message')
+                                }).catch(err => {
+                                    
+                                })
+                            }}
+                            style={global.chatIconContainer}
+                        >
                             <Feather name="mail" style={global.chatIcon} />
                             <View style={global.badges}>
                                 <Text style={global.badgesText}>
@@ -59,4 +79,4 @@ const Header = ({ page, back, navigation, chat }) => {
     )
 }
 
-export default Header
+export default connect(mapStateToProps , mapDispatchToProsp)(Header)

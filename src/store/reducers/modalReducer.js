@@ -13,6 +13,8 @@ modalType.OPEN_LOCATION_PICKER_MODAL = 'OPEN_LOCATION_PICKER_MODAL'
 modalType.CLOSE_LOCATION_PICKER_MODAL = 'CLOSE_LOCATION_PICKER_MODAL'
 modalType.OPEN_PRICE_INPUT_MODAL = 'OPEN_PRICE_INPUT_MODAL'
 modalType.CLOSE_PRICE_INPUT_MODAL = 'CLOSE_PRICE_INPUT_MODAL'
+modalType.OPEN_DETAIL_MODAL = 'OPEN_DETAIL_MODAL'
+modalType.CLOSE_DETAIL_MODAL = 'CLOSE_DETAIL_MODAL'
 
 const initialState = {
     post_modal: false,
@@ -22,7 +24,8 @@ const initialState = {
     date_picker_modal : false,
     image_picker_modal : false,
     location_picker_modal : false,
-    price_input_modal : false
+    price_input_modal : false,
+    detail_modal : false
 }
 
 export default function (state = initialState, action) {
@@ -96,6 +99,16 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 price_input_modal : false
+            }
+        case modalType.OPEN_DETAIL_MODAL :
+            return {
+                ...state,
+                detail_modal : true
+            }
+        case modalType.CLOSE_DETAIL_MODAL :
+            return {
+                ...state,
+                detail_modal : false
             }
         default:
             return state

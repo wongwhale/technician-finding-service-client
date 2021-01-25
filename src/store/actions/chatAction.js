@@ -136,6 +136,7 @@ export const INITIAL_HISTORY_LIST = (uid) => dispatch => {
                         `
                 }
             }).then(res => {
+                console.log('message'  , res.data.data.getChatRoom);
                 dispatch({
                     type: chatType.INITIAL_HISTORY_LIST,
                     payload: {

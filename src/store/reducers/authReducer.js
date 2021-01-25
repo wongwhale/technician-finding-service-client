@@ -4,6 +4,8 @@ authType.LOGIN_FAIL = 'LOGIN_FAIL'
 authType.LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 authType.LOADING = 'LOADING'
 authType.LOADED = 'LOADED'
+authType.CLEAR = 'AUTH_REDUCER_CLEAR'
+
 
 const initialState = {
     isLoading: false,
@@ -49,6 +51,8 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 isLoading: false,
             }
+        case authType.CLEAR :
+            return state = initialState
         default:
             return state
     }

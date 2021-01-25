@@ -1,13 +1,16 @@
 import React from 'react'
 
 import {
-    View
+    View,
+    Text
 } from 'react-native'
 
-import { content } from '../../../stylesheet'
+import { content, heightToDp } from '../../../stylesheet'
 
 import NewOrderNotification from '../../../components/TechnicianNotification/NewOrderNotification'
 import { connect } from 'react-redux'
+
+import Modal from 'react-native-modalbox'
 
 
 const mapStateToProps = (state) => ({
@@ -18,7 +21,7 @@ const mapDispatchToProps = {
 
 }
 
-const NewOrder = () => {
+const NewOrder = (props) => {
     return (
         <>
             <View style={content.container}>
