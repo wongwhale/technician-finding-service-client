@@ -26,7 +26,8 @@ import { SET_FILE } from '../../store/actions/formAction'
 const mapStateToProps = (state) => ({
     count: state.counter.count,
     userInfo: state.auth.userInfo,
-    file : state.form.file
+    file : state.form.file,
+    tech : state.noti
 })
 
 const connector = connect(mapStateToProps, { OPEN_LOCATION_PICKER_MODAL , OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL , SET_FILE })

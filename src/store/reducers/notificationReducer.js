@@ -7,6 +7,7 @@ export const notiType = {
     REMOVE_ACCECTED_TECH: 'REMOVE_ACCECTED_TECH',
     ADD_ACCECTED_TECH_ORDER: 'ADD_ACCECTED_TECH_ORDER',
     REMOVE_ACCECTED_TECH_ORDER: 'REMOVE_ACCECTED_TECH_ORDER',
+    CLEAR : 'NOTIFICATION_REDUCER_CLEAR',
 }
 
 // interface userResponse = {
@@ -98,6 +99,8 @@ export default function notificationReducer(
                     return val._id !== action.payload._id
                 })
             }
+        case notiType.CLEAR:
+            return state = initialState
         default:
             return state
     }

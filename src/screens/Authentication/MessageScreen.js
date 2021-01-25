@@ -19,19 +19,6 @@ const connector = connect(mapStateToProps , {SET_INTERLOCUTOR_ID , ENTER_PRIVATE
 
 const Message = (props) => {
 
-    const [lists , setLists] = useState([])
-
-    useEffect(() => {
-        props.INITIAL_HISTORY_LIST(props.uid)
-        .then( res => {
-            setLists(res)
-            console.log(res);
-        })
-        .catch( err => {
-            setLists([])
-        } )
-    },[])
-
     return (
         <>  
             <SafeAreaView style={content.topsafearray} />
@@ -39,8 +26,8 @@ const Message = (props) => {
                 <Header page='กล่องข้อความ' navigation={props.navigation} back={true} chat={true} />
                 <ScrollView style={content.container}>
                     {
-                        lists.lenght !== 0 ? (
-                            lists.map((item , index) => {
+                        props.chat_history.lenght !== 0 ? (
+                            props.chat_history.map((item , index) => {
                                 return <MessageList 
                                     key={index}
                                     status={true} 
@@ -53,12 +40,12 @@ const Message = (props) => {
                                     onPress={ () => {
                                         // props.navigation.navigate('chat')
                                         if(props.uid !== item.technicianID){
-                                            props.SET_INTERLOCUTOR_ID(item.technicianID)
+                                            props.ENTER_PRIVATE_CHAT(props.uid , item.technicianID)
                                             .then( () => {
                                                 props.navigation.navigate('chat')
                                             })
                                         }else{
-                                            props.SET_INTERLOCUTOR_ID(item.userID)
+                                            props.ENTER_PRIVATE_CHAT(item.technicianID , item.userID)
                                             .then( () => {
                                                 props.navigation.navigate('chat')
                                             })

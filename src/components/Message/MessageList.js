@@ -32,7 +32,7 @@ const MessageList = ({ status, name, lastMessage, badges, onPress, avatar , msgT
                         <Text style={[message.text, !status ? message.unreadMessage : null]}>
                             {
                                 msgType === 'image' ? `${name} ได้ส่งรูปภาพ` :
-                                msgType === "text" ? lastMessage
+                                msgType === "text" ? `${name} ${lastMessage}`
                                 : null
                             }
                         </Text>

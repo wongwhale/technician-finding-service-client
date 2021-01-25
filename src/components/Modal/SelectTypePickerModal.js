@@ -11,6 +11,7 @@ import Modal from 'react-native-modalbox'
 
 import { CLOSE_SELECT_TYPE_PICKER_MODAL } from '../../store/actions/modalAction'
 import { SET_TYPE } from '../../store/actions/formAction'
+import {aptitudeType} from '../../misc/aptitude_type'
 
 import { connect } from 'react-redux'
 
@@ -23,7 +24,6 @@ const connector = connect(mapStateToProps, { CLOSE_SELECT_TYPE_PICKER_MODAL, SET
 
 const SelectTypePickerModal = (props) => {
 
-    const type = ['คอมพิวเตอร์', 'ไฟฟ้า', 'ประปา', 'นวด']
 
     return (
         <>
@@ -50,7 +50,7 @@ const SelectTypePickerModal = (props) => {
                                 selectedValue={props.type}
                             >
                                 {
-                                    type.map((item, index) => <Picker.Item key={index} label={`${item}`} value={item} />)
+                                    aptitudeType.map((item, index) => <Picker.Item key={index} label={`${item}`} value={item} />)
                                 }
                             </Picker>
                         </View>

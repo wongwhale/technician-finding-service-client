@@ -20,10 +20,7 @@ export default function socketReducer (state = initialState , action) {
                 socket_id : action.payload.socket_id
             }
         case socketType.DISCONNECT:
-            return{
-                ...state,
-                socket_id : ''
-            }
+            return state = initialState
         default:
             return state
     }

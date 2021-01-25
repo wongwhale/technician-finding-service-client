@@ -12,6 +12,12 @@ import { infoStyles } from '../../screens/Authentication/UserInfoScreen'
 
 
 const TechnicianInfoComponent = (props) => {
+    const [amountReview , setAmountReview] = React.useState(0)
+    React.useEffect(() => {
+        props.info.aptitude.map( ({amountOfvoteStar}) => {
+            setAmountReview(amountOfvoteStar + amountReview)
+        })
+    },[])
     return (
         <>
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
@@ -48,14 +54,14 @@ const TechnicianInfoComponent = (props) => {
 
                     </View>
                 </View>
-                <View style={infoStyles.infoRow}>
+                {/* <View style={infoStyles.infoRow}>
                     <View style={infoStyles.infoTopic}>
                         <Text style={infoStyles.topicText}>
                             รูปภาพ
                         </Text>
                     </View>
-                </View>
-                <View style={infoStyles.infoRow}>
+                </View> */}
+                {/* <View style={infoStyles.infoRow}>
                     <View style={infoStyles.imageContainer}>
                         <Image style={infoStyles.image} />
                         <Image style={infoStyles.image} />
@@ -64,7 +70,7 @@ const TechnicianInfoComponent = (props) => {
                         <Image style={infoStyles.image} />
                         <Image style={infoStyles.image} />
                     </View>
-                </View>
+                </View> */}
                 <TouchableOpacity
                     style={[infoStyles.infoRow, infoStyles.ratingContainer]}
                     onPress={() => {
@@ -79,13 +85,17 @@ const TechnicianInfoComponent = (props) => {
                         <Feather name='chevron-right' style={infoStyles.btnText} />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={[infoStyles.infoRow, infoStyles.ratingContainer]}>
+                <TouchableOpacity style={[infoStyles.infoRow, infoStyles.ratingContainer]}
+                    onPress={ () => {
+                        console.log(props.info);
+                    }}
+                >
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                         <Feather name='star' style={[infoStyles.btnText, { paddingHorizontal: widthToDp('1') }]} />
                         <Text style={infoStyles.btnText}>เรทติ้ง</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={infoStyles.btnText}>{`${props.info.star}/5  (25 ครั้ง)`}</Text>
+                        <Text style={infoStyles.btnText}>{`${props.info.star}/5  (${amountReview} ครั้ง)`}</Text>
                         <Feather name='chevron-right' style={infoStyles.btnText} />
                     </View>
                 </TouchableOpacity>

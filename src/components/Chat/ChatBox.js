@@ -14,15 +14,15 @@ const connector = connect(mapStateToProps, {ENTER_PRIVATE_CHAT , LEAVE_PRIVATE_C
 
 const ChatBox = (props) => {
 
-    useEffect( () => {
-        props.ENTER_PRIVATE_CHAT(props.uid , props.tid)
-        .then( () => {
+    // useEffect( () => {
+    //     props.ENTER_PRIVATE_CHAT(props.uid , props.tid)
+    //     .then( () => {
 
-        })
-        return () => {
-            props.LEAVE_PRIVATE_CHAT()
-        }
-    },[])
+    //     })
+    //     return () => {
+    //         props.LEAVE_PRIVATE_CHAT()
+    //     }
+    // },[])
 
     return (
         <>

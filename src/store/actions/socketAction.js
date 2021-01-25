@@ -62,7 +62,6 @@ export const disconnect = (uid) => dispatch => {
 export const sendPostReq = ({ name, uid, date, type, file, detail, location }) => dispatch => {
     // console.log('file' , file);
     var image = []
-    const _id = `${parseInt(Math.random() * 1000000)}`
     return new Promise((resovle, reject) => {
         Promise.all(file.map(async (item) => {
             const reference = firebase().ref('post').child(`${item.creationDate}-${item.filename}`)
@@ -72,8 +71,6 @@ export const sendPostReq = ({ name, uid, date, type, file, detail, location }) =
             })
         })).then(() => {
             socket.emit('send_post_req', {
-                _id: _id,
-                senderName: name,
                 senderID: uid,
                 date: date,
                 techType: type,
@@ -82,7 +79,6 @@ export const sendPostReq = ({ name, uid, date, type, file, detail, location }) =
                 location: location
             })
             resovle({
-                _id: _id,
                 detail: detail,
                 techType: type,
                 image: image,

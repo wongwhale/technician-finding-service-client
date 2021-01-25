@@ -9,7 +9,7 @@ import TechnicianInfoComponent from '../../components/TechnicianInfo/TechnicianI
 
 import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
 import { logout } from '../../store/actions/authAction'
-import { ENTER_PRIVATE_CHAT } from '../../store/actions/chatAction'
+import { ENTER_PRIVATE_CHAT, INITIAL_HISTORY_LIST } from '../../store/actions/chatAction'
 
 const mapStateToProps = (state) => ({
     info: state.tech.info,
@@ -33,7 +33,12 @@ const UserInfo = (props) => {
                     />
                     <View style={[global.chatIconContainer, { flexDirection: 'row-reverse' }]}>
                         <TouchableOpacity
-                            onPress={() => props.navigation.navigate('message')}
+                            onPress={() => {
+                                props.INITIAL_HISTORY_LIST(props.uid)
+                                    .then(() => {
+                                        props.navigation.navigate('message')
+                                    })
+                            }}
                             style={{ marginLeft: widthToDp('2') }}
                         >
                             <Feather name="mail" style={global.chatIcon} />
@@ -70,7 +75,7 @@ const UserInfo = (props) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8, backgroundColor: '#fff' }}>
                     <TouchableOpacity
                         style={{ width: widthToDp('70'), backgroundColor: color.BLUE_3, borderRadius: widthToDp('1'), borderWidth: 2, borderColor: `${color.BLUE_3}66`, justifyContent: 'center', alignItems: 'center', height: widthToDp('7') }}
-                        onPress={ () => {
+                        onPress={() => {
                             props.navigation.navigate('editInfo')
                         }}
                     >
@@ -100,7 +105,7 @@ const UserInfo = (props) => {
     )
 }
 
-export default connect(mapStateToProps, { ENTER_PRIVATE_CHAT, GET_TECHNICIAN_INFO, logout })(UserInfo)
+export default connect(mapStateToProps, { INITIAL_HISTORY_LIST, ENTER_PRIVATE_CHAT, GET_TECHNICIAN_INFO, logout })(UserInfo)
 
 export const infoStyles = StyleSheet.create({
     coverImage: {

@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 
 import { Text, View, TouchableOpacity, Image, Button, StyleSheet } from 'react-native'
 
-import { newOrder, color, widthToDp , notification } from '../../stylesheet'
+import { newOrder, color, widthToDp, notification } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
 import { removeOrder } from '../../store/actions/notiAction'
 import { acceptedReq } from '../../store/actions/socketAction'
-import { OPEN_PRICE_INPUT_MODAL } from '../../store/actions/modalAction'
+import { OPEN_PRICE_INPUT_MODAL, OPEN_DETAIL_MODAL } from '../../store/actions/modalAction'
 
 import PriceInputModal from '../Modal/PriceInputModal'
 
@@ -24,19 +24,22 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     removeOrder,
     acceptedReq,
-    OPEN_PRICE_INPUT_MODAL
+    OPEN_DETAIL_MODAL
 }
 
 const Abstract = (props) => {
     const [isAccepted, setIsAccepted] = React.useState(false)
-    const [lowestPrice , setLowestPrice] = React.useState('')
-    const [hightestPrice , setHightestPrice] = React.useState('')
+    const [lowestPrice, setLowestPrice] = React.useState('')
+    const [hightestPrice, setHightestPrice] = React.useState('')
     return (
         <>
             {
                 !isAccepted ? (
                     <>
-                        <View style={!props.last ? [notification.abstractContainer, notification.abstractBottomBorder] : notification.abstractContainer}>
+                        <TouchableOpacity
+                            style={!props.last ? [notification.abstractContainer, notification.abstractBottomBorder] : notification.abstractContainer}
+                            onPress={() => props.OPEN_DETAIL_MODAL()}
+                        >
                             <View style={notification.imageContainer}>
                                 <TouchableOpacity style={notification.image}>
                                     <Image
@@ -45,7 +48,7 @@ const Abstract = (props) => {
                                     />
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity style={notification.detailContainer}>
+                            <View style={notification.detailContainer}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: '' }}>
                                     <View style={{ flexWrap: 'nowrap' }}>
                                         <Text style={[newOrder.text, notification.nameText]}>
@@ -82,10 +85,7 @@ const Abstract = (props) => {
                                                     tid: props.uid,
                                                     customerID: props.order.senderID,
                                                 }
-                                                // props.OPEN_PRICE_INPUT_MODAL()
                                                 setIsAccepted(true)
-
-                                                // props.acceptedReq( props.order.senderID, payload)
                                             }}
                                         >
                                             <Text style={newOrder.buttonText}>
@@ -104,27 +104,27 @@ const Abstract = (props) => {
                                         </TouchableOpacity>
                                     </View>
                                 </View>
-                            </TouchableOpacity>
-                        </View>
+                            </View>
+                        </TouchableOpacity>
                     </>
                 ) : (
                         <>
                             <View style={[notification.abstractContainer, { backgroundColor: color.BLUE_5, borderRadius: widthToDp('1') }]}>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={priceInput.headerText}>ระบุราคาโดยประมาณ</Text>
-                                    <View style={{ flexDirection: 'row' , alignItems:'center' }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                         <TextInput
                                             style={priceInput.textInput}
                                             placeholderTextColor={color.BLUE_4}
                                             placeholder='ต่ำสุด'
                                             keyboardType='number-pad'
                                             value={lowestPrice}
-                                            onChangeText={ val => {
+                                            onChangeText={val => {
                                                 setLowestPrice(val)
                                             }}
                                             autoFocus={true}
                                         />
-                                        <Text style={{color:color.BLUE_2 , fontSize:widthToDp('5')}}>
+                                        <Text style={{ color: color.BLUE_2, fontSize: widthToDp('5') }}>
                                             -
                                         </Text>
                                         <TextInput
@@ -133,20 +133,20 @@ const Abstract = (props) => {
                                             placeholder='สูงสุด'
                                             keyboardType='number-pad'
                                             value={hightestPrice}
-                                            onChangeText={ val => {
+                                            onChangeText={val => {
                                                 setHightestPrice(val)
                                             }}
-                                            
+
                                         />
                                     </View>
-                                    <View style={{flexDirection:'row' , paddingHorizontal:widthToDp('2')}}>
+                                    <View style={{ flexDirection: 'row', paddingHorizontal: widthToDp('2') }}>
                                         <TouchableOpacity
                                             onPress={() => {
                                                 setHightestPrice('')
                                                 setLowestPrice('')
                                                 setIsAccepted(false)
                                             }}
-                                            style={[priceInput.btn , priceInput.cancel , {marginRight : widthToDp('1')}]}>
+                                            style={[priceInput.btn, priceInput.cancel, { marginRight: widthToDp('1') }]}>
                                             <Text style={priceInput.cancelText}>
                                                 ยกเลิก
                                         </Text>
@@ -162,14 +162,17 @@ const Abstract = (props) => {
                                                     tid: props.uid,
                                                     customerID: props.order.senderID,
                                                 }
-                                                if(parseInt(lowestPrice) <= parseInt(hightestPrice)){
-                                                    props.acceptedReq( props.order.senderID, payload)
-                                                }else{
+                                                if (parseInt(lowestPrice) <= parseInt(hightestPrice)) {
+                                                    props.acceptedReq(props.order.senderID, payload)
+                                                    setHightestPrice('')
+                                                    setLowestPrice('')
+                                                    setIsAccepted(false)
+                                                } else {
                                                     alert('จำนวนเงินผิดพลาด')
                                                 }
-                                                
+
                                             }}
-                                            style={[priceInput.btn , priceInput.accept , {marginLeft : widthToDp('1')}]}>
+                                            style={[priceInput.btn, priceInput.accept, { marginLeft: widthToDp('1') }]}>
                                             <Text style={priceInput.acceptText}>
                                                 ยืนยัน
                                         </Text>
@@ -198,19 +201,19 @@ const priceInput = StyleSheet.create({
     },
     btn: {
         marginTop: widthToDp('2'),
-        flex:1,
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         height: widthToDp('7'),
         borderRadius: widthToDp('1'),
     },
-    cancel:{
-        backgroundColor:color.RED_3
+    cancel: {
+        backgroundColor: color.RED_3
     },
-    accept:{
-        backgroundColor:color.GREEN_4
+    accept: {
+        backgroundColor: color.GREEN_4
     },
-    acceptText:{
+    acceptText: {
         color: color.GREEN_0,
         fontSize: widthToDp('4')
     },

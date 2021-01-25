@@ -8,7 +8,7 @@ import Abstract from './AcceptedAbstract'
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => ({
-    techOrder: state.noti.techOrder
+    techAcceptedOrder : state.noti.techAcceptedOrder
 })
 
 const mapDispatchToProps = {
@@ -21,7 +21,7 @@ const AcceptedNotification = (props) => {
 
     return (
         <>
-            {props.techOrder.length !== 0 ? (
+            {props.techAcceptedOrder.length !== 0 ? (
                 <View style={[notification.container, acceptedOrder.bg]}>
                     <View style={notification.headerContainer}>
                         <Text>
@@ -29,24 +29,24 @@ const AcceptedNotification = (props) => {
                                 ออเดอร์
                         </Text>
                             <Text style={notification.headerID}>
-                                {`#${props.techOrder._id}`}
+                                {`#${props.techAcceptedOrder._id}`}
                             </Text>
                         </Text>
                     </View>
                     <View style={notification.content}>
                         {
-                            props.techOrder.length !== 0 ? (
-                                props.techOrder.map((item, index) => {
+                            props.techAcceptedOrder.length !== 0 ? (
+                                props.techAcceptedOrder.map((item, index) => {
                                     const date_ = new Date(item.date)
                                     return <Abstract key={index}
                                         order={item}
                                         distance="2.21"
                                         date={`${date_.getDate()} ${month[date_.getMonth()]} ${date_.getFullYear() + 543}`}
-                                        last={props.techOrder.length === index + 1 ? true : false}
+                                        last={props.techAcceptedOrder.length === index + 1 ? true : false}
                                     />
                                 })
                             ) : (
-                                    <View style={{ padding: widthToDp('1.5') }}>
+                                    <View style={{ padding: widthToDp('1.5') , paddingHorizontal:widthToDp('4') }}>
                                         <Text style={{ fontSize: widthToDp('3.5'), color: color.BLUE_5 }}>
                                             ไม่มีออเดอร์ใหม่
                                     </Text>

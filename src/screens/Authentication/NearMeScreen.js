@@ -14,6 +14,9 @@ import { content, searchScreen, color } from '../../stylesheet'
 import { connect } from 'react-redux'
 import { SEARCH_BY_KEY_WORD } from '../../store/actions/techAction'
 import Feather from 'react-native-vector-icons/Feather'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
+import MapViewDirections from 'react-native-maps-directions'
+import { GOOGLE_API } from '../../misc/google_api'
 
 const mapStateToProps = (state) => ({
 
@@ -29,10 +32,26 @@ const NearMeScreen = ({ navigation, ...props }) => {
         <>
             {/* <SafeAreaView style={content.safearray}> */}
             <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={[content.safearray , {backgroundColor : color.WHITE}]}>
+            <SafeAreaView style={[content.safearray,]}>
                 <Header page="ใกล้ฉัน" back={true} navigation={navigation} />
-                <View style={[content.container, { backgroundColor: color.WHITE }]}>
-                    <View style={{ flexDirection: 'row' }}>
+                <MapView
+                    provider={PROVIDER_GOOGLE}
+                    style={[content.container,]}
+                    initialRegion={{
+                        latitude: 18.795924746501605,
+                        longitude: 98.95296894013882,
+                        latitudeDelta: 0.01,
+                        longitudeDelta: 0.01
+                    }}
+                    region={{
+                        latitude: 18.795924746501605,
+                        longitude: 98.95296894013882,
+                        latitudeDelta: 0.01,
+                        longitudeDelta: 0.01
+                    }}
+                    showsUserLocation
+                >
+                    {/* <View style={{ flexDirection: 'row' }}>
                         <View style={searchScreen.textInputContainer}>
                             {
                                 mapKeyword.length != 0 ? (
@@ -57,9 +76,35 @@ const NearMeScreen = ({ navigation, ...props }) => {
                                 <Feather name='search' style={searchScreen.searchIcon} />
                             </View>
                         </View>
-                    </View>
+                    </View> */}
+                    <MapViewDirections
+                        origin={{
+                            latitude: 18.795924746501605,
+                            longitude: 98.95296894013882,
+                        }}
+                        apikey={GOOGLE_API}
+                        strokeWidth={0}
+                        strokeColor='red'
+                        destination={{
+                            latitude: 18.794925746501605,
+                            longitude: 98.95190894013882,
+                        }}
+                        onReady={ (res)  => {
+                            console.log('distance' , res.distance);
+                        }}
+                    >
+                    </MapViewDirections>
+                    <Marker
+                        coordinate={{
+                            latitude: 18.794925746501605,
+                            longitude: 98.95190894013882,
+                        }}
+                        title='test'
+                        description='test test'
+                    >
+                    </Marker>
                     {/* Map */}
-                </View>
+                </MapView>
             </SafeAreaView>
 
         </>

@@ -10,6 +10,7 @@ formType.SET_DETAIL = 'SET_DETAIL'
 formType.SET_LOCATION = 'SET_LOCATION'
 formType.SET_MINUTE = 'SET_MINUTE'
 formType.SET_HOUR = 'SET_HOUR'
+formType.CLEAR = 'FORM_REDUCER_CLEAR'
 
 const initialState = {
     date_count: 30,
@@ -85,6 +86,8 @@ export default function formReducer(state = initialState, action) {
                 ...state,
                 minute: action.payload.minute
             }
+        case formType.CLEAR :
+            return state = initialState
         default:
             return state
     }
