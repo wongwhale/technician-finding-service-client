@@ -10,11 +10,11 @@ import {
 } from 'react-native'
 
 import Header from '../../components/Header'
-import { content, searchScreen, color } from '../../stylesheet'
+import { content, searchScreen, color, technician } from '../../stylesheet'
 import { connect } from 'react-redux'
-import { SEARCH_BY_KEY_WORD } from '../../store/actions/techAction'
+import { SEARCH_BY_KEY_WORD, GET_NEAR_TECHNICIAN } from '../../store/actions/techAction'
 import Feather from 'react-native-vector-icons/Feather'
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
 import { GOOGLE_API } from '../../misc/google_api'
 
@@ -23,11 +23,20 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    SEARCH_BY_KEY_WORD
+    SEARCH_BY_KEY_WORD,
+    GET_NEAR_TECHNICIAN
 }
 
 const NearMeScreen = ({ navigation, ...props }) => {
     const [mapKeyword, setMapKeyword] = React.useState('')
+    const [technicians, setTechnicians] = React.useState([])
+
+    React.useEffect(() => {
+        props.GET_NEAR_TECHNICIAN().then(res => {
+            setTechnicians(res)
+        })
+    }, [])
+
     return (
         <>
             {/* <SafeAreaView style={content.safearray}> */}
@@ -89,20 +98,31 @@ const NearMeScreen = ({ navigation, ...props }) => {
                             latitude: 18.794925746501605,
                             longitude: 98.95190894013882,
                         }}
-                        onReady={ (res)  => {
-                            console.log('distance' , res.distance);
+                        onReady={(res) => {
+                            console.log('distance', res.distance);
                         }}
                     >
                     </MapViewDirections>
-                    <Marker
-                        coordinate={{
-                            latitude: 18.794925746501605,
-                            longitude: 98.95190894013882,
-                        }}
-                        title='test'
-                        description='test test'
-                    >
-                    </Marker>
+                    {
+                        technicians.length !== 0 ?
+                            technicians.map(tech => {
+                                return (
+                                    <Marker
+                                        coordinate={{
+                                            latitude: tech.address.lat,
+                                            longitude: tech.address.lon
+                                        }}
+                                    >
+                                        <Callout>
+                                            <Text>
+{`${tech.userInfoID.firstname} ${tech.userInfoID.lastname}`}
+                                            </Text>
+                                        </Callout>
+                                    </Marker>
+                                )
+                            })
+                            : null
+                    }
                     {/* Map */}
                 </MapView>
             </SafeAreaView>

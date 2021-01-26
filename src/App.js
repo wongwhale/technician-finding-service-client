@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 
-
 import { NavigationContainer } from '@react-navigation/native';
 
 import IsAuth from './screens/Authentication/'
@@ -17,7 +16,6 @@ const mapStateToProps = (state) => ({
 })
 
 const connector = connect(mapStateToProps, { disconnect, leave, checkToken })
-
 
 const Router = (props) => {
   useEffect(() => {

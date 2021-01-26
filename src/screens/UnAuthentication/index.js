@@ -15,6 +15,8 @@ import Login from './Login'
 import { clear } from '../../store/actions/regAction'
 import { connect } from 'react-redux'
 
+import LoadingModal from '../../components/Modal/LoadingModal'
+
 const mapStateToProps = (state) => ({
     
 })
@@ -36,6 +38,7 @@ const UnAuth = (props) => {
                 <Stack.Screen name='reg_otp' component={OTP} options={{ headerShown: false }} />
                 <Stack.Screen name='reg_image' component={ImageProfile} options={{ headerShown: false }} />
             </Stack.Navigator>
+            <LoadingModal />
         </>
 
     )

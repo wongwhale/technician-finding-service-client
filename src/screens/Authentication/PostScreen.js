@@ -21,7 +21,7 @@ import ImagePickerManager from 'react-native-image-crop-picker'
 
 import { sendPostReq } from '../../store/actions/socketAction'
 import { addNewResponse } from '../../store/actions/notiAction'
-import { SET_FILE, SET_LOCATION } from '../../store/actions/formAction'
+import { SET_FILE, SET_LOCATION  } from '../../store/actions/formAction'
 import { CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
 
 import { connect } from 'react-redux'
@@ -89,7 +89,7 @@ const PostScreen = (props) => {
                     </View>
                     <MyButton title='ยืนยัน'
                         onPress={() => {
-                            const date = `${props.year}-${("0" + (props.month)).slice(-2)}-${("0" + (props.date)).slice(-2)}T${("0" + (props.hour)).slice(-2)}:${("0" + (props.minute)).slice(-2)}:00Z`
+                            const date = `${props.year}-${("0" + (props.month+1)).slice(-2)}-${("0" + (props.date)).slice(-2)}T${("0" + (props.hour)).slice(-2)}:${("0" + (props.minute)).slice(-2)}:00Z`
                             const name = `${props.firstname} ${props.lastname}`
                             props.sendPostReq({
                                 name: name,
@@ -103,14 +103,14 @@ const PostScreen = (props) => {
                                     lon: props.lng
                                 }
                             }).then(res => {
-                                props.addNewResponse(res)
-                                    .then(() => {
-                                        props.navigation.navigate('notification')
-                                    })
-                                    .catch((err) => {
-                                        alert('error')
-                                        console.log(err);
-                                    })
+                                props.navigation.navigate('notification')
+                                // props.addNewResponse(res)
+                                //     .then(() => {
+                                //     })
+                                //     .catch((err) => {
+                                //         alert('error')
+                                //         console.log(err);
+                                //     })
                             })
                         }}
                     />

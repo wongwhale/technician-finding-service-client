@@ -11,7 +11,7 @@ import { Rating } from 'react-native-ratings';
 const Abstract = ({ name, star, distance, price, last }) => {
     return (
         <>
-            <View style={!last ? [notification.abstractContainer, notification.abstractBottomBorder] : userNotification.abstractContainer}>
+            <View style={!last ? [notification.abstractContainer, notification.abstractBottomBorder] : [notification.abstractContainer]}>
                 <View style={notification.imageContainer}>
                     <TouchableOpacity style={notification.image}>
                         <Image
@@ -32,7 +32,7 @@ const Abstract = ({ name, star, distance, price, last }) => {
                         <View style={{ flexDirection: 'column' }}>
                             <View style={{ justifyContent: 'center' }}>
                                 <View style={{ alignItems: 'flex-start' }}>
-                                    <Rating type='custom' imageSize={12} readonly startingValue={star} ratingColor={color.YELLOW} ratingBackgroundColor={color.WHITE} tintColor={color.BLUE_5} />
+                                    <Rating type='custom' imageSize={12} readonly startingValue={star} ratingColor={color.YELLOW} ratingBackgroundColor={color.BLUE_4} tintColor={color.BLUE_5} />
                                 </View>
                             </View>
                             <Text style={[userNotification.text, notification.detailText]}>

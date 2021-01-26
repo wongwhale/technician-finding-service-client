@@ -19,11 +19,13 @@ import { leave, connection } from '../../store/actions/socketAction';
 import { CLOSE_DATE_PICKER_MODAL } from '../../store/actions/modalAction';
 import { INITIAL_HISTORY_LIST } from '../../store/actions/chatAction';
 import { SET_FILE } from '../../store/actions/formAction';
+import { clear } from '../../store/actions/authAction';
 
 import { connect } from 'react-redux';
 import TechnicianRegisterScreen from './TechnicianRegisterScreen';
 import UserInfoEditScreen from './UserInfoEditScreen';
 import OrderDetailModal from '../../components/Modal/OrderDetailModal'
+import LoadingModal from '../../components/Modal/LoadingModal';
 
 const mapStateToProps = (state) => ({
   uid: state.auth.userInfo.uid,
@@ -32,7 +34,7 @@ const mapStateToProps = (state) => ({
   badge : state.noti.badge
 })
 
-const connector = connect(mapStateToProps, { leave, connection , CLOSE_DATE_PICKER_MODAL , INITIAL_HISTORY_LIST , SET_FILE })
+const connector = connect(mapStateToProps, { clear, leave, connection , CLOSE_DATE_PICKER_MODAL , INITIAL_HISTORY_LIST , SET_FILE })
 
 
 const Index = (props) => {
@@ -59,6 +61,7 @@ const Index = (props) => {
         <Stack.Screen name='editInfo' component={UserInfoEditScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
       <OrderDetailModal />
+      <LoadingModal />
     </>
   );
 };

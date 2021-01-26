@@ -31,7 +31,7 @@ const DatePickerModal = (props) => {
 
     useEffect(() => {
         props.SET_DATE(current_date.getDate())
-        props.SET_MONTH(current_date.getMonth()+1)
+        props.SET_MONTH(current_date.getMonth())
         props.SET_YEAR(current_date.getFullYear())
     },[])
 
@@ -41,7 +41,6 @@ const DatePickerModal = (props) => {
                 isOpen={props.isOpen}
                 onClosed={() => {
                     props.CLOSE_DATE_PICKER_MODAL()
-                    console.log(`${props.date}-${props.month}-${props.year}`);
                 }}
                 style={[modalStyle.subcontainer, { backgroundColor: 'transparent' }]}
                 position='bottom'
@@ -71,7 +70,7 @@ const DatePickerModal = (props) => {
                                 onValueChange={ (val) => props.SET_MONTH(val)}
                             >
                                 {
-                                    month.map((item, index) => <Picker.Item key={index} label={`${item}`} value={index+1} />)
+                                    month.map((item, index) => <Picker.Item key={index} label={`${item}`} value={index} />)
                                 }
                             </Picker>
                         </View>

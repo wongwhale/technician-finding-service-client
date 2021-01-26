@@ -41,7 +41,8 @@ export default function technicianReducer (state = initialState , action) {
                     aptitude : action.payload.aptitude,
                     personalInfo : action.payload.personalInfo,
                     onSite : action.payload.onSite,
-                    star : action.payload.star
+                    star : action.payload.star,
+                    location : action.payload.location
                 }
             }
         case techType.CLEAR :

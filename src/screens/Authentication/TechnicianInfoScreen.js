@@ -52,12 +52,48 @@ const TechnicianInfo = (props) => {
                         <Feather name="chevron-left" style={global.backIcon} />
                     </TouchableOpacity>
                 </View>
-                <View style={[infoStyles.headerContainer , {padding:8}]}>
+                <View style={[infoStyles.headerContainer, { padding: 8 }]}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: widthToDp('5'), fontWeight: 'bold' }}>
                             {`${props.info.personalInfo.firstname} ${props.info.personalInfo.lastname}`}
                         </Text>
                     </View>
+                </View>
+                <View style={[infoStyles.headerContainer, { padding: 8, justifyContent: 'space-evenly' }]}>
+                    <TouchableOpacity
+                        style={{
+                            width: widthToDp('20'),
+                            height: widthToDp('8'),
+                            backgroundColor: color.GREEN_2,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: widthToDp('4')
+                        }}
+                    >
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <Ionicons name='call' style={{ color: '#fff', fontSize: widthToDp('4.5') }} />
+                            <Text style={{ color: '#fff', fontSize: widthToDp('4'), fontWeight: 'bold' }}>
+                                โทร
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={{
+                            width: widthToDp('20'),
+                            height: widthToDp('8'),
+                            backgroundColor: color.BLUE_3,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: widthToDp('4')
+                        }}
+                    >
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <Ionicons name='chatbox' style={{ color: '#fff', fontSize: widthToDp('4.5') }} />
+                            <Text style={{ color: '#fff', fontSize: widthToDp('4'), fontWeight: 'bold' }}>
+                                แชท
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
                 <ScrollView>
                     <View style={content.container}>
