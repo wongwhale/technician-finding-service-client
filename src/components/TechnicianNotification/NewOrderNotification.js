@@ -17,7 +17,6 @@ const mapDispatchToProps = {
 
 const NewOrderNotification = (props) => {
     const month = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฏาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
-    
 
     return (
         <>
@@ -36,7 +35,6 @@ const NewOrderNotification = (props) => {
                                 const date_ = new Date(item.date)
                                 return <Abstract key={index} 
                                     order={item}
-                                    distance="2.21" 
                                     date={`${date_.getDate()} ${month[date_.getMonth()]} ${date_.getFullYear() + 543}`} 
                                     last={props.techOrder.length === index+1 ? true : false}
                                 />

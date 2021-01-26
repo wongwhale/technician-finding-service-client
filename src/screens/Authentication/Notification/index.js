@@ -45,11 +45,17 @@ const Notification = ({ navigation, role, userResponse }) => {
                 <ScrollView>
                     {
                         userResponse.length !== 0 ? (
-                            userResponse.map((item) => {
-                                console.log('user test noti', item);
+                            userResponse.map((form) => {
+                                console.log('user test noti', form);
                                 return (
-                                    <View style={content.container}>
-                                        <UserNotification orderID={item._id} acceptedTech={item.acceptedTech} />
+                                    <View key={form._id} style={content.container}>
+                                        <UserNotification 
+                                            orderID={form._id} 
+                                            detail={form.detail} 
+                                            date={form.date} 
+                                            acceptedTech={form.technician} 
+                                            distance={form.distance}
+                                        />
                                     </View>
                                 )
                             })

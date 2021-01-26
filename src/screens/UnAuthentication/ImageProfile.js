@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { SafeAreaView, View, Text, TouchableOpacity, Image , Platform } from 'react-native';
+import { SafeAreaView, View, Text, TouchableOpacity, Image, Platform } from 'react-native';
 
 import ImagePickerModal from '../../components/Modal/ImagePickerModal'
 
@@ -8,7 +8,7 @@ import ImagePicker from 'react-native-image-crop-picker'
 
 import Feather from 'react-native-vector-icons/Feather'
 
-import { OPEN_IMAGE_PICKER_MODAL , CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
+import { OPEN_IMAGE_PICKER_MODAL, CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
 import { SET_IMAGE_PROFILE } from '../../store/actions/regAction'
 
 import { connect } from 'react-redux';
@@ -18,16 +18,16 @@ import Footer from '../../components/Registor/Footer';
 
 const mapStateToProps = (state) => ({
     avatar: state.reg.avatar,
-    avatar_status : state.reg.avatar_status
+    avatar_status: state.reg.avatar_status
 })
 
 const ImageProfile = (props) => {
 
     const handleLibPicker = (image) => {
         props.SET_IMAGE_PROFILE(image)
-        .then( res => {
-            props.CLOSE_IMAGE_PICKER_MODAL()
-        })
+            .then(res => {
+                props.CLOSE_IMAGE_PICKER_MODAL()
+            })
     }
 
 
@@ -61,10 +61,10 @@ const ImageProfile = (props) => {
                             ) :
                                 (
                                     <Image
-                                        style={{width:120 , height:120 , borderRadius:60}}
+                                        style={{ width: 120, height: 120, borderRadius: 60 }}
                                         source={
-                                            Platform.OS === 'ios' ? {uri: props.avatar.path}
-                                            : {uri: props.avatar.path}
+                                            Platform.OS === 'ios' ? { uri: props.avatar.path }
+                                                : { uri: props.avatar.path }
                                         }
                                     />
                                 )
@@ -73,7 +73,7 @@ const ImageProfile = (props) => {
                     <MyButton
                         title='ถัดไป'
                         onPress={() => {
-                            if(props.avatar_status) props.navigation.navigate('reg_phone')
+                            if (props.avatar_status) props.navigation.navigate('reg_phone')
                             else alert('กรุณาเลือกรูปโปรไฟล์')
                         }}
                     />

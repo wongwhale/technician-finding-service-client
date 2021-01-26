@@ -18,9 +18,8 @@ import ListBox from '../../components/Search/ListBox'
 import { connect } from 'react-redux'
 
 import { SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD } from '../../store/actions/techAction'
-import { GOOGLE_API } from '../../misc/google_api'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import MapViewDirections from 'react-native-maps-directions'
+import { LOADED } from '../../store/actions/authAction'
+import { getDistance } from '../../misc/getDistance'
 
 const mapStateToProps = (state) => ({
     keyword: state.tech.keyword,
@@ -32,25 +31,11 @@ const SearchScreen = (props) => {
 
     const [listsWithDistance, setListsWithDistance] = React.useState([])
 
-    const getDistanceOneToOne = async (lat1, lng1, lat2, lng2) => {
-        const Location1Str = lat1 + "," + lng1;
-        const Location2Str = lat2 + "," + lng2;
-
-        let ApiURL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
-
-        let params = `origins=${Location1Str}&destinations=${Location2Str}&key=${GOOGLE_API}`; // you need to get a key
-        let finalApiURL = `${ApiURL}${encodeURI(params)}`;
-
-        let fetchResult = await fetch(finalApiURL); // call API
-        let Result = await fetchResult.json(); // extract json
-        return Result.rows[0].elements[0].distance.value
-    }
-
     const handleDistance = (lists) => {
         let temp_lists = []
         Promise.all(
         lists.map(async (tech) => {
-            const distance = await getDistanceOneToOne(
+            const distance = await getDistance(
                 18.795924746501605,
                 98.95296894013882,
                 tech.address.lat,
@@ -63,11 +48,12 @@ const SearchScreen = (props) => {
         })
         )
         .then( () => {
+            props.LOADED()
             setListsWithDistance(temp_lists.sort( (a,b) => {
                 return a.distance - b.distance
             }))
+            
         })
-
     }
 
     return (
@@ -133,4 +119,4 @@ const SearchScreen = (props) => {
     )
 }
 
-export default connect(mapStateToProps, { SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD })(SearchScreen)
+export default connect(mapStateToProps, { LOADED ,SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD })(SearchScreen)

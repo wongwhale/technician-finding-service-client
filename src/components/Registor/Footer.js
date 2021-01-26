@@ -19,7 +19,7 @@ const Footer = (props) => {
                     <TouchableOpacity onPress={() => {
                         props.navigation.navigate('login')
                     }}>
-                        <Text style={styles.text}>Already have an accout?</Text>
+                        <Text style={styles.text}>ฉันมีบัญชีผู้ใช้แล้ว</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: color.LIGHT_GREY,
-        borderTopWidth: 1
+        borderTopWidth: 1,
+        paddingBottom:5
     },
     row: {
         flexDirection: 'row'

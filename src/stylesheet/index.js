@@ -413,10 +413,11 @@ export const notification = StyleSheet.create({
     },
     headerText: {
         fontSize: widthToDp('4'),
+        fontWeight : 'bold'
     },
     headerID: {
-        fontSize: widthToDp('3'),
-        color: color.BLUE_4
+        fontSize: widthToDp('3.5'),
+        color: color.BLUE_2
     },
     content: {
         
@@ -1018,7 +1019,7 @@ export const registor = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         paddingHorizontal: '10%',
-        marginTop: '20%',
+        marginTop: '15%',
     },
     descText: {
         color: color.GREY,

@@ -15,6 +15,7 @@ import { mainScreen, color, content } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
+import { GET_NEAR_TECHNICIAN } from '../../store/actions/techAction'
 import UserInfo from '../../components/UserInfo'
 import Header from '../../components/Header'
 import { connect } from 'react-redux';
@@ -30,7 +31,7 @@ const mapStateToProps = (state) => ({
     tech : state.noti
 })
 
-const connector = connect(mapStateToProps, { OPEN_LOCATION_PICKER_MODAL , OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL , SET_FILE })
+const connector = connect(mapStateToProps, { GET_NEAR_TECHNICIAN , OPEN_LOCATION_PICKER_MODAL , OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL , SET_FILE })
 
 const Main = (props) => {
 

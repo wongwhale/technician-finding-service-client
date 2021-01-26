@@ -44,7 +44,7 @@ const Abstract = (props) => {
                                 <TouchableOpacity style={notification.image}>
                                     <Image
                                         style={notification.image}
-                                        source={require('./test.jpg')}
+                                        source={{uri : props.order.userInfoID.avatar}}
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -52,7 +52,7 @@ const Abstract = (props) => {
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: '' }}>
                                     <View style={{ flexWrap: 'nowrap' }}>
                                         <Text style={[newOrder.text, notification.nameText]}>
-                                            {`${props.order.senderName}`}
+                                            {`${props.order.userInfoID.firstname} ${props.order.userInfoID.lastname}`}
                                         </Text>
                                     </View>
                                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -63,7 +63,7 @@ const Abstract = (props) => {
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
                                         <Text style={[newOrder.text, notification.detailText]}>
-                                            {`ห่างจากคุณ : ${props.distance} กม. `}
+                                            {`ห่างจากคุณ : ${props.order.distance} กม. `}
                                         </Text>
                                         <Text style={[newOrder.text, notification.detailText]}>
                                             {`วันที่: ${props.date}`}
@@ -76,15 +76,6 @@ const Abstract = (props) => {
                                         <TouchableOpacity
                                             style={[newOrder.acceptButton, notification.button]}
                                             onPress={() => {
-                                                const payload = {
-                                                    _id: props.order._id,
-                                                    date: props.order.date,
-                                                    detail: props.order.detail,
-                                                    image: props.order.image,
-                                                    tname: `${props.firstname} ${props.lastname}`,
-                                                    tid: props.uid,
-                                                    customerID: props.order.senderID,
-                                                }
                                                 setIsAccepted(true)
                                             }}
                                         >
@@ -153,17 +144,8 @@ const Abstract = (props) => {
                                         </TouchableOpacity>
                                         <TouchableOpacity
                                             onPress={() => {
-                                                const payload = {
-                                                    _id: props.order._id,
-                                                    date: props.order.date,
-                                                    detail: props.order.detail,
-                                                    image: props.order.image,
-                                                    tname: `${props.firstname} ${props.lastname}`,
-                                                    tid: props.uid,
-                                                    customerID: props.order.senderID,
-                                                }
                                                 if (parseInt(lowestPrice) <= parseInt(hightestPrice)) {
-                                                    props.acceptedReq(props.order.senderID, payload)
+                                                    props.acceptedReq(props.order.senderID)
                                                     setHightestPrice('')
                                                     setLowestPrice('')
                                                     setIsAccepted(false)

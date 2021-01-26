@@ -37,10 +37,10 @@ const LocationPicker = (props) => {
                             longitudeDelta: 0.005
                         }}
                         showsUserLocation={true}
-                        // onRegionChangeComplete={(res) => {
-                        //     console.log( `\nlat :  ${res.latitude}\nlng : ${res.longitude}`);
-                        //     props.SET_LOCATION(res.latitude, res.longitude)
-                        // }}
+                        onRegionChangeComplete={(res) => {
+                            console.log( `\nlat :  ${res.latitude}\nlng : ${res.longitude}`);
+                            props.SET_LOCATION(res.latitude, res.longitude)
+                        }}
                     >
                         <Ionicons name='ios-pin' size={50} style={{ top:-20 , right:-2 , color:'red' }} />
                         {/* <Marker

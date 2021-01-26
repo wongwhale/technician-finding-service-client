@@ -13,13 +13,15 @@ socket.on('join', (id) => {
 })
 
 socket.on('send_post_req', (order) => {
-    console.log('send post req', order);
     store.dispatch({
         type: notiType.ADD_TECH_ORDER,
         payload: order
     })
 })
 
+socket.on('send_post_req_back' , (form) => {
+    console.log('send_post_req_back' , form);
+})
 
 socket.on('accepted_req', (payload) => {
     store.dispatch({
@@ -78,13 +80,7 @@ export const sendPostReq = ({ name, uid, date, type, file, detail, location }) =
                 detail: detail,
                 location: location
             })
-            resovle({
-                detail: detail,
-                techType: type,
-                image: image,
-                location: location,
-                acceptedTech: []
-            })
+            resovle()
         }).catch(() => {
             reject()
         })
@@ -93,13 +89,12 @@ export const sendPostReq = ({ name, uid, date, type, file, detail, location }) =
 
 }
 
-export const acceptedReq = (sendTo, payload) => dispatch => {
-    // console.log();
-    socket.emit('accepted_req', { sendTo, payload })
+export const acceptedReq = (_id) => dispatch => {
+    socket.emit('accepted_req', {_id})
     dispatch({
         type: notiType.REMOVE_TECH_ORDER,
         payload: {
-            _id: payload._id
+            _id: _id
         }
     })
 }

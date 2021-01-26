@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {
-    View , Text , TouchableOpacity ,Image
+    View, Text, TouchableOpacity, Image
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -9,15 +9,17 @@ import Feather from 'react-native-vector-icons/Feather'
 import { widthToDp } from '../../stylesheet'
 import { infoStyles } from '../../screens/Authentication/UserInfoScreen'
 
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
+
 
 
 const TechnicianInfoComponent = (props) => {
-    const [amountReview , setAmountReview] = React.useState(0)
+    const [amountReview, setAmountReview] = React.useState(0)
     React.useEffect(() => {
-        props.info.aptitude.map( ({amountOfvoteStar}) => {
+        props.info.aptitude.map(({ amountOfvoteStar }) => {
             setAmountReview(amountOfvoteStar + amountReview)
         })
-    },[])
+    }, [])
     return (
         <>
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
@@ -71,7 +73,7 @@ const TechnicianInfoComponent = (props) => {
                         <Image style={infoStyles.image} />
                     </View>
                 </View> */}
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     style={[infoStyles.infoRow, infoStyles.ratingContainer]}
                     onPress={() => {
                         console.log(props.info);
@@ -84,9 +86,34 @@ const TechnicianInfoComponent = (props) => {
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                         <Feather name='chevron-right' style={infoStyles.btnText} />
                     </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+                <MapView
+                    provider={PROVIDER_GOOGLE}
+                    showsUserLocation
+                    style={{
+                        width: '100%',
+                        height: widthToDp('50')
+                    }}
+                    region={{
+                        latitude: props.info.location.lat,
+                        longitude: props.info.location.lon,
+                        latitudeDelta: 0.005,
+                        longitudeDelta: 0.005
+                    }}
+                >
+                    <Marker
+                        coordinate={{
+                            latitude: props.info.location.lat,
+                            longitude: props.info.location.lon,
+                        }}
+                        title={`${props.info.personalInfo.firstname} ${props.info.personalInfo.lastname}`}
+                    >
+
+                    </Marker>
+
+                </MapView>
                 <TouchableOpacity style={[infoStyles.infoRow, infoStyles.ratingContainer]}
-                    onPress={ () => {
+                    onPress={() => {
                         console.log(props.info);
                     }}
                 >

@@ -36,7 +36,7 @@ const DateTimePicker = (props) => {
                     <Text style={posting.halfHeader}>วันที่</Text>
                     <TouchableOpacity style={posting.halfInput} onPress={() => props.OPEN_DATE_PICKER_MODAL()} >
                             <Text style={posting.inputText}>{
-                                `${("0" + props.date).slice(-2)} ${month_[props.month-1]} ${props.year+543}`
+                                `${("0" + props.date).slice(-2)} ${month_[props.month]} ${props.year+543}`
                             }</Text>
                         <Feather name='calendar' style={posting.inputText} />
                     </TouchableOpacity>
