@@ -22,6 +22,7 @@ const LoadingModal = (props) => {
             isOpen={props.isLoading}
             swipeToClose={false}
             backButtonClose={false}
+            backdropPressToClose={false}
             position='center'
             style={{
                 justifyContent:'center',

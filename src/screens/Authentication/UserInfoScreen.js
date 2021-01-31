@@ -8,7 +8,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import TechnicianInfoComponent from '../../components/TechnicianInfo/TechnicianInfoComponent'
 
 import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
-import { logout } from '../../store/actions/authAction'
+import { logout , LOADED } from '../../store/actions/authAction'
 import { ENTER_PRIVATE_CHAT, INITIAL_HISTORY_LIST } from '../../store/actions/chatAction'
 
 const mapStateToProps = (state) => ({
@@ -36,6 +36,7 @@ const UserInfo = (props) => {
                             onPress={() => {
                                 props.INITIAL_HISTORY_LIST(props.uid)
                                     .then(() => {
+                                        props.LOADED()
                                         props.navigation.navigate('message')
                                     })
                             }}
@@ -82,7 +83,7 @@ const UserInfo = (props) => {
                         <Text style={{ color: color.WHITE, fontSize: widthToDp('3.5'), fontWeight: 'bold' }}>แก้ไขข้อมูลส่วนตัว</Text>
                     </TouchableOpacity>
                 </View>
-                <ScrollView >
+                {/* <ScrollView >
                     <View style={[content.container]}>
                         {
                             props.role === 'user' ? (
@@ -99,13 +100,13 @@ const UserInfo = (props) => {
                                 ) : null
                         }
                     </View>
-                </ScrollView>
+                </ScrollView> */}
             </SafeAreaView>
         </>
     )
 }
 
-export default connect(mapStateToProps, { INITIAL_HISTORY_LIST, ENTER_PRIVATE_CHAT, GET_TECHNICIAN_INFO, logout })(UserInfo)
+export default connect(mapStateToProps, { INITIAL_HISTORY_LIST, ENTER_PRIVATE_CHAT, GET_TECHNICIAN_INFO, logout ,LOADED })(UserInfo)
 
 export const infoStyles = StyleSheet.create({
     coverImage: {

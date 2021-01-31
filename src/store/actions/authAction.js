@@ -156,6 +156,7 @@ export const checkToken = () => async (dispatch) => {
         },
     }).then(res => {
         const data = res.data.data.tokenCheck
+        let  temp_list = []
         if (data.status) {
             if (data.role === 'technician') {
                 Promise.all(
@@ -205,21 +206,30 @@ export const checkToken = () => async (dispatch) => {
             } else {
                 Promise.all(
                     data.forms.map(async (form) => {
+                        console.log('form' , form);
                         const distance = await getDistance(
                             18.795424746501605,
                             98.95226894013882,
                             form.location.lat,
                             form.location.lon
                         )
-                        dispatch({
-                            type: notiType.ADD_USER_RESPONSE,
-                            payload: {
-                                ...form,
-                                distance : parseFloat(distance / 1000).toFixed(2)
-                            }
+                        temp_list.push({
+                            ...form,
+                            distance : parseFloat(distance / 1000).toFixed(2)
                         })
+                        // dispatch({
+                        //     type: notiType.ADD_USER_RESPONSE,
+                        //     payload: {
+                        //         ...form,
+                        //         distance : parseFloat(distance / 1000).toFixed(2)
+                        //     }
+                        // })
                     })
                 ).then(() => {
+                    dispatch({
+                        type : notiType.SET_USER_RESPONSE,
+                        payload : temp_list
+                    })
                     dispatch({
                         type: authType.LOGIN_SUCCESS,
                         payload: {

@@ -2,10 +2,13 @@ import React, { } from 'react'
 
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 
-import { message } from '../../stylesheet'
+import { message, widthToDp } from '../../stylesheet'
+import { TextInput } from 'react-native-gesture-handler'
 
-const MessageList = ({ status, name, lastMessage, badges, onPress, avatar , msgType  }) => {
-    
+const lorem = 'asdlhaslkdgjhaskjdhgkasjhgiuwehgjaksdhgkjashdgkljahsdiuvnczn,mxcnv.z,bvodjasdfasdklfhasd9hajdkghaslkdgjhasdgaiughasdkgjasbnbcvwuebasdlfjahsdfkjahslkfdhja'
+
+const MessageList = ({ status, name, lastMessage, badges, onPress, avatar, msgType }) => {
+
     return (
         <>
             <TouchableOpacity style={message.listContainer} onPress={() => onPress()}>
@@ -28,15 +31,19 @@ const MessageList = ({ status, name, lastMessage, badges, onPress, avatar , msgT
                     <Text style={[message.name, !status ? message.unreadName : null]}>
                         {name}
                     </Text>
-                    <View style={{flexDirection:'row'}}>
-                        <Text style={[message.text, !status ? message.unreadMessage : null]}>
-                            {
-                                msgType === 'image' ? `${name} ได้ส่งรูปภาพ` :
-                                msgType === "text" ? `${name} ${lastMessage}`
-                                : null
-                            }
-                        </Text>
-                    </View>
+                    <Text
+                        style={[message.text, !status ? message.unreadMessage : null,
+                        {
+                            height : widthToDp('5'),
+                            lineHeight:widthToDp('5')
+                        }
+                        ]}>
+                        {
+                            msgType === 'image' ? `${name} ได้ส่งรูปภาพ` :
+                            msgType === "text" ? `${name} ${lastMessage}`
+                            : null
+                        }
+                    </Text>
                 </View>
             </TouchableOpacity>
         </>

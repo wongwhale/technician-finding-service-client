@@ -9,13 +9,14 @@ import { content } from '../../stylesheet'
 import { connect } from 'react-redux'
 
 import { ENTER_PRIVATE_CHAT , INITIAL_HISTORY_LIST , SET_INTERLOCUTOR_ID } from '../../store/actions/chatAction'
+import { LOADED } from '../../store/actions/authAction'
 
 const mapStateToProps = (state) => ({
     uid : state.auth.userInfo.uid,
     chat_history : state.chat.lists
 })
 
-const connector = connect(mapStateToProps , {SET_INTERLOCUTOR_ID , ENTER_PRIVATE_CHAT , INITIAL_HISTORY_LIST})
+const connector = connect(mapStateToProps , {SET_INTERLOCUTOR_ID , ENTER_PRIVATE_CHAT , INITIAL_HISTORY_LIST , LOADED} )
 
 const Message = (props) => {
 
@@ -42,11 +43,13 @@ const Message = (props) => {
                                         if(props.uid !== item.technicianID){
                                             props.ENTER_PRIVATE_CHAT(props.uid , item.technicianID)
                                             .then( () => {
+                                                props.LOADED()
                                                 props.navigation.navigate('chat')
                                             })
                                         }else{
                                             props.ENTER_PRIVATE_CHAT(item.technicianID , item.userID)
                                             .then( () => {
+                                                props.LOADED()
                                                 props.navigation.navigate('chat')
                                             })
                                         }

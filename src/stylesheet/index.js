@@ -746,7 +746,6 @@ export const message = StyleSheet.create({
         fontSize: widthToDp('3'),
         color: color.BLUE_3,
         fontWeight: 'normal',
-        flexShrink: 1,
     },
     unreadMessage: {
         fontWeight: 'bold'

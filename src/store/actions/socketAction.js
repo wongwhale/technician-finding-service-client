@@ -1,9 +1,13 @@
 import io from 'socket.io-client'
 import firebase from '@react-native-firebase/storage'
-import { SOCKET_URL } from '../../misc/web_url'
+import { SOCKET_URL, WEB_URL } from '../../misc/web_url'
 import { socketType } from '../reducers/socketReducer'
 import store from '../'
 import { notiType } from '../reducers/notificationReducer'
+import { authType } from '../reducers/authReducer'
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getDistance} from '../../misc/getDistance'
 
 const socket = io.connect(`${SOCKET_URL}`)
 
@@ -13,14 +17,159 @@ socket.on('join', (id) => {
 })
 
 socket.on('send_post_req', (order) => {
+    console.log(order);
     store.dispatch({
-        type: notiType.ADD_TECH_ORDER,
-        payload: order
+        type : notiType.ADD_TECH_ORDER,
+        payload : {
+            ...order.form,
+            distance : 0.54
+        }
     })
 })
 
-socket.on('send_post_req_back' , (form) => {
-    console.log('send_post_req_back' , form);
+socket.on('send_post_req_back', () => {
+    AsyncStorage.getItem('token').then(token => {
+        axios({
+            url: WEB_URL,
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            },
+            data: {
+                query:
+                    `
+                query{
+                    getInformation {
+                        forms{
+                            _id
+                            detail
+                            date 
+                            location {
+                                lat
+                                lon
+                            }
+                            technician {
+                              minPrice
+                              maxPrice
+                              location {
+                              lat
+                              lon
+                              }
+                              tech {
+                                _id
+                                star
+                                count
+                                userInfoID {
+                                  firstname
+                                  lastname
+                                  avatar
+                                }
+                              }
+                            }
+                        }
+                    }
+                  }
+                `
+            }
+        }).then(res => {
+            const data = res.data.data.getInformation
+            let temp_list = []
+            Promise.all(
+                data.forms.map(async (form) => {
+                    const distance = await getDistance(
+                        18.795424746501605,
+                        98.95226894013882,
+                        form.location.lat,
+                        form.location.lon
+                    )
+                    temp_list.push({
+                        ...form,
+                        distance: parseFloat(distance / 1000).toFixed(2)
+                    })
+                })
+            ).then(() => {
+                store.dispatch({
+                    type: notiType.SET_USER_RESPONSE,
+                    payload: temp_list
+                })
+            }).catch(err => {
+                console.log(err);
+            })
+        })
+    })
+})
+
+socket.on('accepted_req_back', () => {
+    AsyncStorage.getItem('token').then(token => {
+        axios({
+            url: WEB_URL,
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            },
+            data: {
+                query:
+                    `
+                query{
+                    tokenCheck {
+                        forms{
+                            _id
+                            detail
+                            date 
+                            location {
+                                lat
+                                lon
+                            }
+                            technician {
+                              minPrice
+                              maxPrice
+                              location {
+                              lat
+                              lon
+                              }
+                              tech {
+                                _id
+                                star
+                                count
+                                userInfoID {
+                                  firstname
+                                  lastname
+                                  avatar
+                                }
+                              }
+                            }
+                        }
+                    }
+                  }
+                `
+            }
+        })
+    }).then(res => {
+        Promise.all(
+            data.forms.map(async (form) => {
+                const distance = await getDistance(
+                    18.795424746501605,
+                    98.95226894013882,
+                    form.location.lat,
+                    form.location.lon
+                )
+                temp_list.push({
+                    ...form,
+                    distance: parseFloat(distance / 1000).toFixed(2)
+                })
+            })
+        ).then(() => {
+            store.dispatch({
+                type: notiType.SET_USER_RESPONSE,
+                payload: temp_list
+            })
+        }).catch(err => {
+            console.log(err);
+        })
+    })
+
 })
 
 socket.on('accepted_req', (payload) => {
@@ -30,9 +179,6 @@ socket.on('accepted_req', (payload) => {
     })
 })
 
-socket.on('accept_req', (order) => {
-
-})
 
 export const leave = (uid) => dispatch => {
     socket.emit('leave', { uid })
@@ -62,7 +208,6 @@ export const disconnect = (uid) => dispatch => {
 }
 
 export const sendPostReq = ({ name, uid, date, type, file, detail, location }) => dispatch => {
-    // console.log('file' , file);
     var image = []
     return new Promise((resovle, reject) => {
         Promise.all(file.map(async (item) => {
@@ -89,12 +234,14 @@ export const sendPostReq = ({ name, uid, date, type, file, detail, location }) =
 
 }
 
-export const acceptedReq = (_id) => dispatch => {
-    socket.emit('accepted_req', {_id})
-    dispatch({
-        type: notiType.REMOVE_TECH_ORDER,
-        payload: {
-            _id: _id
+export const acceptedReq = (res) => dispatch => {
+    socket.emit('accepted_req', {
+        formID: res._id,
+        technician: {
+            maxPrice: res.maxPrice,
+            minPrice: res.minPrice,
+            tech: res.uid
         }
     })
+    console.log(res);
 }
