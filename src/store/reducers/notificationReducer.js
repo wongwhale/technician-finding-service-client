@@ -9,6 +9,8 @@ export const notiType = {
     REMOVE_ACCECTED_TECH_ORDER: 'REMOVE_ACCECTED_TECH_ORDER',
     CLEAR : 'NOTIFICATION_REDUCER_CLEAR',
     SET_USER_RESPONSE : 'SET_USER_RESPONSE',
+    SET_NEW_ORDER : 'SET_NEW_ORDER',
+    SET_ACCEPTED_ORDER : 'SET_ACCEPTED_ORDER',
 }
 
 const initialState = {
@@ -92,6 +94,11 @@ export default function notificationReducer(
             return {
                 ...state,
                 userResponse : action.payload
+            }
+        case notiType.SET_NEW_ORDER:
+            return{
+                ...state,
+                techOrder : action.payload
             }
         case notiType.CLEAR:
             return state = initialState

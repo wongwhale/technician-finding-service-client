@@ -46,7 +46,6 @@ const Notification = ({ navigation, role, userResponse }) => {
                     {
                         userResponse.length !== 0 ? (
                             userResponse.map((form) => {
-                                console.log('user test noti', form);
                                 return (
                                     <View key={form._id} style={content.container}>
                                         <UserNotification 

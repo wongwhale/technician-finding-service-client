@@ -17,7 +17,7 @@ import ListBox from '../../components/Search/ListBox'
 
 import { connect } from 'react-redux'
 
-import { SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD } from '../../store/actions/techAction'
+import { SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD  } from '../../store/actions/techAction'
 import { LOADED } from '../../store/actions/authAction'
 import { getDistance } from '../../misc/getDistance'
 

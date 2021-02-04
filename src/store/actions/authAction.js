@@ -111,6 +111,7 @@ export const checkToken = () => async (dispatch) => {
                           star
                           count
                           userInfoID {
+                            userID
                             firstname
                             lastname
                             avatar
@@ -140,6 +141,7 @@ export const checkToken = () => async (dispatch) => {
                       detail
                       date
                       userInfoID{
+
                           firstname 
                           lastname
                           avatar
@@ -156,7 +158,9 @@ export const checkToken = () => async (dispatch) => {
         },
     }).then(res => {
         const data = res.data.data.tokenCheck
-        let  temp_list = []
+        let temp_list = []
+        let neworder_lists = []
+        let acceptedorder_lists = []
         if (data.status) {
             if (data.role === 'technician') {
                 Promise.all(
@@ -167,18 +171,14 @@ export const checkToken = () => async (dispatch) => {
                             order.location.lat,
                             order.location.lon
                         )
-                        dispatch({
-                            type: notiType.ADD_TECH_ORDER,
-                            payload: {
-                                ...order,
-                                distance: parseFloat(distance / 1000).toFixed(2)
-                            }
+                        neworder_lists.push({
+                            ...order,
+                            distance: parseFloat(distance / 1000).toFixed(2)
                         })
                     }),
                     data.technicianInfoID.acceptForm.map((order) => {
-                        dispatch({
-                            type: notiType.ADD_ACCECTED_TECH_ORDER,
-                            payload: order
+                        acceptedorder_lists.push({
+                            ...order
                         })
                     })
                 ).then(() => {
@@ -195,6 +195,14 @@ export const checkToken = () => async (dispatch) => {
                     dispatch({
                         type: authType.LOADED
                     })
+                    dispatch({
+                        type : notiType.SET_NEW_ORDER,
+                        payload : neworder_lists
+                    })
+                    dispatch({
+                        type : notiType.SET_ACCEPTED_ORDER,
+                        payload : acceptedorder_lists
+                    })
                 }).catch(() => {
                     dispatch({
                         type: authType.LOGIN_FAIL
@@ -206,7 +214,6 @@ export const checkToken = () => async (dispatch) => {
             } else {
                 Promise.all(
                     data.forms.map(async (form) => {
-                        console.log('form' , form);
                         const distance = await getDistance(
                             18.795424746501605,
                             98.95226894013882,
@@ -215,20 +222,13 @@ export const checkToken = () => async (dispatch) => {
                         )
                         temp_list.push({
                             ...form,
-                            distance : parseFloat(distance / 1000).toFixed(2)
+                            distance: parseFloat(distance / 1000).toFixed(2)
                         })
-                        // dispatch({
-                        //     type: notiType.ADD_USER_RESPONSE,
-                        //     payload: {
-                        //         ...form,
-                        //         distance : parseFloat(distance / 1000).toFixed(2)
-                        //     }
-                        // })
                     })
                 ).then(() => {
                     dispatch({
-                        type : notiType.SET_USER_RESPONSE,
-                        payload : temp_list
+                        type: notiType.SET_USER_RESPONSE,
+                        payload: temp_list
                     })
                     dispatch({
                         type: authType.LOGIN_SUCCESS,
@@ -255,6 +255,9 @@ export const checkToken = () => async (dispatch) => {
             console.log('check token error : ', err);
             dispatch({
                 type: authType.LOGIN_FAIL
+            })
+            dispatch({
+                type: authType.LOADED
             })
         })
 }

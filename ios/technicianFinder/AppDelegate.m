@@ -13,6 +13,8 @@
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
 #import <Firebase.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <React/RCTLinkingManager.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -57,7 +59,13 @@ static void InitializeFlipper(UIApplication *application) {
             openURL:(NSURL *)url
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
+  if ([[FBSDKApplicationDelegate sharedInstance] application:app openURL:url options:options]) {
+      return YES;
+    }
 
+    if ([RCTLinkingManager application:app openURL:url options:options]) {
+      return YES;
+    }
 
   return NO;
 }

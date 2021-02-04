@@ -7,27 +7,11 @@ import { notiType } from '../reducers/notificationReducer'
 import { authType } from '../reducers/authReducer'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getDistance} from '../../misc/getDistance'
+import { getDistance } from '../../misc/getDistance'
 
 const socket = io.connect(`${SOCKET_URL}`)
 
-
-socket.on('join', (id) => {
-    console.log('join', id);
-})
-
-socket.on('send_post_req', (order) => {
-    console.log(order);
-    store.dispatch({
-        type : notiType.ADD_TECH_ORDER,
-        payload : {
-            ...order.form,
-            distance : 0.54
-        }
-    })
-})
-
-socket.on('send_post_req_back', () => {
+const updateTechOrder = () => {
     AsyncStorage.getItem('token').then(token => {
         axios({
             url: WEB_URL,
@@ -39,9 +23,90 @@ socket.on('send_post_req_back', () => {
             data: {
                 query:
                     `
-                query{
-                    getInformation {
-                        forms{
+                    query{
+                        tokenCheck {
+                          technicianInfoID {
+                            newForm {
+                              _id
+                              detail
+                              date
+                              location {
+                                  lat 
+                                  lon
+                              }
+                              userInfoID {
+                                firstname
+                                lastname
+                                avatar
+                              }
+                            } 
+                            acceptForm {
+                              _id
+                              senderID
+                              detail
+                              date
+                              userInfoID{
+                                  firstname 
+                                  lastname
+                                  avatar
+                              }
+                            }
+                          }
+                        }
+                      }
+                `
+            }
+        }).then(res => {
+            const data = res.data.data.tokenCheck
+            let neworder_lists = []
+            let acceptedorder_lists = []
+            Promise.all(
+                data.technicianInfoID.newForm.map(async (order) => {
+                    const distance = await getDistance(
+                        18.795424746501605,
+                        98.95226894013882,
+                        order.location.lat,
+                        order.location.lon
+                    )
+                    neworder_lists.push({
+                        ...order,
+                        distance: parseFloat(distance / 1000).toFixed(2)
+                    })
+                }),
+                data.technicianInfoID.acceptForm.map((order) => {
+                    acceptedorder_lists.push({
+                        ...order 
+                    })
+                })
+            ).then( () => {
+                store.dispatch({
+                    type : notiType.SET_NEW_ORDER,
+                    payload : neworder_lists
+                })
+                store.dispatch({
+                    type : notiType.SET_ACCEPTED_ORDER,
+                    payload : acceptedorder_lists
+                })
+            })
+        })
+    })
+}
+
+const updateUserResponse = () => {
+    AsyncStorage.getItem('token').then(token => {
+        axios({
+            url: WEB_URL,
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            },
+            data: {
+                query:
+                    `
+                    query{
+                        tokenCheck {
+                           forms{
                             _id
                             detail
                             date 
@@ -53,8 +118,8 @@ socket.on('send_post_req_back', () => {
                               minPrice
                               maxPrice
                               location {
-                              lat
-                              lon
+                                lat
+                                lon
                               }
                               tech {
                                 _id
@@ -64,16 +129,17 @@ socket.on('send_post_req_back', () => {
                                   firstname
                                   lastname
                                   avatar
+                                  userID
                                 }
                               }
                             }
+                          }
                         }
-                    }
-                  }
+                      }
                 `
             }
         }).then(res => {
-            const data = res.data.data.getInformation
+            const data = res.data.data.tokenCheck
             let temp_list = []
             Promise.all(
                 data.forms.map(async (form) => {
@@ -98,85 +164,18 @@ socket.on('send_post_req_back', () => {
             })
         })
     })
+}
+
+socket.on('join', (id) => {
+    console.log('join', id);
 })
 
-socket.on('accepted_req_back', () => {
-    AsyncStorage.getItem('token').then(token => {
-        axios({
-            url: WEB_URL,
-            method: 'post',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": token
-            },
-            data: {
-                query:
-                    `
-                query{
-                    tokenCheck {
-                        forms{
-                            _id
-                            detail
-                            date 
-                            location {
-                                lat
-                                lon
-                            }
-                            technician {
-                              minPrice
-                              maxPrice
-                              location {
-                              lat
-                              lon
-                              }
-                              tech {
-                                _id
-                                star
-                                count
-                                userInfoID {
-                                  firstname
-                                  lastname
-                                  avatar
-                                }
-                              }
-                            }
-                        }
-                    }
-                  }
-                `
-            }
-        })
-    }).then(res => {
-        Promise.all(
-            data.forms.map(async (form) => {
-                const distance = await getDistance(
-                    18.795424746501605,
-                    98.95226894013882,
-                    form.location.lat,
-                    form.location.lon
-                )
-                temp_list.push({
-                    ...form,
-                    distance: parseFloat(distance / 1000).toFixed(2)
-                })
-            })
-        ).then(() => {
-            store.dispatch({
-                type: notiType.SET_USER_RESPONSE,
-                payload: temp_list
-            })
-        }).catch(err => {
-            console.log(err);
-        })
-    })
-
+socket.on('update_user_response', () => {
+    updateUserResponse()
 })
 
-socket.on('accepted_req', (payload) => {
-    store.dispatch({
-        type: notiType.ADD_ACCECTED_TECH,
-        payload: payload
-    })
+socket.on('update_tech_order', () => {
+    updateTechOrder()
 })
 
 
@@ -230,7 +229,6 @@ export const sendPostReq = ({ name, uid, date, type, file, detail, location }) =
             reject()
         })
     })
-    // console.log(date , type , detail , location);
 
 }
 
@@ -243,5 +241,9 @@ export const acceptedReq = (res) => dispatch => {
             tech: res.uid
         }
     })
-    console.log(res);
 }
+
+export const cancelRequest = (formID) => dispatch => {
+    socket.emit('cancel_request', { formID })
+}
+

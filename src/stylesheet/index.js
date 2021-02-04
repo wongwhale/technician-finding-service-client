@@ -791,9 +791,9 @@ export const message = StyleSheet.create({
         paddingHorizontal: widthToDp('3'),
         marginHorizontal: widthToDp('2'),
         paddingVertical: widthToDp('1'),
-        lineHeight: widthToDp('5'),
+        lineHeight: widthToDp('4'),
         borderRadius: buttonRadiusDp,
-        height: 'auto',
+        height : 'auto',
         fontSize: widthToDp('4'),
     },
     sendButton: {
