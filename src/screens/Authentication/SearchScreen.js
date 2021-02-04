@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     ScrollView,
     Button,
+    Linking
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -55,6 +56,12 @@ const SearchScreen = (props) => {
             
         })
     }
+
+    React.useEffect(() => {
+        return () => {
+            props.SET_SEARCH_KEY_WORD('')
+        }
+    } , [])
 
     return (
         <>

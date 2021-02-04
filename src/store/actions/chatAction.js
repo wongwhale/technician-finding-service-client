@@ -25,6 +25,7 @@ export const GET_INTERLOCUTOR_INFO = (id) => {
                           firstname
                           lastname
                           avatar
+                          technicianInfoID
                         }
                       }
                     `
@@ -77,7 +78,6 @@ export const ENTER_PRIVATE_CHAT = (uid, tid) => dispatch => {
                     const uid = store.getState().auth.userInfo.uid
                     const data = res.data.data.getChatInformation
                     if (res.data.data.getChatInformation.history !== null) {
-                        console.log('enter message', res.data.data.getChatInformation.history);
                         dispatch({
                             type: chatType.ENTER_PRIVATE_CHAT,
                             payload: {
@@ -270,4 +270,45 @@ export const SEND_MESSAGE = (msg, type, uid) => dispatch => {
             msgType: type
         }
     })
-}  
+}
+
+export const clear = () => dispatch => {
+    dispatch({
+        type: chatType.CLEAR
+    })
+}
+
+export const createChatroom = (uid, tid) => dispatch => {
+    return new Promise((resolve, reject) => {
+        AsyncStorage.getItem('token')
+            .then((token) => {
+                axios({
+                    url: `${WEB_URL}`,
+                    method: 'post',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `${token}`
+                    },
+                    data: {
+                        query:
+                            `
+                            mutation{
+                                createChatRoom(
+                                  INFORMATION : {
+                                    technicianID : "${tid}"
+                                    userID : "${uid}"
+                                  }
+                                )
+                              }
+                        `
+                    }
+                }).then(res => {
+                    resolve()
+                }).catch(err => {
+                    console.log(err);
+                    reject(err)
+                })
+            })
+
+    })
+}

@@ -6,7 +6,7 @@ import { message, color } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
-import { SEND_MESSAGE } from '../../store/actions/chatAction'
+import { SEND_MESSAGE, createChatroom } from '../../store/actions/chatAction'
 import { sendMessage } from '../../store/actions/socketAction'
 
 import { connect } from 'react-redux'
@@ -14,6 +14,8 @@ import { connect } from 'react-redux'
 import ImagePicker from 'react-native-image-crop-picker'
 
 import firebaseStorage from '@react-native-firebase/storage'
+
+import axios from 'axios'
 
 // const reference = firebase().ref('post').child(`${item.creationDate}-${item.filename}`)
 //             await reference.putFile(item.path)
@@ -23,31 +25,88 @@ import firebaseStorage from '@react-native-firebase/storage'
 
 const mapStateToProps = (state) => ({
     uid: state.auth.userInfo.uid,
-    interlocutor: state.chat.interlocutor
+    interlocutor: state.chat.interlocutor,
+    messages: state.chat.messages
 })
 
 const ChatInput = (props) => {
     const [msg, setMsg] = useState('')
 
-    const handleSendPhoto = () => {
-        ImagePicker.openPicker({
-            multiple: true,
-            maxFiles : 10
-        }).then( images => {
-            images.map( async image => {
-                const reference = firebaseStorage().ref('chat').child(`${props.uid}-${image.path}-${new Date().getTime()}`)
-                await reference.putFile(image.path)
-                await reference.getDownloadURL().then( url => {
-                    props.SEND_MESSAGE(url, 'image', props.uid)
+    const handleSendMessage = () => {
+        if (props.messages.length === 0) {
+            props.createChatroom(props.uid, props.interlocutor.id)
+                .then(() => {
+                    props.SEND_MESSAGE(msg, 'text', props.uid)
                     props.sendMessage({
                         date: new Date().toISOString(),
-                        message: url,
+                        message: msg,
                         sender: props.uid,
-                        msgType: 'image'
+                        msgType: 'text'
                     }, props.interlocutor.id)
+                    setMsg('')
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+        else {
+            props.SEND_MESSAGE(msg, 'text', props.uid)
+            props.sendMessage({
+                date: new Date().toISOString(),
+                message: msg,
+                sender: props.uid,
+                msgType: 'text'
+            }, props.interlocutor.id)
+            setMsg('')
+        }
+    }
+
+    const handleSendPhoto = () => {
+        if (props.messages.length === 0) {
+            props.createChatroom(props.uid, props.interlocutor.id)
+                .then(() => {
+                    ImagePicker.openPicker({
+                        multiple: true,
+                        maxFiles: 10
+                    }).then(images => {
+                        images.map(async image => {
+                            const reference = firebaseStorage().ref('chat').child(`${props.uid}-${image.path}-${new Date().getTime()}`)
+                            await reference.putFile(image.path)
+                            await reference.getDownloadURL().then(url => {
+                                props.SEND_MESSAGE(url, 'image', props.uid)
+                                props.sendMessage({
+                                    date: new Date().toISOString(),
+                                    message: url,
+                                    sender: props.uid,
+                                    msgType: 'image'
+                                }, props.interlocutor.id)
+                            })
+                        })
+                    })
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        } else {
+            ImagePicker.openPicker({
+                multiple: true,
+                maxFiles: 10
+            }).then(images => {
+                images.map(async image => {
+                    const reference = firebaseStorage().ref('chat').child(`${props.uid}-${image.path}-${new Date().getTime()}`)
+                    await reference.putFile(image.path)
+                    await reference.getDownloadURL().then(url => {
+                        props.SEND_MESSAGE(url, 'image', props.uid)
+                        props.sendMessage({
+                            date: new Date().toISOString(),
+                            message: url,
+                            sender: props.uid,
+                            msgType: 'image'
+                        }, props.interlocutor.id)
+                    })
                 })
             })
-        })
+        }
     }
 
     return (
@@ -93,16 +152,7 @@ const ChatInput = (props) => {
                             borderRadius: 20
                         }]}
                         onPress={() => {
-                            if (msg.length !== 0) {
-                                props.SEND_MESSAGE(msg, 'text', props.uid)
-                                props.sendMessage({
-                                    date: new Date().toISOString(),
-                                    message: msg,
-                                    sender: props.uid,
-                                    msgType: 'text'
-                                }, props.interlocutor.id)
-                                setMsg('')
-                            }
+                            handleSendMessage()
                         }}
                     >
                         <Feather name='send' style={{ fontSize: 20, color: color.BLUE_5 }} />
@@ -113,4 +163,4 @@ const ChatInput = (props) => {
     )
 }
 
-export default connect(mapStateToProps, { SEND_MESSAGE, sendMessage })(ChatInput)
+export default connect(mapStateToProps, { createChatroom, SEND_MESSAGE, sendMessage })(ChatInput)

@@ -22,7 +22,7 @@ const ListBox = (props) => {
             <TouchableOpacity 
                 style={[searchScreen.listContainer]} 
                 onPress={ () => {
-                    props.GET_TECHNICIAN_INFO(props.chatID)
+                    props.GET_TECHNICIAN_INFO(props.tid)
                     .then( () => {
                         props.navigation.navigate('techInfo')
                     })
