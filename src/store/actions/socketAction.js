@@ -8,6 +8,7 @@ import { authType } from '../reducers/authReducer'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getDistance } from '../../misc/getDistance'
+import { chatType } from '../reducers/chatReducer'
 
 const socket = io.connect(`${SOCKET_URL}`)
 
@@ -178,6 +179,27 @@ socket.on('update_tech_order', () => {
     updateTechOrder()
 })
 
+socket.on('receive_message' , ({message}) => {
+    const interlocuter = store.getState().chat.interlocutor
+    if( interlocuter.id !== message.sender ){
+        alert(message.message)
+    }
+    else {
+        store.dispatch({
+            type: chatType.APPEND_MESSAGE,
+            payload: {
+                date: message.date,
+                message: message.message,
+                sender: message.sender,
+                msgType: message.msgType
+            }
+        })
+    }
+})
+
+export const sendMessage = (message , receiver) => dispatch =>  {
+    socket.emit('send_message' , {message , receiver})
+}
 
 export const leave = (uid) => dispatch => {
     socket.emit('leave', { uid })
