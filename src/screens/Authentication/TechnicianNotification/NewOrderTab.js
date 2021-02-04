@@ -11,6 +11,7 @@ import NewOrderNotification from '../../../components/TechnicianNotification/New
 import { connect } from 'react-redux'
 
 import Modal from 'react-native-modalbox'
+import { ScrollView } from 'react-native-gesture-handler'
 
 
 const mapStateToProps = (state) => ({
@@ -24,9 +25,9 @@ const mapDispatchToProps = {
 const NewOrder = (props) => {
     return (
         <>
-            <View style={content.container}>
+            <ScrollView style={content.container}>
                 <NewOrderNotification />
-            </View>
+            </ScrollView>
         </>
     )
 }

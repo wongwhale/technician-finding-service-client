@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     ScrollView,
     Button,
+    Linking
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -17,7 +18,7 @@ import ListBox from '../../components/Search/ListBox'
 
 import { connect } from 'react-redux'
 
-import { SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD } from '../../store/actions/techAction'
+import { SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD  } from '../../store/actions/techAction'
 import { LOADED } from '../../store/actions/authAction'
 import { getDistance } from '../../misc/getDistance'
 
@@ -55,6 +56,12 @@ const SearchScreen = (props) => {
             
         })
     }
+
+    React.useEffect(() => {
+        return () => {
+            props.SET_SEARCH_KEY_WORD('')
+        }
+    } , [])
 
     return (
         <>

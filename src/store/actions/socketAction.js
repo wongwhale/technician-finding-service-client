@@ -1,38 +1,205 @@
 import io from 'socket.io-client'
 import firebase from '@react-native-firebase/storage'
-import { SOCKET_URL } from '../../misc/web_url'
+import { SOCKET_URL, WEB_URL } from '../../misc/web_url'
 import { socketType } from '../reducers/socketReducer'
 import store from '../'
 import { notiType } from '../reducers/notificationReducer'
+import { authType } from '../reducers/authReducer'
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getDistance } from '../../misc/getDistance'
+import { chatType } from '../reducers/chatReducer'
 
 const socket = io.connect(`${SOCKET_URL}`)
 
+const updateTechOrder = () => {
+    AsyncStorage.getItem('token').then(token => {
+        axios({
+            url: WEB_URL,
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            },
+            data: {
+                query:
+                    `
+                    query{
+                        tokenCheck {
+                          technicianInfoID {
+                            newForm {
+                              _id
+                              detail
+                              date
+                              location {
+                                  lat 
+                                  lon
+                              }
+                              userInfoID {
+                                firstname
+                                lastname
+                                avatar
+                              }
+                            } 
+                            acceptForm {
+                              _id
+                              senderID
+                              detail
+                              date
+                              userInfoID{
+                                  firstname 
+                                  lastname
+                                  avatar
+                              }
+                            }
+                          }
+                        }
+                      }
+                `
+            }
+        }).then(res => {
+            const data = res.data.data.tokenCheck
+            let neworder_lists = []
+            let acceptedorder_lists = []
+            Promise.all(
+                data.technicianInfoID.newForm.map(async (order) => {
+                    const distance = await getDistance(
+                        18.795424746501605,
+                        98.95226894013882,
+                        order.location.lat,
+                        order.location.lon
+                    )
+                    neworder_lists.push({
+                        ...order,
+                        distance: parseFloat(distance / 1000).toFixed(2)
+                    })
+                }),
+                data.technicianInfoID.acceptForm.map((order) => {
+                    acceptedorder_lists.push({
+                        ...order 
+                    })
+                })
+            ).then( () => {
+                store.dispatch({
+                    type : notiType.SET_NEW_ORDER,
+                    payload : neworder_lists
+                })
+                store.dispatch({
+                    type : notiType.SET_ACCEPTED_ORDER,
+                    payload : acceptedorder_lists
+                })
+            })
+        })
+    })
+}
+
+const updateUserResponse = () => {
+    AsyncStorage.getItem('token').then(token => {
+        axios({
+            url: WEB_URL,
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            },
+            data: {
+                query:
+                    `
+                    query{
+                        tokenCheck {
+                           forms{
+                            _id
+                            detail
+                            date 
+                            location {
+                                lat
+                                lon
+                            }
+                            technician {
+                              minPrice
+                              maxPrice
+                              location {
+                                lat
+                                lon
+                              }
+                              tech {
+                                _id
+                                star
+                                count
+                                userInfoID {
+                                  firstname
+                                  lastname
+                                  avatar
+                                  userID
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                `
+            }
+        }).then(res => {
+            const data = res.data.data.tokenCheck
+            let temp_list = []
+            Promise.all(
+                data.forms.map(async (form) => {
+                    const distance = await getDistance(
+                        18.795424746501605,
+                        98.95226894013882,
+                        form.location.lat,
+                        form.location.lon
+                    )
+                    temp_list.push({
+                        ...form,
+                        distance: parseFloat(distance / 1000).toFixed(2)
+                    })
+                })
+            ).then(() => {
+                store.dispatch({
+                    type: notiType.SET_USER_RESPONSE,
+                    payload: temp_list
+                })
+            }).catch(err => {
+                console.log(err);
+            })
+        })
+    })
+}
 
 socket.on('join', (id) => {
     console.log('join', id);
 })
 
-socket.on('send_post_req', (order) => {
-    store.dispatch({
-        type: notiType.ADD_TECH_ORDER,
-        payload: order
-    })
+socket.on('update_user_response', () => {
+    updateUserResponse()
 })
 
-socket.on('send_post_req_back' , (form) => {
-    console.log('send_post_req_back' , form);
+socket.on('update_tech_order', () => {
+    updateTechOrder()
 })
 
-socket.on('accepted_req', (payload) => {
-    store.dispatch({
-        type: notiType.ADD_ACCECTED_TECH,
-        payload: payload
-    })
+socket.on('receive_message' , ({message}) => {
+    const interlocuter = store.getState().chat.interlocutor
+    if( interlocuter.id !== message.sender ){
+        alert(message.message)
+    }
+    else {
+        store.dispatch({
+            type: chatType.APPEND_MESSAGE,
+            payload: {
+                date: message.date,
+                message: message.message,
+                sender: message.sender,
+                msgType: message.msgType
+            }
+        })
+    }
 })
 
-socket.on('accept_req', (order) => {
-
-})
+export const sendMessage = (message , receiver) => dispatch =>  {
+    socket.emit('send_message' , {message , receiver})
+}
 
 export const leave = (uid) => dispatch => {
     socket.emit('leave', { uid })
@@ -62,7 +229,6 @@ export const disconnect = (uid) => dispatch => {
 }
 
 export const sendPostReq = ({ name, uid, date, type, file, detail, location }) => dispatch => {
-    // console.log('file' , file);
     var image = []
     return new Promise((resovle, reject) => {
         Promise.all(file.map(async (item) => {
@@ -85,16 +251,21 @@ export const sendPostReq = ({ name, uid, date, type, file, detail, location }) =
             reject()
         })
     })
-    // console.log(date , type , detail , location);
 
 }
 
-export const acceptedReq = (_id) => dispatch => {
-    socket.emit('accepted_req', {_id})
-    dispatch({
-        type: notiType.REMOVE_TECH_ORDER,
-        payload: {
-            _id: _id
+export const acceptedReq = (res) => dispatch => {
+    socket.emit('accepted_req', {
+        formID: res._id,
+        technician: {
+            maxPrice: res.maxPrice,
+            minPrice: res.minPrice,
+            tech: res.uid
         }
     })
 }
+
+export const cancelRequest = (formID) => dispatch => {
+    socket.emit('cancel_request', { formID })
+}
+

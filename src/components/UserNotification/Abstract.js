@@ -1,26 +1,67 @@
 import React, { useEffect } from 'react'
 
-import { Text, View, TouchableOpacity, Image , PixelRatio } from 'react-native'
+import { Text, View, TouchableOpacity, Image, PixelRatio } from 'react-native'
 
-import { userNotification  , color , notification } from '../../stylesheet'
+import { userNotification, color, notification } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
 import { Rating } from 'react-native-ratings';
 
-const Abstract = ({ name, star, distance, price, last }) => {
+import { useNavigation } from '@react-navigation/native'
+import { connect } from 'react-redux';
+
+import { SET_INTERLOCUTOR_ID, ENTER_PRIVATE_CHAT } from '../../store/actions/chatAction'
+import { LOADED } from '../../store/actions/authAction'
+import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
+
+
+const mapStateToProps = (state) => ({
+    uid: state.auth.userInfo.uid,
+    
+})
+
+const mapDispatchToProps = {
+    SET_INTERLOCUTOR_ID, 
+    ENTER_PRIVATE_CHAT, 
+    LOADED,
+    GET_TECHNICIAN_INFO,
+}
+
+const Abstract = ({ name, star, distance, price, last, avatar, techID ,...props }) => {
+
+    const navigation = useNavigation()
+    const handleContact = () => {
+        props.ENTER_PRIVATE_CHAT( props.uid , techID)
+            .then(() => {
+                props.LOADED()
+                navigation.navigate('chat')
+            })
+    }
+
+    const handleGetTechInfo = () => {
+        props.GET_TECHNICIAN_INFO(techID)
+        .then( () => {
+            navigation.navigate('techInfo')
+        })
+    }
+
     return (
         <>
             <View style={!last ? [notification.abstractContainer, notification.abstractBottomBorder] : [notification.abstractContainer]}>
                 <View style={notification.imageContainer}>
-                    <TouchableOpacity style={notification.image}>
+                    <TouchableOpacity 
+                        onPress={ () => {
+                            handleGetTechInfo()
+                        }}
+                    style={notification.image}>
                         <Image
                             style={notification.image}
-                            source={require('./test.jpg')}
+                            source={{ uri: avatar }}
                         />
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={notification.detailContainer}>
+                <View style={notification.detailContainer}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'nowrap' }}>
                         <View style={{ flex: 1, flexWrap: 'nowrap', flexShrink: 0 }}>
                             <Text style={[userNotification.text, notification.nameText]}>
@@ -49,17 +90,22 @@ const Abstract = ({ name, star, distance, price, last }) => {
                                     ตอบรับ
                         </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[userNotification.contactButton, notification.button]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    handleContact()
+                                }}
+                                style={[userNotification.contactButton, notification.button]}
+                            >
                                 <Text style={userNotification.buttonText}>
                                     สอบถาม
                         </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                </TouchableOpacity>
+                </View>
             </View>
         </>
     )
 }
 
-export default Abstract
+export default connect(mapStateToProps, mapDispatchToProps)(Abstract)

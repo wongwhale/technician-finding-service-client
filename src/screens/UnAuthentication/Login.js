@@ -13,6 +13,27 @@ import { connect } from 'react-redux'
 import { login , logout , checkToken } from '../../store/actions/authAction'
 import { connection } from '../../store/actions/socketAction'
 
+import auth from '@react-native-firebase/auth';
+import { LoginManager, AccessToken } from 'react-native-fbsdk';
+
+async function onFacebookButtonPress() {
+  const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+
+  if (result.isCancelled) {
+    throw 'User cancelled the login process';
+  }
+
+  const data = await AccessToken.getCurrentAccessToken();
+
+  if (!data) {
+    throw 'Something went wrong obtaining access token';
+  }
+
+  const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
+  return auth().signInWithCredential(facebookCredential);
+}
+
 const mapStateToProps = (state) => ({
 
 })
@@ -37,6 +58,9 @@ const Login = (props) => {
         })
     }
 
+    const handleFacebookdLogin = () => {
+        onFacebookButtonPress()
+    }
 
     return (
         <>
@@ -99,7 +123,9 @@ const Login = (props) => {
                             </Text>
                             <View style={styles.line} />
                         </View>
-                        <TouchableOpacity >
+                        <TouchableOpacity 
+                            onPress={ () => onFacebookButtonPress()}
+                        >
                             <Ionicons name='logo-facebook' style={styles.facebookIcon} />
                         </TouchableOpacity>
 

@@ -4,19 +4,18 @@ import { Text, View, TouchableOpacity, Button } from 'react-native'
 
 import { userNotification, notification, widthToDp, color } from '../../stylesheet'
 
-import { getDistance } from '../../misc/getDistance'
-
 import Abstract from './Abstract'
 import { connect } from 'react-redux';
 
 import { LOADING, LOADED } from '../../store/actions/authAction'
+import { cancelRequest } from '../../store/actions/socketAction'
 
 const mapStateToProps = (state) => ({
 
 })
 
 const mapDispatchToProps = {
-    LOADING, LOADED
+    LOADING, LOADED , cancelRequest
 }
 
 const UserNotification = (props) => {
@@ -26,15 +25,33 @@ const UserNotification = (props) => {
     return (
         <>
             <View style={[notification.container, userNotification.bg]}>
-                <View style={[notification.headerContainer , {borderBottomColor:color.BLUE_4}]}>
-                    <Text>
-                        <Text style={[notification.headerText, userNotification.headerText]}>
+                <View style={[notification.headerContainer, { borderBottomColor: color.BLUE_4 }]}>
+                    <View
+                        style={{
+                            flexDirection: 'row'
+                        }}
+                    >
+                        <Text style={[notification.headerText, userNotification.headerText,{flex:1}]}>
                             {`การตอบรับของรายการ`}
                         </Text>
-                        {/* <Text style={notification.headerID}>
+                        <TouchableOpacity
+                            onPress={ () => {
+                                props.cancelRequest(props.orderID)
+                            }}
+                        >
+                            <Text style={{
+                                color :color.IOS_BLUE,
+                                fontSize: widthToDp('4'),
+                            }}>
+                                ยกเลิก
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+
+
+                    {/* <Text style={notification.headerID}>
                             {`#${props.orderID}`}
                         </Text> */}
-                    </Text>
                     <View>
                         <Text style={notification.headerID}>
                             {`วันที่ ${date.getDate()} ${month_[date.getMonth()]} ${date.getFullYear() + 543}`}
@@ -52,7 +69,7 @@ const UserNotification = (props) => {
                         props.acceptedTech !== undefined ? (
                             props.acceptedTech.length !== 0 ? (
                                 props.acceptedTech.map((item, index) => {
-
+                                    console.log(item);
                                     return <Abstract
                                         key={item.tech._id}
                                         name={`${item.tech.userInfoID.firstname} ${item.tech.userInfoID.lastname}`}
@@ -60,6 +77,8 @@ const UserNotification = (props) => {
                                         distance={props.distance}
                                         price={`${item.minPrice} - ${item.maxPrice}`}
                                         last={index === props.acceptedTech.length - 1}
+                                        avatar={item.tech.userInfoID.avatar}
+                                        techID={item.tech.userInfoID.userID}
                                     />
                                 })
                             ) : (

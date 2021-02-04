@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, Linking, SafeAreaView } from 'react-native'
 
 import { content, technician, heightToDp, global, widthToDp, color } from '../../stylesheet'
 import { infoStyles as styles } from './UserInfoScreen'
@@ -69,6 +69,9 @@ const TechnicianInfo = (props) => {
                             alignItems: 'center',
                             borderRadius: widthToDp('4')
                         }}
+                        onPress={ () => {
+                            Linking.openURL(`tel:${props.info.personalInfo.phone}`)
+                        }}
                     >
                         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             <Ionicons name='call' style={{ color: '#fff', fontSize: widthToDp('4.5') }} />
@@ -85,6 +88,12 @@ const TechnicianInfo = (props) => {
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: widthToDp('4')
+                        }}
+                        onPress={ () => {
+                            props.ENTER_PRIVATE_CHAT(props.uid , props.info.personalInfo.userID)
+                            .then( () => {
+                                props.navigation.navigate('chat')
+                            })
                         }}
                     >
                         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
