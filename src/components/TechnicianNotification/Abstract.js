@@ -145,7 +145,12 @@ const Abstract = (props) => {
                                         <TouchableOpacity
                                             onPress={() => {
                                                 if (parseInt(lowestPrice) <= parseInt(hightestPrice)) {
-                                                    props.acceptedReq(props.order.senderID)
+                                                    props.acceptedReq({
+                                                        _id : props.order._id,
+                                                        minPrice :lowestPrice,
+                                                        maxPrice : hightestPrice,
+                                                        uid : props.uid
+                                                    })
                                                     setHightestPrice('')
                                                     setLowestPrice('')
                                                     setIsAccepted(false)

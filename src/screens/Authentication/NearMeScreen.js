@@ -115,7 +115,7 @@ const NearMeScreen = ({ navigation, ...props }) => {
                                     >
                                         <Callout>
                                             <Text>
-{`${tech.userInfoID.firstname} ${tech.userInfoID.lastname}`}
+                                                {`${tech.userInfoID.firstname} ${tech.userInfoID.lastname}`}
                                             </Text>
                                         </Callout>
                                     </Marker>

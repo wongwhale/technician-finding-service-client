@@ -9,14 +9,14 @@ import ChatBox from '../../components/Chat/ChatBox'
 import { ScrollView } from 'react-native-gesture-handler'
 import { color , content} from '../../stylesheet'
 import { connect } from 'react-redux'
-import { SEND_MESSAGE , LEAVE_PRIVATE_CHAT } from '../../store/actions/chatAction'
+import { SEND_MESSAGE , LEAVE_PRIVATE_CHAT  , clear} from '../../store/actions/chatAction'
 
 const mapStateToProps = (state) => ({
     cid: state.chat.cid,
     uid: state.auth.userInfo.uid
 })
 
-const connector = connect(mapStateToProps, { SEND_MESSAGE , LEAVE_PRIVATE_CHAT })
+const connector = connect(mapStateToProps, { clear, SEND_MESSAGE , LEAVE_PRIVATE_CHAT })
 
 const Chat = (props) => {
 
@@ -28,6 +28,7 @@ const Chat = (props) => {
         return () => {
             Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
             Keyboard.removeListener("keyboardDidHide", _keyboardDidHide);
+            props.LEAVE_PRIVATE_CHAT()
         }
     },[])
 

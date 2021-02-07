@@ -13,6 +13,7 @@ import { global } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 import { connect } from 'react-redux';
+import {GET_TECHNICIAN_INFO} from '../../store/actions/techAction'
 
 const mapStateToProps = (state) => ({
     interlocutor : state.chat.interlocutor
@@ -26,7 +27,14 @@ const ChatHeader = (props) => {
                 <View >
                     <Image style={global.interlocutorImage} source={{uri:props.interlocutor.avatar}} />
                 </View>
-                <TouchableOpacity style={global.nameContainer} onPress={ () => props.navigation.navigate('techInfo')}>
+                <TouchableOpacity style={global.nameContainer} 
+                    onPress={ () => {
+                        props.GET_TECHNICIAN_INFO(props.interlocutor.id)
+                        .then( () => {
+                            props.navigation.navigate('techInfo')
+                        })
+                    }}
+                    >
                     <Text style={global.interlocutorName}>
                         {props.interlocutor.name}
                     </Text>
@@ -45,4 +53,4 @@ const ChatHeader = (props) => {
     )
 }
 
-export default connect(mapStateToProps , {})(ChatHeader)
+export default connect(mapStateToProps , {GET_TECHNICIAN_INFO})(ChatHeader)

@@ -8,19 +8,10 @@ export const notiType = {
     ADD_ACCECTED_TECH_ORDER: 'ADD_ACCECTED_TECH_ORDER',
     REMOVE_ACCECTED_TECH_ORDER: 'REMOVE_ACCECTED_TECH_ORDER',
     CLEAR : 'NOTIFICATION_REDUCER_CLEAR',
+    SET_USER_RESPONSE : 'SET_USER_RESPONSE',
+    SET_NEW_ORDER : 'SET_NEW_ORDER',
+    SET_ACCEPTED_ORDER : 'SET_ACCEPTED_ORDER',
 }
-
-// interface userResponse = {
-//     _id : string,
-//     accected_tech : {
-//         tid : string,
-//         distance : number,
-//         min_price : number ,
-//         max_price : number ,
-//         star : number ,
-//         tname : string ,
-//     }    
-// }
 
 const initialState = {
     techOrder: [
@@ -98,6 +89,16 @@ export default function notificationReducer(
                 techAcceptedOrder : state.techAcceptedOrder.filter( val => {
                     return val._id !== action.payload._id
                 })
+            }
+        case notiType.SET_USER_RESPONSE :
+            return {
+                ...state,
+                userResponse : action.payload
+            }
+        case notiType.SET_NEW_ORDER:
+            return{
+                ...state,
+                techOrder : action.payload
             }
         case notiType.CLEAR:
             return state = initialState

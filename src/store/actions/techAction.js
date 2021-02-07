@@ -101,7 +101,6 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                     `
                 }
             }).then(res => {
-                console.log(res.data.data);
                 dispatch({
                     type: techType.SET_TECHNICIAN_INFO,
                     payload: {

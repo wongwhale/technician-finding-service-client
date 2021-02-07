@@ -16,6 +16,41 @@ const mapDispatchToProps = {
     logout,
 }
 
+const Btn = (props) => {
+    return (
+        <>
+            <TouchableOpacity
+                style={
+                    {
+                        height: widthToDp('10'),
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        backgroundColor: '#fff',
+                        paddingHorizontal: widthToDp('5')
+                    }}
+                onPress={() => {
+                    props.navigation()
+                }}
+            >
+                <Text
+                    style={{
+                        fontSize: widthToDp('3.5'),
+                        color: color.BLUE_0
+                    }}
+                >
+                    {props.title}
+                </Text>
+                <Feather name='chevron-right'
+                    style={{
+                        fontSize: widthToDp('3.5'),
+                        color: color.BLUE_0
+                    }} />
+            </TouchableOpacity>
+        </>
+    )
+}
+
 const SettingScreen = (props) => {
     return (
         <>
@@ -24,44 +59,23 @@ const SettingScreen = (props) => {
                 <Header navigation={props.navigation} title='ตั้งค่า' />
                 <View style={{ flex: 1, backgroundColor: color.WHITE }}>
                     <View style={{ height: widthToDp('10'), marginTop: widthToDp('2') }}>
-                        <TouchableOpacity
-                            style={
-                                {
-                                    height: widthToDp('10'),
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    backgroundColor: '#fff'
-                                }}
-                        >
-                            <Text>
-                                ประวัติ
-                        </Text>
-                        </TouchableOpacity>
+                        <Btn
+                            title='ประวัติ'
+                            navigation={() => props.navigation.navigate('editInfo')}
+                        />
                     </View>
                     {
                         props.role === 'user' ? (
-                            <View style={{ height: widthToDp('10') }}>
-                                <TouchableOpacity
-                                    style={
-                                        {
-                                            height: widthToDp('10'),
-                                            flexDirection: 'row',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            backgroundColor: '#fff'
-                                        }}
-                                    onPress={() => {
-                                        props.navigation.navigate('regTech')
-                                    }}
-                                >
-                                    <Text>
-                                        สมัครเป็นช่าง
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
+                            <Btn
+                                title='สมัครเป็นช่าง'
+                                navigation={() => props.navigation.navigate('regTech')}
+                            />
                         ) : null
                     }
+                    <Btn
+                        title='แก้ไขข้อมูลส่วนตัว'
+                        navigation={() => props.navigation.navigate('editInfo')}
+                    />
                     <View style={{ height: widthToDp('10') }}>
                         <TouchableOpacity
                             style={
@@ -69,22 +83,7 @@ const SettingScreen = (props) => {
                                     height: widthToDp('10'),
                                     flexDirection: 'row',
                                     justifyContent: 'center',
-                                    alignItems: 'center',
-                                    backgroundColor: '#fff'
-                                }}
-                        >
-                            <Text>
-                                ข้อแก้ไขข้อมูลส่วนตัว
-                        </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ height: widthToDp('10') }}>
-                        <TouchableOpacity
-                            style={
-                                {
-                                    height: widthToDp('10'),
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
+                                    paddingHorizontal: widthToDp('5'),
                                     alignItems: 'center',
                                     backgroundColor: color.RED_4
                                 }}
@@ -92,8 +91,20 @@ const SettingScreen = (props) => {
                                 props.logout()
                             }}
                         >
-                            <Feather name="log-out" />
-                            <Text>
+                            <Feather name="log-out"
+                                style={{
+                                    fontSize: widthToDp('4'),
+                                    marginRight: widthToDp('2'),
+                                    color: color.RED_0
+                                }}
+                            />
+                            <Text
+                                style={{
+                                    fontSize: widthToDp('4'),
+                                    marginRight: widthToDp('2'),
+                                    color: color.RED_0
+                                }}
+                            >
                                 ออกจากระบบ
                         </Text>
                         </TouchableOpacity>
