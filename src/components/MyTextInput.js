@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { TextInput, View, TouchableOpacity, StyleSheet, Keyboard } from 'react-native'
+import { TextInput, View, TouchableOpacity, StyleSheet, Keyboard, Platform } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
 
@@ -56,8 +56,19 @@ export const inputStyles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         borderRadius: 5,
-        padding: 10,
+        ...Platform.select({
+            ios :{
+                paddingVertical : 5
+            },
+            android:{
+                paddingVertical: 0
+            },
+            default : {
+                paddingVertical: 0
+            }
+        }),
         paddingLeft: 15,
+        paddingRight: 5,
         marginVertical: 5,
         backgroundColor: color.BLUE_5
     },
