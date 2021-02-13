@@ -67,7 +67,11 @@ const UserInfoEditScreen = (props) => {
             <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={[content.safearray, { backgroundColor: color.WHITE }]}>
                 <Header title='แก้ไขข้อมูลส่วนตัว' navigation={props.navigation} />
-                <ScrollView style={content.container}>
+                <ScrollView style={{
+                    flex: 1,
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                }}>
                     {/* personal info */}
                     <View style={card.card}>
                         <View style={card.cardHeader}>

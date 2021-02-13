@@ -16,7 +16,7 @@ import { SEARCH_BY_KEY_WORD, GET_NEAR_TECHNICIAN } from '../../store/actions/tec
 import Feather from 'react-native-vector-icons/Feather'
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
-import { GOOGLE_API } from '../../misc/google_api'
+import {GOOGLE_API} from '@env'
 
 const mapStateToProps = (state) => ({
 

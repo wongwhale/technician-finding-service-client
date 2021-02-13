@@ -268,14 +268,12 @@ export const userInfo = StyleSheet.create({
 
 export const searchScreen = StyleSheet.create({
     textInputContainer: {
-        borderRadius: widthToDp('5'),
         backgroundColor: '#fff',
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
         flex: 1,
         height: widthToDp('10'),
         paddingHorizontal: widthToDp('1'),
-        marginBottom: heightToDp('1')
     },
     textInput: {
         flex: 1,
@@ -783,7 +781,6 @@ export const message = StyleSheet.create({
     },
     chatInputContainer: {
         flexDirection: 'row',
-        marginBottom: heightToDp('1'),
     },
     textInput: {
         flex: 1,

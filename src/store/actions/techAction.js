@@ -129,8 +129,8 @@ export const SET_TID = (tid) => dispatch => {
 }
 
 export const GET_NEAR_TECHNICIAN = () => dispatch => {
-    return new Promise( (resolve , resject) => {
-        AsyncStorage.getItem('token').then( token => {
+    return new Promise((resolve, resject) => {
+        AsyncStorage.getItem('token').then(token => {
             axios({
                 url: WEB_URL,
                 method: 'post',
@@ -138,9 +138,9 @@ export const GET_NEAR_TECHNICIAN = () => dispatch => {
                     "Content-Type": "application/json",
                     "Authorization": token
                 },
-                data :{
+                data: {
                     query:
-                    `
+                        `
                     query{
                         getNearTechnician(ADDRESS: {
                           address : {
@@ -166,9 +166,36 @@ export const GET_NEAR_TECHNICIAN = () => dispatch => {
                       }
                     `
                 }
-            }).then( res => {
+            }).then(res => {
                 resolve(res.data.data.getNearTechnician.technician)
-            }).catch( err => {
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    })
+}
+
+export const SEARCH_GUIDE = (keyword) => dispatch => {
+    return new Promise((resolve, reject) => {
+        AsyncStorage.getItem('token').then(token => {
+            axios({
+                url: WEB_URL,
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                data: {
+                    query:
+                        `
+                query{
+                    wordGuide(word:"${keyword}")
+                }
+                `
+                }
+            }).then(res => {
+                resolve(res.data.data.wordGuide)
+            }).catch(err => {
                 reject(err)
             })
         })

@@ -36,28 +36,32 @@ const ChatInput = (props) => {
         if (props.messages.length === 0) {
             props.createChatroom(props.uid, props.interlocutor.id)
                 .then(() => {
-                    props.SEND_MESSAGE(msg, 'text', props.uid)
-                    props.sendMessage({
-                        date: new Date().toISOString(),
-                        message: msg,
-                        sender: props.uid,
-                        msgType: 'text'
-                    }, props.interlocutor.id)
-                    setMsg('')
+                    if(msg.trimEnd().length !== 0){
+                        props.SEND_MESSAGE(msg.trimEnd(), 'text', props.uid)
+                        props.sendMessage({
+                            date: new Date().toISOString(),
+                            message: msg.trimEnd(),
+                            sender: props.uid,
+                            msgType: 'text'
+                        }, props.interlocutor.id)
+                        setMsg('')
+                    }
                 })
                 .catch(err => {
                     console.log(err);
                 })
         }
         else {
-            props.SEND_MESSAGE(msg, 'text', props.uid)
-            props.sendMessage({
-                date: new Date().toISOString(),
-                message: msg,
-                sender: props.uid,
-                msgType: 'text'
-            }, props.interlocutor.id)
-            setMsg('')
+            if(msg.trimEnd().length !== 0){
+                props.SEND_MESSAGE(msg.trimEnd(), 'text', props.uid)
+                props.sendMessage({
+                    date: new Date().toISOString(),
+                    message: msg.trimEnd(),
+                    sender: props.uid,
+                    msgType: 'text'
+                }, props.interlocutor.id)
+                setMsg('')
+            }
         }
     }
 
@@ -111,7 +115,10 @@ const ChatInput = (props) => {
 
     return (
         <>
-            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : null}>
+            <KeyboardAvoidingView 
+                behavior={Platform.OS === 'ios' ? 'padding' : null}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+            >
                 <View style={message.chatInputContainer}>
                     <TouchableOpacity
                         style={[{
@@ -143,7 +150,14 @@ const ChatInput = (props) => {
                         <Feather name='image' style={{ fontSize: 20, color: color.BLUE_5 }} />
                     </TouchableOpacity>
 
-                    <TextInput value={msg} onChangeText={(val) => setMsg(val)} multiline style={message.textInput} placeholder='Aa' />
+                    <TextInput 
+                        value={msg} 
+                        onChangeText={(val) => setMsg(val)} 
+                        multiline 
+                        style={message.textInput} 
+                        placeholder='Aa' 
+                        
+                    />
                     <TouchableOpacity
                         style={[message.sendButton, {
                             backgroundColor: color.GREEN_3,

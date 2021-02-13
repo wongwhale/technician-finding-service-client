@@ -46,6 +46,10 @@ const Abstract = ({ name, star, distance, price, last, avatar, techID ,...props 
         })
     }
 
+    const handleAccept = () => {
+        
+    }
+
     return (
         <>
             <View style={!last ? [notification.abstractContainer, notification.abstractBottomBorder] : [notification.abstractContainer]}>
@@ -85,7 +89,12 @@ const Abstract = ({ name, star, distance, price, last, avatar, techID ,...props 
 
                         </View>
                         <View style={notification.buttonContainer}>
-                            <TouchableOpacity style={[userNotification.acceptButton, notification.button]}>
+                            <TouchableOpacity 
+                                style={[userNotification.acceptButton, notification.button]}
+                                onPress={ () => {
+                                    handleAccept()
+                                }}    
+                            >
                                 <Text style={userNotification.buttonText}>
                                     ตอบรับ
                         </Text>

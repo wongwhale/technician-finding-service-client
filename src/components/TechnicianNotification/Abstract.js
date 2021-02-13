@@ -31,6 +31,23 @@ const Abstract = (props) => {
     const [isAccepted, setIsAccepted] = React.useState(false)
     const [lowestPrice, setLowestPrice] = React.useState('')
     const [hightestPrice, setHightestPrice] = React.useState('')
+
+    const handleAccept = () => {
+        if (parseInt(lowestPrice) <= parseInt(hightestPrice)) {
+            props.acceptedReq({
+                _id: props.order._id,
+                minPrice: lowestPrice,
+                maxPrice: hightestPrice,
+                uid: props.uid
+            })
+            setHightestPrice('')
+            setLowestPrice('')
+            setIsAccepted(false)
+        } else {
+            alert('จำนวนเงินผิดพลาด')
+        }
+    }
+
     return (
         <>
             {
@@ -44,7 +61,7 @@ const Abstract = (props) => {
                                 <TouchableOpacity style={notification.image}>
                                     <Image
                                         style={notification.image}
-                                        source={{uri : props.order.userInfoID.avatar}}
+                                        source={{ uri: props.order.userInfoID.avatar }}
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -143,22 +160,7 @@ const Abstract = (props) => {
                                         </Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity
-                                            onPress={() => {
-                                                if (parseInt(lowestPrice) <= parseInt(hightestPrice)) {
-                                                    props.acceptedReq({
-                                                        _id : props.order._id,
-                                                        minPrice :lowestPrice,
-                                                        maxPrice : hightestPrice,
-                                                        uid : props.uid
-                                                    })
-                                                    setHightestPrice('')
-                                                    setLowestPrice('')
-                                                    setIsAccepted(false)
-                                                } else {
-                                                    alert('จำนวนเงินผิดพลาด')
-                                                }
-
-                                            }}
+                                            onPress={() => handleAccept() }
                                             style={[priceInput.btn, priceInput.accept, { marginLeft: widthToDp('1') }]}>
                                             <Text style={priceInput.acceptText}>
                                                 ยืนยัน

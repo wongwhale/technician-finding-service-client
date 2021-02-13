@@ -1,4 +1,4 @@
-import { GOOGLE_API } from './google_api'
+import {GOOGLE_API} from '@env'
 export const  getDistance = async (lat1, lng1, lat2, lng2) => {
     const Location1Str = lat1 + "," + lng1;
     const Location2Str = lat2 + "," + lng2;
