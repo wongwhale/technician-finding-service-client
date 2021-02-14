@@ -12,7 +12,6 @@ import { infoStyles } from '../../screens/Authentication/UserInfoScreen'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 
 
-
 const TechnicianInfoComponent = (props) => {
     const [amountReview, setAmountReview] = React.useState(0)
     React.useEffect(() => {

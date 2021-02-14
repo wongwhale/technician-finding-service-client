@@ -23,30 +23,6 @@ import {login, logout, checkToken} from '../../store/actions/authAction';
 import {connection} from '../../store/actions/socketAction';
 
 import auth from '@react-native-firebase/auth';
-import {LoginManager, AccessToken} from 'react-native-fbsdk';
-
-async function onFacebookButtonPress() {
-  const result = await LoginManager.logInWithPermissions([
-    'public_profile',
-    'email',
-  ]);
-
-  if (result.isCancelled) {
-    throw 'User cancelled the login process';
-  }
-
-  const data = await AccessToken.getCurrentAccessToken();
-
-  if (!data) {
-    throw 'Something went wrong obtaining access token';
-  }
-
-  const facebookCredential = auth.FacebookAuthProvider.credential(
-    data.accessToken,
-  );
-
-  return auth().signInWithCredential(facebookCredential);
-}
 
 const mapStateToProps = (state) => ({});
 
@@ -77,6 +53,86 @@ const Login = (props) => {
   const handleFacebookdLogin = () => {
     onFacebookButtonPress();
   };
+
+  // return (
+  //   <>
+  //     <SafeAreaView style={content.safearray}>
+  //       <View
+  //         style={{
+  //           flex: 1,
+  //           justifyContent: 'center',
+  //           alignItems: 'center',
+  //           paddingHorizontal: '10%',
+  //         }}>
+  //         <View
+  //           style={{
+  //             flexDirection: 'row',
+  //             justifyContent: 'center',
+  //             alignItems: 'center',
+  //             marginBottom: 40,
+  //           }}>
+  //           <View
+  //             style={{
+  //               width: 100,
+  //               height: 100,
+  //               backgroundColor: color.BLUE_4,
+  //               borderRadius: 50,
+  //               marginRight: 10,
+  //             }}
+  //           />
+  //         </View>
+  //         <View style={[inputStyles.container]}>
+  //           <TextInput
+  //             style={[inputStyles.textInput]}
+  //             placeholder="ชื่อผู้ใช้"
+  //             placeholderTextColor={color.BLUE_2}
+  //             blurOnSubmit={false}
+  //             ref={uname_ref}
+  //             onSubmitEditing={() => {
+  //               pwss_ref.current.focus();
+  //             }}
+  //             value={username}
+  //             onChangeText={(val) => setUsername(val)}
+  //             autoCapitalize="none"
+  //             autoCorrect={false}
+  //             autoCompleteType="off"
+  //           />
+  //         </View>
+  //         <View style={[inputStyles.container]}>
+  //           <TextInput
+  //             style={[inputStyles.textInput]}
+  //             placeholder="รหัสผ่าน"
+  //             placeholderTextColor={color.BLUE_2}
+  //             blurOnSubmit={false}
+  //             ref={pwss_ref}
+  //             onSubmitEditing={() => {
+  //               Keyboard.dismiss();
+  //               // props.login(username, password)
+  //               handleLogin();
+  //             }}
+  //             value={password}
+  //             onChangeText={(val) => setPassword(val)}
+  //             autoCapitalize="none"
+  //             autoCorrect={false}
+  //             secureTextEntry={secure}
+  //             autoCompleteType="off"
+  //           />
+  //           {
+  //             <TouchableOpacity
+  //               style={inputStyles.iconContainer}
+  //               onPress={() => setSecure(!secure)}>
+  //               <Feather
+  //                 name={secure ? 'eye' : 'eye-off'}
+  //                 style={[inputStyles.icon]}
+  //               />
+  //             </TouchableOpacity>
+  //           }
+  //       })
+  //   }
+
+  //   const handleFacebookdLogin = () => {
+  //       // onFacebookButtonPress()
+  //   }
 
   return (
     <>
@@ -165,7 +221,7 @@ const Login = (props) => {
               <Text style={styles.headerText}>เข้าสู่ระบบโดยวิธีอื่น</Text>
               <View style={styles.line} />
             </View>
-            <TouchableOpacity onPress={() => onFacebookButtonPress()}>
+            <TouchableOpacity>
               <Ionicons name="logo-facebook" style={styles.facebookIcon} />
             </TouchableOpacity>
           </View>

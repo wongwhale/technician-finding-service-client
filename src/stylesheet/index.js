@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, PixelRatio } from 'react-native'
+import { StyleSheet, Dimensions, PixelRatio , Platform } from 'react-native'
 
 export const widthToDp = percent => {
     const swidth = Dimensions.get('window').width
@@ -583,6 +583,7 @@ export const posting = StyleSheet.create({
         borderColor: color.BLUE_5,
         color: color.BLUE_1,
         lineHeight: widthToDp('4'),
+        textAlignVertical:'top'
     },
     detailLength: {
         justifyContent: 'flex-end',
