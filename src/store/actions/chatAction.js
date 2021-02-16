@@ -207,9 +207,9 @@ export const SET_INTERLOCUTOR_ID = (id) => dispatch => {
 }
 
 export const INITIAL_HISTORY_LIST = (uid) => dispatch => {
-    dispatch({
-        type: authType.LOADING
-    })
+    // dispatch({
+    //     type: authType.LOADING
+    // })
     return new Promise((resolve, reject) => {
         AsyncStorage.getItem('token').then((token) => {
             axios({

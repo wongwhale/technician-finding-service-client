@@ -58,7 +58,7 @@ export const inputStyles = StyleSheet.create({
         borderRadius: 5,
         ...Platform.select({
             ios :{
-                paddingVertical : 5
+                paddingVertical : 10
             },
             android:{
                 paddingVertical: 0

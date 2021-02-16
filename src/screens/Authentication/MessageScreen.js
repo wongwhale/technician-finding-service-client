@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-import { SafeAreaView, View, Text, ScrollView } from 'react-native'
+import { SafeAreaView, ScrollView } from 'react-native'
+
+import { useFocusEffect } from '@react-navigation/native'
 
 import Header from '../../components/Header'
 import MessageList from '../../components/Message/MessageList'
@@ -20,6 +22,25 @@ const connector = connect(mapStateToProps , {SET_INTERLOCUTOR_ID ,ENTER_PRIVATE_
 
 const Message = (props) => {
 
+    // React.useEffect( () => {
+    //     props.INITIAL_HISTORY_LIST(props.uid).then( () => {
+    //         props.LOADED()
+    //     }).catch(err => {
+            
+    //     })
+    // },[])
+
+    useFocusEffect( 
+        React.useCallback( () => {
+            props.INITIAL_HISTORY_LIST(props.uid).then( () => {
+                props.LOADED()
+            }).catch(err => {
+                console.log(err);
+            })
+        },[])
+    )
+
+
     return (
         <>  
             <SafeAreaView style={content.topsafearray} />
@@ -37,6 +58,7 @@ const Message = (props) => {
                                     lastMessage={item.recentMessage.message} 
                                     status={true} 
                                     badges={0} 
+                                    date={item.recentMessage.date}
                                     msgType = {item.recentMessage.msgType}
                                     onPress={ () => {
                                         props.ENTER_PRIVATE_CHAT_BY_ID(item._id)

@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { SET_INTERLOCUTOR_ID, ENTER_PRIVATE_CHAT } from '../../store/actions/chatAction'
 import { LOADED } from '../../store/actions/authAction'
 import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
+import { confirmTechnician } from '../../store/actions/socketAction'
 
 
 const mapStateToProps = (state) => ({
@@ -26,6 +27,7 @@ const mapDispatchToProps = {
     ENTER_PRIVATE_CHAT, 
     LOADED,
     GET_TECHNICIAN_INFO,
+    confirmTechnician
 }
 
 const Abstract = ({ name, star, distance, price, last, avatar, techID ,...props }) => {
@@ -47,7 +49,7 @@ const Abstract = ({ name, star, distance, price, last, avatar, techID ,...props 
     }
 
     const handleAccept = () => {
-        
+        props.confirmTechnician(props.formID , techID)
     }
 
     return (

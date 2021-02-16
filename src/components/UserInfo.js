@@ -30,6 +30,8 @@ const UserInfo = (props) => {
                         props.GET_TECHNICIAN_INFO(props.uid).then(() => {
                             props.navigation.navigate('userInfo')
                             props.LOADED()
+                        }).catch( err => {
+                            props.LOADED()
                         })
                     }
                     else {

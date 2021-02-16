@@ -148,12 +148,14 @@ export const global = StyleSheet.create({
         alignItems: 'center',
         height: heightToDp('7'),
         backgroundColor: '#fff',
+        paddingTop : heightToDp('1'),
     },
     chatHeader: {
         justifyContent: 'center',
         alignItems: 'center',
         height: heightToDp('7'),
         backgroundColor: '#fff',
+        paddingTop : heightToDp('1'),
         paddingBottom: heightToDp('1')
     },
     headerText: {
@@ -207,15 +209,16 @@ export const global = StyleSheet.create({
         fontWeight: 'bold'
     },
     interlocutorImage: {
-        height: heightToDp('5'),
+        height: heightToDp('4'),
         aspectRatio: 1,
-        borderRadius: heightToDp('2.5'),
+        borderRadius: heightToDp('2'),
         marginVertical: heightToDp('1'),
         backgroundColor: color.GREEN_4
     },
     interlocutorName: {
         fontSize: heightToDp('1.5'),
-        color: '#444'
+        color: '#111',
+        fontWeight:'bold'
     },
     bbt: {
         borderBottomWidth: 0.3,
@@ -249,8 +252,8 @@ export const userInfo = StyleSheet.create({
     },
     name: {
         color: color.BLUE_2,
-        fontSize: heightToDp('2'),
-        fontWeight: '500'
+        fontSize: widthToDp('4'),
+        fontWeight: 'bold'
     },
     type: {
         color: color.BLUE_4,
@@ -400,7 +403,6 @@ export const userNotification = StyleSheet.create({
 
 export const notification = StyleSheet.create({
     container: {
-        paddingVertical: heightToDp('1'),
         borderRadius: heightToDp('1.5'),
     },
     headerContainer: {
@@ -426,6 +428,7 @@ export const notification = StyleSheet.create({
     },
     abstractBottomBorder: {
         borderBottomWidth: heightToDp('0.1'),
+        paddingBottom : widthToDp('1'),
         borderColor: color.WHITE
     },
     imageContainer: {
@@ -742,7 +745,7 @@ export const message = StyleSheet.create({
         fontWeight: 'bold',
     },
     text: {
-        fontSize: widthToDp('3'),
+        fontSize: widthToDp('3.5'),
         color: color.BLUE_3,
         fontWeight: 'normal',
     },
@@ -750,7 +753,7 @@ export const message = StyleSheet.create({
         fontWeight: 'bold'
     },
     bubbleContainer: {
-        paddingVertical: heightToDp('0.2'),
+        paddingVertical: widthToDp('0.2'),
         paddingHorizontal: widthToDp('5'),
         justifyContent: 'center',
     },
@@ -758,9 +761,9 @@ export const message = StyleSheet.create({
         alignItems: 'flex-end'
     },
     bubble: {
-        paddingVertical: heightToDp('0.7'),
-        paddingHorizontal: widthToDp('3'),
-        borderRadius: heightToDp('2'),
+        paddingVertical: widthToDp('2'),
+        paddingHorizontal: widthToDp('4'),
+        borderRadius: widthToDp('4'),
         maxWidth: '75%'
     },
     rightBubble: {
@@ -782,16 +785,16 @@ export const message = StyleSheet.create({
     },
     chatInputContainer: {
         flexDirection: 'row',
+        paddingBottom : heightToDp('1')
     },
     textInput: {
         flex: 1,
         backgroundColor: color.BLUE_5,
         paddingHorizontal: widthToDp('3'),
         marginHorizontal: widthToDp('2'),
-        paddingVertical: widthToDp('1'),
         lineHeight: widthToDp('4'),
         borderRadius: buttonRadiusDp,
-        height : 'auto',
+        textAlignVertical:'center',
         fontSize: widthToDp('4'),
     },
     sendButton: {

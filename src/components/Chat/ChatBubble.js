@@ -1,9 +1,11 @@
 import React, { } from 'react'
 
 import { View, Text, Image } from 'react-native'
-import { message } from '../../stylesheet'
+import { message, widthToDp } from '../../stylesheet'
 
 const DateShow = ({ date, current_date }) => {
+    const _month = ['มค','กพ','มีค','เมย','พค','มิย','กค','สค','กย','ตค','พย','ธค']
+
     return (
         <View style={message.newDateContainer}>
             <Text style={message.newDateText}>
@@ -11,7 +13,7 @@ const DateShow = ({ date, current_date }) => {
                     date.toDateString() === current_date.toDateString() ? (
                         date.toTimeString().slice(0, 8)
                     ) : (
-                            date.toDateString()
+                            `${date.getDate()} ${_month[date.getMonth()]} ${date.getFullYear() + 543}`
                         )
                 }
             </Text>
@@ -21,6 +23,7 @@ const DateShow = ({ date, current_date }) => {
 
 const ChatBubble = ({ sender, text, name, time, isLast, isFirst, isNewDate, type }) => {
     const current_date = new Date()
+    const _month = ['มค','กพ','มีค','เมย','พค','มิย','กค','สค','กย','ตค','พย','ธค']
     return (
         <>
             {
@@ -39,7 +42,18 @@ const ChatBubble = ({ sender, text, name, time, isLast, isFirst, isNewDate, type
 
                 {
                     type === 'text' ? (
-                        <View style={[message.bubble, sender ? message.rightBubble : message.leftBubble]}>
+                        <View 
+                            style={[
+                                message.bubble, 
+                                sender ? message.rightBubble : message.leftBubble,
+                                !isFirst && !isLast && sender ? { borderTopRightRadius : widthToDp('2') , borderBottomRightRadius : widthToDp('2')  } : null,
+                                !isFirst && !isLast && !sender ? { borderTopLeftRadius : widthToDp('2') , borderBottomLeftRadius : widthToDp('2')  } : null,
+                                isFirst && !isLast && sender ? { borderBottomRightRadius : widthToDp('2')  } : null,
+                                isFirst && !isLast && !sender ? { borderBottomLeftRadius : widthToDp('2')  } : null,
+                                !isFirst && isLast && sender ? { borderTopRightRadius : widthToDp('2')  } : null,
+                                !isFirst && isLast && !sender ? { borderTopLeftRadius : widthToDp('2')  } : null,
+                            ]}
+                            >
                             <Text style={[message.text, sender ? message.rightText : message.leftText]}>
                                 {text}
                             </Text>
@@ -53,16 +67,22 @@ const ChatBubble = ({ sender, text, name, time, isLast, isFirst, isNewDate, type
                         ) : null
                 }
 
-                <View style={message.dateTimeContainer}>
+                <View 
+                    style={[
+                        message.dateTimeContainer,
+                        sender ? {marginRight : widthToDp('1')} : {marginLeft : widthToDp('1')}
+                        
+                    ]}
+                >
                     {
                         isLast ? (
-                            <Text style={message.dateTimeText}>
+                            <Text style={[message.dateTimeText , {marginTop : 5}]}>
                                 {
                                     current_date.toDateString() === time.toDateString() ?
                                         (
                                             `${time.toTimeString().slice(0, 8)} น.`
                                         ) :
-                                        `${time.toDateString()}`
+                                        `${time.getDate()} ${_month[time.getMonth()]} ${time.getFullYear() + 543}`
                                 }
                             </Text>
                         ) : null

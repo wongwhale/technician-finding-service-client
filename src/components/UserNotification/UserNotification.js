@@ -69,9 +69,9 @@ const UserNotification = (props) => {
                         props.acceptedTech !== undefined ? (
                             props.acceptedTech.length !== 0 ? (
                                 props.acceptedTech.map((item, index) => {
-                                    console.log(item);
                                     return <Abstract
                                         key={item.tech._id}
+                                        formID={props.orderID}
                                         name={`${item.tech.userInfoID.firstname} ${item.tech.userInfoID.lastname}`}
                                         star={item.tech.star}
                                         distance={props.distance}

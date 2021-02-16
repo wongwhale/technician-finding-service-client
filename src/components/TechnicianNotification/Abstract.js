@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { Text, View, TouchableOpacity, Image, Button, StyleSheet } from 'react-native'
+import { Text, View, TouchableOpacity, Image, Button, StyleSheet, Animated, Easing } from 'react-native'
 
 import { newOrder, color, widthToDp, notification } from '../../stylesheet'
 
@@ -46,6 +46,47 @@ const Abstract = (props) => {
         } else {
             alert('จำนวนเงินผิดพลาด')
         }
+    }
+
+    const [opacity, setOpacity] = React.useState(new Animated.Value(0))
+
+    const scaleX = opacity.interpolate({
+        inputRange : [0,1],
+        outputRange : [0,1]
+    })
+
+    const animateIn = () => {
+        Animated.spring(
+            opacity, {
+                toValue: 1,
+                delay: 0,
+                easing: Easing.elastic(2),
+                useNativeDriver: true
+        }
+        ).start()
+    }
+
+    const animateOut = () => {
+        Animated.timing(
+            opacity, {
+                toValue: 0,
+                duration: 500,
+                easing: Easing.elastic(2),
+                useNativeDriver: true
+        }
+        ).start()
+    }
+
+    const [acceptScaleY , setAceptScaleY] = React.useState( new Animated.Value(1))
+
+    const animateAccepted = () => {
+        Animated.spring(
+            acceptScaleY , {
+                toValue : 0,
+                delay : 1,
+                
+            }
+        )
     }
 
     return (
@@ -94,6 +135,7 @@ const Abstract = (props) => {
                                             style={[newOrder.acceptButton, notification.button]}
                                             onPress={() => {
                                                 setIsAccepted(true)
+                                                animateIn()
                                             }}
                                         >
                                             <Text style={newOrder.buttonText}>
@@ -117,58 +159,71 @@ const Abstract = (props) => {
                     </>
                 ) : (
                         <>
-                            <View style={[notification.abstractContainer, { backgroundColor: color.BLUE_5, borderRadius: widthToDp('1') }]}>
-                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={priceInput.headerText}>ระบุราคาโดยประมาณ</Text>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <TextInput
-                                            style={priceInput.textInput}
-                                            placeholderTextColor={color.BLUE_4}
-                                            placeholder='ต่ำสุด'
-                                            keyboardType='number-pad'
-                                            value={lowestPrice}
-                                            onChangeText={val => {
-                                                setLowestPrice(val)
-                                            }}
-                                            autoFocus={true}
-                                        />
-                                        <Text style={{ color: color.BLUE_2, fontSize: widthToDp('5') }}>
-                                            -
+                            <Animated.View
+                                style={{
+                                    opacity , 
+                                    transform:[
+                                        {scaleX : scaleX},
+                                        {scaleY : scaleX}
+                                    ]
+                                }}
+                            >
+                                <View style={[notification.abstractContainer, { backgroundColor: color.BLUE_5, borderRadius: widthToDp('1') }]}>
+                                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text style={priceInput.headerText}>ระบุราคาโดยประมาณ</Text>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <TextInput
+                                                style={priceInput.textInput}
+                                                placeholderTextColor={color.BLUE_4}
+                                                placeholder='ต่ำสุด'
+                                                keyboardType='number-pad'
+                                                value={lowestPrice}
+                                                onChangeText={val => {
+                                                    setLowestPrice(val)
+                                                }}
+                                                autoFocus={true}
+                                            />
+                                            <Text style={{ color: color.BLUE_2, fontSize: widthToDp('5') }}>
+                                                -
                                         </Text>
-                                        <TextInput
-                                            style={priceInput.textInput}
-                                            placeholderTextColor={color.BLUE_4}
-                                            placeholder='สูงสุด'
-                                            keyboardType='number-pad'
-                                            value={hightestPrice}
-                                            onChangeText={val => {
-                                                setHightestPrice(val)
-                                            }}
+                                            <TextInput
+                                                style={priceInput.textInput}
+                                                placeholderTextColor={color.BLUE_4}
+                                                placeholder='สูงสุด'
+                                                keyboardType='number-pad'
+                                                value={hightestPrice}
+                                                onChangeText={val => {
+                                                    setHightestPrice(val)
+                                                }}
 
-                                        />
-                                    </View>
-                                    <View style={{ flexDirection: 'row', paddingHorizontal: widthToDp('2') }}>
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                setHightestPrice('')
-                                                setLowestPrice('')
-                                                setIsAccepted(false)
-                                            }}
-                                            style={[priceInput.btn, priceInput.cancel, { marginRight: widthToDp('1') }]}>
-                                            <Text style={priceInput.cancelText}>
-                                                ยกเลิก
+                                            />
+                                        </View>
+                                        <View style={{ flexDirection: 'row', paddingHorizontal: widthToDp('2') }}>
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    setHightestPrice('')
+                                                    setLowestPrice('')
+                                                    setTimeout( () => {
+                                                        setIsAccepted(false)
+                                                    },300)
+                                                    animateOut()
+                                                }}
+                                                style={[priceInput.btn, priceInput.cancel, { marginRight: widthToDp('1') }]}>
+                                                <Text style={priceInput.cancelText}>
+                                                    ยกเลิก
                                         </Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress={() => handleAccept() }
-                                            style={[priceInput.btn, priceInput.accept, { marginLeft: widthToDp('1') }]}>
-                                            <Text style={priceInput.acceptText}>
-                                                ยืนยัน
+                                            </TouchableOpacity>
+                                            <TouchableOpacity
+                                                onPress={() => handleAccept()}
+                                                style={[priceInput.btn, priceInput.accept, { marginLeft: widthToDp('1') }]}>
+                                                <Text style={priceInput.acceptText}>
+                                                    ยืนยัน
                                         </Text>
-                                        </TouchableOpacity>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
+                            </Animated.View>
                         </>
                     )
             }

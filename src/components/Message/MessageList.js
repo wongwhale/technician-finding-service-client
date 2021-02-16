@@ -7,7 +7,10 @@ import { TextInput } from 'react-native-gesture-handler'
 
 const lorem = 'asdlhaslkdgjhaskjdhgkasjhgiuwehgjaksdhgkjashdgkljahsdiuvnczn,mxcnv.z,bvodjasdfasdklfhasd9hajdkghaslkdgjhasdgaiughasdkgjasbnbcvwuebasdlfjahsdfkjahslkfdhja'
 
-const MessageList = ({ status, name, lastMessage, badges, onPress, avatar, msgType }) => {
+const MessageList = ({ status, name, lastMessage, badges, date , onPress, avatar, msgType }) => {
+
+
+    const _month = ['มค','กพ','มีค','เมย','พค','มิย','กค','สค','กย','ตค','พย','ธค']
 
     return (
         <>
@@ -31,19 +34,41 @@ const MessageList = ({ status, name, lastMessage, badges, onPress, avatar, msgTy
                     <Text style={[message.name, !status ? message.unreadName : null]}>
                         {name}
                     </Text>
-                    <Text
-                        style={[message.text, !status ? message.unreadMessage : null,
-                        {
-                            height : widthToDp('5'),
-                            lineHeight:widthToDp('5')
-                        }
-                        ]}>
-                        {
-                            msgType === 'image' ? `${name} ได้ส่งรูปภาพ` :
-                            msgType === "text" ? `${name} ${lastMessage}`
-                            : null
-                        }
-                    </Text>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between'
+                        }}
+                    >
+                        <Text
+                            style={[message.text, !status ? message.unreadMessage : null,
+                            {
+                                height: widthToDp('5'),
+                                lineHeight: widthToDp('5')
+                            }
+                            ]}>
+                            {
+                                msgType === 'image' ? `${name} : ได้ส่งรูปภาพ` :
+                                    msgType === "text" ? `${name} : ${lastMessage}`
+                                        : null
+                            }
+                        </Text>
+                        <Text
+                            style={[message.text, !status ? message.unreadMessage : null,
+                            {
+                                height: widthToDp('5'),
+                                lineHeight: widthToDp('5')
+                            }
+                            ]}>
+                            {
+                                new Date(date).getDate() !== new Date().getDate() 
+                                && new Date(date).getDate() !== new Date().getMonth() 
+                                && new Date(date).getFullYear !== new Date().getFullYear()
+                                ? `${new Date(date).getDate()} ${_month[new Date(date).getMonth()]} ${new Date(date).getFullYear() + 543}`
+                                : `${new Date(date).getHours()} : ${new Date(date).getMinutes()} น.`
+                            }
+                        </Text>
+                    </View>
                 </View>
             </TouchableOpacity>
         </>

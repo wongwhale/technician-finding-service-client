@@ -95,7 +95,20 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                                 star
                                 amountOfvoteStar
                                 amountOfcomment
+                                voteID
+                                
                               }
+                              workDay
+                                workTime{
+                                    start{
+                                        hour
+                                        minutes
+                                    }
+                                    end{
+                                        hour
+                                        minutes
+                                    }
+                                }
                             }
                           }
                     `
@@ -114,6 +127,7 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                 resolve()
             }).catch(err => {
                 console.log(err);
+                reject()
             })
         })
     })

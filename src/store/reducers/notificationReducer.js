@@ -23,6 +23,9 @@ const initialState = {
     techAcceptedOrder : [
 
     ],
+    userConfirmed :[
+
+    ],
     badge: 0,
 }
 
@@ -99,6 +102,11 @@ export default function notificationReducer(
             return{
                 ...state,
                 techOrder : action.payload
+            }
+        case notiType.SET_ACCEPTED_ORDER:
+            return {
+                ...state,
+                techAcceptedOrder : action.payload
             }
         case notiType.CLEAR:
             return state = initialState

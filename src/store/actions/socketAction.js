@@ -269,3 +269,11 @@ export const cancelRequest = (formID) => dispatch => {
     socket.emit('cancel_request', { formID })
 }
 
+export const confirmTechnician = (formID , tid ) => dispatch => {
+    const uid = store.getState().auth.userInfo.uid
+    socket.emit('confirm_technician' , {
+        formID : formID ,
+        userID : uid,
+        techID : tid
+    })
+}

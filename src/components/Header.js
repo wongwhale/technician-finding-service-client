@@ -37,12 +37,13 @@ const Header = ({ page, back, navigation, chat , INITIAL_HISTORY_LIST , LOADED ,
                     !chat ? (
                         <TouchableOpacity
                             onPress={() => {
-                                INITIAL_HISTORY_LIST(uid).then( () => {
-                                    LOADED()
-                                    navigation.navigate('message')
-                                }).catch(err => {
+                                navigation.navigate('message')
+                                // INITIAL_HISTORY_LIST(uid).then( () => {
+                                //     LOADED()
+                                //     navigation.navigate('message')
+                                // }).catch(err => {
                                     
-                                })
+                                // })
                             }}
                             style={global.chatIconContainer}
                         >

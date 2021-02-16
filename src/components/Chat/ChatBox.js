@@ -14,6 +14,7 @@ const connector = connect(mapStateToProps, {ENTER_PRIVATE_CHAT , LEAVE_PRIVATE_C
 
 const ChatBox = (props) => {
 
+
     // useEffect( () => {
     //     props.ENTER_PRIVATE_CHAT(props.uid , props.tid)
     //     .then( () => {

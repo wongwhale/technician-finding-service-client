@@ -4,7 +4,8 @@ import { SafeAreaView, View, TouchableOpacity, Image, ScrollView, Text, StyleShe
 import { connect } from 'react-redux'
 import Header from '../../components/Setting/Header'
 import { content, color, card, widthToDp, posting } from '../../stylesheet'
-import { infoStyles } from './UserInfoScreen'
+
+import ImagePickerModal from '../../components/Modal/ImagePickerModal'
 
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -16,15 +17,21 @@ import { CheckBox } from './TechnicianRegisterScreen'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
 import { SET_LOCATION } from '../../store/actions/formAction'
+import { OPEN_IMAGE_PICKER_MODAL, CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
 
+import ImagePickerManager from 'react-native-image-crop-picker'
+import MyButton from '../../components/MyButton'
 
 const mapStateToProps = (state) => ({
     userInfo: state.auth.userInfo,
-    location: state.form.location
+    location: state.form.location,
+    info: state.tech.info,
 })
 
 const mapDispatchToProps = {
-    SET_LOCATION
+    SET_LOCATION,
+    OPEN_IMAGE_PICKER_MODAL,
+    CLOSE_IMAGE_PICKER_MODAL
 }
 
 const UserInfoEditScreen = (props) => {
@@ -61,6 +68,21 @@ const UserInfoEditScreen = (props) => {
     const [newFirstname, setNewFirstName] = React.useState(props.userInfo.firstname)
     const [newLastname, setNewLastname] = React.useState(props.userInfo.lastname)
 
+    const [avatar, setAvatar] = React.useState(props.userInfo.avatar)
+    const handleLibPicker = () => {
+        ImagePickerManager.openPicker({
+            multiple: false,
+            width: 400,
+            height: 400,
+            cropping: true,
+            cropperCircleOverlay: true
+        }).then(image => {
+            setAvatar(image.path)
+            props.CLOSE_IMAGE_PICKER_MODAL()
+        }).catch(err => {
+
+        })
+    }
 
     return (
         <>
@@ -81,10 +103,13 @@ const UserInfoEditScreen = (props) => {
                         </View>
                         <View style={card.cardContainer}>
                             <View style={{ justifyContent: "center", alignItems: 'center' }}>
-                                <TouchableOpacity style={{ width: widthToDp('15'), height: widthToDp('15'), borderRadius: widthToDp('7.5') }} >
+                                <TouchableOpacity
+                                    style={{ width: widthToDp('15'), height: widthToDp('15'), borderRadius: widthToDp('7.5') }}
+                                    onPress={() => props.OPEN_IMAGE_PICKER_MODAL()}
+                                >
                                     <Image
                                         style={{ width: widthToDp('15'), height: widthToDp('15'), borderRadius: widthToDp('7.5') }}
-                                        source={{ uri: props.userInfo.avatar }}
+                                        source={{ uri: avatar }}
                                     />
                                     <View
                                         style={{
@@ -140,6 +165,14 @@ const UserInfoEditScreen = (props) => {
                                     />
                                 </View>
                             </View>
+                        </View>
+                        <View style={card.cardContainer}>
+                            <MyButton
+                                title='ยืนยัน'
+                                onPress={() => {
+
+                                }}
+                            />
                         </View>
                     </View>
 
@@ -242,6 +275,14 @@ const UserInfoEditScreen = (props) => {
 
                                     </MapView>
                                 </View>
+                                <View style={card.cardContainer}>
+                                    <MyButton
+                                        title='ยืนยัน'
+                                        onPress={() => {
+
+                                        }}
+                                    />
+                                </View>
                             </View>
 
                         ) : null
@@ -249,6 +290,14 @@ const UserInfoEditScreen = (props) => {
 
                 </ScrollView>
             </SafeAreaView>
+            <ImagePickerModal
+                libFunc={() => {
+                    handleLibPicker()
+                }}
+                camFunc={() => {
+
+                }}
+            />
         </>
     )
 }

@@ -66,9 +66,9 @@ const UserInfo = (props) => {
                         <Feather name="chevron-left" style={global.backIcon} />
                     </TouchableOpacity>
                 </View>
-                <View style={[infoStyles.headerContainer, { backgroundColor: '#fff' }]}>
+                <View style={[infoStyles.headerContainer]}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontSize: widthToDp('5'), color: '#333' }}>
+                        <Text style={{ fontSize: widthToDp('4'), fontWeight : 'bold', color: '#333' }}>
                             {`${props.firstname} ${props.lastname}`}
                         </Text>
                     </View>
@@ -116,12 +116,13 @@ export const infoStyles = StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingVertical : widthToDp('1')
     },
     profileImage: {
-        width: widthToDp('12'),
-        height: widthToDp('12'),
-        borderRadius: widthToDp('6'),
+        width: heightToDp('5'),
+        height: heightToDp('5'),
+        borderRadius: heightToDp('3'),
         backgroundColor: color.GREEN_4,
     },
     headerButton: {
@@ -186,8 +187,9 @@ export const infoStyles = StyleSheet.create({
         flex: 1,
     },
     topicText: {
-        fontSize: widthToDp('3.5'),
-        color: color.BLUE_1
+        fontSize: widthToDp('4'),
+        color: color.BLUE_1,
+        fontWeight : 'bold'
     },
     infoDetail: {
         flex: 2,
@@ -197,14 +199,13 @@ export const infoStyles = StyleSheet.create({
     aptitude: {
         backgroundColor: color.BLUE_5,
         justifyContent: 'center',
-        height: widthToDp('4'),
         paddingHorizontal: widthToDp('2'),
         marginHorizontal: widthToDp('0.5'),
         marginVertical: widthToDp('0.5'),
         borderRadius: widthToDp('1.5'),
     },
     aptitudeText: {
-        fontSize: widthToDp('3'),
+        fontSize: widthToDp('3.5'),
         color: color.BLUE_1
     },
     imageContainer: {

@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 
-import { Text, TextInput, View, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'
+import { Animated, Easing, TextInput, View, TouchableOpacity, Text } from 'react-native'
 
-import { message, color } from '../../stylesheet'
+import { message, color, widthToDp } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { SEND_MESSAGE, createChatroom } from '../../store/actions/chatAction'
 import { sendMessage } from '../../store/actions/socketAction'
@@ -15,13 +16,6 @@ import ImagePicker from 'react-native-image-crop-picker'
 
 import firebaseStorage from '@react-native-firebase/storage'
 
-import axios from 'axios'
-
-// const reference = firebase().ref('post').child(`${item.creationDate}-${item.filename}`)
-//             await reference.putFile(item.path)
-//             await reference.getDownloadURL().then(url => {
-//                 image.push(url)
-//             })
 
 const mapStateToProps = (state) => ({
     uid: state.auth.userInfo.uid,
@@ -30,13 +24,46 @@ const mapStateToProps = (state) => ({
 })
 
 const ChatInput = (props) => {
+
+    const [opacity , setOpacity] = useState(new Animated.Value(0));
+
+    const translateX = opacity.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 1]
+    })
+
+    const translateY = opacity.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 1]
+    })
+
+    const animate = () => {
+        Animated.spring(opacity, {
+            toValue: 1,
+            delay: 0,
+            useNativeDriver: true,
+            easing: Easing.elastic(4)
+        }).start();
+    };
+
+    const animateOut = () => {
+        Animated.spring(
+            opacity , {
+                toValue : 0,
+                delay : 100,
+                useNativeDriver: true,
+                easing : Easing.bounce
+            }
+        ).start()
+    }
+
     const [msg, setMsg] = useState('')
 
     const handleSendMessage = () => {
         if (props.messages.length === 0) {
             props.createChatroom(props.uid, props.interlocutor.id)
                 .then(() => {
-                    if(msg.trimEnd().length !== 0){
+                    if (msg.trimEnd().length !== 0) {
                         props.SEND_MESSAGE(msg.trimEnd(), 'text', props.uid)
                         props.sendMessage({
                             date: new Date().toISOString(),
@@ -52,7 +79,7 @@ const ChatInput = (props) => {
                 })
         }
         else {
-            if(msg.trimEnd().length !== 0){
+            if (msg.trimEnd().length !== 0) {
                 props.SEND_MESSAGE(msg.trimEnd(), 'text', props.uid)
                 props.sendMessage({
                     date: new Date().toISOString(),
@@ -113,66 +140,99 @@ const ChatInput = (props) => {
         }
     }
 
+    React.useEffect( () => {
+        if(msg.trimEnd().length !== 0 ) {
+            animate()
+        }else {
+            animateOut()
+        }
+    })
+
     return (
         <>
-            <KeyboardAvoidingView 
-                behavior={Platform.OS === 'ios' ? 'padding' : null}
-                keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
-            >
-                <View style={message.chatInputContainer}>
-                    <TouchableOpacity
-                        style={[{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginLeft: 10,
-                            backgroundColor: color.BLUE_4,
-                            height: 40,
-                            width: 40,
-                            borderRadius: 20
-                        }]}
-                    >
-                        <Feather name='camera' style={{ fontSize: 20, color: color.BLUE_5 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginLeft: 10,
-                            backgroundColor: color.BLUE_4,
-                            height: 40,
-                            width: 40,
-                            borderRadius: 20
-                        }]}
-                        onPress={() => {
-                            handleSendPhoto()
+            <View style={message.chatInputContainer}>
+                <TouchableOpacity
+                    style={[{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginLeft: 10,
+                        backgroundColor: color.BLUE_4,
+                        height: widthToDp('8'),
+                        width: widthToDp('8'),
+                        borderRadius: widthToDp('4')
+                    }]}
+                    onPress={() => {
+                        animate()
+                    }}
+                >
+                    <Feather name='camera' style={{ fontSize: widthToDp('4'), color: color.BLUE_5 }} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={[{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginLeft: 10,
+                        backgroundColor: color.BLUE_4,
+                        height: widthToDp('8'),
+                        width: widthToDp('8'),
+                        borderRadius: widthToDp('4')
+                    }]}
+                    onPress={() => {
+                        handleSendPhoto()
+                    }}
+                >
+                    <Feather name='image' style={{ fontSize: widthToDp('4'), color: color.BLUE_5 }} />
+                </TouchableOpacity>
+                <View
+                    style={{
+                        flex: 1,
+                        paddingRight: widthToDp('4'),
+                        paddingVertical: widthToDp('1'),
+                        backgroundColor: color.BLUE_5,
+                        marginHorizontal: 10,
+                        borderRadius: widthToDp('4'),
+                        flexDirection: 'row',
+                        alignItems: 'flex-start'
+                    }}
+                >
+                    <TextInput
+                        value={msg}
+                        onChangeText={(val) => {
+                            setMsg(val)
                         }}
-                    >
-                        <Feather name='image' style={{ fontSize: 20, color: color.BLUE_5 }} />
-                    </TouchableOpacity>
+                        multiline
+                        style={{
+                            flex: 1,
+                            paddingHorizontal: widthToDp('4'),
+                            lineHeight: widthToDp('4'),
+                            fontSize: widthToDp('4'),
+                        }}
+                        placeholder='Aa'
 
-                    <TextInput 
-                        value={msg} 
-                        onChangeText={(val) => setMsg(val)} 
-                        multiline 
-                        style={message.textInput} 
-                        placeholder='Aa' 
-                        
                     />
-                    <TouchableOpacity
-                        style={[message.sendButton, {
-                            backgroundColor: color.GREEN_3,
-                            height: 40,
-                            width: 40,
-                            borderRadius: 20
+                    <Animated.View
+                        style={[{
+                            opacity,
+                            transform: [
+                                { scaleX: translateX },
+                                { scaleY: translateY }
+                            ]
                         }]}
-                        onPress={() => {
-                            handleSendMessage()
-                        }}
                     >
-                        <Feather name='send' style={{ fontSize: 20, color: color.BLUE_5 }} />
-                    </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                handleSendMessage()
+                            }}
+                        >
+                            {/* <Text style={{ fontSize: widthToDp('4.5'), fontWeight: 'bold', color: color.GREEN_3 }}>
+                                Send
+                                    </Text> */}
+                            <Ionicons name='paper-plane' style={{ fontSize: widthToDp('5'), color: color.BLUE_2 }} />
+                        </TouchableOpacity>
+                    </Animated.View>
+
                 </View>
-            </KeyboardAvoidingView>
+            </View>
         </>
     )
 }
