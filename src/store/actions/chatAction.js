@@ -1,7 +1,6 @@
 import { chatType } from "../reducers/chatReducer"
 import axios from "axios"
 import WEB_URL from "../../misc/web_url"
-import { authType } from "../reducers/authReducer"
 import store from '../'
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
@@ -310,5 +309,14 @@ export const createChatroom = (uid, tid) => dispatch => {
                 })
             })
 
+    })
+}
+
+export const setImageUrl = (imageUrl) => dispatch => {
+    dispatch({
+        type: chatType.SET_IMAGE_URL,
+        payload: {
+            imageUrl
+        }
     })
 }

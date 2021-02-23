@@ -44,14 +44,7 @@ const UserInfoEditScreen = (props) => {
     const [starTimeVisible, setStartTimeVisible] = React.useState(false)
     const [endTimeVisible, setEndTimeVisible] = React.useState(false)
     const [time, setTime] = React.useState({
-        start: {
-            hour: 0,
-            minute: 0
-        },
-        end: {
-            hour: 0,
-            minute: 0
-        }
+        ...props.info.workTime
     })
 
     const [aptitude, setAbtitude] = React.useState({
@@ -62,7 +55,24 @@ const UserInfoEditScreen = (props) => {
     const [detail, setDetail] = React.useState('')
 
     React.useEffect(() => {
-        props.SET_LOCATION(18.795924746501605, 98.95296894013882)
+        let day_status = day.status
+        let apt_status = aptitude.status
+        let apt = props.info.aptitude.map( (item) => item.aptitude)
+        props.SET_LOCATION( props.info.location.lat , props.info.location.lon)
+        Promise.all(
+            props.info.workDay.map( (item) => {
+                // status[item] = true
+                // console.log(item);
+                day_status[item] = true
+            }),
+            apt.map(item => {
+                if (aptitudeType.includes(item)){
+                    apt_status[aptitudeType.indexOf(item)] = true
+                }
+            })
+        ).then( () => {
+            setDay({...day , status : day_status} )
+        })
     }, [])
 
     const [newFirstname, setNewFirstName] = React.useState(props.userInfo.firstname)
@@ -83,6 +93,10 @@ const UserInfoEditScreen = (props) => {
 
         })
     }
+
+    React.useEffect( () => {
+        console.log(props.info);
+    },[])
 
     return (
         <>
@@ -191,7 +205,9 @@ const UserInfoEditScreen = (props) => {
                                             return <CheckBox
                                                 key={item}
                                                 title={item}
-                                                status={day.status[index]}
+                                                status={
+                                                    day.status[index]
+                                                }
                                                 onPress={() => {
                                                     let status = [...day.status]
                                                     status[index] = !status[index]
@@ -214,7 +230,7 @@ const UserInfoEditScreen = (props) => {
                                                     setStartTimeVisible(true)
                                                 }}
                                             >
-                                                <Text style={posting.inputText}>{`${("0" + time.start.hour).slice(-2)} : ${("0" + time.start.minute).slice(-2)} น`}</Text>
+                                                <Text style={posting.inputText}>{`${("0" + time.start.hour).slice(-2)} : ${("0" + time.start.minutes).slice(-2)} น`}</Text>
                                             </TouchableOpacity>
                                         </View>
                                         <View style={{ flex: 1 }}>
@@ -223,7 +239,7 @@ const UserInfoEditScreen = (props) => {
                                                 style={[posting.halfInput, { marginLeft: widthToDp('1') }]}
                                                 onPress={() => setEndTimeVisible(true)}
                                             >
-                                                <Text style={posting.inputText}>{`${("0" + time.end.hour).slice(-2)} : ${("0" + time.end.minute).slice(-2)} น`}</Text>
+                                                <Text style={posting.inputText}>{`${("0" + time.end.hour).slice(-2)} : ${("0" + time.end.minutes).slice(-2)} น`}</Text>
                                             </TouchableOpacity>
                                         </View>
                                     </View>

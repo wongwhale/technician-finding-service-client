@@ -7,7 +7,7 @@ import MyTextInput from '../../components/MyTextInput'
 import { registor, color, content } from '../../stylesheet'
 import WEB_URL from '../../misc/web_url'
 
-import { Text, SafeAreaView, View } from 'react-native'
+import { Text, SafeAreaView, View, Animated, Easing } from 'react-native'
 import axios from 'axios'
 
 import { connect } from 'react-redux'
@@ -25,6 +25,7 @@ const BasicInfo = (props) => {
     const [unameStatus, setUnameStatus] = useState(null)
     const [passwordStatus, setPasswordStatus] = useState(null)
     const [confirmPasswordStatus, setConfirmPasswordStatus] = useState(null)
+    const [unameDesc, setUnameDesc] = React.useState('')
 
     const handleUsername = async (username) => {
         const check = await axios({
@@ -40,12 +41,20 @@ const BasicInfo = (props) => {
                     `
             }
         }).then((res) => {
-            if (res.data.data.usernameCheck && /^[a-z0-9_-]{4,}/.test(username)) {
-                setUnameStatus(true)
-                return true
+            if (res.data.data.usernameCheck) {
+                if (/^[a-z0-9_-]{4,}/.test(username)) {
+                    setUnameStatus(true)
+                    setUnameDesc('')
+                    return true
+                } else {
+                    setUnameStatus(false)
+                    setUnameDesc('')
+                    return false
+                }
             }
             else {
                 setUnameStatus(false)
+                setUnameDesc('ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว')
                 return false
             }
         })
@@ -65,6 +74,9 @@ const BasicInfo = (props) => {
         return check
     }
 
+
+
+
     return (
         <>
             <SafeAreaView style={content.safearray}>
@@ -73,20 +85,28 @@ const BasicInfo = (props) => {
                         placeholder='Username'
                         onChangeText={(val) => {
                             props.setUsername(val)
+                            handleUsername(val)
                         }}
                         value={props.username}
                         isOnBlur={true}
                         onBlur={() => handleUsername(props.username)}
                         status={unameStatus}
+                        descText={unameDesc}
                     />
                     <Text
                         style={[registor.descText,
                         unameStatus !== null ?
-                            !unameStatus ? { color: color.RED_0 } : { color: color.GREEN_2 }
+                            !unameStatus ? { color: color.RED_1 } : { color: color.GREEN_2 }
                             : null
                         ]}
                     >
-                        {'- ใช้ตัวอักษรภาษาอังกฤษและตัวเลขเท่านั้น \n-  มีความยาวมากกว่า 4 ตัวอักษร'}
+                        {
+                            unameDesc === 'ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว' ? (
+                                'ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว'
+                            ) : (
+                                    '- ใช้ตัวอักษรภาษาอังกฤษและตัวเลขเท่านั้น \n-  มีความยาวมากกว่า 4 ตัวอักษร'
+                                )
+                        }
                     </Text>
                     <MyTextInput
                         placeholder='Password'

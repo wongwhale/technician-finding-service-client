@@ -7,16 +7,17 @@ import {
     SafeAreaView,
     TextInput,
     TouchableOpacity,
+    Image,
 } from 'react-native'
 
 import Header from '../../components/Header'
-import { content, searchScreen, color, technician } from '../../stylesheet'
+import { content, searchScreen, color, technician, widthToDp } from '../../stylesheet'
 import { connect } from 'react-redux'
 import { SEARCH_BY_KEY_WORD, GET_NEAR_TECHNICIAN } from '../../store/actions/techAction'
 import Feather from 'react-native-vector-icons/Feather'
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
-import {GOOGLE_API} from '@env'
+import { GOOGLE_API } from '@env'
 
 const mapStateToProps = (state) => ({
 
@@ -105,19 +106,30 @@ const NearMeScreen = ({ navigation, ...props }) => {
                     </MapViewDirections>
                     {
                         technicians.length !== 0 ?
-                            technicians.map(tech => {
+                            technicians.map((tech, index) => {
                                 return (
+
                                     <Marker
+                                        key={index}
                                         coordinate={{
                                             latitude: tech.address.lat,
                                             longitude: tech.address.lon
                                         }}
                                     >
-                                        <Callout>
-                                            <Text>
-                                                {`${tech.userInfoID.firstname} ${tech.userInfoID.lastname}`}
-                                            </Text>
-                                        </Callout>
+                                        <Image
+                                            style={{
+                                                width: widthToDp('10'),
+                                                height: widthToDp('10'),
+                                                borderRadius : widthToDp('5'),
+                                                borderWidth : 2,
+                                                borderColor : color.RED_0
+                                            }}
+                                            source={{
+                                                uri: tech.userInfoID.avatar
+                                            }}
+                                        >
+
+                                        </Image>
                                     </Marker>
                                 )
                             })

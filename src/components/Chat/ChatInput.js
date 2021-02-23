@@ -200,6 +200,7 @@ const ChatInput = (props) => {
                         onChangeText={(val) => {
                             setMsg(val)
                         }}
+                        autoFocus
                         multiline
                         style={{
                             flex: 1,

@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, PixelRatio , Platform } from 'react-native'
+import { StyleSheet, Dimensions, PixelRatio, Platform } from 'react-native'
 
 export const widthToDp = percent => {
     const swidth = Dimensions.get('window').width
@@ -58,7 +58,8 @@ color.IOS_BLUE = '#0461e9'
 color.LIGHT_BLUE = '#97B3D0'
 // color.GREY_BLUE = '#539D'
 color.SKIN = '#F0EEE8'
-color.WHITE = '#e6e6e6'
+// color.WHITE = '#e6e6e6'
+color.WHITE = '#D3D9E3'
 color.GREY = '#999999'
 
 export const card = StyleSheet.create({
@@ -75,15 +76,15 @@ export const card = StyleSheet.create({
     },
     cardContainer: {
         paddingHorizontal: widthToDp('4'),
-        paddingVertical:widthToDp('2')
+        paddingVertical: widthToDp('2')
     },
     headerText: {
         fontSize: widthToDp('4.5'),
         color: color.BLUE_0
     },
-    topBorder : {
-        borderTopColor : color.WHITE,
-        borderTopWidth:1
+    topBorder: {
+        borderTopColor: color.WHITE,
+        borderTopWidth: 1
     },
 })
 
@@ -148,14 +149,14 @@ export const global = StyleSheet.create({
         alignItems: 'center',
         height: heightToDp('7'),
         backgroundColor: '#fff',
-        paddingTop : heightToDp('1'),
+        paddingTop: heightToDp('1'),
     },
     chatHeader: {
         justifyContent: 'center',
         alignItems: 'center',
         height: heightToDp('7'),
         backgroundColor: '#fff',
-        paddingTop : heightToDp('1'),
+        paddingTop: heightToDp('1'),
         paddingBottom: heightToDp('1')
     },
     headerText: {
@@ -218,7 +219,7 @@ export const global = StyleSheet.create({
     interlocutorName: {
         fontSize: heightToDp('1.5'),
         color: '#111',
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
     bbt: {
         borderBottomWidth: 0.3,
@@ -271,12 +272,14 @@ export const userInfo = StyleSheet.create({
 
 export const searchScreen = StyleSheet.create({
     textInputContainer: {
-        backgroundColor: '#fff',
+        backgroundColor: color.WHITE,
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
         flex: 1,
-        height: widthToDp('10'),
-        paddingHorizontal: widthToDp('1'),
+        height: widthToDp('9'),
+        alignItems: 'center',
+        margin: widthToDp('2'),
+        borderRadius: widthToDp('2')
     },
     textInput: {
         flex: 1,
@@ -368,8 +371,8 @@ export const searchScreen = StyleSheet.create({
 })
 
 export const userNotification = StyleSheet.create({
-    bg : {
-        backgroundColor : color.BLUE_5
+    bg: {
+        backgroundColor: color.BLUE_5
     },
     contactButton: {
         backgroundColor: color.BLUE_3,
@@ -397,7 +400,7 @@ export const userNotification = StyleSheet.create({
         fontSize: widthToDp('3')
     },
     headerText: {
-        color : color.BLUE_0
+        color: color.BLUE_0
     },
 })
 
@@ -413,14 +416,14 @@ export const notification = StyleSheet.create({
     },
     headerText: {
         fontSize: widthToDp('4'),
-        fontWeight : 'bold'
+        fontWeight: 'bold'
     },
     headerID: {
         fontSize: widthToDp('3.5'),
         color: color.BLUE_2
     },
     content: {
-        
+
     },
     abstractContainer: {
         flexDirection: 'row',
@@ -428,13 +431,13 @@ export const notification = StyleSheet.create({
     },
     abstractBottomBorder: {
         borderBottomWidth: heightToDp('0.1'),
-        paddingBottom : widthToDp('1'),
+        paddingBottom: widthToDp('1'),
         borderColor: color.WHITE
     },
     imageContainer: {
         width: widthToDp('12'),
-        marginRight :widthToDp('2') ,
-        marginLeft : widthToDp('4'), 
+        marginRight: widthToDp('2'),
+        marginLeft: widthToDp('4'),
         justifyContent: 'center',
         alignItems: 'flex-start',
     },
@@ -448,7 +451,7 @@ export const notification = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         paddingLeft: widthToDp('3'),
-        marginRight : widthToDp('4')
+        marginRight: widthToDp('4')
     },
     buttonContainer: {
         // backgroundColor:'grey',
@@ -475,8 +478,8 @@ export const notification = StyleSheet.create({
 
 
 export const newOrder = StyleSheet.create({
-    bg : {
-        backgroundColor : color.BLUE_2
+    bg: {
+        backgroundColor: color.BLUE_2
     },
     contactButton: {
         backgroundColor: color.YELLOW_2,
@@ -496,14 +499,14 @@ export const newOrder = StyleSheet.create({
     text: {
         color: color.WHITE
     },
-    headerText:{
-        color : color.WHITE
+    headerText: {
+        color: color.WHITE
     },
 })
 
-export const  acceptedOrder = StyleSheet.create({
-    bg : {
-        backgroundColor : color.GREEN_2
+export const acceptedOrder = StyleSheet.create({
+    bg: {
+        backgroundColor: color.GREEN_2
     },
     contactButton: {
         backgroundColor: color.YELLOW_2,
@@ -523,8 +526,8 @@ export const  acceptedOrder = StyleSheet.create({
     text: {
         color: color.WHITE
     },
-    headerText:{
-        color : color.WHITE
+    headerText: {
+        color: color.WHITE
     },
 })
 
@@ -584,7 +587,7 @@ export const posting = StyleSheet.create({
         borderColor: color.BLUE_5,
         color: color.BLUE_1,
         lineHeight: widthToDp('4'),
-        textAlignVertical:'top'
+        textAlignVertical: 'top'
     },
     detailLength: {
         justifyContent: 'flex-end',
@@ -785,7 +788,7 @@ export const message = StyleSheet.create({
     },
     chatInputContainer: {
         flexDirection: 'row',
-        paddingBottom : heightToDp('1')
+        paddingBottom: heightToDp('1')
     },
     textInput: {
         flex: 1,
@@ -794,7 +797,7 @@ export const message = StyleSheet.create({
         marginHorizontal: widthToDp('2'),
         lineHeight: widthToDp('4'),
         borderRadius: buttonRadiusDp,
-        textAlignVertical:'center',
+        textAlignVertical: 'center',
         fontSize: widthToDp('4'),
     },
     sendButton: {
@@ -1023,8 +1026,9 @@ export const registor = StyleSheet.create({
     },
     descText: {
         color: color.GREY,
-        marginLeft: 15,
-        marginBottom: 15
+        marginLeft: widthToDp('4'),
+        marginBottom: widthToDp('3'),
+        fontSize : widthToDp('3.5')
     },
     whaturname: {
         fontSize: 20,

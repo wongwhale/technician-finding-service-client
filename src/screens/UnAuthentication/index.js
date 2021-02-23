@@ -15,6 +15,8 @@ import Login from './Login'
 import { clear } from '../../store/actions/regAction'
 import { connect } from 'react-redux'
 
+import { useFocusEffect } from '@react-navigation/native'
+
 import LoadingModal from '../../components/Modal/LoadingModal'
 
 const mapStateToProps = (state) => ({
@@ -22,11 +24,6 @@ const mapStateToProps = (state) => ({
 })
 
 const UnAuth = (props) => {
-    React.useEffect(() => {
-        return () => {
-            props.clear()
-        }
-    })
     return (
         <>
             <Stack.Navigator>

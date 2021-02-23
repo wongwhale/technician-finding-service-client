@@ -121,7 +121,9 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                         personalInfo: res.data.data.getTechnicianInfo.userInfoID,
                         onSite: res.data.data.getTechnicianInfo.onSite,
                         star: res.data.data.getTechnicianInfo.star,
-                        location: res.data.data.getTechnicianInfo.address
+                        location: res.data.data.getTechnicianInfo.address,
+                        workDay : res.data.data.getTechnicianInfo.workDay,
+                        workTime : res.data.data.getTechnicianInfo.workTime 
                     }
                 })
                 resolve()
@@ -170,6 +172,7 @@ export const GET_NEAR_TECHNICIAN = () => dispatch => {
                             userInfoID {
                                 firstname
                                 lastname
+                                avatar
                             }
                             address {
                               lat

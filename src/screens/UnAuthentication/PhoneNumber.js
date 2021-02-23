@@ -28,22 +28,25 @@ const PhoneNumber = (props) => {
     const [phoneStatus, setPhoneStatus] = useState(null)
 
     const hanndlePhoneNumber = (val) => {
-        const check = /^0/.test(val)
-        if (check) {
-            setPhoneStatus(/[\d]{10}$/.test(val))
-            if (val.length > 1) props.setPhoneNumber(val.slice(1, val.length))
-            else props.setPhoneNumber(val)
-            status = /[\d]{9}$/.test(val)
-            if (status) Keyboard.dismiss()
-            return status
-        }
-        else {
-            props.setPhoneNumber(val)
-            setPhoneStatus(/[\d]{9}/.test(val))
-            status = /[\d]{9}$/.test(val)
-            if (status) Keyboard.dismiss()
-            return status
-        }
+        // const check = /^0/.test(val)
+        // if (check) {
+        //     setPhoneStatus(/[\d]{10}$/.test(val))
+        //     if (val.length > 1) props.setPhoneNumber(val.slice(1, val.length))
+        //     else props.setPhoneNumber(val)
+        //     status = /[\d]{10}$/.test(val)
+        //     if (status) Keyboard.dismiss()
+        //     return status
+        // }
+        // else {
+        //     props.setPhoneNumber(val)
+        //     setPhoneStatus(/[\d]{9}/.test(val))
+        //     status = /[\d]{9}$/.test(val)
+        //     if (status) Keyboard.dismiss()
+        //     return status
+        // }
+        props.setPhoneNumber(val)
+        const check = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/.test(val)
+        setPhoneStatus(check)
 
     }
 
@@ -72,7 +75,7 @@ const PhoneNumber = (props) => {
                             onChangeText={(val) => {
                                 hanndlePhoneNumber(val)
                             }}
-                            maxLength={9}
+                            maxLength={10}
                         />
                         {
                             !phoneStatus
@@ -84,14 +87,15 @@ const PhoneNumber = (props) => {
                     <MyButton
                         title='ถัดไป'
                         onPress={() => {
-                            if (hanndlePhoneNumber(props.phone)) {
+                            const phone = props.phone.slice(1,props.phone.length)
+                            if (phoneStatus) {
                                 axios({
                                     url: `${WEB_URL}/api/graphql`,
                                     method: 'post',
                                     data: {
                                         query:
                                             `query{
-                                                phoneCheck(phone:"${props.phone}")
+                                                phoneCheck(phone:"${phone}")
                                             }`
                                     }
                                 }).then(res => {

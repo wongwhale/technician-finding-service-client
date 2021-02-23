@@ -7,6 +7,9 @@ import { formType } from "../reducers/formReducer"
 import { chatType } from "../reducers/chatReducer"
 import { techType } from "../reducers/technicianReducer"
 import { getDistance } from "../../misc/getDistance"
+import { LoginManager, AccessToken } from 'react-native-fbsdk'
+import store from ".."
+import { regType } from "../reducers/regReducer"
 
 export const login = (username, password) => (dispatch) => {
     dispatch({
@@ -18,7 +21,7 @@ export const login = (username, password) => (dispatch) => {
             method: "post",
             data: {
                 query: `
-                  mutation{
+                  query{
                     login(LOGIN:{username:"${username}"password:"${password}"}){
                         token
                         status
@@ -29,7 +32,7 @@ export const login = (username, password) => (dispatch) => {
             headers: {
                 "Content-Type": "application/json",
             },
-        }).then(async (result) => {
+        }).then((result) => {
             const data = result.data.data.login
             if (data.status) {
                 AsyncStorage.setItem('token', `${data.token}`)
@@ -71,6 +74,100 @@ export const logout = () => (dispatch) => {
     })
     dispatch({
         type: techType.CLEAR
+    })
+    try {
+        LoginManager.logOut()
+    } catch (err) {
+        console.log('logout err :', err);
+    }
+}
+
+export const loginWithFacebook = () => dispatch => {
+    return new Promise((resolve, reject) => {
+        LoginManager.logInWithPermissions(["public_profile"])
+            .then((res) => {
+                if (res.isCancelled) {
+                    console.log("Login has cancelled");
+                }
+                else {
+                    AccessToken.getCurrentAccessToken()
+                        .then(data => {
+                            const token = data.accessToken.toString()
+                            fetch('https://graph.facebook.com/v2.5/me?fields=picture,name,first_name,last_name,friends&access_token=' + token)
+                                .then(res => res.json())
+                                .then(json => {
+                                    axios({
+                                        url: WEB_URL,
+                                        method: 'post',
+                                        data: {
+                                            query: `
+                                                query{
+                                                    facebookLogin (facebookID : "${json.id}"){
+                                                      token
+                                                      status
+                                                    }
+                                                  }
+                                                `,
+                                        },
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                        },
+                                    }).then(result => {
+                                        const data = result.data.data.facebookLogin
+                                        if (data.status) {
+                                            AsyncStorage.setItem('token', `${data.token}`)
+                                                .then(() => {
+                                                    resolve({ status : data.status })
+                                                }).catch((err) => {
+                                                    reject(err)
+                                                })
+                                        }
+                                        else {
+                                            Promise.all(
+                                                store.dispatch({
+                                                    type: regType.SET_FIRSTNAME,
+                                                    payload: {
+                                                        firstname: json.first_name
+                                                    }
+                                                }),
+                                                store.dispatch({
+                                                    type: regType.SET_LASTNAME,
+                                                    payload: {
+                                                        lastname: json.last_name
+                                                    }
+                                                }),
+                                                store.dispatch({
+                                                    type: regType.SET_IMAGE_PROFILE,
+                                                    payload: {
+                                                        avatar: {
+                                                            path: json.picture.data.url,
+                                                            type: 'url'
+                                                        }
+                                                    }
+                                                }),
+                                                store.dispatch({
+                                                    type: regType.SET_USERNAME,
+                                                    payload: {
+                                                        username: `fb?${json.id}`
+                                                    }
+                                                })
+                                            ).then(() => {
+                                                resolve({ status: false })
+                                            }).catch((err) => {
+                                                reject(err)
+                                            })
+                                        }
+                                    }).catch(err => {
+                                        console.log('login with facebook error :', err);
+                                    })
+                                })
+                        })
+                }
+            },
+                (err) => {
+                    reject(err)
+                }
+            )
     })
 }
 
@@ -196,12 +293,12 @@ export const checkToken = () => async (dispatch) => {
                         type: authType.LOADED
                     })
                     dispatch({
-                        type : notiType.SET_NEW_ORDER,
-                        payload : neworder_lists
+                        type: notiType.SET_NEW_ORDER,
+                        payload: neworder_lists
                     })
                     dispatch({
-                        type : notiType.SET_ACCEPTED_ORDER,
-                        payload : acceptedorder_lists
+                        type: notiType.SET_ACCEPTED_ORDER,
+                        payload: acceptedorder_lists
                     })
                 }).catch(() => {
                     dispatch({

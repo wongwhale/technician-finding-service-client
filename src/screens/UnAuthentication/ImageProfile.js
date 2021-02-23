@@ -13,7 +13,7 @@ import { SET_IMAGE_PROFILE } from '../../store/actions/regAction'
 
 import { connect } from 'react-redux';
 import MyButton from '../../components/MyButton';
-import { registor, color, content } from '../../stylesheet';
+import { registor, color, content, widthToDp } from '../../stylesheet';
 import Footer from '../../components/Registor/Footer';
 
 const mapStateToProps = (state) => ({
@@ -24,7 +24,7 @@ const mapStateToProps = (state) => ({
 const ImageProfile = (props) => {
 
     const handleLibPicker = (image) => {
-        props.SET_IMAGE_PROFILE(image)
+        props.SET_IMAGE_PROFILE(image.path)
             .then(res => {
                 props.CLOSE_IMAGE_PICKER_MODAL()
             })
@@ -43,13 +43,14 @@ const ImageProfile = (props) => {
                     </View>
                     <TouchableOpacity
                         style={{
-                            width: 120,
-                            height: 120,
-                            borderRadius: 60,
+                            width: widthToDp('25'),
+                            height: widthToDp('25'),
+                            borderRadius: widthToDp('12.5'),
                             backgroundColor: color.BLUE_5,
-                            marginBottom: 25,
+                            marginBottom: widthToDp('3'),
                             justifyContent: 'center',
-                            alignItems: 'center'
+                            alignItems: 'center',
+
                         }}
                         onPress={() => {
                             props.OPEN_IMAGE_PICKER_MODAL()
@@ -57,16 +58,41 @@ const ImageProfile = (props) => {
                     >
                         {
                             !props.avatar_status ? (
-                                <Feather name='image' style={{ fontSize: 50, color: color.BLUE_3 }} />
+                                <Feather name='image'
+                                    style={{
+                                        fontSize: widthToDp('10'),
+                                        color: color.BLUE_3,
+                                        opacity: 0.4
+                                    }}
+                                />
                             ) :
                                 (
-                                    <Image
-                                        style={{ width: 120, height: 120, borderRadius: 60 }}
-                                        source={
-                                            Platform.OS === 'ios' ? { uri: props.avatar.path }
-                                                : { uri: props.avatar.path }
-                                        }
-                                    />
+                                    <View
+                                        style={{
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}
+                                    >
+                                        <Image
+                                            style={{
+                                                width: widthToDp('25'),
+                                                height: widthToDp('25'),
+                                                borderRadius: widthToDp('12.5'),
+                                            }}
+                                            source={
+                                                Platform.OS === 'ios' ? { uri: props.avatar.path }
+                                                    : { uri: props.avatar.path }
+                                            }
+                                        />
+                                        <Feather name='upload'
+                                            style={{
+                                                fontSize: widthToDp('10'),
+                                                color: color.BLUE_3,
+                                                position: 'absolute',
+                                                opacity: 0.4,
+                                            }}
+                                        />
+                                    </View>
                                 )
                         }
                     </TouchableOpacity>
@@ -102,7 +128,7 @@ const ImageProfile = (props) => {
                         cropperCircleOverlay: true
                     }).then(res => {
                         console.log(res);
-                        handleLibPicker(res)
+                        handleLibPicker(res , 'file')
                     }).catch(err => {
                         console.log(err);
                     })

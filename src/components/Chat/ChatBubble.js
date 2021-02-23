@@ -2,6 +2,7 @@ import React, { } from 'react'
 
 import { View, Text, Image } from 'react-native'
 import { message, widthToDp } from '../../stylesheet'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const DateShow = ({ date, current_date }) => {
     const _month = ['มค','กพ','มีค','เมย','พค','มิย','กค','สค','กย','ตค','พย','ธค']
@@ -21,7 +22,7 @@ const DateShow = ({ date, current_date }) => {
     )
 }
 
-const ChatBubble = ({ sender, text, name, time, isLast, isFirst, isNewDate, type }) => {
+const ChatBubble = ({ sender, text, name, time, isLast, isFirst, isNewDate, type , setImageIsOpen , setImageUrl}) => {
     const current_date = new Date()
     const _month = ['มค','กพ','มีค','เมย','พค','มิย','กค','สค','กย','ตค','พย','ธค']
     return (
@@ -46,12 +47,12 @@ const ChatBubble = ({ sender, text, name, time, isLast, isFirst, isNewDate, type
                             style={[
                                 message.bubble, 
                                 sender ? message.rightBubble : message.leftBubble,
-                                !isFirst && !isLast && sender ? { borderTopRightRadius : widthToDp('2') , borderBottomRightRadius : widthToDp('2')  } : null,
-                                !isFirst && !isLast && !sender ? { borderTopLeftRadius : widthToDp('2') , borderBottomLeftRadius : widthToDp('2')  } : null,
-                                isFirst && !isLast && sender ? { borderBottomRightRadius : widthToDp('2')  } : null,
-                                isFirst && !isLast && !sender ? { borderBottomLeftRadius : widthToDp('2')  } : null,
-                                !isFirst && isLast && sender ? { borderTopRightRadius : widthToDp('2')  } : null,
-                                !isFirst && isLast && !sender ? { borderTopLeftRadius : widthToDp('2')  } : null,
+                                !isNewDate && !isLast && sender ? { borderTopRightRadius : widthToDp('2') , borderBottomRightRadius : widthToDp('2')  } : null,
+                                !isNewDate && !isLast && !sender ? { borderTopLeftRadius : widthToDp('2') , borderBottomLeftRadius : widthToDp('2')  } : null,
+                                isNewDate && !isLast && sender ? { borderBottomRightRadius : widthToDp('2')  } : null,
+                                isNewDate && !isLast && !sender ? { borderBottomLeftRadius : widthToDp('2')  } : null,
+                                !isNewDate && isLast && sender ? { borderTopRightRadius : widthToDp('2')  } : null,
+                                !isNewDate && isLast && !sender ? { borderTopLeftRadius : widthToDp('2')  } : null,
                             ]}
                             >
                             <Text style={[message.text, sender ? message.rightText : message.leftText]}>
@@ -60,10 +61,17 @@ const ChatBubble = ({ sender, text, name, time, isLast, isFirst, isNewDate, type
                         </View>
                     ) :
                         type === 'image' ? (
-                            <Image
-                                style={[message.bubleImage , sender ? message.rightImageBubble : message.leftImageBubble]}
-                                source={{ uri: text }}
-                            />
+                            <TouchableOpacity
+                                onPress={ () => {
+                                    setImageIsOpen(true)
+                                    setImageUrl(text)
+                                }}
+                            >
+                                <Image
+                                    style={[message.bubleImage , sender ? message.rightImageBubble : message.leftImageBubble]}
+                                    source={{ uri: text }}
+                                />
+                            </TouchableOpacity>
                         ) : null
                 }
 

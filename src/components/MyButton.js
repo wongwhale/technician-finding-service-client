@@ -19,16 +19,28 @@ export default MyButton
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:color.BLUE_3,
-        borderRadius:widthToDp('2'),
-        marginVertical:5,
-        height:widthToDp('10'),
-        width:'100%',
-        justifyContent:'center',
-        alignItems:'center'
+        flexDirection: 'row',
+        justifyContent : 'center',
+        width: '100%',
+        borderRadius: widthToDp('2'),
+        ...Platform.select({
+            ios: {
+                paddingVertical: widthToDp('2')
+            },
+            android: {
+                paddingVertical: 0
+            },
+            default: {
+                paddingVertical: 0
+            }
+        }),
+        paddingLeft: widthToDp('4'),
+        paddingRight: widthToDp('1'),
+        marginVertical: widthToDp('1'),
+        backgroundColor: color.BLUE_3,
     },
     text:{
-        color:color.WHITE,
+        color: '#fff',
         fontSize:widthToDp('4'),
         fontWeight:'bold'
     }

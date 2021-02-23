@@ -6,6 +6,7 @@ chatType.INITIAL_HISTORY_LIST = 'INITIAL_HISTORY_LIST'
 chatType.SET_INTERLOCUTOR_ID = 'SET_INTERLOCUTOR_ID'
 chatType.DISCONNECT = 'DISCONNECT'
 chatType.CLEAR = 'CHAT_REDUCER_CLEAR'
+chatType.SET_IMAGE_URL = 'SET_IMAGE_URL'
 
 const initialState = {
     interlocutor : {
@@ -15,7 +16,8 @@ const initialState = {
     },
     messages : [],
     lists : [],
-    cid:''
+    cid:'',
+    imageUrl : ''
 }
 
 export default function chatReducer(state=initialState , action){
@@ -53,6 +55,11 @@ export default function chatReducer(state=initialState , action){
             return state = initialState
         case chatType.CLEAR:
             return state = initialState
+        case chatType.SET_IMAGE_URL:
+            return {
+                ...state,
+                imageUrl : action.payload.imageUrl
+            }
         default:    
             return state
     }

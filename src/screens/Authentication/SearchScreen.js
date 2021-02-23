@@ -6,9 +6,6 @@ import {
     TextInput,
     TouchableOpacity,
     ScrollView,
-    Button,
-    Linking,
-    Text
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -23,6 +20,8 @@ import { SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD, SEARCH_GUIDE } from '../../sto
 import { LOADED } from '../../store/actions/authAction'
 import { getDistance } from '../../misc/getDistance'
 
+import SearchModal from '../../components/Modal/SearchModal'
+
 const mapStateToProps = (state) => ({
     keyword: state.tech.keyword,
     search_list: state.tech.search_list
@@ -32,9 +31,7 @@ const mapStateToProps = (state) => ({
 const SearchScreen = (props) => {
 
     const [listsWithDistance, setListsWithDistance] = React.useState([])
-    const [kw, setKw] = React.useState('')
     const [check, setCheck] = React.useState(false)
-    const [guide, setGuide] = React.useState([])
     const searchInputRef = React.useRef()
 
     const handleDistance = (lists) => {
@@ -59,22 +56,10 @@ const SearchScreen = (props) => {
                 setListsWithDistance(temp_lists.sort((a, b) => {
                     return a.distance - b.distance
                 }))
-            }).catch( () => {
+            }).catch(() => {
                 props.LOADED()
-            } )
+            })
     }
-
-    React.useEffect(() => {
-        if (kw !== '' && kw === props.keyword && check) {
-            setCheck(false)
-            props.SEARCH_GUIDE(kw)
-                .then(lists => {
-                    setGuide(lists)
-                }).catch(err => {
-                    console.log(err);
-                })
-        }
-    })
 
     React.useEffect(() => {
         return () => {
@@ -85,13 +70,12 @@ const SearchScreen = (props) => {
     return (
         <>
             <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={[content.safearray, { backgroundColor: color.WHITE }]}>
+            <SafeAreaView style={[content.safearray, { backgroundColor: '#fff' }]}>
 
                 <Header page="ค้นหา" back={true} navigation={props.navigation} />
-                <View style={[content.container, { backgroundColor: color.WHITE }]}
+                <View style={[content.container, { backgroundColor: '#fff' }]}
                     onStartShouldSetResponder={() => true}
                     onTouchStart={() => {
-                        // setKw('')
                         searchInputRef.current.blur()
                     }}
                 >
@@ -106,47 +90,21 @@ const SearchScreen = (props) => {
                             paddingHorizontal: widthToDp('7'),
                         }}>
                         <View style={{ flexDirection: 'row' }}>
-                            <View
+                            <TouchableOpacity
+                                onPress={() => setCheck(true)}
                                 style={[
                                     searchScreen.textInputContainer,
-                                    check || kw.length === 0
-                                        ? { borderRadius: widthToDp('5') }
-                                        : {
-                                            borderTopLeftRadius: widthToDp('5'),
-                                            borderTopRightRadius: widthToDp('5')
-                                        }
                                 ]}
                             >
-                                {
-                                    props.keyword.length != 0 ? (
-                                        <TouchableOpacity
-                                            style={searchScreen.xIconContainer}
-                                            onPress={() => {
-                                                props.SET_SEARCH_KEY_WORD('')
-                                                setKw('')
-                                                setCheck(false)
-                                            }}>
-                                            <Feather name='x' style={searchScreen.xIcon} />
-                                        </TouchableOpacity>
-                                    ) : null
-
-                                }
                                 <TextInput
                                     placeholder="ค้นหาช่าง  ประเภท , ชื่อ หรือ อื่นๆ "
                                     placeholderTextColor={color.BLUE_4}
                                     style={searchScreen.textInput}
                                     ref={searchInputRef}
                                     autoCorrect={false}
+                                    onEndEditing={false}
                                     onFocus={() => {
-                                        setKw(props.keyword)
                                         setCheck(true)
-                                    }}
-                                    onChangeText={(val) => {
-                                        props.SET_SEARCH_KEY_WORD(val)
-                                        setCheck(true)
-                                        setTimeout(() => {
-                                            setKw(val)
-                                        }, 500)
                                     }}
                                     value={props.keyword}
                                     onSubmitEditing={() => {
@@ -154,13 +112,12 @@ const SearchScreen = (props) => {
                                             .then((res) => {
                                                 handleDistance(res)
                                             })
-
                                     }}
                                 />
                                 <View style={searchScreen.searchIconContainer}>
                                     <Feather name='search' style={searchScreen.searchIcon} />
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         </View>
                         <View
                             style={{
@@ -172,66 +129,6 @@ const SearchScreen = (props) => {
                                 width: '100%'
                             }}
                         >
-                            {
-                                kw.length !== 0 && kw === props.keyword ? (
-                                    guide.length === 0
-                                        ? (
-                                            <View
-                                                style={[{
-                                                    backgroundColor: 'white',
-                                                    paddingTop: widthToDp('3'),
-                                                    paddingBottom: widthToDp('5')
-
-                                                }]}
-                                            >
-                                            </View>
-                                        )
-                                        :
-                                        guide.map((item, index) => {
-                                            return (
-                                                <TouchableOpacity
-                                                    key={index}
-                                                    style={[{
-                                                        backgroundColor: 'white',
-                                                    }, guide.length === index + 1
-                                                        ? {
-                                                            paddingBottom: widthToDp('5')
-                                                        }
-                                                        : {
-                                                            paddingVertical: widthToDp('2'),
-                                                        }
-                                                        , index === 0
-                                                        ? {
-                                                            paddingTop: widthToDp('3')
-                                                        } : null
-
-                                                    ]}
-                                                    onPress={() => {
-                                                        props.SEARCH_BY_KEY_WORD(item)
-                                                            .then((res) => {
-                                                                handleDistance(res)
-                                                                props.SET_SEARCH_KEY_WORD(item)
-                                                            })
-                                                        setKw('')
-                                                        setCheck(false)
-                                                        searchInputRef.current.blur()
-                                                    }}
-                                                >
-                                                    <Text
-                                                        style={{
-                                                            fontSize: widthToDp('3.5'),
-                                                            color: color.BLUE_1
-                                                        }}
-                                                    >{item}
-                                                    </Text>
-                                                </TouchableOpacity>
-
-                                            )
-                                        })
-                                ) : (
-                                        null
-                                    )
-                            }
                         </View>
                     </View>
                     <ScrollView style={{ marginTop: widthToDp('12') }}>
@@ -251,9 +148,19 @@ const SearchScreen = (props) => {
                         }
                     </ScrollView>
                 </View>
-
+                <SearchModal
+                    isOpen={check}
+                    onClosed={() => setCheck(false)}
+                    setSearchList={(key) => {
+                        props.SET_SEARCH_KEY_WORD(key)
+                        props.SEARCH_BY_KEY_WORD(key)
+                            .then((res) => {
+                                handleDistance(res)
+                            })
+                    }}
+                    oldKeyword={props.keyword}
+                />
             </SafeAreaView>
-
         </>
     )
 }

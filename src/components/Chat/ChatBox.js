@@ -2,15 +2,15 @@ import React, { useEffect } from 'react'
 
 import ChatBubble from '../Chat/ChatBubble'
 import { connect } from 'react-redux'
-import { ENTER_PRIVATE_CHAT , LEAVE_PRIVATE_CHAT } from '../../store/actions/chatAction'
+import { ENTER_PRIVATE_CHAT , LEAVE_PRIVATE_CHAT  , setImageUrl} from '../../store/actions/chatAction'
 
 const mapStateToProps = (state) => ({
     uid: state.auth.userInfo.uid,
     tid: state.chat.interlocutor.id,
-    messages: state.chat.messages
+    messages: state.chat.messages,
 })
 
-const connector = connect(mapStateToProps, {ENTER_PRIVATE_CHAT , LEAVE_PRIVATE_CHAT} )
+const connector = connect(mapStateToProps, { setImageUrl , ENTER_PRIVATE_CHAT , LEAVE_PRIVATE_CHAT} )
 
 const ChatBox = (props) => {
 
@@ -90,6 +90,8 @@ const ChatBox = (props) => {
                                     isLast={isLast}
                                     isNewDate={isNewDate}
                                     type={item.msgType}
+                                    setImageIsOpen={() => props.setImageIsOpen()}
+                                    setImageUrl = { (url) => props.setImageUrl(url)}
                                 />
                             })
                         }

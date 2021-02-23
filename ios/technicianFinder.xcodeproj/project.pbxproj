@@ -23,6 +23,7 @@
 		FF869A1225A335F300AE8256 /* libswiftWebKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FF869A1125A335F300AE8256 /* libswiftWebKit.tbd */; };
 		FF869A4D25AC8EE300AE8256 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF869A4C25AC8EE300AE8256 /* GoogleService-Info.plist */; };
 		FFCD7EBF25B1AF92002EFBF2 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCD7EBE25B1AF92002EFBF2 /* GoogleMaps.framework */; };
+		FFE0900B25DBBD6D00F8A37C /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0900A25DBBD6D00F8A37C /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		FF869A1125A335F300AE8256 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
 		FF869A4C25AC8EE300AE8256 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FFCD7EBE25B1AF92002EFBF2 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = "../../../../../Downloads/GoogleMaps-4.1.0/Maps/Frameworks/GoogleMaps.framework"; sourceTree = "<group>"; };
+		FFE0900925DBBD6D00F8A37C /* technicianFinder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "technicianFinder-Bridging-Header.h"; sourceTree = "<group>"; };
+		FFE0900A25DBBD6D00F8A37C /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +143,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				FFE0900A25DBBD6D00F8A37C /* File.swift */,
+				FFE0900925DBBD6D00F8A37C /* technicianFinder-Bridging-Header.h */,
 			);
 			name = technicianFinder;
 			sourceTree = "<group>";
@@ -313,7 +318,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1200;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -679,6 +684,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				FFE0900B25DBBD6D00F8A37C /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -720,6 +726,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A78BBFAC3FFCBE7086753607 /* Pods-technicianFinder-technicianFinderTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -743,6 +750,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2AFBE567FE4252F75BC260B7 /* Pods-technicianFinder-technicianFinderTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = technicianFinderTests/Info.plist;
@@ -780,6 +788,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = technicianFinder;
+				SWIFT_OBJC_BRIDGING_HEADER = "technicianFinder-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -806,6 +815,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = technicianFinder;
+				SWIFT_OBJC_BRIDGING_HEADER = "technicianFinder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
