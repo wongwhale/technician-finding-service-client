@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions, PixelRatio, Platform } from 'react-native'
+import { color as colors } from './colors'
 
 export const widthToDp = percent => {
     const swidth = Dimensions.get('window').width
@@ -16,51 +17,8 @@ export const heightToDp = percent => {
 
 export const buttonRadiusDp = widthToDp('2')
 export const modalRadiusDp = widthToDp('3')
+export const color = colors
 
-export const color = {}
-// color.BLUE_0 = '#325288'
-color.BLUE_0 = '#182947'
-color.BLUE_1 = '#2A3A56'
-color.BLUE_2 = '#40506E'
-color.BLUE_3 = '#5B6A84'
-color.BLUE_4 = '#818CA0'
-color.BLUE_5 = '#D3D9E3'
-
-color.RED_0 = '#6A321D'
-color.RED_1 = '#824C38'
-color.RED_2 = '#A56E59'
-color.RED_3 = '#C79582'
-color.RED_4 = '#F1CCBE'
-
-color.GREEN_0 = '#144931'
-color.GREEN_1 = '#275A42'
-color.GREEN_2 = '#3D725A'
-color.GREEN_3 = '#5A8974'
-color.GREEN_4 = '#83A797'
-color.GREEN_5 = '#23383F'
-
-color.YELLOW_0 = '#6A4F1D'
-color.YELLOW_1 = '#826838'
-color.YELLOW_2 = '#A58B59'
-color.YELLOW_3 = '#C7AF82'
-color.YELLOW_4 = '#F1DFBE'
-
-color.FACEBOOK = '#3b5998'
-
-color.GREY_BLUE = '#7d8aa1'
-color.DARK_BLUE = '#112046'
-color.YELLOW = '#F2C743'
-// color.LIGHT_GREY = '#E6E6E6'
-color.LIGHT_GREY = '#D4D4CE'
-color.GREEN = '#248152'
-// color.GREEN_5 = '#386065'
-color.IOS_BLUE = '#0461e9'
-color.LIGHT_BLUE = '#97B3D0'
-// color.GREY_BLUE = '#539D'
-color.SKIN = '#F0EEE8'
-// color.WHITE = '#e6e6e6'
-color.WHITE = '#D3D9E3'
-color.GREY = '#999999'
 
 export const card = StyleSheet.create({
     card: {
@@ -69,14 +27,16 @@ export const card = StyleSheet.create({
         marginBottom: 15
     },
     cardHeader: {
-        borderBottomColor: color.WHITE,
         paddingHorizontal: widthToDp('4'),
-        paddingVertical: widthToDp('2'),
-        borderBottomWidth: 1
+        paddingTop: widthToDp('2'),
+        paddingBottom : widthToDp('1'),
+        borderBottomWidth : widthToDp('0.1'),
+        borderBottomColor : color.GREY_4
     },
     cardContainer: {
         paddingHorizontal: widthToDp('4'),
-        paddingVertical: widthToDp('2')
+        paddingBottom: widthToDp('2'),
+        paddingTop : widthToDp('2')
     },
     headerText: {
         fontSize: widthToDp('4.5'),
@@ -91,7 +51,7 @@ export const card = StyleSheet.create({
 export const content = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: widthToDp('7'),
+        paddingHorizontal: widthToDp('4'),
         paddingVertical: 10,
     },
     safearray: {
@@ -133,13 +93,15 @@ export const mainScreen = StyleSheet.create({
     },
     menuTextHalf: {
         color: color.BLUE_1,
-        fontSize: 20,
-        marginTop: 5
+        fontSize: widthToDp('5'),
+        marginTop: widthToDp('1'),
+        fontWeight : 'bold',
     },
     menuTextFull: {
         color: color.BLUE_5,
-        fontSize: 30,
-        marginLeft: 10
+        fontWeight : 'bold',
+        fontSize: widthToDp('7'),
+        marginLeft: widthToDp('2'),
     }
 })
 
@@ -175,7 +137,7 @@ export const global = StyleSheet.create({
     badges: {
         aspectRatio: 1,
         width: heightToDp('2'),
-        backgroundColor: color.YELLOW,
+        backgroundColor: color.IOS_YELLOW_LIGHT,
         borderRadius: heightToDp('1'),
         position: 'absolute',
         right: -(widthToDp('1')),
@@ -263,7 +225,7 @@ export const userInfo = StyleSheet.create({
     },
     userImage: {
         aspectRatio: 1,
-        height: heightToDp('6'),
+        height: widthToDp('10'),
         borderRadius: heightToDp('3'),
         marginLeft: heightToDp('1'),
         backgroundColor: color.BLUE_5,
@@ -575,16 +537,16 @@ export const posting = StyleSheet.create({
     inputText: {
         color: color.BLUE_1,
         fontSize: widthToDp('3.5'),
-
     },
     detailInput: {
         height: widthToDp('25'),
         marginTop: heightToDp('0.5'),
         padding: widthToDp('3'),
+        paddingTop : widthToDp('3'),
         borderRadius: widthToDp('2'),
-        borderWidth: 1,
+        borderWidth: widthToDp('0.1'),
         fontSize: widthToDp('4'),
-        borderColor: color.BLUE_5,
+        borderColor: color.GREY_4,
         color: color.BLUE_1,
         lineHeight: widthToDp('4'),
         textAlignVertical: 'top'
@@ -642,7 +604,7 @@ export const datePicker = StyleSheet.create({
     contentContainer: {
         paddingHorizontal: widthToDp('4'),
         borderRadius: modalRadiusDp,
-        backgroundColor: color.WHITE,
+        backgroundColor: '#fff',
         shadowColor: color.GREEN_5,
         shadowRadius: 7,
         shadowOffset: {

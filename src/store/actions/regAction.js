@@ -122,6 +122,9 @@ export const registor_success = (info) => async dispatch => {
             }).then(res => {
                 if (res.data.data.register.status) {
                     AsyncStorage.setItem('token', res.data.data.register.token).then(() => {
+                        dispatch({
+                            type : regType.CLEAR
+                        })
                         resovle()
                     })
                 } else {
@@ -162,6 +165,9 @@ export const registor_success = (info) => async dispatch => {
                     }).then(res => {
                         if (res.data.data.register.status) {
                             AsyncStorage.setItem('token', res.data.data.register.token).then(() => {
+                                dispatch({
+                                    type : regType.CLEAR
+                                })
                                 resovle()
                             })
                         } else {
@@ -200,7 +206,11 @@ export const registor_success = (info) => async dispatch => {
                     }
                 }).then(res => {
                     if (res.data.data.register.status) {
-                        AsyncStorage.setItem('token', res.data.data.register.token).then(() => {
+                        AsyncStorage.setItem('token', res.data.data.register.token)
+                        .then(() => {
+                            dispatch({
+                                type : regType.CLEAR
+                            })
                             resovle()
                         })
                     } else {

@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     text: {
-        color: color.IOS_BLUE
+        color: color.IOS_BLUE,
+        fontWeight : 'bold'
     }
 })

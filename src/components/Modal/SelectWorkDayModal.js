@@ -4,10 +4,9 @@ import Modal from 'react-native-modalbox'
 import { widthToDp } from '../../stylesheet'
 import Radio from '../Radio'
 import { color } from '../../stylesheet/colors'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
-const LocationPickerModal = ({setLocation , location , ...props}) => {
+
+const SelectWorkDayModal = (props) => {
 
     return (
         <>
@@ -35,7 +34,7 @@ const LocationPickerModal = ({setLocation , location , ...props}) => {
                             <Text
                                 style={techRegModalStyles.headerText}
                             >
-                                ระบุที่อยู่
+                                เลือกวันทำงาน
                             </Text>
                         </View>
                         <View
@@ -43,27 +42,30 @@ const LocationPickerModal = ({setLocation , location , ...props}) => {
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 paddingHorizontal: widthToDp('5'),
-                                paddingVertical: widthToDp('2'),
-                                width: '100%',
-                                aspectRatio: 1
+                                paddingVertical : widthToDp('2'),
+                                width: '100%'
                             }}
                         >
-                            <MapView
-                                style={{ width: '100%', aspectRatio: 1, justifyContent: 'center', alignItems: 'center', borderRadius: widthToDp('2') }}
-                                provider={PROVIDER_GOOGLE}
-                                region={{
-                                    latitude: location.latitude,
-                                    longitude: location.longitude,
-                                    latitudeDelta: 0.005,
-                                    longitudeDelta: 0.005
-                                }}
-                                showsUserLocation
-                                onRegionChangeComplete={(res) => {
-                                    setLocation(res.latitude, res.longitude)
-                                }}
-                            >
-                                <Ionicons name='ios-pin' size={50} style={{ top: -20, right: -2, color: 'red' }} />
-                            </MapView>
+                            {
+                                props.day.title.map((item, index) => (
+                                    <View style={techRegModalStyles.rowContainer} key={item}>
+                                        <Radio
+                                            status={props.day.status[index]}
+                                            setStatus={() => {
+                                                let status = [...props.day.status]
+                                                status[index] = !status[index]
+                                                props.setDay({ ...props.day, status: status })
+                                            }}
+                                        />
+                                        <Text
+                                            style={techRegModalStyles.text}
+                                        >
+                                            {item}
+                                        </Text>
+                                    </View>
+                                )
+                                )
+                            }
                         </View>
                         <View
                             style={{
@@ -104,7 +106,7 @@ const LocationPickerModal = ({setLocation , location , ...props}) => {
     )
 }
 
-export default LocationPickerModal
+export default SelectWorkDayModal
 
 const techRegModalStyles = StyleSheet.create({
     container: {
@@ -121,17 +123,17 @@ const techRegModalStyles = StyleSheet.create({
     },
     header: {
         marginTop: widthToDp('3'),
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        borderBottomWidth: widthToDp(0.1),
-        borderBottomColor: `${color.BLUE_2}66`,
-        paddingBottom: widthToDp('3')
+        justifyContent : 'center',
+        alignItems : 'center',
+        width : '100%',
+        borderBottomWidth : widthToDp(0.1),
+        borderBottomColor : `${color.BLUE_2}66`,
+        paddingBottom : widthToDp('3')
     },
     headerText: {
         fontSize: widthToDp('4'),
-        color: color.BLUE_0,
-        fontWeight: 'bold'
+        color : color.BLUE_0,
+        fontWeight : 'bold'
     },
     text: {
         fontSize: widthToDp('4')

@@ -80,7 +80,7 @@ const UserInfo = (props) => {
                             props.navigation.navigate('editInfo')
                         }}
                     >
-                        <Text style={{ color: color.WHITE, fontSize: widthToDp('3.5'), fontWeight: 'bold' }}>แก้ไขข้อมูลส่วนตัว</Text>
+                        <Text style={{ color: '#fff', fontSize: widthToDp('3.5'), fontWeight: 'bold' }}>แก้ไขข้อมูลส่วนตัว</Text>
                     </TouchableOpacity>
                 </View>
                 <ScrollView >

@@ -26,15 +26,29 @@ import TechnicianRegisterScreen from './TechnicianRegisterScreen';
 import UserInfoEditScreen from './UserInfoEditScreen';
 import OrderDetailModal from '../../components/Modal/OrderDetailModal'
 import LoadingModal from '../../components/Modal/LoadingModal';
+import LogoutConfirmModal from '../../components/Modal/LogoutConfirmModal';
+import { OPEN_LOGOUT_CONFIRM_MODAL, CLOSE_LOGOUT_CONFIRM_MODAL } from '../../store/actions/modalAction'
+import { logout } from '../../store/actions/authAction'
 
 const mapStateToProps = (state) => ({
   uid: state.auth.userInfo.uid,
-  role : state.auth.userInfo.role,
+  role: state.auth.userInfo.role,
   date_picker: state.modal.date_picker,
-  badge : state.noti.badge
+  badge: state.noti.badge,
+  logoutConfirmIsOpen: state.modal.logout_confirm_modal,
+  userInfo: state.auth.userInfo
 })
 
-const connector = connect(mapStateToProps, { clear, leave, connection , CLOSE_DATE_PICKER_MODAL , INITIAL_HISTORY_LIST , SET_FILE })
+const connector = connect(mapStateToProps,
+  {
+    clear, leave, connection,
+    CLOSE_DATE_PICKER_MODAL,
+    INITIAL_HISTORY_LIST,
+    SET_FILE,
+    OPEN_LOGOUT_CONFIRM_MODAL,
+    CLOSE_LOGOUT_CONFIRM_MODAL,
+    logout
+  })
 
 
 const Index = (props) => {
@@ -62,6 +76,12 @@ const Index = (props) => {
       </Stack.Navigator>
       <OrderDetailModal />
       <LoadingModal />
+      <LogoutConfirmModal
+        isOpen={props.logoutConfirmIsOpen}
+        onClose={() => props.CLOSE_LOGOUT_CONFIRM_MODAL(false)}
+        onLogout={() => props.logout()}
+        name={`${props.userInfo.firstname} ${props.userInfo.lastname}`}
+      />
     </>
   );
 };

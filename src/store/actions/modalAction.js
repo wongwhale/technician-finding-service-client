@@ -96,3 +96,16 @@ export const CLOSE_DETAIL_MODAL = () => dispatch => {
         type : modalType.CLOSE_DETAIL_MODAL
     })
 }
+
+export const OPEN_LOGOUT_CONFIRM_MODAL = () => dispatch => {
+    dispatch({
+        type : modalType.OPEN_LOGOUT_CONFIRM_MODAL
+    })
+}
+
+
+export const CLOSE_LOGOUT_CONFIRM_MODAL = () => dispatch => {
+    dispatch({
+        type : modalType.CLOSE_LOGOUT_CONFIRM_MODAL
+    })
+}

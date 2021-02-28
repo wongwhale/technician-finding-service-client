@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SafeAreaView, View, ScrollView, Text } from 'react-native'
+import { SafeAreaView, View, ScrollView, Text , TouchableOpacity} from 'react-native'
 
 import Header from '../../components/Header'
 import DateTimePicker from '../../components/Form/DateTimePicker'
@@ -21,11 +21,12 @@ import ImagePickerManager from 'react-native-image-crop-picker'
 
 import { sendPostReq } from '../../store/actions/socketAction'
 import { addNewResponse } from '../../store/actions/notiAction'
-import { SET_FILE, SET_LOCATION  } from '../../store/actions/formAction'
+import { SET_FILE, SET_LOCATION } from '../../store/actions/formAction'
 import { CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
 
 import { connect } from 'react-redux'
-import { content, color, card } from '../../stylesheet'
+import { content, color, card , widthToDp } from '../../stylesheet'
+import { styles } from '../../components/Setting/styles'
 
 const mapStateToProps = (state) => ({
     firstname: state.auth.userInfo.firstname,
@@ -40,19 +41,21 @@ const mapStateToProps = (state) => ({
     detail: state.form.detail,
     lat: state.form.location.latitude,
     lng: state.form.location.longitude,
+    location: state.form.location,
     type: state.form.type
 })
 
 const connector = connect(mapStateToProps, { addNewResponse, SET_LOCATION, sendPostReq, SET_FILE, CLOSE_IMAGE_PICKER_MODAL })
 
 const PostScreen = (props) => {
+    const [locationVisible, setLocationVisible] = React.useState(false)
     React.useEffect(() => {
         props.SET_LOCATION(18.795924746501605, 98.95296894013882)
     }, [])
     return (
         <>
             <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={[content.safearray, { backgroundColor: color.WHITE }]}>
+            <SafeAreaView style={[content.safearray, { backgroundColor: color.GREY_5 }]}>
                 <Header page='บอกอาการ' back={true} navigation={props.navigation} chat={false} />
                 <ScrollView style={content.container}>
                     <View style={card.card}>
@@ -84,12 +87,38 @@ const PostScreen = (props) => {
                             </Text>
                         </View>
                         <View style={card.cardContainer}>
-                            <LocationPicker />
+                            {/* <LocationPicker /> */}
+                            <TouchableOpacity
+                                style={{
+                                    width: '100%',
+                                    backgroundColor: color.BLUE_5,
+                                    padding: widthToDp('2'),
+                                    paddingLeft: widthToDp('5'),
+                                    borderRadius: widthToDp('2'),
+                                    marginBottom: widthToDp('2'),
+                                    justifyContent: 'center',
+                                    flexDirection: 'row',
+                                    alignItems: 'center'
+                                }}
+                                onPress={() => {
+                                    setLocationVisible(true)
+                                }}
+                            >
+                                <Text
+                                    style={styles.selectedText}
+                                >
+                                    ระบุที่อยู่
+                                </Text>
+                                {/* <Feather
+                                    style={styles.selectedText}
+                                    name='map-pin'
+                                /> */}
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <MyButton title='ยืนยัน'
                         onPress={() => {
-                            const date = `${props.year}-${("0" + (props.month+1)).slice(-2)}-${("0" + (props.date)).slice(-2)}T${("0" + (props.hour)).slice(-2)}:${("0" + (props.minute)).slice(-2)}:00Z`
+                            const date = `${props.year}-${("0" + (props.month + 1)).slice(-2)}-${("0" + (props.date)).slice(-2)}T${("0" + (props.hour)).slice(-2)}:${("0" + (props.minute)).slice(-2)}:00Z`
                             const name = `${props.firstname} ${props.lastname}`
                             props.sendPostReq({
                                 name: name,
@@ -129,6 +158,14 @@ const PostScreen = (props) => {
                         props.CLOSE_IMAGE_PICKER_MODAL()
                     })
                 }} />
+                <LocationPickerModal
+                    isOpen={locationVisible}
+                    onClosed={() => setLocationVisible(false)}
+                    location={props.location}
+                    setLocation={(lat, lng) => {
+                        props.SET_LOCATION(lat, lng)
+                    }}
+                />
             </SafeAreaView>
         </>
     )

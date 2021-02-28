@@ -4,7 +4,7 @@ import { color, searchScreen, heightToDp, widthToDp } from '../../stylesheet'
 import Feather from 'react-native-vector-icons/Feather'
 import { ScrollView } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
-import { SEARCH_GUIDE , SET_SEARCH_KEY_WORD } from '../../store/actions/techAction'
+import { SEARCH_GUIDE, SET_SEARCH_KEY_WORD } from '../../store/actions/techAction'
 
 const mapStateToProps = (state) => ({
     keyword: state.tech.keyword
@@ -15,7 +15,7 @@ const mapDispatchToProps = {
     SET_SEARCH_KEY_WORD
 }
 
-const SearchModal = ({ isOpen, onClosed ,...props }) => {
+const SearchModal = ({ isOpen, onClosed, ...props }) => {
 
     const [keyword, setKeyword] = React.useState('')
 
@@ -23,13 +23,33 @@ const SearchModal = ({ isOpen, onClosed ,...props }) => {
 
     const handleCloseModal = () => {
         onClosed()
-        setKeyword('')
         setGuideLists([])
     }
 
     const handleSearch = (key) => {
         props.setSearchList(key)
         handleCloseModal()
+    }
+
+    const handleChangeText = (val) => {
+        props.SET_SEARCH_KEY_WORD(val)
+        if (val.trimEnd().length !== 0) {
+            props.SEARCH_GUIDE(val.trimEnd())
+                .then(lists => {
+                    setGuideLists(lists)
+                })
+                .catch(err => {
+                    console.log('error on search guide method', err);
+                })
+        }
+        else {
+            setGuideLists([])
+        }
+        if (val.length > 0) {
+            animateIn()
+        } else {
+            animateOut()
+        }
     }
 
     const animateIn = () => {
@@ -102,7 +122,7 @@ const SearchModal = ({ isOpen, onClosed ,...props }) => {
                             >
                                 <TouchableOpacity
                                     onPress={() => {
-                                        setKeyword('')
+                                        props.SET_SEARCH_KEY_WORD('')
                                         animateOut()
                                         setGuideLists([])
                                     }}
@@ -111,7 +131,7 @@ const SearchModal = ({ isOpen, onClosed ,...props }) => {
                                 </TouchableOpacity>
                             </Animated.View>
                             <TextInput
-                                placeholder="ค้นหาช่าง  ประเภท , ชื่อ หรือ อื่นๆ "
+                                placeholder="ค้นหาช่าง ประเภท , ชื่อ หรือ อื่นๆ "
                                 placeholderTextColor={color.BLUE_4}
                                 autoFocus
                                 style={{
@@ -121,27 +141,10 @@ const SearchModal = ({ isOpen, onClosed ,...props }) => {
                                 }}
                                 value={props.keyword}
                                 onChangeText={(val) => {
-                                    props.SET_SEARCH_KEY_WORD(val)
-                                    if (val.trimEnd().length !== 0) {
-                                        props.SEARCH_GUIDE(val.trimEnd())
-                                            .then(lists => {
-                                                setGuideLists(lists)
-                                            })
-                                            .catch(err => {
-                                                console.log('error on search guide method', err);
-                                            })
-                                    }
-                                    else {
-                                        setGuideLists([])
-                                    }
-                                    if (val.length > 0) {
-                                        animateIn()
-                                    } else {
-                                        animateOut()
-                                    }
+                                    handleChangeText(val)
                                 }}
                                 onSubmitEditing={() => {
-                                    handleSearch(keyword)
+                                    handleSearch(props.keyword)
                                 }}
                             ></TextInput>
                             <View style={searchScreen.searchIconContainer}>
@@ -179,8 +182,8 @@ const SearchModal = ({ isOpen, onClosed ,...props }) => {
                                                 paddingHorizontal: widthToDp('2'),
                                                 paddingVertical: widthToDp('2'),
                                                 width: '90%',
-                                                borderBottomWidth: widthToDp('0.1'),
-                                                borderBottomColor: color.BLUE_4,
+                                                borderBottomWidth: 1,
+                                                borderBottomColor: `${color.BLUE_4}33`,
                                                 marginLeft: widthToDp('5'),
                                                 flexDirection: 'row',
                                                 alignItems: 'center'

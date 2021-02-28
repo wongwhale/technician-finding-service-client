@@ -13,13 +13,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { color } from '../../stylesheet'
 import TechnicianNotification from './TechnicianNotification'
+import LogoutConfirmModal from '../../components/Modal/LogoutConfirmModal'
 
 const mapStateToProps = (state) => ({
     badge: state.noti.badge,
     techOrder: state.noti.techOrder,
     techAcceptedOrder: state.noti.techAcceptedOrder,
     userResponse: state.noti.userResponse,
-    role: state.auth.userInfo.role
+    role: state.auth.userInfo.role,
 })
 
 const mapDispatchToProps = {
@@ -74,7 +75,6 @@ const TabScreen = (props) => {
                     name="notification" component={Notification}
                 />
             </Tab.Navigator>
-
         </>
     )
 }

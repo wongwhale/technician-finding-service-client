@@ -10,16 +10,18 @@ import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { connect } from 'react-redux'
-import { login, logout, checkToken, loginWithFacebook } from '../../store/actions/authAction'
+import { login, logout, checkToken, loginWithFacebook, clear as authClear } from '../../store/actions/authAction'
 import { connection } from '../../store/actions/socketAction'
-import auth from '@react-native-firebase/auth';
+import { clear as regClear } from '../../store/actions/regAction'
+
+import { useFocusEffect } from '@react-navigation/native'
 
 
 const mapStateToProps = (state) => ({
 
 })
 
-const connector = connect(mapStateToProps, { loginWithFacebook, login, logout, connection, checkToken })
+const connector = connect(mapStateToProps, { loginWithFacebook, login, logout, connection, checkToken, regClear, authClear })
 
 const Login = (props) => {
     const uname_ref = useRef()
@@ -53,6 +55,18 @@ const Login = (props) => {
                 console.log('login with facebook err :', err);
             })
     }
+
+    useFocusEffect(
+        React.useCallback(() => {
+            props.regClear()
+            setSecure(true)
+            return () => {
+                setUsername('')
+                setPassword('')
+            }
+        }, [])
+    )
+
 
     return (
         <>
@@ -114,7 +128,11 @@ const Login = (props) => {
                         <View style={styles.btnContainer}>
                             <View style={styles.header}>
                                 <View style={styles.line} />
-                                <Text style={styles.headerText}>
+                                <Text style={{
+                                    fontSize: widthToDp('3.5'),
+                                    fontWeight: 'bold',
+                                    color: '#222'
+                                }}>
                                     เข้าสู่ระบบโดยวิธีอื่น
                             </Text>
                                 <View style={styles.line} />

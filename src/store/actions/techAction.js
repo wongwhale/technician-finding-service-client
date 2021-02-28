@@ -73,9 +73,11 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                         query{
                             getTechnicianInfo( userID :"${tid}") {
                               onSite
+                              frontStore
                               star
                               amount
                               description
+                              bio
                               count
                               address{
                                   lat
@@ -120,6 +122,8 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                         aptitude: res.data.data.getTechnicianInfo.aptitude,
                         personalInfo: res.data.data.getTechnicianInfo.userInfoID,
                         onSite: res.data.data.getTechnicianInfo.onSite,
+                        frontStore : res.data.data.getTechnicianInfo.frontStore,
+                        bio : res.data.data.getTechnicianInfo.bio,
                         star: res.data.data.getTechnicianInfo.star,
                         location: res.data.data.getTechnicianInfo.address,
                         workDay : res.data.data.getTechnicianInfo.workDay,
@@ -212,6 +216,81 @@ export const SEARCH_GUIDE = (keyword) => dispatch => {
                 }
             }).then(res => {
                 resolve(res.data.data.wordGuide)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    })
+}
+
+export const technicianRegister = (info) => dispatch => {
+    console.log(
+        `
+        INFORMATION : {
+            aptitude : [${info.aptitude}],
+            frontStore : ${info.frontStore},
+            onSite : ${info.onSite},
+            address : {
+                lat : ${info.address.lat},
+                lon : ${info.address.lon}
+            },
+            description : "${info.description}",
+            bio : "${info.bio}" ,
+            workTime : {
+                start :{
+                    hour : ${info.workTime.start.hour},
+                    minutes : ${info.workTime.start.minutes}
+                },end :{
+                    hour : ${info.workTime.end.hour},
+                    minutes : ${info.workTime.end.minutes}
+                }
+            },
+            workDay : [${info.workDay}]
+        }`
+    );
+    return new Promise((resolve, reject) => {
+        AsyncStorage.getItem('token').then(token => {
+            axios({
+                url: WEB_URL,
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                data: {
+                    query:
+                        `
+                        mutation{
+                            createTechnicianInfo(
+                                INFORMATION : {
+                                    aptitude : [${ info.aptitude.map(item => ('"'+item+'"')) }],
+                                    frontStore : ${info.frontStore},
+                                    onSite : ${info.onSite},
+                                    address : {
+                                        lat : ${info.address.lat},
+                                        lon : ${info.address.lon}
+                                    },
+                                    description : "${info.description}",
+                                    bio : "${info.bio}" ,
+                                    workTime : {
+                                        start :{
+                                            hour : ${info.workTime.start.hour},
+                                            minutes : ${info.workTime.start.minutes}
+                                        },end :{
+                                            hour : ${info.workTime.end.hour},
+                                            minutes : ${info.workTime.end.minutes}
+                                        }
+                                    },
+                                    workDay : [${info.workDay}]
+                                }
+                            ) {
+                              _id
+                            }
+                        }
+                `
+                }
+            }).then(res => {
+                resolve(res.data.data.createTechnicianInfo)
             }).catch(err => {
                 reject(err)
             })

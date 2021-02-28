@@ -9,6 +9,9 @@ target 'technicianFinder' do
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+  pod 'FBSDKShareKit'
   
   # pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 

@@ -24,17 +24,17 @@ export const styles = StyleSheet.create({
         // backgroundColor: color.GREEN_4,
         // color: color.GREEN_0,
         // fontWeight: 'bold'
-        backgroundColor:color.BLUE_5,
+        backgroundColor: '#ddd',
         color : color.BLUE_4,
     },
     selected: {
-        backgroundColor: color.GREEN_2,
+        backgroundColor: color.GREEN_4,
         color: color.GREEN_0,
         fontWeight: 'bold'
     },
     selectedText: {
         fontSize: widthToDp('4'),
-        color : color.BLUE_0
+        color : color.BLUE_1
     },
     checkIcon: {
         fontSize:widthToDp('4'),

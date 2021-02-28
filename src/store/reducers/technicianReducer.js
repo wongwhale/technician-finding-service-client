@@ -1,21 +1,21 @@
 export const techType = {}
 techType.SET_SEARCH_KEY_WORD = 'SET_SEARCH_KEY_WORD'
-techType.SET_SEARCH_LIST = 'SET_SEARCH_LIST'
 techType.SET_TECHNICIAN_INFO = 'SET_TECHNICIAN_INFO'
 techType.SET_TID = 'SET_TID'
 techType.CLEAR = 'TECHNICIAN_REDUCER_CLEAR'
 
 const initialState = {
     keyword : '',
-    search_list : [],
     info : {
         aptitude : [],
         personalInfo : {},
         onSite : false,
+        frontStore : false,
+        bio : '',
         star : 0,
         workDay : [],
         workTime : {
-
+        
         },
     },
     tid : ''
@@ -27,11 +27,6 @@ export default function technicianReducer (state = initialState , action) {
             return {
                 ...state,
                 keyword : action.payload.keyword
-            }
-        case techType.SET_SEARCH_LIST:
-            return {
-                ...state,
-                search_list : action.payload.search_list
             }
         case techType.SET_TID:
             return{
@@ -45,6 +40,8 @@ export default function technicianReducer (state = initialState , action) {
                     aptitude : action.payload.aptitude,
                     personalInfo : action.payload.personalInfo,
                     onSite : action.payload.onSite,
+                    frontStore : action.payload.frontStore,
+                    bio : action.payload.bio,
                     star : action.payload.star,
                     location : action.payload.location,
                     workDay : action.payload.workDay,

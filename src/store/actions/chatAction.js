@@ -231,6 +231,7 @@ export const INITIAL_HISTORY_LIST = (uid) => dispatch => {
                               technicianID
                               technicianName
                               technicianAvatar
+                              readStatus
                               userAvatar
                                 recentMessage {
                                   sender

@@ -15,17 +15,20 @@ modalType.OPEN_PRICE_INPUT_MODAL = 'OPEN_PRICE_INPUT_MODAL'
 modalType.CLOSE_PRICE_INPUT_MODAL = 'CLOSE_PRICE_INPUT_MODAL'
 modalType.OPEN_DETAIL_MODAL = 'OPEN_DETAIL_MODAL'
 modalType.CLOSE_DETAIL_MODAL = 'CLOSE_DETAIL_MODAL'
+modalType.OPEN_LOGOUT_CONFIRM_MODAL = 'OPEN_LOGOUT_CONFIRM_MODAL'
+modalType.CLOSE_LOGOUT_CONFIRM_MODAL = 'CLOSE_LOGOUT_CONFIRM_MODAL'
 
 const initialState = {
     post_modal: false,
     date_picker: false,
     time_picker: false,
     select_type_modal: false,
-    date_picker_modal : false,
-    image_picker_modal : false,
-    location_picker_modal : false,
-    price_input_modal : false,
-    detail_modal : false
+    date_picker_modal: false,
+    image_picker_modal: false,
+    location_picker_modal: false,
+    price_input_modal: false,
+    detail_modal: false,
+    logout_confirm_modal : false,
 }
 
 export default function (state = initialState, action) {
@@ -33,12 +36,12 @@ export default function (state = initialState, action) {
         case modalType.OPEN_DATE_PICKER_MODAL:
             return {
                 ...state,
-                date_picker_modal : true
+                date_picker_modal: true
             }
         case modalType.CLOSE_DATE_PICKER_MODAL:
             return {
                 ...state,
-                date_picker_modal : false
+                date_picker_modal: false
             }
         case modalType.OPEN_POST_MODAL:
             return {
@@ -71,44 +74,54 @@ export default function (state = initialState, action) {
                 select_type_modal: false,
             }
         case modalType.OPEN_IMAGE_PICKER_MODAL:
-            return{
+            return {
                 ...state,
-                image_picker_modal : true
+                image_picker_modal: true
             }
         case modalType.CLOSE_IMAGE_PICKER_MODAL:
-            return{
+            return {
                 ...state,
-                image_picker_modal : false
+                image_picker_modal: false
             }
         case modalType.OPEN_LOCATION_PICKER_MODAL:
-            return{
+            return {
                 ...state,
-                location_picker_modal : true
+                location_picker_modal: true
             }
         case modalType.CLOSE_LOCATION_PICKER_MODAL:
-            return{
+            return {
                 ...state,
                 location_picker_modal: false
             }
         case modalType.OPEN_PRICE_INPUT_MODAL:
-            return{
+            return {
                 ...state,
-                price_input_modal : true
+                price_input_modal: true
             }
         case modalType.CLOSE_PRICE_INPUT_MODAL:
             return {
                 ...state,
-                price_input_modal : false
+                price_input_modal: false
             }
-        case modalType.OPEN_DETAIL_MODAL :
+        case modalType.OPEN_DETAIL_MODAL:
             return {
                 ...state,
-                detail_modal : true
+                detail_modal: true
             }
-        case modalType.CLOSE_DETAIL_MODAL :
+        case modalType.CLOSE_DETAIL_MODAL:
             return {
                 ...state,
-                detail_modal : false
+                detail_modal: false
+            }
+        case modalType.OPEN_LOGOUT_CONFIRM_MODAL:
+            return {
+                ...state,
+                logout_confirm_modal: true
+            }
+        case modalType.CLOSE_LOGOUT_CONFIRM_MODAL:
+            return {
+                ...state,
+                logout_confirm_modal: false
             }
         default:
             return state

@@ -32,7 +32,8 @@ const Message = (props) => {
 
     useFocusEffect( 
         React.useCallback( () => {
-            props.INITIAL_HISTORY_LIST(props.uid).then( () => {
+            props.INITIAL_HISTORY_LIST(props.uid)
+            .then( () => {
                 props.LOADED()
             }).catch(err => {
                 console.log(err);
@@ -56,7 +57,7 @@ const Message = (props) => {
                                     name={ item.technicianID !== props.uid ? item.technicianName : item.userName }
                                     avatar = {item.technicianID !== props.uid ? item.technicianAvatar : item.userAvatar} 
                                     lastMessage={item.recentMessage.message} 
-                                    status={true} 
+                                    status={item.readStatus} 
                                     badges={0} 
                                     date={item.recentMessage.date}
                                     msgType = {item.recentMessage.msgType}
@@ -66,20 +67,6 @@ const Message = (props) => {
                                                 props.LOADED()
                                                 props.navigation.navigate('chat')
                                             })
-                                        
-                                        // if(props.uid !== item.technicianID){
-                                        //     props.ENTER_PRIVATE_CHAT(props.uid , item.technicianID)
-                                        //     .then( () => {
-                                        //         props.LOADED()
-                                        //         props.navigation.navigate('chat')
-                                        //     })
-                                        // }else{
-                                        //     props.ENTER_PRIVATE_CHAT(item.technicianID , item.userID)
-                                        //     .then( () => {
-                                        //         props.LOADED()
-                                        //         props.navigation.navigate('chat')
-                                        //     })
-                                        // }
                                     }} />
                             })
                         ) : null

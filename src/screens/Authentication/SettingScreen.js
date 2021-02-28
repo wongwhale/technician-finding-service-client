@@ -6,14 +6,14 @@ import Feather from 'react-native-vector-icons/Feather'
 import Header from '../../components/Setting/Header'
 
 import { connect } from 'react-redux'
-import { logout } from '../../store/actions/authAction'
+import { OPEN_LOGOUT_CONFIRM_MODAL } from '../../store/actions/modalAction'
 
 const mapStateToProps = (state) => ({
     role: state.auth.userInfo.role
 })
 
 const mapDispatchToProps = {
-    logout,
+    OPEN_LOGOUT_CONFIRM_MODAL
 }
 
 const Btn = (props) => {
@@ -55,10 +55,10 @@ const SettingScreen = (props) => {
     return (
         <>
             <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={[content.safearray, { backgroundColor: color.WHITE }]}>
+            <SafeAreaView style={[content.safearray, { backgroundColor: color.GREY_5 }]}>
                 <Header navigation={props.navigation} title='ตั้งค่า' />
-                <View style={{ flex: 1, backgroundColor: color.WHITE }}>
-                    <View style={{ height: widthToDp('10'), marginTop: widthToDp('2') }}>
+                <View style={{ flex: 1, backgroundColor: color.GREY_5 }}>
+                    <View style={{ height: widthToDp('10'), marginTop: widthToDp('2') , borderTopRightRadius : widthToDp('2') , borderTopLeftRadius : widthToDp('2') }}>
                         <Btn
                             title='ประวัติ'
                             navigation={() => props.navigation.navigate('editInfo')}
@@ -80,29 +80,35 @@ const SettingScreen = (props) => {
                         <TouchableOpacity
                             style={
                                 {
-                                    height: widthToDp('10'),
+                                    height: widthToDp('12'),
                                     flexDirection: 'row',
                                     justifyContent: 'center',
                                     paddingHorizontal: widthToDp('5'),
                                     alignItems: 'center',
-                                    backgroundColor: color.RED_4
+                                    backgroundColor: '#fff',
+                                    borderBottomRightRadius : widthToDp('2'),
+                                    borderBottomLeftRadius : widthToDp('2'),
+                                    borderTopWidth : widthToDp('0.1'),
+                                    borderTopColor :`${color.GREY_1}66`
                                 }}
                             onPress={() => {
-                                props.logout()
+                                props.OPEN_LOGOUT_CONFIRM_MODAL()
                             }}
                         >
                             <Feather name="log-out"
                                 style={{
                                     fontSize: widthToDp('4'),
                                     marginRight: widthToDp('2'),
-                                    color: color.RED_0
+                                    color: color.IOS_RED_LIGHT,
+                                    fontWeight : 'bold'
                                 }}
                             />
                             <Text
                                 style={{
                                     fontSize: widthToDp('4'),
                                     marginRight: widthToDp('2'),
-                                    color: color.RED_0
+                                    color: color.IOS_RED_LIGHT,
+                                    fontWeight : 'bold'
                                 }}
                             >
                                 ออกจากระบบ

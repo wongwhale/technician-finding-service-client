@@ -9,11 +9,12 @@ import MyButton from '../../components/MyButton'
 
 import { Text, SafeAreaView, View, TouchableOpacity, Keyboard } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 
 
 import WEB_URL from '../../misc/web_url'
 import axios from 'axios'
+import { regType } from '../../store/reducers/regReducer'
 
 const mapStateToProps = (state) => ({
     username: state.reg.username,
@@ -43,7 +44,6 @@ const OTP = (props) => {
     const [pin6, setPin6] = useState('')
 
     const [confirmOTP ,setConfirmOTP] = useState('')
-    const [status ,setStatus] = useState('')
 
     const handleOTP = () => {
         if (pin1.length === 1 && pin2.length === 1 && pin3.length === 1

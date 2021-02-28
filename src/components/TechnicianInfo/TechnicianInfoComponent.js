@@ -13,8 +13,10 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 
 
 const TechnicianInfoComponent = (props) => {
+
     const [amountReview, setAmountReview] = React.useState(0)
     React.useEffect(() => {
+        console.log(props.info);
         props.info.aptitude.map(({ amountOfvoteStar }) => {
             setAmountReview(amountOfvoteStar + amountReview)
         })
@@ -23,16 +25,45 @@ const TechnicianInfoComponent = (props) => {
         <>
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <View style={infoStyles.onside}>
-                    <Feather name='x' style={[infoStyles.onsideIcon, infoStyles.xColor]} />
-                    <Text style={[infoStyles.onsideText, infoStyles.xColor]}>
-                        หน้าร้าน
-                    </Text>
+                    {
+                        props.info.frontStore ? (
+                            <>
+                                <Feather name='check' style={[infoStyles.onsideIcon, infoStyles.checkColor]} />
+                                <Text style={[infoStyles.onsideText, infoStyles.checkColor]}>
+                                    หน้าร้าน
+                                </Text>
+                            </>
+                        ) :
+                            (
+                                <>
+                                    <Feather name='x' style={[infoStyles.onsideIcon, infoStyles.xColor]} />
+                                    <Text style={[infoStyles.onsideText, infoStyles.xColor]}>
+                                        หน้าร้าน
+                                    </Text>
+                                </>
+                            )
+
+                    }
                 </View>
                 <View style={infoStyles.onside}>
-                    <Feather name='check' style={[infoStyles.onsideIcon, infoStyles.checkColor]} />
-                    <Text style={[infoStyles.onsideText, infoStyles.checkColor]}>
-                        บริการนอกสถานที่
-                    </Text>
+                    {
+                        props.info.onSite ? (
+                            <>
+                                <Feather name='check' style={[infoStyles.onsideIcon, infoStyles.checkColor]} />
+                                <Text style={[infoStyles.onsideText, infoStyles.checkColor]}>
+                                    บริการนอกสถานที่
+                                </Text>
+                            </>
+                        ) : (
+                                <>
+                                    <Feather name='x' style={[infoStyles.onsideIcon, infoStyles.xColor]} />
+                                    <Text style={[infoStyles.onsideText, infoStyles.xColor]}>
+                                    บริการนอกสถานที่
+                                    </Text>
+                                </>
+                            )
+                    }
+
                 </View>
             </View>
             <View style={infoStyles.infoContainer}>

@@ -66,7 +66,7 @@ export const modalStyle = StyleSheet.create({
     },
 
     subcontainer: {
-        width:'84%',
+        width:'90%',
         height: 300,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,

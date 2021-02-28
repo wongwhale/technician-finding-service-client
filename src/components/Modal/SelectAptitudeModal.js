@@ -4,10 +4,9 @@ import Modal from 'react-native-modalbox'
 import { widthToDp } from '../../stylesheet'
 import Radio from '../Radio'
 import { color } from '../../stylesheet/colors'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
-const LocationPickerModal = ({setLocation , location , ...props}) => {
+
+const SelectAptitudeModal = (props) => {
 
     return (
         <>
@@ -35,7 +34,7 @@ const LocationPickerModal = ({setLocation , location , ...props}) => {
                             <Text
                                 style={techRegModalStyles.headerText}
                             >
-                                ระบุที่อยู่
+                                เลือกความถนัด
                             </Text>
                         </View>
                         <View
@@ -44,26 +43,32 @@ const LocationPickerModal = ({setLocation , location , ...props}) => {
                                 alignItems: 'center',
                                 paddingHorizontal: widthToDp('5'),
                                 paddingVertical: widthToDp('2'),
-                                width: '100%',
-                                aspectRatio: 1
+                                width: '100%'
                             }}
                         >
-                            <MapView
-                                style={{ width: '100%', aspectRatio: 1, justifyContent: 'center', alignItems: 'center', borderRadius: widthToDp('2') }}
-                                provider={PROVIDER_GOOGLE}
-                                region={{
-                                    latitude: location.latitude,
-                                    longitude: location.longitude,
-                                    latitudeDelta: 0.005,
-                                    longitudeDelta: 0.005
-                                }}
-                                showsUserLocation
-                                onRegionChangeComplete={(res) => {
-                                    setLocation(res.latitude, res.longitude)
-                                }}
-                            >
-                                <Ionicons name='ios-pin' size={50} style={{ top: -20, right: -2, color: 'red' }} />
-                            </MapView>
+                            {
+                                props.aptitude.type.map((item, index) => (
+                                    <View
+                                        style={techRegModalStyles.rowContainer}
+                                        key={item}
+                                    >
+                                        <Radio
+                                            status={props.aptitude.status[index]}
+                                            setStatus={() => {
+                                                let status = [...props.aptitude.status]
+                                                status[index] = !status[index]
+                                                props.setAbtitude({ ...props.aptitude, status: status })
+                                            }}
+                                        />
+                                        <Text
+                                            style={techRegModalStyles.text}
+                                        >
+                                            {item}
+                                        </Text>
+                                    </View>
+                                )
+                                )
+                            }
                         </View>
                         <View
                             style={{
@@ -104,9 +109,9 @@ const LocationPickerModal = ({setLocation , location , ...props}) => {
     )
 }
 
-export default LocationPickerModal
+export default SelectAptitudeModal
 
-const techRegModalStyles = StyleSheet.create({
+export const techRegModalStyles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',

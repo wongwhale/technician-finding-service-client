@@ -1,15 +1,15 @@
-import React, { } from 'react'
+import React from 'react'
 
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-
-import { userInfo } from '../stylesheet'
+import { userInfo, widthToDp, color } from '../stylesheet'
 import { connect } from 'react-redux'
 
 import Feather from 'react-native-vector-icons/Feather'
 
 import { GET_TECHNICIAN_INFO } from '../store/actions/techAction'
 import { GET_INTERLOCUTOR_INFO } from '../store/actions/chatAction'
-import { LOADING, LOADED } from '../store/actions/authAction'
+import { LOADING, LOADED, logout } from '../store/actions/authAction'
+import { OPEN_LOGOUT_CONFIRM_MODAL } from '../store/actions/modalAction'
 
 const mapStateToProps = (state) => ({
     firstname: state.auth.userInfo.firstname,
@@ -30,7 +30,7 @@ const UserInfo = (props) => {
                         props.GET_TECHNICIAN_INFO(props.uid).then(() => {
                             props.navigation.navigate('userInfo')
                             props.LOADED()
-                        }).catch( err => {
+                        }).catch(err => {
                             props.LOADED()
                         })
                     }
@@ -44,7 +44,7 @@ const UserInfo = (props) => {
                     style={userInfo.userImage}
                     source={{ uri: props.avatar }}
                 />
-                <View style={userInfo.subContainer}>
+                <View style={[userInfo.subContainer, { flex: 1 }]}>
                     <Text style={userInfo.name}>
                         {`${props.firstname} ${props.lastname}`}
                     </Text>
@@ -52,9 +52,28 @@ const UserInfo = (props) => {
                         {props.role}
                     </Text>
                 </View>
+                <TouchableOpacity
+                    style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingHorizontal: widthToDp('3'),
+                    }}
+                    onPress={ () => {
+                        props.OPEN_LOGOUT_CONFIRM_MODAL()
+                    }}
+                >
+                    <Feather
+                        name='log-out'
+                        style={{
+                            fontSize: widthToDp('5'),
+                            color: color.IOS_RED_LIGHT
+                        }}
+                    />
+                </TouchableOpacity>
             </TouchableOpacity>
+            
         </>
     )
 }
 
-export default connect(mapStateToProps, { LOADING, LOADED, GET_INTERLOCUTOR_INFO, GET_TECHNICIAN_INFO })(UserInfo)
+export default connect(mapStateToProps, { OPEN_LOGOUT_CONFIRM_MODAL, logout, LOADING, LOADED, GET_INTERLOCUTOR_INFO, GET_TECHNICIAN_INFO })(UserInfo)

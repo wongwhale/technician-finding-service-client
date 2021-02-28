@@ -11,6 +11,7 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import store from ".."
 import { regType } from "../reducers/regReducer"
 
+
 export const login = (username, password) => (dispatch) => {
     dispatch({
         type: authType.LOADING

@@ -101,7 +101,6 @@ const UserInfoEditScreen = (props) => {
     return (
         <>
             <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={[content.safearray, { backgroundColor: color.WHITE }]}>
                 <Header title='แก้ไขข้อมูลส่วนตัว' navigation={props.navigation} />
                 <ScrollView style={{
                     flex: 1,
@@ -305,7 +304,6 @@ const UserInfoEditScreen = (props) => {
                     }
 
                 </ScrollView>
-            </SafeAreaView>
             <ImagePickerModal
                 libFunc={() => {
                     handleLibPicker()

@@ -24,7 +24,6 @@ import SearchModal from '../../components/Modal/SearchModal'
 
 const mapStateToProps = (state) => ({
     keyword: state.tech.keyword,
-    search_list: state.tech.search_list
 })
 
 
@@ -64,6 +63,7 @@ const SearchScreen = (props) => {
     React.useEffect(() => {
         return () => {
             props.SET_SEARCH_KEY_WORD('')
+            setListsWithDistance([])
         }
     }, [])
 
@@ -102,17 +102,10 @@ const SearchScreen = (props) => {
                                     style={searchScreen.textInput}
                                     ref={searchInputRef}
                                     autoCorrect={false}
-                                    onEndEditing={false}
                                     onFocus={() => {
                                         setCheck(true)
                                     }}
                                     value={props.keyword}
-                                    onSubmitEditing={() => {
-                                        props.SEARCH_BY_KEY_WORD(props.keyword)
-                                            .then((res) => {
-                                                handleDistance(res)
-                                            })
-                                    }}
                                 />
                                 <View style={searchScreen.searchIconContainer}>
                                     <Feather name='search' style={searchScreen.searchIcon} />

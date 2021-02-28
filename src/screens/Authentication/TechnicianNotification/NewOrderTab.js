@@ -1,16 +1,7 @@
 import React from 'react'
-
-import {
-    View,
-    Text
-} from 'react-native'
-
-import { content, heightToDp } from '../../../stylesheet'
-
+import { content } from '../../../stylesheet'
 import NewOrderNotification from '../../../components/TechnicianNotification/NewOrderNotification'
 import { connect } from 'react-redux'
-
-import Modal from 'react-native-modalbox'
 import { ScrollView } from 'react-native-gesture-handler'
 
 
