@@ -1,8 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.technicianfinder">
-    
-    <meta-data android:name="com.facebook.sdk.ApplicationId"
-          android:value="@string/facebook_app_id"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA"/>
     <application
@@ -12,6 +9,8 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
+      <meta-data android:name="com.facebook.sdk.ApplicationId"
+          android:value="@string/facebook_app_id"/>
       <meta-data
       android:name="com.google.android.geo.API_KEY"
       android:value="AIzaSyBponPCdtalZC3D4PvXaqAG3UMdsYmt9LQ"/>
