@@ -2,7 +2,7 @@ import React, { } from 'react'
 
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 
-import { color } from '../../stylesheet'
+import { color, widthToDp } from '../../stylesheet'
 import { connect } from 'react-redux'
 
 import {clear } from '../../store/actions/regAction'
@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        borderColor: color.LIGHT_GREY,
-        borderTopWidth: 1,
+        borderColor: color.GREY_4,
+        borderTopWidth: widthToDp('0.1'),
         paddingBottom:5
     },
     row: {

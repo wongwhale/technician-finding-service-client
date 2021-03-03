@@ -7,7 +7,6 @@ import Header from '../../components/Setting/Header'
 import { styles } from '../../components/Setting/styles'
 
 import Feather from 'react-native-vector-icons/Feather'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 
 
 import { modalStyle } from '../../components/Modal/PostModal'
@@ -15,7 +14,6 @@ import Modal from 'react-native-modalbox'
 import { Picker } from '@react-native-picker/picker'
 import { TextInput, ScrollView } from 'react-native-gesture-handler'
 import { aptitudeType } from '../../misc/aptitude_type'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { connect } from 'react-redux'
 import { SET_LOCATION } from '../../store/actions/formAction'
 
@@ -23,7 +21,9 @@ import SelectWorkDayModal from '../../components/Modal/SelectWorkDayModal'
 import SelectAptitudeModal from '../../components/Modal/SelectAptitudeModal'
 import MyButton from '../../components/MyButton'
 import LocationPickerModal from '../../components/Modal/LocationPickerModal'
-import { technicianRegister } from '../../store/actions/techAction'
+import { technicianRegister , GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
+import { updateToken , changeRole , LOADING , LOADED , checkToken } from '../../store/actions/authAction'
+import Geolocation from '@react-native-community/geolocation'
 
 export const CheckBox = ({ title, status, onPress }) => {
     return (
@@ -56,7 +56,7 @@ const SelectedView = ({ title }) => {
                 style={{
                     paddingHorizontal: widthToDp('4'),
                     paddingVertical: widthToDp('1'),
-                    backgroundColor: `${color.IOS_GREEN_LIGHT}66`,
+                    backgroundColor: `${color.IOS_BLUE}55`,
                     borderRadius: widthToDp('4'),
                     marginRight: widthToDp('2'),
                     marginBottom: widthToDp('2')
@@ -65,7 +65,7 @@ const SelectedView = ({ title }) => {
                 <Text
                     style={{
                         fontSize: widthToDp(3.5),
-                        color: color.GREEN_0
+                        color: color.IOS_INDIGO_LIGHT
                     }}
                 >
                     {title}
@@ -81,10 +81,17 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     SET_LOCATION,
-    technicianRegister
+    technicianRegister,
+    updateToken,
+    GET_TECHNICIAN_INFO,
+    changeRole,
+    LOADING , 
+    LOADED ,
+    checkToken,
 }
 
 const TechnicianRegisterScreen = (props) => {
+
     const scrollRef = React.useRef()
     const [bioLayout , setBioLayout] = React.useState(0)
     const [addressLayout , setaddressLayout] = React.useState(0)
@@ -120,7 +127,12 @@ const TechnicianRegisterScreen = (props) => {
     const [detail, setDetail] = React.useState('')
 
     React.useEffect(() => {
-        props.SET_LOCATION(18.795924746501605, 98.95296894013882)
+        Geolocation.getCurrentPosition( ({coords : {latitude , longitude}}) => {
+            props.SET_LOCATION(latitude, longitude)
+        } , 
+        (err) => {
+            console.log(err);
+        })
     }, [])
 
     const handleSubmit = async () => {
@@ -159,23 +171,6 @@ const TechnicianRegisterScreen = (props) => {
             reject(err)
         })
     }
-
-    // React.useEffect(() => {
-    //     Keyboard.addListener('keyboardDidShow', _keyboardDidShow)
-    //     Keyboard.addListener('keyboardDidHide', _keyboardDidHide)
-    //     return () => {
-    //         Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
-    //         Keyboard.removeListener("keyboardDidHide", _keyboardDidHide);
-    //     }
-    // }, [])
-
-    // const _keyboardDidShow = () => {
-    //     scrollRef.current.scrollToEnd({ animated: true })
-    // }
-
-    // const _keyboardDidHide = () => {
-    //     scrollRef.current.scrollToEnd({ animated: true })
-    // }
 
     return (
         <>
@@ -545,9 +540,23 @@ const TechnicianRegisterScreen = (props) => {
                         <MyButton
                             title='ยืนยัน'
                             onPress={() => {
+                                props.LOADING()
                                 handleSubmit()
                                     .then(info => {
                                         props.technicianRegister(info)
+                                        .then( res => {
+                                            // props.changeRole('technician')
+                                            props.updateToken()
+                                            .then( ({uid}) => {
+                                                props.GET_TECHNICIAN_INFO(uid)
+                                                .then( () => {
+                                                    props.checkToken()
+                                                    props.navigation.navigate('userInfo')
+                                                })
+                                            })
+                                        }).catch(err => {
+                                            console.log('technician register err :' , err);
+                                        })
                                     })
                             }}
                         />
@@ -587,7 +596,7 @@ const TechnicianRegisterScreen = (props) => {
                                 <Picker
                                     selectedValue={time.start.minute}
                                     itemStyle={{ height: 150 }}
-                                    onValueChange={(val) => setTime({ ...time, start: { minute: val, hour: time.start.hour } })}
+                                    onValueChange={(val) => setTime({ ...time, start: { ...time.start , minute : val } })}
                                 >
                                     {
                                         [...Array(60)].map((item, index) => <Picker.Item key={index} label={`0${index}`.slice(-2)} value={index} />)
@@ -622,7 +631,7 @@ const TechnicianRegisterScreen = (props) => {
                                     itemStyle={{ height: 150 }}
                                     onValueChange={(val) => {
                                         // props.SET_HOUR(val)
-                                        setTime({ ...time, end: { hour: val, minute: time.start.minute } })
+                                        setTime({ ...time, end: { ...time.end , hour: val } })
                                     }}
                                 >
                                     {
@@ -634,7 +643,7 @@ const TechnicianRegisterScreen = (props) => {
                                 <Picker
                                     selectedValue={time.end.minute}
                                     itemStyle={{ height: 150 }}
-                                    onValueChange={(val) => setTime({ ...time, end: { minute: val, hour: time.start.hour } })}
+                                    onValueChange={(val) => setTime({ ...time, end: { ...time.end , minute: val } })}
                                 >
                                     {
                                         [...Array(60)].map((item, index) => <Picker.Item key={index} label={`0${index}`.slice(-2)} value={index} />)

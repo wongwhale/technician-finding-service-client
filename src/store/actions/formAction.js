@@ -195,3 +195,9 @@ export const SET_MINUTE = (minute) => dispatch => {
         }
     })
 }
+
+export const clear = () => dispatch => {
+    dispatch({
+        type : formType.CLEAR
+    })
+}

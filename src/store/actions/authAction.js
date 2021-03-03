@@ -118,7 +118,7 @@ export const loginWithFacebook = () => dispatch => {
                                         if (data.status) {
                                             AsyncStorage.setItem('token', `${data.token}`)
                                                 .then(() => {
-                                                    resolve({ status : data.status })
+                                                    resolve({ status: data.status })
                                                 }).catch((err) => {
                                                     reject(err)
                                                 })
@@ -388,5 +388,47 @@ export const clear = () => (dispatch) => {
     })
     dispatch({
         type: techType.CLEAR
+    })
+}
+
+
+export const updateToken = () => dispatch => {
+    return new Promise((resolve, reject) => {
+        AsyncStorage.getItem('token')
+            .then(token => {
+                axios({
+                    url: WEB_URL,
+                    method: "post",
+                    data: {
+                        query: `
+                            query{
+                                updateToken {
+                                    token
+                                    userID
+                                }
+                            }
+                        `,
+                    },
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": token
+                    },
+                }).then( res => {
+                    const data = res.data.data.updateToken
+                    AsyncStorage.setItem('token' , data.token)
+                    resolve({ uid : data.userID })
+                }).catch( err => {
+                    reject(err)
+                })
+            })
+    })
+}
+
+export const changeRole = (role) => dispatch => {
+    dispatch({
+        type : authType.SET_ROLE,
+        payload : {
+            role : role
+        }
     })
 }

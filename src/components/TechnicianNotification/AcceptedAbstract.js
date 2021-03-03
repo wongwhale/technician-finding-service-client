@@ -35,7 +35,7 @@ const AcceptedAbstract = (props) => {
                     <TouchableOpacity style={notification.image}>
                         <Image
                             style={notification.image}
-                            source={require('./test.jpg')}
+                            source={{uri : props.order.userInfoID.avatar}}
                         />
                     </TouchableOpacity>
                 </View>
@@ -43,7 +43,7 @@ const AcceptedAbstract = (props) => {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: '' }}>
                         <View style={{ flexWrap: 'nowrap' }}>
                             <Text style={[acceptedOrder.text, notification.nameText]}>
-                                {`${props.order.senderName}`}
+                                {`${props.order.userInfoID.firstname} ${props.order.userInfoID.lastname}`}
                             </Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -67,7 +67,7 @@ const AcceptedAbstract = (props) => {
                             <TouchableOpacity
                                 style={[acceptedOrder.acceptButton, notification.button]}
                                 onPress={() => {
-
+                                    console.log(props.order);
                                 }}
                             >
                                 <Text style={acceptedOrder.buttonText}>

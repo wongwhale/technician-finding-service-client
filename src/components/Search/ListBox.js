@@ -37,7 +37,14 @@ const ListBox = (props) => {
                             {props.name}
                         </Text>
                         <View style={[searchScreen.listRowContainer , {backgroundColor:'red'}]}>
-                            <Rating type='custom' startingValue={props.star} imageSize={widthToDp('3.5')} ratingBackgroundColor={color.BLUE_4} ratingColor={color.WHITE}  tintColor={'#fff'} readonly={true} />
+                            <Rating 
+                                type='custom' 
+                                startingValue={props.star} 
+                                imageSize={widthToDp('3.5')} 
+                                ratingBackgroundColor={color.GREY} 
+                                ratingColor={color.IOS_YELLOW_LIGHT}  
+                                tintColor={'#fff'} 
+                                readonly={true} />
                         </View>
                     </View>
                     <View style={[searchScreen.listRowContainer, { justifyContent: 'space-between' }]}>

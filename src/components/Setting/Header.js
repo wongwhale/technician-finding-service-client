@@ -1,12 +1,15 @@
 import React from 'react'
 
-import { TouchableOpacity , View , Text } from 'react-native'
+import { TouchableOpacity, View, Text } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
 
-import { global , widthToDp , color } from '../../stylesheet'
+import { useNavigation } from '@react-navigation/native'
+
+import { global, widthToDp, color } from '../../stylesheet'
 
 const Header = (props) => {
+    const { goBack } = useNavigation()
     return (
         <>
             <View
@@ -20,14 +23,17 @@ const Header = (props) => {
                 <TouchableOpacity
                     style={global.backIconContainer}
                     onPress={() => {
-                        props.navigation.goBack()
+                        goBack()
                     }}
                 >
-                    <Feather style={global.backIcon} name='chevron-left' />
+                    <Feather style={{
+                        fontSize: widthToDp('5'),
+                        color: color.BLUE_2,
+                    }} name='chevron-left' />
                 </TouchableOpacity>
-                <Text style={{ color: color.BLUE_2, fontSize: widthToDp('4') }}>
+                <Text style={{ color: color.BLUE_2, fontSize: widthToDp('4'), fontWeight: 'bold' }}>
                     {props.title}
-                    </Text>
+                </Text>
             </View>
         </>
     )

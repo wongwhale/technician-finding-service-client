@@ -7,7 +7,7 @@ import MyTextInput from '../../components/MyTextInput'
 import { registor, color, content } from '../../stylesheet'
 import WEB_URL from '../../misc/web_url'
 
-import { Text, SafeAreaView, View, Animated, Easing } from 'react-native'
+import { Text, SafeAreaView, View, Animated, Easing, KeyboardAvoidingView } from 'react-native'
 import axios from 'axios'
 
 import { connect } from 'react-redux'
@@ -27,7 +27,7 @@ const BasicInfo = (props) => {
     const [confirmPasswordStatus, setConfirmPasswordStatus] = useState(null)
     const [unameDesc, setUnameDesc] = React.useState('')
 
-    const handleUsername = async (username) => {
+    const checkUsername = async (username) => {
         const check = await axios({
             url: `${WEB_URL}/api/graphql`,
             method: 'post',
@@ -61,6 +61,17 @@ const BasicInfo = (props) => {
         return check
     }
 
+    const handleUsername = (username) => {
+
+        if (/^[a-z0-9_-]{4,}/.test(username)) {
+            setUnameStatus(true)
+            setUnameDesc('')
+        } else {
+            setUnameStatus(false)
+            setUnameDesc('')
+        }
+    }
+
     const handlePassword = (password) => {
         const check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/.test(password) && password !== '' ? true : false
         setPasswordStatus(check)
@@ -79,74 +90,80 @@ const BasicInfo = (props) => {
 
     return (
         <>
-            <SafeAreaView style={content.safearray}>
-                <View style={registor.container}>
-                    <MyTextInput
-                        placeholder='Username'
-                        onChangeText={(val) => {
-                            props.setUsername(val)
-                            handleUsername(val)
-                        }}
-                        value={props.username}
-                        isOnBlur={true}
-                        onBlur={() => handleUsername(props.username)}
-                        status={unameStatus}
-                        descText={unameDesc}
-                    />
-                    <Text
-                        style={[registor.descText,
-                        unameStatus !== null ?
-                            !unameStatus ? { color: color.RED_1 } : { color: color.GREEN_2 }
-                            : null
-                        ]}
-                    >
-                        {
-                            unameDesc === 'ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว' ? (
-                                'ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว'
-                            ) : (
-                                    '- ใช้ตัวอักษรภาษาอังกฤษและตัวเลขเท่านั้น \n-  มีความยาวมากกว่า 4 ตัวอักษร'
-                                )
-                        }
-                    </Text>
-                    <MyTextInput
-                        placeholder='Password'
-                        onChangeText={(val) => props.setPassword(val)}
-                        isSecure={true}
-                        value={props.password}
-                        isOnBlur={true}
-                        onBlur={() => handlePassword(props.password)}
-                        status={passwordStatus}
-                    />
-                    <Text
-                        style={[registor.descText,
-                        passwordStatus !== null ?
-                            !passwordStatus ? { color: color.RED_0 } : { color: color.GREEN_2 }
-                            : null
-                        ]}
-                    >
-                        {'- ใช้อักขระ 8 ตัวขึ้นไปที่มีทั้ง ตัวเลข ตัวอักษรพิมเล็กและพิมใหญ่'}
-                    </Text>
-                    <MyTextInput
-                        placeholder='Confirm Password'
-                        onChangeText={async (val) => {
-                            handleConfirmPassword(val)
-                        }}
-                        isSecure={true}
-                        value={confirmPassword}
-                        status={confirmPasswordStatus}
-                    />
-                    <MyButton title='ถัดไป'
-                        onPress={() => {
-                            handleUsername(props.username).then((isCheck) => {
-                                if (isCheck && handlePassword(props.password) && handleConfirmPassword(confirmPassword)) {
-                                    props.navigation.navigate('reg_name')
-                                }
-                            })
-                        }}
-                    />
-                </View>
-                <Footer navigation={props.navigation} />
-            </SafeAreaView>
+                <SafeAreaView style={content.safearray}>
+                    <View style={registor.container}>
+                        <MyTextInput
+                            placeholder='Username'
+                            onChangeText={(val) => {
+                                props.setUsername(val)
+                                handleUsername(val)
+                            }}
+                            value={props.username}
+                            isOnBlur={true}
+                            onBlur={() => checkUsername(props.username)}
+                            status={unameStatus}
+                            descText={unameDesc}
+                            onSubmit={() => {
+                                checkUsername(props.username)
+                            }}
+                        />
+                        <Text
+                            style={[registor.descText,
+                            unameStatus !== null ?
+                                !unameStatus ? { color: color.RED_1 } : { color: color.GREEN_2 }
+                                : null
+                            ]}
+                        >
+                            {
+                                unameDesc === 'ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว' ? (
+                                    'ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว'
+                                ) : (
+                                        '- ใช้ตัวอักษรภาษาอังกฤษและตัวเลขเท่านั้น \n-  มีความยาวมากกว่า 4 ตัวอักษร'
+                                    )
+                            }
+                        </Text>
+                        <MyTextInput
+                            placeholder='Password'
+                            onChangeText={(val) => {
+                                handlePassword(val)
+                                props.setPassword(val)
+                            }}
+                            isSecure={true}
+                            value={props.password}
+                            isOnBlur={true}
+                            onBlur={() => handlePassword(props.password)}
+                            status={passwordStatus}
+                        />
+                        <Text
+                            style={[registor.descText,
+                            passwordStatus !== null ?
+                                !passwordStatus ? { color: color.RED_0 } : { color: color.GREEN_2 }
+                                : null
+                            ]}
+                        >
+                            {'- ใช้อักขระ 8 ตัวขึ้นไปที่มีทั้ง ตัวเลข ตัวอักษรพิมเล็กและพิมใหญ่'}
+                        </Text>
+                        <MyTextInput
+                            placeholder='Confirm Password'
+                            onChangeText={async (val) => {
+                                handleConfirmPassword(val)
+                            }}
+                            isSecure={true}
+                            value={confirmPassword}
+                            status={confirmPasswordStatus}
+                        />
+                        <MyButton title='ถัดไป'
+                            onPress={() => {
+                                checkUsername(props.username).then((isCheck) => {
+                                    if (isCheck && handlePassword(props.password) && handleConfirmPassword(confirmPassword)) {
+                                        props.navigation.navigate('reg_name')
+                                    }
+                                })
+                            }}
+                        />
+                    </View>
+                    <Footer navigation={props.navigation} />
+                </SafeAreaView>
         </>
     )
 }

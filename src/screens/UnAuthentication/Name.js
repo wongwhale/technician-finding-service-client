@@ -25,13 +25,13 @@ const Name = (props) => {
     const [lastnameStatus,setLastnameStatus] = useState(null)
 
     const handleFirstname = () => {
-        const check = /^([A-Z]|[a-z]|[0-9]|[/]|[\\]|[\n]|[.]|[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$/.test(props.firstname)
+        const check = /^([A-Z]|[a-z]|[ ]|[0-9]|[/]|[\\]|[\n]|[.]|[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$/.test(props.firstname)
         setFirstnameStatus(check)
         return check
     }
 
     const handleLastname = () => {
-        const check = /^([A-Z]|[a-z]|[0-9]|[/]|[\\]|[\n]|[.]|[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$/.test(props.lastname)
+        const check = /^([A-Z]|[a-z]|[ ]|[0-9]|[/]|[\\]|[\n]|[.]|[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$/.test(props.lastname)
         setLastnameStatus(check)
         return check
     }

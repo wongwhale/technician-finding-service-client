@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { SafeAreaView, View, Text, TouchableOpacity, Image, Platform } from 'react-native';
+import { SafeAreaView, View, Text, TouchableOpacity, Image, Platform, KeyboardAvoidingView } from 'react-native';
 
 import ImagePickerModal from '../../components/Modal/ImagePickerModal'
 
@@ -128,7 +128,7 @@ const ImageProfile = (props) => {
                         cropperCircleOverlay: true
                     }).then(res => {
                         console.log(res);
-                        handleLibPicker(res , 'file')
+                        handleLibPicker(res, 'file')
                     }).catch(err => {
                         console.log(err);
                     })
@@ -137,8 +137,6 @@ const ImageProfile = (props) => {
 
                 }}
             />
-
-
         </>
     )
 }

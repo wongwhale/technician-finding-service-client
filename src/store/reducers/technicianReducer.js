@@ -17,6 +17,7 @@ const initialState = {
         workTime : {
         
         },
+        description : '',
     },
     tid : ''
 }
@@ -45,7 +46,8 @@ export default function technicianReducer (state = initialState , action) {
                     star : action.payload.star,
                     location : action.payload.location,
                     workDay : action.payload.workDay,
-                    workTime : action.payload.workTime
+                    workTime : action.payload.workTime,
+                    description : action.payload.description,
                 }
             }
         case techType.CLEAR :

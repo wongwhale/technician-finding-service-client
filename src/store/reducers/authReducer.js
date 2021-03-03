@@ -5,6 +5,7 @@ authType.LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 authType.LOADING = 'LOADING'
 authType.LOADED = 'LOADED'
 authType.CLEAR = 'AUTH_REDUCER_CLEAR'
+authType.SET_ROLE = 'SET_ROLE'
 
 
 const initialState = {
@@ -53,6 +54,14 @@ export default function authReducer(state = initialState, action) {
             }
         case authType.CLEAR :
             return state = initialState
+        case authType.SET_ROLE :
+            return {
+                ...state,
+                userInfo : {
+                    ...state.userInfo,
+                    role : action.payload.role
+                }
+            }
         default:
             return state
     }

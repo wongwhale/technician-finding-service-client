@@ -71,13 +71,16 @@ const Login = (props) => {
     return (
         <>
             <SafeAreaView style={[content.safearray]}>
-                <KeyboardAvoidingView
-                    behavior='padding'
-                    style={{ flex: 1 }}
-                >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: '10%' }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 40 }}>
-                            <View style={{ width: 100, height: 100, backgroundColor: color.BLUE_4, borderRadius: 50, marginRight: 10 }} />
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: widthToDp('8') }}>
+                            {/* <View style={{ width: 100, height: 100, backgroundColor: color.BLUE_4, borderRadius: 50, marginRight: 10 }} /> */}
+                            <Image 
+                                source={require('../../assets/image/logo.png')}
+                                style={{
+                                    width : widthToDp('35'),
+                                    height : widthToDp('35')
+                                }}
+                            />
                         </View>
                         <View style={[inputStyles.container]}>
                             <TextInput
@@ -149,8 +152,6 @@ const Login = (props) => {
                         </View>
                     </View>
                     <Footer navigation={props.navigation} />
-
-                </KeyboardAvoidingView>
             </SafeAreaView>
         </>
     )

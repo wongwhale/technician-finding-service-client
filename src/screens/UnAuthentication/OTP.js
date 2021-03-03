@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import Footer from '../../components/Registor/Footer'
 import { registor, color, content } from '../../stylesheet'
 import { registor_success } from '../../store/actions/regAction'
-import { checkToken } from '../../store/actions/authAction'
+import { checkToken  , LOADING} from '../../store/actions/authAction'
 import MyButton from '../../components/MyButton'
 
 import { Text, SafeAreaView, View, TouchableOpacity, Keyboard } from 'react-native'
@@ -14,7 +14,6 @@ import { connect, useDispatch } from 'react-redux'
 
 import WEB_URL from '../../misc/web_url'
 import axios from 'axios'
-import { regType } from '../../store/reducers/regReducer'
 
 const mapStateToProps = (state) => ({
     username: state.reg.username,
@@ -26,7 +25,7 @@ const mapStateToProps = (state) => ({
     avatar_status : state.reg.avatar_status
 })
 
-const connector = connect(mapStateToProps, { registor_success , checkToken })
+const connector = connect(mapStateToProps, { registor_success , checkToken , LOADING })
 
 const OTP = (props) => {
     const pin1_ref = useRef()
@@ -185,6 +184,7 @@ const OTP = (props) => {
                         if (handleOTP()) {
                             var otp = pin1.concat(pin2).concat(pin3).concat(pin4).concat(pin5).concat(pin6)
                             if(checkOTP(otp)) {
+                                props.LOADING()
                                 props.registor_success({
                                     username : props.username,
                                     password : props.password,

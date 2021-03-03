@@ -2,7 +2,6 @@ import React from 'react'
 import { Button, SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native'
 import Modal from 'react-native-modalbox'
 import { widthToDp } from '../../stylesheet'
-import Radio from '../Radio'
 import { color } from '../../stylesheet/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
@@ -42,8 +41,8 @@ const LocationPickerModal = ({setLocation , location , ...props}) => {
                             style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                paddingHorizontal: widthToDp('5'),
-                                paddingVertical: widthToDp('2'),
+                                // paddingHorizontal: widthToDp('5'),
+                                // paddingVertical: widthToDp('2'),
                                 width: '100%',
                                 aspectRatio: 1
                             }}

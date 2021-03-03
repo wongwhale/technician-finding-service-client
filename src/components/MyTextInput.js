@@ -7,7 +7,9 @@ import Feather from 'react-native-vector-icons/Feather'
 import { color, widthToDp } from '../stylesheet'
 
 const MyTextInput = ({ placeholder, onChangeText, value,
-    isSecure = false, isOnBlur = false, onBlur, status = true }) => {
+    isSecure = false, isOnBlur = false, onBlur, status = true ,
+    onSubmit = () => {} ,
+    }) => {
     const [secure, setSecure] = useState(isSecure)
 
     return (
@@ -20,7 +22,10 @@ const MyTextInput = ({ placeholder, onChangeText, value,
                     secureTextEntry={secure}
                     textContentType={"none"}
                     blurOnSubmit={false}
-                    onSubmitEditing={() => Keyboard.dismiss()}
+                    onSubmitEditing={() =>{
+                        Keyboard.dismiss()
+                        onSubmit()
+                    }}
                     value={value}
                     onChangeText={(val) => onChangeText(val)}
                     autoCapitalize='none'

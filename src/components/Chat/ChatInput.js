@@ -16,6 +16,8 @@ import ImagePicker from 'react-native-image-crop-picker'
 
 import firebaseStorage from '@react-native-firebase/storage'
 
+import LinearGradient from 'react-native-linear-gradient'
+
 
 const mapStateToProps = (state) => ({
     uid: state.auth.userInfo.uid,
@@ -25,7 +27,7 @@ const mapStateToProps = (state) => ({
 
 const ChatInput = (props) => {
 
-    const [opacity , setOpacity] = useState(new Animated.Value(0));
+    const [opacity, setOpacity] = useState(new Animated.Value(0));
 
     const translateX = opacity.interpolate({
         inputRange: [0, 1],
@@ -48,12 +50,12 @@ const ChatInput = (props) => {
 
     const animateOut = () => {
         Animated.spring(
-            opacity , {
-                toValue : 0,
-                delay : 100,
-                useNativeDriver: true,
-                easing : Easing.bounce
-            }
+            opacity, {
+            toValue: 0,
+            delay: 100,
+            useNativeDriver: true,
+            easing: Easing.bounce
+        }
         ).start()
     }
 
@@ -140,10 +142,10 @@ const ChatInput = (props) => {
         }
     }
 
-    React.useEffect( () => {
-        if(msg.trimEnd().length !== 0 ) {
+    React.useEffect(() => {
+        if (msg.trimEnd().length !== 0) {
             animate()
-        }else {
+        } else {
             animateOut()
         }
     })
@@ -152,36 +154,50 @@ const ChatInput = (props) => {
         <>
             <View style={message.chatInputContainer}>
                 <TouchableOpacity
-                    style={[{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginLeft: 10,
-                        backgroundColor: color.BLUE_4,
-                        height: widthToDp('8'),
-                        width: widthToDp('8'),
-                        borderRadius: widthToDp('4')
-                    }]}
                     onPress={() => {
                         animate()
                     }}
                 >
-                    <Feather name='camera' style={{ fontSize: widthToDp('4'), color: color.BLUE_5 }} />
+                    <LinearGradient
+                        style={[{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginLeft: widthToDp('4'),
+                            backgroundColor: color.BLUE_4,
+                            height: widthToDp('8'),
+                            width: widthToDp('8'),
+                            borderRadius: widthToDp('4')
+                        }]}
+                        colors={[
+                            color.IOS_INDIGO_LIGHT,
+                            color.BLUE_0
+                        ]}
+                    >
+                        <Feather name='camera' style={{ fontSize: widthToDp('5'), color: color.BLUE_5 }} />
+                    </LinearGradient>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginLeft: 10,
-                        backgroundColor: color.BLUE_4,
-                        height: widthToDp('8'),
-                        width: widthToDp('8'),
-                        borderRadius: widthToDp('4')
-                    }]}
                     onPress={() => {
                         handleSendPhoto()
                     }}
                 >
-                    <Feather name='image' style={{ fontSize: widthToDp('4'), color: color.BLUE_5 }} />
+                    <LinearGradient
+                        style={[{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginLeft: widthToDp('2'),
+                            backgroundColor: color.BLUE_4,
+                            height: widthToDp('8'),
+                            width: widthToDp('8'),
+                            borderRadius: widthToDp('4')
+                        }]}
+                        colors={[
+                            color.IOS_BLUE,
+                            color.BLUE_0
+                        ]}
+                    >
+                        <Feather name='image' style={{ fontSize: widthToDp('5'), color: color.BLUE_5 }} />
+                    </LinearGradient>
                 </TouchableOpacity>
                 <View
                     style={{
@@ -189,7 +205,8 @@ const ChatInput = (props) => {
                         paddingRight: widthToDp('4'),
                         paddingVertical: widthToDp('1'),
                         backgroundColor: color.BLUE_5,
-                        marginHorizontal: 10,
+                        marginHorizontal: widthToDp('2'),
+                        marginRight : widthToDp('4'),
                         borderRadius: widthToDp('4'),
                         flexDirection: 'row',
                         alignItems: 'flex-start'

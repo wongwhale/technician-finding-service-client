@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
 import { ENTER_PRIVATE_CHAT } from '../../store/actions/chatAction'
 import TechnicianInfoComponent from '../../components/TechnicianInfo/TechnicianInfoComponent'
+import LinearGradient from 'react-native-linear-gradient'
 
 const mapStateToProps = (state) => ({
     info: state.tech.info,
@@ -25,7 +26,7 @@ const TechnicianInfo = (props) => {
         <>
             <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={[content.safearray, { backgroundColor: '#fff' }]}>
-                <View style={global.header}>
+                <View style={[global.header]}>
                     <Image
                         style={infoStyles.profileImage}
                         source={{ uri: props.info.personalInfo.avatar }}
@@ -59,49 +60,78 @@ const TechnicianInfo = (props) => {
                         </Text>
                     </View>
                 </View>
-                <View style={[infoStyles.headerContainer, { padding: 8, justifyContent: 'space-evenly' }]}>
+                <View
+                    style={[
+                        infoStyles.headerContainer,
+                        {
+                            paddingBottom: widthToDp('2'),
+                            justifyContent: 'space-evenly',
+                            borderBottomWidth: widthToDp('0.1'),
+                            borderColor: color.GREY_4
+                        }
+                    ]}
+                >
                     <TouchableOpacity
-                        style={{
-                            width: widthToDp('20'),
-                            height: widthToDp('8'),
-                            backgroundColor: color.GREEN_2,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: widthToDp('4')
-                        }}
-                        onPress={ () => {
+
+                        onPress={() => {
                             Linking.openURL(`tel:${props.info.personalInfo.phone}`)
                         }}
                     >
-                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                            <Ionicons name='call' style={{ color: '#fff', fontSize: widthToDp('4.5') }} />
-                            <Text style={{ color: '#fff', fontSize: widthToDp('4'), fontWeight: 'bold' }}>
-                                โทร
+                        <LinearGradient
+                            style={{
+                                width: widthToDp('24'),
+                                height: widthToDp('10'),
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: widthToDp('5')
+                            }}
+                            colors={[
+                                color.IOS_GREEN_DARK,
+                                color.IOS_GREEN_LIGHT,
+                            ]}
+                        >
+                            <View
+                                style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+                                colors={[
+                                    color.GREEN_2,
+                                    color.GREEN_0
+                                ]}
+                            >
+                                <Ionicons name='call' style={{ color: '#fff', fontSize: widthToDp('4.5') , marginRight : widthToDp('1') }} />
+                                <Text style={{ color: '#fff', fontSize: widthToDp('4'), fontWeight: 'bold' }}>
+                                    โทร
                             </Text>
-                        </View>
+                            </View>
+                        </LinearGradient>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{
-                            width: widthToDp('20'),
-                            height: widthToDp('8'),
-                            backgroundColor: color.BLUE_3,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: widthToDp('4')
-                        }}
-                        onPress={ () => {
-                            props.ENTER_PRIVATE_CHAT(props.uid , props.info.personalInfo.userID)
-                            .then( () => {
-                                props.navigation.navigate('chat')
-                            })
+                        onPress={() => {
+                            props.ENTER_PRIVATE_CHAT(props.uid, props.info.personalInfo.userID)
+                                .then(() => {
+                                    props.navigation.navigate('chat')
+                                })
                         }}
                     >
-                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                            <Ionicons name='chatbox' style={{ color: '#fff', fontSize: widthToDp('4.5') }} />
-                            <Text style={{ color: '#fff', fontSize: widthToDp('4'), fontWeight: 'bold' }}>
-                                แชท
+                        <LinearGradient
+                            style={{
+                                width: widthToDp('24'),
+                                height: widthToDp('10'),
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: widthToDp('5')
+                            }}
+                            colors={[
+                                color.IOS_PURPLE_DARK,
+                                color.IOS_INDIGO_LIGHT,
+                            ]}
+                        >
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-end' }}>
+                                <Ionicons name='chatbox' style={{ color: '#fff', fontSize: widthToDp('4') , marginRight : widthToDp('1') }} />
+                                <Text style={{ color: '#fff', fontSize: widthToDp('4'), fontWeight: 'bold' }}>
+                                    แชท
                             </Text>
-                        </View>
+                            </View>
+                        </LinearGradient>
                     </TouchableOpacity>
                 </View>
                 <ScrollView>

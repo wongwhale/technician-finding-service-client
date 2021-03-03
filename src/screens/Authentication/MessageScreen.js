@@ -10,7 +10,7 @@ import MessageList from '../../components/Message/MessageList'
 import { content } from '../../stylesheet'
 import { connect } from 'react-redux'
 
-import { ENTER_PRIVATE_CHAT , ENTER_PRIVATE_CHAT_BY_ID , INITIAL_HISTORY_LIST , SET_INTERLOCUTOR_ID } from '../../store/actions/chatAction'
+import { ENTER_PRIVATE_CHAT , ENTER_PRIVATE_CHAT_BY_ID , INITIAL_HISTORY_LIST , SET_INTERLOCUTOR_ID  , unMountMessageScreen} from '../../store/actions/chatAction'
 import { LOADED } from '../../store/actions/authAction'
 
 const mapStateToProps = (state) => ({
@@ -18,7 +18,7 @@ const mapStateToProps = (state) => ({
     chat_history : state.chat.lists
 })
 
-const connector = connect(mapStateToProps , {SET_INTERLOCUTOR_ID ,ENTER_PRIVATE_CHAT_BY_ID, ENTER_PRIVATE_CHAT , INITIAL_HISTORY_LIST , LOADED} )
+const connector = connect(mapStateToProps , { unMountMessageScreen , SET_INTERLOCUTOR_ID ,ENTER_PRIVATE_CHAT_BY_ID, ENTER_PRIVATE_CHAT , INITIAL_HISTORY_LIST , LOADED} )
 
 const Message = (props) => {
 
@@ -40,6 +40,12 @@ const Message = (props) => {
             })
         },[])
     )
+
+    React.useEffect( () => {
+        return () => {
+            props.unMountMessageScreen()
+        }
+    },[])
 
 
     return (
@@ -64,8 +70,8 @@ const Message = (props) => {
                                     onPress={ () => {
                                         props.ENTER_PRIVATE_CHAT_BY_ID(item._id)
                                             .then( () => {
-                                                props.LOADED()
                                                 props.navigation.navigate('chat')
+                                                props.LOADED()
                                             })
                                     }} />
                             })

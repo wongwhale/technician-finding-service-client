@@ -77,18 +77,23 @@ export const ENTER_PRIVATE_CHAT = (uid, tid) => dispatch => {
                     const uid = store.getState().auth.userInfo.uid
                     const data = res.data.data.getChatInformation
                     if (res.data.data.getChatInformation.history !== null) {
-                        dispatch({
-                            type: chatType.ENTER_PRIVATE_CHAT,
-                            payload: {
-                                interlocutor: {
-                                    id: tid,
-                                    name: data.technicianID !== uid ? data.technicianName : data.userName,
-                                    avatar: data.technicianID !== uid ? data.technicianAvatar : data.userAvatar
-                                },
-                                messages: res.data.data.getChatInformation.history
-                            }
+                        Promise.all(
+                            dispatch({
+                                type: chatType.ENTER_PRIVATE_CHAT,
+                                payload: {
+                                    interlocutor: {
+                                        id: tid,
+                                        name: data.technicianID !== uid ? data.technicianName : data.userName,
+                                        avatar: data.technicianID !== uid ? data.technicianAvatar : data.userAvatar
+                                    },
+                                    messages: res.data.data.getChatInformation.history
+                                }
+                            })
+                        ).then( () => {
+                            resolve({ status: true })
+                        }).catch ( () => {
+                            reject({status : false})
                         })
-                        resolve({ status: true })
                     }
                     else {
                         Promise.all(
@@ -318,6 +323,15 @@ export const setImageUrl = (imageUrl) => dispatch => {
         type: chatType.SET_IMAGE_URL,
         payload: {
             imageUrl
+        }
+    })
+}
+
+export const unMountMessageScreen = () => dispatch => {
+    dispatch({
+        type: chatType.INITIAL_HISTORY_LIST,
+        payload: {
+            list: []
         }
     })
 }

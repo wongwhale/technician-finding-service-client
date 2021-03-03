@@ -34,6 +34,7 @@ export const SEARCH_BY_KEY_WORD = (keyword) => dispatch => {
                             technician {
                               star
                               _id
+                              count
                               userID
                               userInfoID {
                                 firstname
@@ -116,21 +117,27 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                     `
                 }
             }).then(res => {
-                dispatch({
-                    type: techType.SET_TECHNICIAN_INFO,
-                    payload: {
-                        aptitude: res.data.data.getTechnicianInfo.aptitude,
-                        personalInfo: res.data.data.getTechnicianInfo.userInfoID,
-                        onSite: res.data.data.getTechnicianInfo.onSite,
-                        frontStore : res.data.data.getTechnicianInfo.frontStore,
-                        bio : res.data.data.getTechnicianInfo.bio,
-                        star: res.data.data.getTechnicianInfo.star,
-                        location: res.data.data.getTechnicianInfo.address,
-                        workDay : res.data.data.getTechnicianInfo.workDay,
-                        workTime : res.data.data.getTechnicianInfo.workTime 
-                    }
-                })
-                resolve()
+                Promise.all(
+
+                ).then((val) => {
+                    dispatch({
+                        type: techType.SET_TECHNICIAN_INFO,
+                        payload: {
+                            aptitude: res.data.data.getTechnicianInfo.aptitude,
+                            personalInfo: res.data.data.getTechnicianInfo.userInfoID,
+                            onSite: res.data.data.getTechnicianInfo.onSite,
+                            frontStore: res.data.data.getTechnicianInfo.frontStore,
+                            bio: res.data.data.getTechnicianInfo.bio,
+                            description: res.data.data.getTechnicianInfo.description,
+                            star: res.data.data.getTechnicianInfo.star,
+                            location: res.data.data.getTechnicianInfo.address,
+                            workDay: res.data.data.getTechnicianInfo.workDay,
+                            workTime: res.data.data.getTechnicianInfo.workTime
+                        }
+                    })
+                    resolve()
+                }).catch(() => reject())
+
             }).catch(err => {
                 console.log(err);
                 reject()
@@ -148,7 +155,7 @@ export const SET_TID = (tid) => dispatch => {
     })
 }
 
-export const GET_NEAR_TECHNICIAN = () => dispatch => {
+export const GET_NEAR_TECHNICIAN = (lat, lon) => dispatch => {
     return new Promise((resolve, resject) => {
         AsyncStorage.getItem('token').then(token => {
             axios({
@@ -164,8 +171,8 @@ export const GET_NEAR_TECHNICIAN = () => dispatch => {
                     query{
                         getNearTechnician(ADDRESS: {
                           address : {
-                            lat : 18.795924746501605,
-                            lon : 98.95296894013882
+                            lat : ${lat},
+                            lon : ${lon}
                           }
                         }) {
                           technician {
@@ -224,30 +231,6 @@ export const SEARCH_GUIDE = (keyword) => dispatch => {
 }
 
 export const technicianRegister = (info) => dispatch => {
-    console.log(
-        `
-        INFORMATION : {
-            aptitude : [${info.aptitude}],
-            frontStore : ${info.frontStore},
-            onSite : ${info.onSite},
-            address : {
-                lat : ${info.address.lat},
-                lon : ${info.address.lon}
-            },
-            description : "${info.description}",
-            bio : "${info.bio}" ,
-            workTime : {
-                start :{
-                    hour : ${info.workTime.start.hour},
-                    minutes : ${info.workTime.start.minutes}
-                },end :{
-                    hour : ${info.workTime.end.hour},
-                    minutes : ${info.workTime.end.minutes}
-                }
-            },
-            workDay : [${info.workDay}]
-        }`
-    );
     return new Promise((resolve, reject) => {
         AsyncStorage.getItem('token').then(token => {
             axios({
@@ -263,7 +246,7 @@ export const technicianRegister = (info) => dispatch => {
                         mutation{
                             createTechnicianInfo(
                                 INFORMATION : {
-                                    aptitude : [${ info.aptitude.map(item => ('"'+item+'"')) }],
+                                    aptitude : [${ info.aptitude.map(item => ('"' + item + '"'))}],
                                     frontStore : ${info.frontStore},
                                     onSite : ${info.onSite},
                                     address : {

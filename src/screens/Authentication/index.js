@@ -29,6 +29,7 @@ import LoadingModal from '../../components/Modal/LoadingModal';
 import LogoutConfirmModal from '../../components/Modal/LogoutConfirmModal';
 import { OPEN_LOGOUT_CONFIRM_MODAL, CLOSE_LOGOUT_CONFIRM_MODAL } from '../../store/actions/modalAction'
 import { logout } from '../../store/actions/authAction'
+import RatingScreen from './RatingScreen';
 
 const mapStateToProps = (state) => ({
   uid: state.auth.userInfo.uid,
@@ -73,6 +74,7 @@ const Index = (props) => {
         <Stack.Screen name='setting' component={SettingScreen} options={{ headerShown: false }} />
         <Stack.Screen name='regTech' component={TechnicianRegisterScreen} options={{ headerShown: false }} />
         <Stack.Screen name='editInfo' component={UserInfoEditScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='rating' component={RatingScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
       <OrderDetailModal />
       <LoadingModal />

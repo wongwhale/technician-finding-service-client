@@ -6,6 +6,8 @@ import {
     TextInput,
     TouchableOpacity,
     ScrollView,
+    Animated,
+    Easing,
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -18,12 +20,15 @@ import { connect } from 'react-redux'
 
 import { SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD, SEARCH_GUIDE } from '../../store/actions/techAction'
 import { LOADED } from '../../store/actions/authAction'
+import { SET_LOCATION } from '../../store/actions/formAction'
 import { getDistance } from '../../misc/getDistance'
+import Geolocation from '@react-native-community/geolocation'
 
 import SearchModal from '../../components/Modal/SearchModal'
 
 const mapStateToProps = (state) => ({
     keyword: state.tech.keyword,
+    location : state.form.location
 })
 
 
@@ -33,27 +38,38 @@ const SearchScreen = (props) => {
     const [check, setCheck] = React.useState(false)
     const searchInputRef = React.useRef()
 
+    React.useEffect( () => {
+        Geolocation.getCurrentPosition( ({coords : {latitude , longitude}}) => {
+            props.SET_LOCATION(latitude , longitude)
+        }, 
+        (err) => {
+            console.log(err);
+        })
+    },[])
+
     const handleDistance = (lists) => {
         let temp_lists = []
         searchInputRef.current.blur()
         Promise.all(
             lists.map(async (tech) => {
+                const count = tech.count
                 const distance = await getDistance(
-                    18.795924746501605,
-                    98.95296894013882,
+                    props.location.latitude,
+                    props.location.longitude,
                     tech.address.lat,
                     tech.address.lon
                 )
                 temp_lists.push({
                     ...tech,
-                    distance: distance
+                    distance: distance,
+                    sorter : distance/2000 + count
                 })
             })
         )
             .then(() => {
                 props.LOADED()
                 setListsWithDistance(temp_lists.sort((a, b) => {
-                    return a.distance - b.distance
+                    return a.sorter - b.sorter
                 }))
             }).catch(() => {
                 props.LOADED()
@@ -71,7 +87,6 @@ const SearchScreen = (props) => {
         <>
             <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={[content.safearray, { backgroundColor: '#fff' }]}>
-
                 <Header page="ค้นหา" back={true} navigation={props.navigation} />
                 <View style={[content.container, { backgroundColor: '#fff' }]}
                     onStartShouldSetResponder={() => true}
@@ -158,4 +173,4 @@ const SearchScreen = (props) => {
     )
 }
 
-export default connect(mapStateToProps, { SEARCH_GUIDE, LOADED, SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD })(SearchScreen)
+export default connect(mapStateToProps, { SET_LOCATION , SEARCH_GUIDE, LOADED, SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD })(SearchScreen)

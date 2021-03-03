@@ -78,7 +78,7 @@ export const mainScreen = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: color.BLUE_5,
-        borderRadius: 10,
+        borderRadius: widthToDp('7'),
         aspectRatio: 1,
     },
     fullBox: {
@@ -86,9 +86,8 @@ export const mainScreen = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10,
+        borderRadius: widthToDp('7'),
         aspectRatio: 2,
-        color: color.BLUE_5,
         flexDirection: 'row'
     },
     menuTextHalf: {
@@ -184,8 +183,8 @@ export const global = StyleSheet.create({
         fontWeight: 'bold'
     },
     bbt: {
-        borderBottomWidth: 0.3,
-        borderBottomColor: color.BLUE_5,
+        borderBottomWidth: widthToDp('0.1'),
+        borderBottomColor: color.GREY_4,
         paddingBottom: heightToDp('1'),
     },
     nameContainer: {

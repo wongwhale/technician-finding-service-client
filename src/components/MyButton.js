@@ -1,15 +1,25 @@
-import React , {} from 'react'
+import React, { } from 'react'
 
-import { TouchableOpacity , View , Text, StyleSheet } from 'react-native'
+import { TouchableOpacity, View, Text, StyleSheet } from 'react-native'
 import { color, widthToDp } from '../stylesheet'
+import LinearGradient from 'react-native-linear-gradient'
 
-const MyButton = ({onPress , title}) => {
-    return(
+const MyButton = ({ onPress, title }) => {
+    return (
         <>
-            <TouchableOpacity style={styles.container} onPress={ () => onPress()}>
-                <Text style={styles.text}>
-                    {title}
-                </Text>
+            <TouchableOpacity onPress={() => onPress()}
+                style={{
+                    width : '100%'
+                }}
+            >
+                <LinearGradient
+                    colors={[ color.BLUE_3, color.BLUE_2 , color.BLUE_1 , color.BLUE_1 , color.BLUE_0]}
+                    style={styles.container}
+                >
+                    <Text style={styles.text}>
+                        {title}
+                    </Text>
+                </LinearGradient>
             </TouchableOpacity>
         </>
     )
@@ -18,9 +28,9 @@ const MyButton = ({onPress , title}) => {
 export default MyButton
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flexDirection: 'row',
-        justifyContent : 'center',
+        justifyContent: 'center',
         width: '100%',
         borderRadius: widthToDp('2'),
         ...Platform.select({
@@ -37,11 +47,10 @@ const styles = StyleSheet.create({
         paddingLeft: widthToDp('4'),
         paddingRight: widthToDp('1'),
         marginVertical: widthToDp('1'),
-        backgroundColor: color.BLUE_3,
     },
-    text:{
+    text: {
         color: '#fff',
-        fontSize:widthToDp('4'),
-        fontWeight:'bold'
+        fontSize: widthToDp('4'),
+        fontWeight: 'bold'
     }
 })

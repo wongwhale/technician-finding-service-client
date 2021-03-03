@@ -21,7 +21,10 @@ import Header from '../../components/Header'
 import { connect } from 'react-redux';
 
 import { OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL, OPEN_LOCATION_PICKER_MODAL } from '../../store/actions/modalAction'
-import { SET_FILE } from '../../store/actions/formAction'
+import { SET_FILE, SET_LOCATION } from '../../store/actions/formAction'
+
+import Geolocation from '@react-native-community/geolocation'
+import LinearGradient from 'react-native-linear-gradient'
 
 
 const mapStateToProps = (state) => ({
@@ -31,11 +34,34 @@ const mapStateToProps = (state) => ({
     tech: state.noti
 })
 
-const connector = connect(mapStateToProps, { GET_NEAR_TECHNICIAN, OPEN_LOCATION_PICKER_MODAL, OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL, SET_FILE })
+const connector = connect(mapStateToProps, {
+    GET_NEAR_TECHNICIAN,
+    OPEN_LOCATION_PICKER_MODAL,
+    OPEN_DATE_PICKER_MODAL,
+    OPEN_POST_MODAL,
+    OPEN_TIME_PICKER_MODAL,
+    SET_FILE,
+    SET_LOCATION
+})
 
 const Main = (props) => {
 
     const [imageURI, setImageURI] = useState(null)
+
+    const onChangePageToNearMe = () => {
+        return new Promise((resolve, reject) => {
+            Geolocation.getCurrentPosition((position) => {
+                props.SET_LOCATION(
+                    position.coords.latitude,
+                    position.coords.longitude
+                )
+                resolve(position.coords)
+            },
+                (err) => {
+                    reject(err)
+                })
+        })
+    }
 
 
     return (
@@ -47,38 +73,71 @@ const Main = (props) => {
                 <ScrollView>
                     <View style={mainScreen.container}>
                         <View style={mainScreen.menuLayout}>
-                            <TouchableOpacity style={[mainScreen.halfBox, { marginRight: 5 }]}
+                            <TouchableOpacity
                                 onPress={() => {
                                     props.navigation.navigate('search')
                                 }}
+                                style={{ flex: 1, marginRight: 5 }}
                             >
-                                <Feather name='search' size={50} color={color.BLUE_1} />
-                                <Text style={mainScreen.menuTextHalf}>
-                                    ค้นหา
+                                <LinearGradient
+                                    style={[mainScreen.halfBox]}
+                                    colors={[
+                                        color.GREY_5,
+                                        color.GREY_4,
+                                        color.BLUE_5,
+                                    ]}
+                                >
+                                    <Feather name='search' size={50} color={color.BLUE_1} />
+                                    <Text style={mainScreen.menuTextHalf}>
+                                        ค้นหา
                                 </Text>
+                                </LinearGradient>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[mainScreen.halfBox, { marginLeft: 5 }]}
+                            <TouchableOpacity
+                                style={{ flex: 1 }}
                                 onPress={() => {
-                                    props.navigation.navigate('nearme')
+                                    onChangePageToNearMe()
+                                        .then((coords) => props.navigation.navigate('nearme'))
+                                        .catch((err) => console.log('change page to near me error :', err))
                                 }}
                             >
-                                <Feather name='map' size={50} color={color.BLUE_1} />
-                                <Text style={mainScreen.menuTextHalf}>
-                                    ใกล้ฉัน
-                            </Text>
+                                <LinearGradient
+                                    style={[mainScreen.halfBox, { marginLeft: 5 }]}
+                                    colors={[
+                                        color.GREY_5,
+                                        color.GREY_4,
+                                        color.BLUE_5,
+                                    ]}
+                                >
+                                    <Feather name='map' size={50} color={color.BLUE_1} />
+                                    <Text style={mainScreen.menuTextHalf}>
+                                        ใกล้ฉัน
+                                </Text>
+                                </LinearGradient>
                             </TouchableOpacity>
                         </View>
                         <View style={mainScreen.menuLayout}>
-                            <TouchableOpacity style={mainScreen.fullBox}
+                            <TouchableOpacity
                                 onPress={() => {
                                     // props.OPEN_POST_MODAL()
                                     props.navigation.navigate('post')
                                 }}
                             >
-                                <Feather name='edit' size={50} color={color.BLUE_5} />
-                                <Text style={mainScreen.menuTextFull}>
-                                    บอกอาการ
-                        </Text>
+                                <LinearGradient
+                                    style={mainScreen.fullBox}
+                                    colors={[
+                                        color.BLUE_3,
+                                        color.BLUE_2,
+                                        color.BLUE_1,
+                                        color.BLUE_0,
+                                        color.BLUE_0,
+                                    ]}
+                                >
+                                    <Feather name='edit' size={50} color={color.BLUE_5} />
+                                    <Text style={mainScreen.menuTextFull}>
+                                        บอกอาการ
+                                    </Text>
+                                </LinearGradient>
                             </TouchableOpacity>
                         </View>
                     </View>

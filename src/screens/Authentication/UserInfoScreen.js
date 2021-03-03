@@ -8,8 +8,9 @@ import Feather from 'react-native-vector-icons/Feather'
 import TechnicianInfoComponent from '../../components/TechnicianInfo/TechnicianInfoComponent'
 
 import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
-import { logout , LOADED } from '../../store/actions/authAction'
+import { logout, LOADED } from '../../store/actions/authAction'
 import { ENTER_PRIVATE_CHAT, INITIAL_HISTORY_LIST } from '../../store/actions/chatAction'
+import LinearGredient from 'react-native-linear-gradient'
 
 const mapStateToProps = (state) => ({
     info: state.tech.info,
@@ -60,7 +61,7 @@ const UserInfo = (props) => {
                     <TouchableOpacity
                         style={global.backIconContainer}
                         onPress={() => {
-                            props.navigation.goBack()
+                            props.navigation.navigate('tab')
                         }}
                     >
                         <Feather name="chevron-left" style={global.backIcon} />
@@ -68,19 +69,22 @@ const UserInfo = (props) => {
                 </View>
                 <View style={[infoStyles.headerContainer]}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontSize: widthToDp('4'), fontWeight : 'bold', color: '#333' }}>
+                        <Text style={{ fontSize: widthToDp('4'), fontWeight: 'bold', color: '#333' }}>
                             {`${props.firstname} ${props.lastname}`}
                         </Text>
                     </View>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8, backgroundColor: '#fff' }}>
                     <TouchableOpacity
-                        style={{ width: widthToDp('70'), backgroundColor: color.BLUE_3, borderRadius: widthToDp('1'), borderWidth: 2, borderColor: `${color.BLUE_3}66`, justifyContent: 'center', alignItems: 'center', height: widthToDp('7') }}
                         onPress={() => {
                             props.navigation.navigate('editInfo')
                         }}
                     >
-                        <Text style={{ color: '#fff', fontSize: widthToDp('3.5'), fontWeight: 'bold' }}>แก้ไขข้อมูลส่วนตัว</Text>
+                        <View
+                            style={{ width: widthToDp('70'), backgroundColor: color.BLUE_3, borderRadius: widthToDp('1'), borderWidth: 2, borderColor: `${color.BLUE_3}66`, justifyContent: 'center', alignItems: 'center', height: widthToDp('7') }}
+                        >
+                            <Text style={{ color: '#fff', fontSize: widthToDp('3.5'), fontWeight: 'bold' }}>แก้ไขข้อมูลส่วนตัว</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <ScrollView >
@@ -106,7 +110,7 @@ const UserInfo = (props) => {
     )
 }
 
-export default connect(mapStateToProps, { INITIAL_HISTORY_LIST, ENTER_PRIVATE_CHAT, GET_TECHNICIAN_INFO, logout ,LOADED })(UserInfo)
+export default connect(mapStateToProps, { INITIAL_HISTORY_LIST, ENTER_PRIVATE_CHAT, GET_TECHNICIAN_INFO, logout, LOADED })(UserInfo)
 
 export const infoStyles = StyleSheet.create({
     coverImage: {
@@ -117,7 +121,7 @@ export const infoStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical : widthToDp('1')
+        paddingVertical: widthToDp('1')
     },
     profileImage: {
         width: heightToDp('5'),
@@ -177,7 +181,6 @@ export const infoStyles = StyleSheet.create({
         paddingHorizontal: widthToDp('3'),
         backgroundColor: '#fff',
         paddingVertical: widthToDp('2'),
-        borderRadius: widthToDp('1')
     },
     bottomBorder: {
         borderBottomColor: color.BLUE_3,
@@ -189,7 +192,7 @@ export const infoStyles = StyleSheet.create({
     topicText: {
         fontSize: widthToDp('4'),
         color: color.BLUE_1,
-        fontWeight : 'bold'
+        fontWeight: 'bold'
     },
     infoDetail: {
         flex: 2,
@@ -197,15 +200,16 @@ export const infoStyles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     aptitude: {
-        backgroundColor: color.BLUE_5,
+        backgroundColor: color.GREY_4,
         justifyContent: 'center',
-        paddingHorizontal: widthToDp('2'),
+        paddingHorizontal: widthToDp('4'),
+        paddingVertical: widthToDp('0.5'),
         marginHorizontal: widthToDp('0.5'),
         marginVertical: widthToDp('0.5'),
-        borderRadius: widthToDp('1.5'),
+        borderRadius: widthToDp('5'),
     },
     aptitudeText: {
-        fontSize: widthToDp('3.5'),
+        fontSize: widthToDp('4'),
         color: color.BLUE_1
     },
     imageContainer: {
@@ -229,8 +233,9 @@ export const infoStyles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     btnText: {
-        color: color.BLUE_1,
-        fontSize: widthToDp('3.5')
+        color: color.GREY_5,
+        fontSize: widthToDp('4'),
+        fontWeight : 'bold'
     }
 
 })
