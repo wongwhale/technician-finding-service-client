@@ -18,7 +18,7 @@ import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 
 import LoadingModal from '../../components/Modal/LoadingModal'
-import { KeyboardAvoidingView } from 'react-native'
+import { KeyboardAvoidingView , Platform } from 'react-native'
 
 const mapStateToProps = (state) => ({
     
@@ -29,7 +29,7 @@ const UnAuth = (props) => {
         <>
         <KeyboardAvoidingView
             style={{flex : 1}}
-            behavior='padding'
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
             <Stack.Navigator>
                 <Stack.Screen name='login' component={Login} options={{headerShown: false}} />

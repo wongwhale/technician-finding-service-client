@@ -7,20 +7,19 @@ import LinearGradient from 'react-native-linear-gradient'
 const MyButton = ({ onPress, title }) => {
     return (
         <>
-            <TouchableOpacity onPress={() => onPress()}
-                style={{
-                    width : '100%'
-                }}
-            >
+           
                 <LinearGradient
-                    colors={[ color.BLUE_3, color.BLUE_2 , color.BLUE_1 , color.BLUE_1 , color.BLUE_0]}
+                    // colors={[ color.BLUE_3, color.BLUE_2 , color.BLUE_1 , color.BLUE_1 , color.BLUE_0]}
+                    colors={[  color.BLUE_2 , color.BLUE_2 ]}
                     style={styles.container}
+                    onTouchEnd={ () => {
+                        onPress()
+                    }}
                 >
                     <Text style={styles.text}>
                         {title}
                     </Text>
                 </LinearGradient>
-            </TouchableOpacity>
         </>
     )
 }
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
                 paddingVertical: widthToDp('2')
             },
             android: {
-                paddingVertical: 0
+                paddingVertical: widthToDp('2')
             },
             default: {
                 paddingVertical: 0

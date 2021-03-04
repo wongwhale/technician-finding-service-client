@@ -98,7 +98,7 @@ const LogoutConfirmModal = ( { isOpen , ...props}) => {
                         >
                             <Text
                                 style={{
-                                    color: color.BLUE_0,
+                                    color: '#000',
                                     fontWeight: 'bold',
                                     fontSize: widthToDp('4')
                                 }}

@@ -23,7 +23,7 @@ export const color = colors
 export const card = StyleSheet.create({
     card: {
         backgroundColor: '#fff',
-        borderRadius: widthToDp('2'),
+        borderRadius: widthToDp('4'),
         marginBottom: 15
     },
     cardHeader: {
@@ -111,6 +111,8 @@ export const global = StyleSheet.create({
         height: heightToDp('7'),
         backgroundColor: '#fff',
         paddingTop: heightToDp('1'),
+        borderBottomLeftRadius : widthToDp('4'),
+        borderBottomRightRadius: widthToDp('4'),
     },
     chatHeader: {
         justifyContent: 'center',

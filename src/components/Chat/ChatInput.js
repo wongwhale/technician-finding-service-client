@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Animated, Easing, TextInput, View, TouchableOpacity, Text } from 'react-native'
+import { Animated, Easing, TextInput, View, TouchableOpacity, Text , Platform } from 'react-native'
 
 import { message, color, widthToDp } from '../../stylesheet'
 
@@ -221,6 +221,7 @@ const ChatInput = (props) => {
                         multiline
                         style={{
                             flex: 1,
+                            paddingVertical : 0,
                             paddingHorizontal: widthToDp('4'),
                             lineHeight: widthToDp('4'),
                             fontSize: widthToDp('4'),

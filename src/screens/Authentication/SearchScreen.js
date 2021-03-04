@@ -8,6 +8,7 @@ import {
     ScrollView,
     Animated,
     Easing,
+    Keyboard
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -47,9 +48,8 @@ const SearchScreen = (props) => {
         })
     },[])
 
-    const handleDistance = (lists) => {
+    const handleDistance = async (lists) => {
         let temp_lists = []
-        searchInputRef.current.blur()
         Promise.all(
             lists.map(async (tech) => {
                 const count = tech.count
@@ -63,7 +63,7 @@ const SearchScreen = (props) => {
                     ...tech,
                     distance: distance,
                     sorter : distance/2000 + count
-                })
+                })  
             })
         )
             .then(() => {
@@ -71,8 +71,9 @@ const SearchScreen = (props) => {
                 setListsWithDistance(temp_lists.sort((a, b) => {
                     return a.sorter - b.sorter
                 }))
-            }).catch(() => {
+            }).catch((err) => {
                 props.LOADED()
+                console.log(err);
             })
     }
 
@@ -104,7 +105,12 @@ const SearchScreen = (props) => {
                             zIndex: 4,
                             paddingHorizontal: widthToDp('7'),
                         }}>
-                        <View style={{ flexDirection: 'row' }}>
+                        <View 
+                            style={{
+                                flexDirection: 'row' ,
+                                justifyContent : 'center',
+                                alignItems : 'center'
+                            }}>
                             <TouchableOpacity
                                 onPress={() => setCheck(true)}
                                 style={[
@@ -116,10 +122,8 @@ const SearchScreen = (props) => {
                                     placeholderTextColor={color.BLUE_4}
                                     style={searchScreen.textInput}
                                     ref={searchInputRef}
+                                    editable={false}
                                     autoCorrect={false}
-                                    onFocus={() => {
-                                        setCheck(true)
-                                    }}
                                     value={props.keyword}
                                 />
                                 <View style={searchScreen.searchIconContainer}>
@@ -158,7 +162,9 @@ const SearchScreen = (props) => {
                 </View>
                 <SearchModal
                     isOpen={check}
-                    onClosed={() => setCheck(false)}
+                    onClosed={() => {
+                        setCheck(false)
+                    }}
                     setSearchList={(key) => {
                         props.SET_SEARCH_KEY_WORD(key)
                         props.SEARCH_BY_KEY_WORD(key)
@@ -166,7 +172,6 @@ const SearchScreen = (props) => {
                                 handleDistance(res)
                             })
                     }}
-                    oldKeyword={props.keyword}
                 />
             </SafeAreaView>
         </>

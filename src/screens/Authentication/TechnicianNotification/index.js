@@ -47,7 +47,7 @@ const Notification = ({ navigation, role, userResponse, techAcceptedOrder, techO
                 <Header page="การแจ้งเตือน" navigation={navigation} />
                 <TopTab.Navigator lazy tabBarPosition='top'
                     tabBarOptions={{
-                        labelStyle: { fontSize: widthToDp('3.6'), fontWeight: 'bold' },
+                        labelStyle: { fontSize: widthToDp('3'), fontWeight: 'bold' },
                         indicatorStyle: { backgroundColor: color.BLUE_1 }
                     }}
                     screenOptions={({ route }) => ({
@@ -70,7 +70,7 @@ const Notification = ({ navigation, role, userResponse, techAcceptedOrder, techO
                                 badge = techAcceptedOrder.length
                                 badgeColor = focused ? 'red' : color.YELLOW_1
                             }
-                            return (<Text style={{ fontWeight: weight, color: fontColor, fontSize: widthToDp('4') }}>{name}
+                            return (<Text style={{ fontWeight: 'normal', color: fontColor, fontSize: widthToDp('3.5') }}>{name}
                                 {badge > 0 ? (
                                     <View style={{
                                         width: widthToDp('4') , 

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 
-import { View, Text, SafeAreaView, Keyboard, KeyboardAvoidingView, Image, Dimensions } from 'react-native'
+import { View, Text, SafeAreaView, Keyboard, KeyboardAvoidingView, Image, Dimensions , Platform } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import ChatHeader from '../../components/Chat/ChatHeader'
 import ChatInput from '../../components/Chat/ChatInput'
@@ -49,10 +49,10 @@ const Chat = (props) => {
     return (
         <>
             <SafeAreaView style={content.topsafearray} />
-            <KeyboardAvoidingView
-                behavior='padding'
-                style={{ flex: 1 }}
-            >
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    style={{ flex: 1 }}
+                >
                 <SafeAreaView style={content.safearray}>
                     <ChatHeader navigation={props.navigation} />
                     {/* {

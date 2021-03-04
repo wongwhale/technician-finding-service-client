@@ -83,7 +83,6 @@ const Main = (props) => {
                                     style={[mainScreen.halfBox]}
                                     colors={[
                                         color.GREY_5,
-                                        color.GREY_4,
                                         color.BLUE_5,
                                     ]}
                                 >
@@ -105,7 +104,6 @@ const Main = (props) => {
                                     style={[mainScreen.halfBox, { marginLeft: 5 }]}
                                     colors={[
                                         color.GREY_5,
-                                        color.GREY_4,
                                         color.BLUE_5,
                                     ]}
                                 >
@@ -128,13 +126,10 @@ const Main = (props) => {
                                     colors={[
                                         color.BLUE_3,
                                         color.BLUE_2,
-                                        color.BLUE_1,
-                                        color.BLUE_0,
-                                        color.BLUE_0,
                                     ]}
                                 >
-                                    <Feather name='edit' size={50} color={color.BLUE_5} />
-                                    <Text style={mainScreen.menuTextFull}>
+                                    <Feather name='edit' size={50} color={color.GREY_5} />
+                                    <Text style={[mainScreen.menuTextFull , {color : color.GREY_5}]}>
                                         บอกอาการ
                                     </Text>
                                 </LinearGradient>

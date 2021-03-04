@@ -116,6 +116,7 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
                             style={{
                                 flexDirection: 'row',
                                 paddingHorizontal: widthToDp('1'),
+                                paddingVertical : 0
                             }}
                         >
                             <View
@@ -127,7 +128,9 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
                                     height: widthToDp('9'),
                                     alignItems: 'center',
                                     margin: widthToDp('2'),
-                                    borderRadius: widthToDp('2')
+                                    borderRadius: widthToDp('2'),
+                                    paddingVertical : 0
+
                                 }}
                             >
 
@@ -159,6 +162,7 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
                                         flex: 1,
                                         fontSize: widthToDp('4'),
                                         color: color.BLUE_1,
+                                        paddingVertical : 0
                                     }}
                                     value={props.keyword}
                                     onChangeText={(val) => {
