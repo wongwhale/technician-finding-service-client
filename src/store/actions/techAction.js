@@ -117,22 +117,28 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                     `
                 }
             }).then(res => {
+                const data = res.data.data.getTechnicianInfo
                 Promise.all(
-
-                ).then((val) => {
+                    data.aptitude.map( (item) => {
+                        return {
+                            key : item.aptitude,
+                            data : item
+                        }
+                    })
+                ).then((aptitude) => {
                     dispatch({
                         type: techType.SET_TECHNICIAN_INFO,
                         payload: {
-                            aptitude: res.data.data.getTechnicianInfo.aptitude,
-                            personalInfo: res.data.data.getTechnicianInfo.userInfoID,
-                            onSite: res.data.data.getTechnicianInfo.onSite,
-                            frontStore: res.data.data.getTechnicianInfo.frontStore,
-                            bio: res.data.data.getTechnicianInfo.bio,
-                            description: res.data.data.getTechnicianInfo.description,
-                            star: res.data.data.getTechnicianInfo.star,
-                            location: res.data.data.getTechnicianInfo.address,
-                            workDay: res.data.data.getTechnicianInfo.workDay,
-                            workTime: res.data.data.getTechnicianInfo.workTime
+                            aptitude: aptitude,
+                            personalInfo: data.userInfoID,
+                            onSite: data.onSite,
+                            frontStore: data.frontStore,
+                            bio: data.bio,
+                            description: data.description,
+                            star: data.star,
+                            location: data.address,
+                            workDay: data.workDay,
+                            workTime: data.workTime
                         }
                     })
                     resolve()
