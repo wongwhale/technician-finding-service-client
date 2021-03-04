@@ -88,7 +88,7 @@ const SearchScreen = (props) => {
         <>
             <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={[content.safearray, { backgroundColor: '#fff' }]}>
-                <Header page="ค้นหา" back={true} navigation={props.navigation} />
+                <Header page="ค้นหา" back={true} navigation={props.navigation} isRadius />
                 <View style={[content.container, { backgroundColor: '#fff' }]}
                     onStartShouldSetResponder={() => true}
                     onTouchStart={() => {
@@ -143,7 +143,13 @@ const SearchScreen = (props) => {
                         >
                         </View>
                     </View>
-                    <ScrollView style={{ marginTop: widthToDp('12') }}>
+                    <ScrollView 
+                        style={{ 
+                            marginTop: widthToDp('12') ,
+                            paddingHorizontal : widthToDp('4'),
+                            paddingVertical : 0   
+                        }}
+                    >
                         {
 
                             listsWithDistance.map((item, index) => {

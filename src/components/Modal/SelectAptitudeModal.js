@@ -71,14 +71,7 @@ const SelectAptitudeModal = (props) => {
                             }
                         </View>
                         <View
-                            style={{
-                                flexDirection: 'row',
-                                height: widthToDp('12'),
-                                borderBottomRightRadius: widthToDp('4'),
-                                borderBottomLeftRadius: widthToDp('4'),
-                                borderTopColor: `${color.BLUE_2}66`,
-                                borderTopWidth: widthToDp('0.1')
-                            }}
+                            style={techRegModalStyles.closeContainer}
                         >
                             <TouchableOpacity
                                 style={{
@@ -122,15 +115,15 @@ export const techRegModalStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         marginVertical: widthToDp('1.5'),
-        width: '100%'
+        width: '100%',
     },
     header: {
         marginTop: widthToDp('3'),
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        borderBottomWidth: widthToDp(0.1),
-        borderBottomColor: `${color.BLUE_2}66`,
+        borderBottomWidth: 1,
+        borderBottomColor: color.GREY_5,
         paddingBottom: widthToDp('3')
     },
     headerText: {
@@ -140,5 +133,13 @@ export const techRegModalStyles = StyleSheet.create({
     },
     text: {
         fontSize: widthToDp('4')
-    }
+    },
+    closeContainer : {
+        flexDirection: 'row',
+        height: widthToDp('12'),
+        borderBottomRightRadius: widthToDp('4'),
+        borderBottomLeftRadius: widthToDp('4'),
+        borderTopColor: color.GREY_5,
+        borderTopWidth: 1
+    },
 })

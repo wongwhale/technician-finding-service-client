@@ -11,7 +11,7 @@ import {
     Easing
 } from 'react-native';
 
-import { mainScreen, color, content } from '../../stylesheet'
+import { mainScreen, color, content, widthToDp } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 
@@ -68,7 +68,7 @@ const Main = (props) => {
         <>
             <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray}>
-                <Header page='หน้าหลัก' back={false} navigation={props.navigation} />
+                <Header page='หน้าหลัก' back={false} navigation={props.navigation}  />
                 <UserInfo navigation={props.navigation} />
                 <ScrollView>
                     <View style={mainScreen.container}>
@@ -77,16 +77,16 @@ const Main = (props) => {
                                 onPress={() => {
                                     props.navigation.navigate('search')
                                 }}
-                                style={{ flex: 1, marginRight: 5 }}
+                                style={{ flex: 1 }}
                             >
                                 <LinearGradient
                                     style={[mainScreen.halfBox]}
                                     colors={[
-                                        color.GREY_5,
+                                        color.BLUE_5,
                                         color.BLUE_5,
                                     ]}
                                 >
-                                    <Feather name='search' size={50} color={color.BLUE_1} />
+                                    <Feather name='search' size={45} color={color.BLUE_1} />
                                     <Text style={mainScreen.menuTextHalf}>
                                         ค้นหา
                                 </Text>
@@ -101,13 +101,13 @@ const Main = (props) => {
                                 }}
                             >
                                 <LinearGradient
-                                    style={[mainScreen.halfBox, { marginLeft: 5 }]}
+                                    style={[mainScreen.halfBox]}
                                     colors={[
-                                        color.GREY_5,
+                                        color.BLUE_5,
                                         color.BLUE_5,
                                     ]}
                                 >
-                                    <Feather name='map' size={50} color={color.BLUE_1} />
+                                    <Feather name='map' size={45} color={color.BLUE_1} />
                                     <Text style={mainScreen.menuTextHalf}>
                                         ใกล้ฉัน
                                 </Text>
@@ -120,6 +120,7 @@ const Main = (props) => {
                                     // props.OPEN_POST_MODAL()
                                     props.navigation.navigate('post')
                                 }}
+                                style={{flex : 1 , paddingHorizontal : widthToDp('2') }}
                             >
                                 <LinearGradient
                                     style={mainScreen.fullBox}

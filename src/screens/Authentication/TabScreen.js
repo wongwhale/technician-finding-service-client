@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator()
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { color } from '../../stylesheet'
+import { color, heightToDp, widthToDp } from '../../stylesheet'
 import TechnicianNotification from './TechnicianNotification'
 import LogoutConfirmModal from '../../components/Modal/LogoutConfirmModal'
 
@@ -53,9 +53,16 @@ const TabScreen = (props) => {
                     },
                 })}
                 tabBarOptions={{
-                    activeTintColor: color.GREEN_5,
-                    inactiveTintColor: color.BLUE_4,
-                    showLabel: false
+                    activeTintColor: color.BLUE_2,
+                    inactiveTintColor: color.BLUE_2,
+                    showLabel: false,
+                    // inactiveBackgroundColor : color.GREY_5,
+                    // activeBackgroundColor : color.GREY_5,
+                    style: {
+                        borderTopLeftRadius : heightToDp('3'),
+                        borderTopRightRadius : heightToDp('3'),
+                        backgroundColor : color.GREY_5,
+                    }
                 }}
             >
                 <Tab.Screen name="menu" component={Main} />

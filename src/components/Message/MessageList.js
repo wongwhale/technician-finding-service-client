@@ -1,11 +1,10 @@
-import React, { } from 'react'
+import React from 'react'
 
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 
 import { message, widthToDp } from '../../stylesheet'
 import { TextInput } from 'react-native-gesture-handler'
 
-const lorem = 'asdlhaslkdgjhaskjdhgkasjhgiuwehgjaksdhgkjashdgkljahsdiuvnczn,mxcnv.z,bvodjasdfasdklfhasd9hajdkghaslkdgjhasdgaiughasdkgjasbnbcvwuebasdlfjahsdfkjahslkfdhja'
 
 const MessageList = ({ status, name, lastMessage, badges, date , onPress, avatar, msgType }) => {
 

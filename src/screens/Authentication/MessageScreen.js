@@ -52,7 +52,7 @@ const Message = (props) => {
         <>  
             <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray}>
-                <Header page='กล่องข้อความ' navigation={props.navigation} back={true} chat={true} />
+                <Header page='กล่องข้อความ' navigation={props.navigation} back={true} chat={true} isRadius={true} />
                 <ScrollView style={content.container}>
                     {
                         props.chat_history.lenght !== 0 ? (

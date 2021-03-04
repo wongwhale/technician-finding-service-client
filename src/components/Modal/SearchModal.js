@@ -116,12 +116,12 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
                             style={{
                                 flexDirection: 'row',
                                 paddingHorizontal: widthToDp('1'),
-                                paddingVertical : 0
+                                
                             }}
                         >
                             <View
                                 style={{
-                                    backgroundColor: color.WHITE,
+                                    backgroundColor: color.GREY_5,
                                     flexDirection: 'row-reverse',
                                     justifyContent: 'space-between',
                                     flex: 1,
@@ -208,7 +208,7 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
                                                     paddingVertical: widthToDp('2'),
                                                     width: '90%',
                                                     borderBottomWidth: 1,
-                                                    borderBottomColor: `${color.BLUE_4}33`,
+                                                    borderBottomColor: color.GREY_5,
                                                     marginLeft: widthToDp('5'),
                                                     flexDirection: 'row',
                                                     alignItems: 'center'

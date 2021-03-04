@@ -1,8 +1,8 @@
 import React, { } from 'react'
 
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, View, TouchableOpacity , SafeAreaView , Platform } from 'react-native'
 
-import { datePicker } from '../../stylesheet'
+import { datePicker, widthToDp } from '../../stylesheet'
 import { modalStyle } from './PostModal'
 
 import { Picker } from '@react-native-picker/picker'
@@ -14,6 +14,8 @@ import { SET_TYPE } from '../../store/actions/formAction'
 import {aptitudeType} from '../../misc/aptitude_type'
 
 import { connect } from 'react-redux'
+import { techRegModalStyles } from './SelectAptitudeModal'
+import { color } from '../../stylesheet/colors'
 
 const mapStateToProps = (state) => ({
     isOpen: state.modal.select_type_modal,
@@ -30,37 +32,98 @@ const SelectTypePickerModal = (props) => {
             <Modal
                 isOpen={props.isOpen}
                 onClosed={() => props.CLOSE_SELECT_TYPE_PICKER_MODAL()}
-                style={[modalStyle.subcontainer, { backgroundColor: 'transparent' }]}
-                position='bottom'
+                style={{
+                    backgroundColor: 'transparent'
+                }}
+                position='center'
                 swipeToClose={false}
             >
-                <View style={datePicker.contentContainer}>
-                    <View style={datePicker.headerContainer}>
-                        <Text style={datePicker.headerText}>
-                            เลือกประเภทอุปกรณ์ หรือ ประเภทงาน
-                        </Text>
-                    </View>
-                    <View style={datePicker.pickerContainer}>
-                        <View style={datePicker.dayContainer}>
-                            <Picker
-                                itemStyle={{ height: 150 }}
-                                onValueChange={(val) => {
-                                    props.SET_TYPE(val)
-                                }}
-                                selectedValue={props.type}
+                <SafeAreaView
+                    style={techRegModalStyles.container}
+                >
+                    <View 
+                        style={{
+                            backgroundColor: '#fff',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                            width: widthToDp('80'),
+                            borderRadius: widthToDp('4'),
+                        }}>
+                        <View style={techRegModalStyles.header}>
+                            <Text
+                                style={techRegModalStyles.headerText}
                             >
-                                {
-                                    aptitudeType.map((item, index) => <Picker.Item key={index} label={`${item}`} value={item} />)
-                                }
-                            </Picker>
+                                เลือกประเภทอุปกรณ์ หรือ ประเภทงาน
+                            </Text>
+                        </View>
+                        <View 
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                paddingHorizontal: widthToDp('5'),
+                                paddingVertical: widthToDp('2'),
+                                width: '100%'
+                            }}
+                        >
+                            <View
+                                style={techRegModalStyles.rowContainer}
+                            >
+                                <Picker
+                                    style={{
+                                        ...Platform.select({
+                                            ios : {
+                                                height : 150
+                                            },
+                                            android : {
+                                                flex : 1
+                                            }
+                                        })
+                                    
+                                    }}
+                                    onValueChange={(val) => {
+                                        props.SET_TYPE(val)
+                                    }}
+                                    selectedValue={props.type}
+                                >
+                                    {
+                                        aptitudeType.map((item, index) => <Picker.Item key={index} label={`${item}`} value={item} />)
+                                    }
+                                </Picker>
+                            </View>
+                            
+                        </View>
+                        <View
+                            style={techRegModalStyles.closeContainer}
+                        >
+                            <TouchableOpacity
+                                style={{
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                                onPress={() => {
+                                    props.CLOSE_SELECT_TYPE_PICKER_MODAL()
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        color: color.IOS_BLUE,
+                                        fontWeight: 'bold',
+                                        fontSize: widthToDp('4')
+                                    }}
+                                >
+                                    ยืนยัน
+                            </Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
-                </View>
-                <TouchableOpacity style={datePicker.closeContainer}
+                </SafeAreaView>
+
+                {/* <TouchableOpacity style={datePicker.closeContainer}
                     onPress={() => props.CLOSE_SELECT_TYPE_PICKER_MODAL()}
                 >
                     <Text style={datePicker.closeBtnText}>Close</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </Modal>
         </>
     )

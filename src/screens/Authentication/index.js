@@ -62,7 +62,13 @@ const Index = (props) => {
 
   return (
     <>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          cardStyle : {
+            backgroundColor : '#fff'
+          }
+        }}
+      >
         <Stack.Screen name='tab' component={TabScreen} options={{ headerShown: false }} />
         <Stack.Screen name='search' component={SearchScreen} options={{ headerShown: false }} />
         <Stack.Screen name='nearme' component={NearMeScreen} options={{ headerShown: false }} />

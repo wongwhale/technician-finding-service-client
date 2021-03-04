@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SafeAreaView, View, ScrollView, Text, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import { SafeAreaView, View, ScrollView, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'
 
 import Header from '../../components/Header'
 import DateTimePicker from '../../components/Form/DateTimePicker'
@@ -70,11 +70,11 @@ const PostScreen = (props) => {
         <>
             <SafeAreaView style={content.topsafearray} />
             <KeyboardAvoidingView
-                behavior='padding'
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={{ flex: 1 }}
             >
-                <SafeAreaView style={[content.safearray, { backgroundColor: color.GREY_5 }]}>
-                    <Header page='บอกอาการ' back={true} navigation={props.navigation} chat={false} />
+                <SafeAreaView style={[content.safearray]}>
+                    <Header page='บอกอาการ' back={true} navigation={props.navigation} chat={false} isRadius={true} />
                     <ScrollView style={content.container}>
                         <View style={card.card}>
                             <View style={card.cardHeader}>
@@ -140,7 +140,7 @@ const PostScreen = (props) => {
                                             alignItems: 'center'
                                         }}
                                         colors={[
-                                            color.GREY_5,
+                                            color.BLUE_5,
                                             color.BLUE_5
                                         ]}
                                     >

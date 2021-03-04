@@ -30,7 +30,7 @@ const ImagePickerComponent = (props) => {
                             padding: 5
                         }}
                         colors={[
-                            color.GREY_5,
+                            color.BLUE_5,
                             color.BLUE_5
                         ]}
                     >

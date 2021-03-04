@@ -1,5 +1,12 @@
-import { StyleSheet, Dimensions, PixelRatio, Platform } from 'react-native'
-import { color as colors } from './colors'
+import {
+    StyleSheet,
+    Dimensions,
+    PixelRatio,
+    Platform
+} from 'react-native'
+import {
+    color as colors
+} from './colors'
 
 export const widthToDp = percent => {
     const swidth = Dimensions.get('window').width
@@ -22,21 +29,21 @@ export const color = colors
 
 export const card = StyleSheet.create({
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: color.GREY_5,
         borderRadius: widthToDp('4'),
         marginBottom: 15
     },
     cardHeader: {
         paddingHorizontal: widthToDp('4'),
         paddingTop: widthToDp('2'),
-        paddingBottom : widthToDp('1'),
-        borderBottomWidth : widthToDp('0.1'),
-        borderBottomColor : color.GREY_4
+        paddingBottom: widthToDp('1'),
+        borderBottomWidth: 1,
+        borderBottomColor: `${color.BLUE_5}66`
     },
     cardContainer: {
         paddingHorizontal: widthToDp('4'),
         paddingBottom: widthToDp('2'),
-        paddingTop : widthToDp('2')
+        paddingTop: widthToDp('2')
     },
     headerText: {
         fontSize: widthToDp('4.5'),
@@ -53,6 +60,7 @@ export const content = StyleSheet.create({
         flex: 1,
         paddingHorizontal: widthToDp('4'),
         paddingVertical: 10,
+        backgroundColor: '#fff'
     },
     safearray: {
         flex: 1,
@@ -66,12 +74,13 @@ export const content = StyleSheet.create({
 
 export const mainScreen = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        padding: widthToDp('5')
     },
     menuLayout: {
-        paddingHorizontal: widthToDp('8'),
-        paddingVertical: 5,
-        flexDirection: 'row'
+        paddingHorizontal: widthToDp('6'),
+        paddingVertical: widthToDp('2'),
+        flexDirection: 'row',
     },
     halfBox: {
         flex: 1,
@@ -80,6 +89,7 @@ export const mainScreen = StyleSheet.create({
         backgroundColor: color.BLUE_5,
         borderRadius: widthToDp('7'),
         aspectRatio: 1,
+        marginHorizontal: widthToDp('2')
     },
     fullBox: {
         backgroundColor: color.BLUE_1,
@@ -92,14 +102,14 @@ export const mainScreen = StyleSheet.create({
     },
     menuTextHalf: {
         color: color.BLUE_1,
-        fontSize: widthToDp('5'),
+        fontSize: widthToDp('4'),
         marginTop: widthToDp('1'),
-        fontWeight : 'bold',
+        fontWeight: 'bold',
     },
     menuTextFull: {
         color: color.BLUE_5,
-        fontWeight : 'bold',
-        fontSize: widthToDp('7'),
+        fontWeight: 'bold',
+        fontSize: widthToDp('6'),
         marginLeft: widthToDp('2'),
     }
 })
@@ -108,19 +118,32 @@ export const global = StyleSheet.create({
     header: {
         justifyContent: 'center',
         alignItems: 'center',
-        height: heightToDp('7'),
+        height: heightToDp('8'),
         backgroundColor: '#fff',
         paddingTop: heightToDp('1'),
-        borderBottomLeftRadius : widthToDp('4'),
-        borderBottomRightRadius: widthToDp('4'),
+        shadowColor: "#000",
+    },
+    headerShadow: {
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+    },
+    headerBorderRadius: {
+        borderBottomLeftRadius: heightToDp('3'),
+        borderBottomRightRadius: heightToDp('3'),
     },
     chatHeader: {
         justifyContent: 'center',
         alignItems: 'center',
-        height: heightToDp('7'),
-        backgroundColor: '#fff',
+        backgroundColor: color.GREY_5,
         paddingTop: heightToDp('1'),
-        paddingBottom: heightToDp('1')
+        paddingBottom: heightToDp('1'),
+        borderBottomLeftRadius: heightToDp('3'),
+        borderBottomRightRadius: heightToDp('3'),
     },
     headerText: {
         color: color.BLUE_2,
@@ -173,9 +196,9 @@ export const global = StyleSheet.create({
         fontWeight: 'bold'
     },
     interlocutorImage: {
-        height: heightToDp('4'),
+        height: heightToDp('6'),
         aspectRatio: 1,
-        borderRadius: heightToDp('2'),
+        borderRadius: heightToDp('2.5'),
         marginVertical: heightToDp('1'),
         backgroundColor: color.GREEN_4
     },
@@ -205,8 +228,12 @@ export const global = StyleSheet.create({
 export const userInfo = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        marginVertical: heightToDp('2'),
-        paddingHorizontal: widthToDp('8'),
+        paddingVertical: heightToDp('3'),
+        paddingHorizontal: widthToDp('10'),
+        backgroundColor: '#fff',
+        borderBottomLeftRadius: heightToDp('4'),
+        borderBottomRightRadius: heightToDp('4'),
+        justifyContent : 'space-between'
     },
     subContainer: {
         flexDirection: 'column',
@@ -227,7 +254,7 @@ export const userInfo = StyleSheet.create({
     userImage: {
         aspectRatio: 1,
         height: widthToDp('10'),
-        borderRadius: heightToDp('3'),
+        borderRadius: widthToDp('4'),
         marginLeft: heightToDp('1'),
         backgroundColor: color.BLUE_5,
     },
@@ -235,7 +262,7 @@ export const userInfo = StyleSheet.create({
 
 export const searchScreen = StyleSheet.create({
     textInputContainer: {
-        backgroundColor: color.WHITE,
+        backgroundColor: color.GREY_5,
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
         flex: 1,
@@ -512,7 +539,7 @@ export const posting = StyleSheet.create({
         marginTop: heightToDp('0.5'),
         borderRadius: widthToDp('2'),
         backgroundColor: color.BLUE_5,
-        height: heightToDp('4.5'),
+        paddingVertical : widthToDp('2'),
         flexDirection: 'row',
     },
     fullContainer: {
@@ -530,25 +557,26 @@ export const posting = StyleSheet.create({
         borderRadius: widthToDp('2'),
         justifyContent: 'center',
         backgroundColor: color.BLUE_5,
-        height: heightToDp('4.5'),
+        paddingVertical : widthToDp('2'),
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
     },
     inputText: {
         color: color.BLUE_1,
-        fontSize: widthToDp('3.5'),
+        fontSize: widthToDp('4'),
     },
     detailInput: {
         height: widthToDp('25'),
         marginTop: heightToDp('0.5'),
         padding: widthToDp('3'),
-        paddingTop : widthToDp('3'),
+        paddingTop: widthToDp('3'),
         borderRadius: widthToDp('2'),
-        borderWidth: widthToDp('0.1'),
+        // borderWidth: widthToDp('0.1'),
         fontSize: widthToDp('4'),
         borderColor: color.GREY_4,
-        color: color.BLUE_1,
+        backgroundColor : '#fff' ,
+        color: color.BLUE_0,
         lineHeight: widthToDp('4'),
         textAlignVertical: 'top'
     },
@@ -619,7 +647,7 @@ export const datePicker = StyleSheet.create({
     headerContainer: {
         justifyContent: 'center',
         alignContent: 'center',
-        height: heightToDp('5'),
+        paddingVertical : widthToDp('3')
     },
     headerText: {
         fontSize: widthToDp('4'),
@@ -641,10 +669,9 @@ export const datePicker = StyleSheet.create({
         justifyContent: 'center',
     },
     closeContainer: {
-        height: heightToDp('6'),
-        marginBottom: heightToDp('2'),
-        marginTop: heightToDp('1.5'),
-        padding: heightToDp('1'),
+        paddingVertical : widthToDp('3'),
+        marginBottom: widthToDp('2'),
+        marginTop: widthToDp('2'),
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center',
@@ -667,22 +694,22 @@ export const datePicker = StyleSheet.create({
 export const message = StyleSheet.create({
     listContainer: {
         flexDirection: 'row',
-        borderBottomColor: color.LIGHT_GREY,
-        borderBottomWidth: 0.3,
+        borderBottomColor: color.GREY_5,
+        borderBottomWidth: 1,
         paddingHorizontal: 5,
-        paddingVertical: heightToDp('1'),
+        paddingVertical: widthToDp('2'),
     },
     imageContainer: {
         width: widthToDp('12'),
         height: widthToDp('12'),
-        backgroundColor: color.BLUE_5,
-        borderRadius: widthToDp('6'),
+        backgroundColor: color.GREY_5,
+        borderRadius: widthToDp('4.5'),
         marginHorizontal: widthToDp('2')
     },
     image: {
         height: widthToDp('12'),
         width: widthToDp('12'),
-        borderRadius: widthToDp('6')
+        borderRadius: widthToDp('4.5')
     },
     badges: {
         aspectRatio: 1,
@@ -751,7 +778,11 @@ export const message = StyleSheet.create({
     },
     chatInputContainer: {
         flexDirection: 'row',
-        paddingBottom: heightToDp('1')
+        paddingBottom: heightToDp('1'),
+        backgroundColor: color.GREY_5,
+        paddingTop: widthToDp('3'),
+        borderTopLeftRadius: heightToDp('3'),
+        borderTopRightRadius: heightToDp('3')
     },
     textInput: {
         flex: 1,
@@ -991,7 +1022,7 @@ export const registor = StyleSheet.create({
         color: color.GREY,
         marginLeft: widthToDp('4'),
         marginBottom: widthToDp('3'),
-        fontSize : widthToDp('3.5')
+        fontSize: widthToDp('3.5')
     },
     whaturname: {
         fontSize: 20,

@@ -14,7 +14,7 @@ import Feather from 'react-native-vector-icons/Feather'
 
 import Header from '../../../components/Header'
 
-import { content, widthToDp, color } from '../../../stylesheet'
+import { content, widthToDp, color, heightToDp } from '../../../stylesheet'
 
 import UserNotification from '../../../components/UserNotification'
 import { connect } from 'react-redux'
@@ -48,9 +48,19 @@ const Notification = ({ navigation, role, userResponse, techAcceptedOrder, techO
                 <TopTab.Navigator lazy tabBarPosition='top'
                     tabBarOptions={{
                         labelStyle: { fontSize: widthToDp('3'), fontWeight: 'bold' },
-                        indicatorStyle: { backgroundColor: color.BLUE_1 }
+                        indicatorStyle: { 
+                            width : 0
+                        },
+                        bounces : true,
+                        activeTintColor : color.IOS_YELLOW_DARK,
+                        inactiveTintColor : color.GREY_5,
+                        style : {
+                            backgroundColor : '#fff',
+                            borderBottomLeftRadius : heightToDp('3'),
+                            borderBottomRightRadius : heightToDp('3')
+                        }
                     }}
-                    screenOptions={({ route }) => ({
+                    screenOptions={({ route  }) => ({
                         tabBarLabel: ({ focused }) => {
                             let name
                             let weight
@@ -60,17 +70,22 @@ const Notification = ({ navigation, role, userResponse, techAcceptedOrder, techO
                             if (route.name === 'newOrderTab') {
                                 name = 'ออเดอร์ใหม่'
                                 weight = focused ? 'bold' : 'normal'
-                                fontColor = focused ? color.BLUE_0 : color.BLUE_4
+                                fontColor = focused ? color.BLUE_0 : color.GREY_2
                                 badge = techOrder.length
                                 badgeColor = focused ? 'red' : color.YELLOW_1
                             } else if (route.name === 'acceptedOrderTab') {
                                 name = 'ยืนยันแล้ว'
                                 weight = focused ? 'bold' : 'normal'
-                                fontColor = focused ? color.BLUE_0 : color.BLUE_4
+                                fontColor = focused ? color.BLUE_0 : color.GREY_2
                                 badge = techAcceptedOrder.length
                                 badgeColor = focused ? 'red' : color.YELLOW_1
                             }
-                            return (<Text style={{ fontWeight: 'normal', color: fontColor, fontSize: widthToDp('3.5') }}>{name}
+                            return (<Text 
+                                style={{ 
+                                    fontWeight: 'normal', 
+                                    color: fontColor, 
+                                    fontSize: widthToDp('4') ,
+                                }}>{name}
                                 {badge > 0 ? (
                                     <View style={{
                                         width: widthToDp('4') , 
@@ -89,8 +104,9 @@ const Notification = ({ navigation, role, userResponse, techAcceptedOrder, techO
                             </Text>
                             )
                         },
-
-                    })}
+                    })
+                    
+                }
                 >
                     <TopTab.Screen name='newOrderTab' component={NewOrderTab} />
                     <TopTab.Screen name='acceptedOrderTab' component={AcceptedOrderTab} />

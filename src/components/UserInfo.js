@@ -23,34 +23,58 @@ const mapStateToProps = (state) => ({
 const UserInfo = (props) => {
     return (
         <>
-            <TouchableOpacity style={userInfo.container}
-                onPress={() => {
-                    props.LOADING()
-                    if (props.role === 'technician') {
-                        props.GET_TECHNICIAN_INFO(props.uid).then(() => {
-                            props.navigation.navigate('userInfo')
-                            props.LOADED()
-                        }).catch(err => {
-                            props.LOADED()
-                        })
-                    }
-                    else {
-                        props.navigation.navigate('userInfo')
-                        props.LOADED()
-                    }
-                }}
-            >
-                <Image
-                    style={userInfo.userImage}
-                    source={{ uri: props.avatar }}
-                />
-                <View style={[userInfo.subContainer, { flex: 1 }]}>
-                    <Text style={userInfo.name}>
-                        {`${props.firstname} ${props.lastname}`}
-                    </Text>
-                    <Text style={userInfo.type}>
-                        {props.role}
-                    </Text>
+            <View style={userInfo.container}>
+                <View style={{
+                    flexDirection : 'row'
+                }}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            props.LOADING()
+                            if (props.role === 'technician') {
+                                props.GET_TECHNICIAN_INFO(props.uid).then(() => {
+                                    props.navigation.navigate('userInfo')
+                                    props.LOADED()
+                                }).catch(err => {
+                                    props.LOADED()
+                                })
+                            }
+                            else {
+                                props.navigation.navigate('userInfo')
+                                props.LOADED()
+                            }
+                        }}
+                    >
+                        <Image
+                            style={userInfo.userImage}
+                            source={{ uri: props.avatar }}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            props.LOADING()
+                            if (props.role === 'technician') {
+                                props.GET_TECHNICIAN_INFO(props.uid).then(() => {
+                                    props.navigation.navigate('userInfo')
+                                    props.LOADED()
+                                }).catch(err => {
+                                    props.LOADED()
+                                })
+                            }
+                            else {
+                                props.navigation.navigate('userInfo')
+                                props.LOADED()
+                            }
+                        }}
+                    >
+                        <View style={[userInfo.subContainer, { flex: 1 }]}>
+                            <Text style={userInfo.name}>
+                                {`${props.firstname} ${props.lastname}`}
+                            </Text>
+                            <Text style={userInfo.type}>
+                                {props.role}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
                 <TouchableOpacity
                     style={{
@@ -70,7 +94,7 @@ const UserInfo = (props) => {
                         }}
                     />
                 </TouchableOpacity>
-            </TouchableOpacity>
+            </View>
             
         </>
     )

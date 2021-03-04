@@ -40,7 +40,7 @@ const Notification = ({ navigation, role, userResponse }) => {
         <>
             <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray}>
-                <Header page="การแจ้งเตือน" navigation={navigation} />
+                <Header page="การแจ้งเตือน" navigation={navigation} isRadius={true} />
 
                 <ScrollView>
                     {

@@ -59,14 +59,14 @@ const LogoutConfirmModal = ( { isOpen , ...props}) => {
                             height: widthToDp('12'),
                             borderBottomRightRadius: widthToDp('4'),
                             borderBottomLeftRadius: widthToDp('4'),
-                            borderTopColor: `${color.BLUE_2}66`,
+                            borderTopColor: color.GREY_5,
                             borderTopWidth: 1
                         }}
                     >
                         <TouchableOpacity
                             style={{
                                 flex: 1,
-                                borderRightColor: `${color.BLUE_2}66`,
+                                borderRightColor: color.GREY_5,
                                 borderRightWidth: 1,
                                 justifyContent: 'center',
                                 alignItems: 'center'

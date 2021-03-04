@@ -48,7 +48,6 @@ const ChatHeader = (props) => {
                     <Feather name="chevron-left" style={global.backIcon} />
                 </TouchableOpacity>
             </View>
-            <View style={global.bbt} />
         </>
     )
 }

@@ -1,4 +1,4 @@
-import React, { } from 'react'
+import React from 'react'
 
 import {
     Text,
@@ -25,11 +25,11 @@ const mapDispatchToProsp = {
     LOADED
 }
 
-const Header = ({ page, back, navigation, chat , INITIAL_HISTORY_LIST , LOADED , uid }) => {
+const Header = ({ page, back, navigation, chat , isRadius , LOADED , uid }) => {
     const badgesNum = 1
     return (
         <>
-            <View style={global.header}>
+            <View style={[global.header , isRadius ? global.headerBorderRadius : null ]}>
                 <Text style={global.headerText}>
                     {page}
                 </Text>

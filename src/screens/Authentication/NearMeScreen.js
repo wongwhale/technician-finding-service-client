@@ -49,7 +49,7 @@ const NearMeScreen = ({ navigation, ...props }) => {
             {/* <SafeAreaView style={content.safearray}> */}
             <SafeAreaView style={content.topsafearray} />
             <View style={[content.safearray , {backgroundColor : color.GREY_5}]}>
-                <Header page="ใกล้ฉัน" back={true} navigation={navigation} />
+                <Header page="ใกล้ฉัน" back={true} navigation={navigation} isRadius />
                 <MapView
                     provider={PROVIDER_GOOGLE}
                     style={[content.container]}
