@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native'
 import { connect } from 'react-redux';
 
 import { SET_INTERLOCUTOR_ID, ENTER_PRIVATE_CHAT } from '../../store/actions/chatAction'
-import { LOADED } from '../../store/actions/authAction'
+import { LOADED , LOADING } from '../../store/actions/authAction'
 import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
 import { confirmTechnician } from '../../store/actions/socketAction'
 
@@ -26,6 +26,7 @@ const mapDispatchToProps = {
     SET_INTERLOCUTOR_ID, 
     ENTER_PRIVATE_CHAT, 
     LOADED,
+    LOADING,
     GET_TECHNICIAN_INFO,
     confirmTechnician
 }
@@ -49,6 +50,7 @@ const Abstract = ({ name, star, distance, price, last, avatar, techID ,...props 
     }
 
     const handleAccept = () => {
+        props.LOADING()
         props.confirmTechnician(props.formID , techID)
     }
 
@@ -68,15 +70,13 @@ const Abstract = ({ name, star, distance, price, last, avatar, techID ,...props 
                     </TouchableOpacity>
                 </View>
                 <View style={notification.detailContainer}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'nowrap' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'column' }}>
                         <View style={{ flex: 1, flexWrap: 'nowrap', flexShrink: 0 }}>
                             <Text style={[userNotification.text, notification.nameText]}>
                                 {`${name}`}
                             </Text>
                         </View>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <View style={{ flexDirection: 'column' }}>
                             <View style={{ justifyContent: 'center' }}>
                                 <View style={{ alignItems: 'flex-start' }}>
                                     <Rating type='custom' imageSize={12} readonly startingValue={star} ratingColor={color.YELLOW} ratingBackgroundColor={color.BLUE_4} tintColor={color.BLUE_5} />

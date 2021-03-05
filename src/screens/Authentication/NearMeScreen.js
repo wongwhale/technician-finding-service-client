@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 
 import Header from '../../components/Header'
-import { content, searchScreen, color, technician, widthToDp } from '../../stylesheet'
+import { content, searchScreen, color, technician, widthToDp, heightToDp } from '../../stylesheet'
 import { connect } from 'react-redux'
 import { SEARCH_BY_KEY_WORD, GET_NEAR_TECHNICIAN } from '../../store/actions/techAction'
 import { SET_LOCATION } from '../../store/actions/formAction'
@@ -20,6 +20,7 @@ import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
 import { GOOGLE_API } from '@env'
 import Geolocation from '@react-native-community/geolocation'
+import { useFocusEffect } from '@react-navigation/native'
 
 const mapStateToProps = (state) => ({
     location: state.form.location
@@ -44,27 +45,21 @@ const NearMeScreen = ({ navigation, ...props }) => {
         })
     }, [])
 
+    useFocusEffect( 
+        React.useCallback( () => {
+            setTechnicians([])
+        },[])
+    )
+
     return (
         <>
             {/* <SafeAreaView style={content.safearray}> */}
             <SafeAreaView style={content.topsafearray} />
             <View style={[content.safearray , {backgroundColor : color.GREY_5}]}>
-                <Header page="ใกล้ฉัน" back={true} navigation={navigation} isRadius />
+                <Header page="ใกล้ฉัน" back={true} navigation={navigation} />
                 <MapView
                     provider={PROVIDER_GOOGLE}
                     style={[content.container]}
-                    // initialRegion={{
-                    //     latitude: props.location.latitude,
-                    //     longitude: props.location.longitude,
-                    //     latitudeDelta: 0.01,
-                    //     longitudeDelta: 0.01
-                    // }}
-                    // region={{
-                    //     latitude: props.location.latitude,
-                    //     longitude: props.location.latitude,
-                    //     latitudeDelta: 0.01,
-                    //     longitudeDelta: 0.01
-                    // }}
                     initialRegion={{
                         latitude: props.location.latitude,
                         longitude: props.location.longitude,

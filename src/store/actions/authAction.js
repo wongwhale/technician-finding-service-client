@@ -10,6 +10,8 @@ import { getDistance } from "../../misc/getDistance"
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import store from ".."
 import { regType } from "../reducers/regReducer"
+import { StatusBar } from 'react-native'
+import { color } from "../../stylesheet/colors"
 
 
 export const login = (username, password) => (dispatch) => {
@@ -429,6 +431,18 @@ export const changeRole = (role) => dispatch => {
         type : authType.SET_ROLE,
         payload : {
             role : role
+        }
+    })
+}
+
+export const setCurrentLocation = (lat , lon) => dispatch => {
+    dispatch({
+        type : authType.SET_CURRENT_LOCATION,
+        payload : {
+            currentLocation : {
+                lat : lat,
+                lon : lon
+            }
         }
     })
 }

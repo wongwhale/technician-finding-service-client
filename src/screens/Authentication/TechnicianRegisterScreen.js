@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SafeAreaView, View, Text, TouchableOpacity, KeyboardAvoidingView , Keyboard } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, KeyboardAvoidingView, Keyboard, Platform } from 'react-native'
 import { content, widthToDp, color, global, posting, datePicker, heightToDp, card } from '../../stylesheet'
 
 import Header from '../../components/Setting/Header'
@@ -8,8 +8,6 @@ import { styles } from '../../components/Setting/styles'
 
 import Feather from 'react-native-vector-icons/Feather'
 
-
-import { modalStyle } from '../../components/Modal/PostModal'
 import Modal from 'react-native-modalbox'
 import { Picker } from '@react-native-picker/picker'
 import { TextInput, ScrollView } from 'react-native-gesture-handler'
@@ -18,11 +16,11 @@ import { connect } from 'react-redux'
 import { SET_LOCATION } from '../../store/actions/formAction'
 
 import SelectWorkDayModal from '../../components/Modal/SelectWorkDayModal'
-import SelectAptitudeModal from '../../components/Modal/SelectAptitudeModal'
+import SelectAptitudeModal, { techRegModalStyles } from '../../components/Modal/SelectAptitudeModal'
 import MyButton from '../../components/MyButton'
 import LocationPickerModal from '../../components/Modal/LocationPickerModal'
-import { technicianRegister , GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
-import { updateToken , changeRole , LOADING , LOADED , checkToken } from '../../store/actions/authAction'
+import { technicianRegister, GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
+import { updateToken, changeRole, LOADING, LOADED, checkToken } from '../../store/actions/authAction'
 import Geolocation from '@react-native-community/geolocation'
 
 export const CheckBox = ({ title, status, onPress }) => {
@@ -85,16 +83,16 @@ const mapDispatchToProps = {
     updateToken,
     GET_TECHNICIAN_INFO,
     changeRole,
-    LOADING , 
-    LOADED ,
+    LOADING,
+    LOADED,
     checkToken,
 }
 
 const TechnicianRegisterScreen = (props) => {
 
     const scrollRef = React.useRef()
-    const [bioLayout , setBioLayout] = React.useState(0)
-    const [addressLayout , setaddressLayout] = React.useState(0)
+    const [bioLayout, setBioLayout] = React.useState(0)
+    const [addressLayout, setaddressLayout] = React.useState(0)
     const [onsite, setOnsite] = React.useState(null)
     const [frontStore, setFrontStore] = React.useState(null)
     const [workDayVisible, setWorkDayVisible] = React.useState(false)
@@ -127,12 +125,12 @@ const TechnicianRegisterScreen = (props) => {
     const [detail, setDetail] = React.useState('')
 
     React.useEffect(() => {
-        Geolocation.getCurrentPosition( ({coords : {latitude , longitude}}) => {
+        Geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
             props.SET_LOCATION(latitude, longitude)
-        } , 
-        (err) => {
-            console.log(err);
-        })
+        },
+            (err) => {
+                console.log(err);
+            })
     }, [])
 
     const handleSubmit = async () => {
@@ -182,7 +180,7 @@ const TechnicianRegisterScreen = (props) => {
                     behavior='padding'
                     style={{ flex: 1 }}
                 >
-                    <ScrollView 
+                    <ScrollView
                         style={content.container}
                         ref={scrollRef}
                     >
@@ -458,7 +456,7 @@ const TechnicianRegisterScreen = (props) => {
 
                         {/* bio */}
                         <View style={card.card}
-                            onLayout={ (e) => {
+                            onLayout={(e) => {
                                 setBioLayout(e.nativeEvent.layout.y)
                             }}
                         >
@@ -473,11 +471,11 @@ const TechnicianRegisterScreen = (props) => {
                                     value={bio}
                                     placeholderTextColor={color.GREY_2}
                                     onChangeText={(val) => setBio(val)}
-                                    onFocus={ (e) => {
+                                    onFocus={(e) => {
                                         scrollRef.current.scrollTo({
-                                            x : 0,
-                                            y : bioLayout,
-                                            animated : true
+                                            x: 0,
+                                            y: bioLayout,
+                                            animated: true
                                         })
                                     }}
                                 />
@@ -486,7 +484,7 @@ const TechnicianRegisterScreen = (props) => {
 
                         {/* address */}
                         <View style={card.card}
-                            onLayout={ (e) => {
+                            onLayout={(e) => {
                                 setaddressLayout(e.nativeEvent.layout.y)
                             }}
                         >
@@ -500,11 +498,11 @@ const TechnicianRegisterScreen = (props) => {
                                     placeholder='ที่อยู่'
                                     value={detail}
                                     onChangeText={(val) => setDetail(val)}
-                                    onFocus={ (e) => {
+                                    onFocus={(e) => {
                                         scrollRef.current.scrollTo({
-                                            x : 0,
-                                            y : addressLayout,
-                                            animated : true
+                                            x: 0,
+                                            y: addressLayout,
+                                            animated: true
                                         })
                                     }}
                                 />
@@ -544,19 +542,19 @@ const TechnicianRegisterScreen = (props) => {
                                 handleSubmit()
                                     .then(info => {
                                         props.technicianRegister(info)
-                                        .then( res => {
-                                            // props.changeRole('technician')
-                                            props.updateToken()
-                                            .then( ({uid}) => {
-                                                props.GET_TECHNICIAN_INFO(uid)
-                                                .then( () => {
-                                                    props.checkToken()
-                                                    props.navigation.navigate('userInfo')
-                                                })
+                                            .then(res => {
+                                                // props.changeRole('technician')
+                                                props.updateToken()
+                                                    .then(({ uid }) => {
+                                                        props.GET_TECHNICIAN_INFO(uid)
+                                                            .then(() => {
+                                                                props.checkToken()
+                                                                props.navigation.navigate('userInfo')
+                                                            })
+                                                    })
+                                            }).catch(err => {
+                                                console.log('technician register err :', err);
                                             })
-                                        }).catch(err => {
-                                            console.log('technician register err :' , err);
-                                        })
                                     })
                             }}
                         />
@@ -569,96 +567,256 @@ const TechnicianRegisterScreen = (props) => {
                 <Modal
                     isOpen={starTimeVisible}
                     onClosed={() => setStartTimeVisible(false)}
-                    style={[modalStyle.subcontainer, { backgroundColor: 'transparent' }]}
-                    position='bottom'
+                    style={{ backgroundColor: 'transparent' }}
+                    position='center'
                     swipeToClose={false}
                 >
-                    <View style={datePicker.contentContainer}>
-                        <View style={datePicker.headerContainer}>
-                            <Text style={datePicker.headerText}>เลือกเวลา</Text>
-                        </View>
-                        <View style={datePicker.pickerContainer}>
-                            <View style={datePicker.dayContainer}>
-                                <Picker
-                                    selectedValue={time.start.hour}
-                                    itemStyle={{ height: 150 }}
-                                    onValueChange={(val) => {
-                                        // props.SET_HOUR(val)
-                                        setTime({ ...time, start: { hour: val, minute: time.start.minute } })
+                    <SafeAreaView
+                        style={techRegModalStyles.container}
+                    >
+                        <View
+                            style={{
+                                backgroundColor: '#fff',
+                                justifyContent: 'flex-start',
+                                alignItems: 'center',
+                                width: widthToDp('80'),
+                                borderRadius: widthToDp('4'),
+                            }}>
+                            <View style={techRegModalStyles.header}>
+                                <Text
+                                    style={techRegModalStyles.headerText}
+                                >
+                                    เลือกเวลาา
+                            </Text>
+                            </View>
+                            <View
+                                style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    paddingHorizontal: widthToDp('5'),
+                                    paddingVertical: widthToDp('2'),
+                                    width: '100%'
+                                }}
+                            >
+                                <View
+                                    style={
+                                        [
+                                            technicianRegister.rowContainer,
+                                            {
+                                                flexDirection: 'row'
+                                            }
+                                        ]
+                                    }
+                                >
+                                    <View
+                                        style={{
+                                            flex: 1
+                                        }}
+                                    >
+                                        <Picker
+                                            itemStyle={{
+                                                ...Platform.select({
+                                                    ios: {
+                                                        height: widthToDp('30'),
+                                                    },
+                                                    android: {
+                                                        height: widthToDp('10'),
+                                                    }
+                                                })
+                                            }}
+                                            selectedValue={time.start.hour}
+                                            onValueChange={(val) => {
+                                                setTime({ ...time, start: { hour: val, minute: time.start.minute } })
+                                            }}
+
+                                        >
+                                            {
+                                                [...Array(24)].map((item, index) => <Picker.Item key={index} label={`${index}`} value={`${index}`} />)
+                                            }
+                                        </Picker>
+                                    </View>
+                                    <View
+                                        style={{
+                                            flex: 1
+                                        }}>
+                                        <Picker
+                                            itemStyle={{
+                                                ...Platform.select({
+                                                    ios: {
+                                                        height: widthToDp('30'),
+                                                    },
+                                                    android: {
+                                                        height: widthToDp('10'),
+                                                    }
+                                                })
+                                            }}
+                                            selectedValue={time.start.minute}
+                                            onValueChange={(val) => setTime({ ...time, start: { ...time.start, minute: val } })}
+                                        >
+                                            {
+                                                [...Array(60)].map((item, index) => <Picker.Item key={index} label={`${index}`} value={`${index}`} />)
+                                            }
+                                        </Picker>
+                                    </View>
+                                </View>
+                            </View>
+                            <View
+                                style={techRegModalStyles.closeContainer}
+                            >
+                                <TouchableOpacity
+                                    style={{
+                                        flex: 1,
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}
+                                    onPress={() => {
+                                        setStartTimeVisible(false)
                                     }}
                                 >
-                                    {
-                                        [...Array(24)].map((item, index) => <Picker.Item key={index} label={`0${index}`.slice(-2)} value={index} />)
-                                    }
-                                </Picker>
-                            </View>
-                            <View style={datePicker.dayContainer}>
-                                <Picker
-                                    selectedValue={time.start.minute}
-                                    itemStyle={{ height: 150 }}
-                                    onValueChange={(val) => setTime({ ...time, start: { ...time.start , minute : val } })}
-                                >
-                                    {
-                                        [...Array(60)].map((item, index) => <Picker.Item key={index} label={`0${index}`.slice(-2)} value={index} />)
-                                    }
-                                </Picker>
+                                    <Text
+                                        style={{
+                                            color: color.IOS_BLUE,
+                                            fontWeight: 'bold',
+                                            fontSize: widthToDp('4')
+                                        }}
+                                    >
+                                        ยืนยัน
+                            </Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
-                    </View>
-                    <TouchableOpacity style={datePicker.closeContainer}
-                        onPress={() => setStartTimeVisible(false)}
-                    >
-                        <Text style={datePicker.closeBtnText}>Close</Text>
-                    </TouchableOpacity>
+                    </SafeAreaView>
                 </Modal>
 
                 {/* End time Modal */}
                 <Modal
                     isOpen={endTimeVisible}
                     onClosed={() => setEndTimeVisible(false)}
-                    style={[modalStyle.subcontainer, { backgroundColor: 'transparent' }]}
-                    position='bottom'
+                    style={{ backgroundColor: 'transparent' }}
+                    position='center'
                     swipeToClose={false}
                 >
-                    <View style={datePicker.contentContainer}>
-                        <View style={datePicker.headerContainer}>
-                            <Text style={datePicker.headerText}>เลือกเวลา</Text>
-                        </View>
-                        <View style={datePicker.pickerContainer}>
-                            <View style={datePicker.dayContainer}>
-                                <Picker
-                                    selectedValue={time.end.hour}
-                                    itemStyle={{ height: 150 }}
-                                    onValueChange={(val) => {
-                                        // props.SET_HOUR(val)
-                                        setTime({ ...time, end: { ...time.end , hour: val } })
+                    <SafeAreaView
+                        style={techRegModalStyles.container}
+                    >
+                        <View
+                            style={{
+                                backgroundColor: '#fff',
+                                justifyContent: 'flex-start',
+                                alignItems: 'center',
+                                width: widthToDp('80'),
+                                borderRadius: widthToDp('4'),
+                            }}>
+                            <View style={techRegModalStyles.header}>
+                                <Text
+                                    style={techRegModalStyles.headerText}
+                                >
+                                    เลือกเวลาา
+                            </Text>
+                            </View>
+                            <View
+                                style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    paddingHorizontal: widthToDp('5'),
+                                    paddingVertical: widthToDp('2'),
+                                    width: '100%'
+                                }}
+                            >
+                                <View
+                                    style={
+                                        [
+                                            technicianRegister.rowContainer,
+                                            {
+                                                flexDirection: 'row'
+                                            }
+                                        ]
+                                    }
+                                >
+                                    <View
+                                        style={{
+                                            flex: 1
+                                        }}
+                                    >
+                                        <Picker
+                                            itemStyle={{
+                                                ...Platform.select({
+                                                    ios: {
+                                                        height: widthToDp('30'),
+                                                    },
+                                                    android: {
+                                                        height: widthToDp('10'),
+                                                    }
+                                                })
+                                            }}
+                                            selectedValue={time.end.hour}
+                                            itemStyle={{ height: 150 }}
+                                            onValueChange={(val) => {
+                                                // props.SET_HOUR(val)
+                                                setTime({ ...time, end: { ...time.end, hour: val } })
+                                            }}
+
+                                        >
+                                            {
+                                                [...Array(24)].map((item, index) => <Picker.Item key={index} label={`${index}`} value={`${index}`} />)
+                                            }
+                                        </Picker>
+                                    </View>
+                                    <View
+                                        style={{
+                                            flex: 1
+                                        }}>
+                                        <Picker
+                                            itemStyle={{
+                                                ...Platform.select({
+                                                    ios: {
+                                                        height: widthToDp('30'),
+                                                    },
+                                                    android: {
+                                                        height: widthToDp('10'),
+                                                    }
+                                                })
+                                            }}
+                                            selectedValue={time.end.minute}
+                                            itemStyle={{ height: 150 }}
+                                            onValueChange={(val) => setTime({ ...time, end: { ...time.end, minute: val } })}
+                                        >
+                                            {
+                                                [...Array(60)].map((item, index) => <Picker.Item key={index} label={`${index}`} value={`${index}`} />)
+                                            }
+                                        </Picker>
+                                    </View>
+                                </View>
+                            </View>
+                            <View
+                                style={techRegModalStyles.closeContainer}
+                            >
+                                <TouchableOpacity
+                                    style={{
+                                        flex: 1,
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}
+                                    onPress={() => {
+                                        setEndTimeVisible(false)
                                     }}
                                 >
-                                    {
-                                        [...Array(24)].map((item, index) => <Picker.Item key={index} label={`0${index}`.slice(-2)} value={index} />)
-                                    }
-                                </Picker>
-                            </View>
-                            <View style={datePicker.dayContainer}>
-                                <Picker
-                                    selectedValue={time.end.minute}
-                                    itemStyle={{ height: 150 }}
-                                    onValueChange={(val) => setTime({ ...time, end: { ...time.end , minute: val } })}
-                                >
-                                    {
-                                        [...Array(60)].map((item, index) => <Picker.Item key={index} label={`0${index}`.slice(-2)} value={index} />)
-                                    }
-                                </Picker>
+                                    <Text
+                                        style={{
+                                            color: color.IOS_BLUE,
+                                            fontWeight: 'bold',
+                                            fontSize: widthToDp('4')
+                                        }}
+                                    >
+                                        ยืนยัน
+                                    </Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
-                    </View>
-                    <TouchableOpacity style={datePicker.closeContainer}
-                        onPress={() => setEndTimeVisible(false)}
-                    >
-                        <Text style={datePicker.closeBtnText}>Close</Text>
-                    </TouchableOpacity>
+                    </SafeAreaView>
                 </Modal>
             </View>
+
             <SelectWorkDayModal
                 isOpen={workDayVisible}
                 onClosed={() => setWorkDayVisible(false)}

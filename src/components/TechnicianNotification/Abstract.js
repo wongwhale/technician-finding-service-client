@@ -8,12 +8,10 @@ import Feather from 'react-native-vector-icons/Feather'
 
 import { removeOrder } from '../../store/actions/notiAction'
 import { acceptedReq } from '../../store/actions/socketAction'
-import { OPEN_PRICE_INPUT_MODAL, OPEN_DETAIL_MODAL } from '../../store/actions/modalAction'
-
-import PriceInputModal from '../Modal/PriceInputModal'
+import { OPEN_PRICE_INPUT_MODAL, OPEN_DETAIL_MODAL, getFormInfo, setFormInfo } from '../../store/actions/modalAction'
 
 import { connect } from 'react-redux'
-import { TextInput } from 'react-native-gesture-handler'
+import { getDistance } from '../../misc/getDistance'
 
 const mapStateToProps = (state) => ({
     uid: state.auth.userInfo.uid,
@@ -24,44 +22,33 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     removeOrder,
     acceptedReq,
-    OPEN_DETAIL_MODAL
+    OPEN_DETAIL_MODAL,
+    OPEN_PRICE_INPUT_MODAL,
+    getFormInfo,
+    setFormInfo
 }
 
 const Abstract = (props) => {
-    const [isAccepted, setIsAccepted] = React.useState(false)
-    const [lowestPrice, setLowestPrice] = React.useState('')
-    const [hightestPrice, setHightestPrice] = React.useState('')
 
-    const handleAccept = () => {
-        if (parseInt(lowestPrice) <= parseInt(hightestPrice)) {
-            props.acceptedReq({
-                _id: props.order._id,
-                minPrice: lowestPrice,
-                maxPrice: hightestPrice,
-                uid: props.uid
-            })
-            setHightestPrice('')
-            setLowestPrice('')
-            setIsAccepted(false)
-        } else {
-            alert('จำนวนเงินผิดพลาด')
-        }
+    const handleRemoveOrder = () => {
+        props.removeOrder(props.order._id)
+
     }
 
     const [opacity, setOpacity] = React.useState(new Animated.Value(0))
 
     const scaleX = opacity.interpolate({
-        inputRange : [0,1],
-        outputRange : [0,1]
+        inputRange: [0, 1],
+        outputRange: [0, 1]
     })
 
     const animateIn = () => {
         Animated.spring(
             opacity, {
-                toValue: 1,
-                delay: 0,
-                easing: Easing.elastic(2),
-                useNativeDriver: true
+            toValue: 1,
+            delay: 0,
+            easing: Easing.elastic(2),
+            useNativeDriver: true
         }
         ).start()
     }
@@ -69,165 +56,99 @@ const Abstract = (props) => {
     const animateOut = () => {
         Animated.timing(
             opacity, {
-                toValue: 0,
-                duration: 500,
-                easing: Easing.elastic(2),
-                useNativeDriver: true
+            toValue: 0,
+            duration: 500,
+            easing: Easing.elastic(2),
+            useNativeDriver: true
         }
         ).start()
     }
 
-    const [acceptScaleY , setAceptScaleY] = React.useState( new Animated.Value(1))
+    const [acceptScaleY, setAceptScaleY] = React.useState(new Animated.Value(1))
 
     const animateAccepted = () => {
         Animated.spring(
-            acceptScaleY , {
-                toValue : 0,
-                delay : 1,
-                
-            }
+            acceptScaleY, {
+            toValue: 0,
+            delay: 1,
+
+        }
         )
     }
 
     return (
         <>
-            {
-                !isAccepted ? (
-                    <>
-                        <TouchableOpacity
-                            style={!props.last ? [notification.abstractContainer, notification.abstractBottomBorder] : notification.abstractContainer}
-                            onPress={() => props.OPEN_DETAIL_MODAL()}
-                        >
-                            <View style={notification.imageContainer}>
-                                <TouchableOpacity style={notification.image}>
-                                    <Image
-                                        style={notification.image}
-                                        source={{ uri: props.order.userInfoID.avatar }}
-                                    />
+            <>
+                <TouchableOpacity
+                    style={!props.last ? [notification.abstractContainer, notification.abstractBottomBorder] : notification.abstractContainer}
+                    // onPress={() => {
+                    //     props.getFormInfo(props.order._id)
+                    //         .then(form => {
+                                
+                    //         }).catch(err => {
+                    //             console.log(err);
+                    //         })
+                    // }}
+                >
+                    <View style={notification.imageContainer}>
+                        <TouchableOpacity style={notification.image}>
+                            <Image
+                                style={notification.image}
+                                source={{ uri: props.order.userInfoID.avatar }}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={notification.detailContainer}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: '' }}>
+                            <View style={{ flexWrap: 'nowrap' }}>
+                                <Text style={[newOrder.text, notification.nameText]}>
+                                    {`${props.order.userInfoID.firstname} ${props.order.userInfoID.lastname}`}
+                                </Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={[newOrder.text, notification.detailText]}> ดูรายละเอียด</Text>
+                                <Feather name='chevron-right' style={[newOrder.text, notification.detailText]} />
+                            </View>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
+                                <Text style={[newOrder.text, notification.detailText]}>
+                                    {`ห่างจากคุณ : ${props.order.distance} กม. `}
+                                </Text>
+                                <Text style={[newOrder.text, notification.detailText]}>
+                                    {`วันที่: ${props.date}`}
+                                </Text>
+                                <Text style={[newOrder.text, notification.detailText]}>
+                                    {`รายละเอียด: ${props.order.detail}`}
+                                </Text>
+                            </View>
+                            <View style={notification.buttonContainer}>
+                                <TouchableOpacity
+                                    style={[newOrder.acceptButton, notification.button]}
+                                    onPress={() => {
+                                        // animateIn()
+                                        props.OPEN_PRICE_INPUT_MODAL(props.order._id)
+                                    }}
+                                >
+                                    <Text style={newOrder.buttonText}>
+                                        ตอบรับ
+                                            </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[newOrder.contactButton, notification.button]}
+                                    onPress={() => {
+                                        handleRemoveOrder()
+                                    }}
+                                >
+                                    <Text style={newOrder.buttonText}>
+                                        ไม่สนใจ
+                                            </Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={notification.detailContainer}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: '' }}>
-                                    <View style={{ flexWrap: 'nowrap' }}>
-                                        <Text style={[newOrder.text, notification.nameText]}>
-                                            {`${props.order.userInfoID.firstname} ${props.order.userInfoID.lastname}`}
-                                        </Text>
-                                    </View>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                        <Text style={[newOrder.text, notification.detailText]}> ดูรายละเอียด</Text>
-                                        <Feather name='chevron-right' style={[newOrder.text, notification.detailText]} />
-                                    </View>
-                                </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
-                                        <Text style={[newOrder.text, notification.detailText]}>
-                                            {`ห่างจากคุณ : ${props.order.distance} กม. `}
-                                        </Text>
-                                        <Text style={[newOrder.text, notification.detailText]}>
-                                            {`วันที่: ${props.date}`}
-                                        </Text>
-                                        <Text style={[newOrder.text, notification.detailText]}>
-                                            {`รายละเอียด: ${props.order.detail}`}
-                                        </Text>
-                                    </View>
-                                    <View style={notification.buttonContainer}>
-                                        <TouchableOpacity
-                                            style={[newOrder.acceptButton, notification.button]}
-                                            onPress={() => {
-                                                setIsAccepted(true)
-                                                animateIn()
-                                            }}
-                                        >
-                                            <Text style={newOrder.buttonText}>
-                                                ตอบรับ
-                                            </Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            style={[newOrder.contactButton, notification.button]}
-                                            onPress={() => {
-                                                props.removeOrder(props.order._id)
-                                            }}
-                                        >
-                                            <Text style={newOrder.buttonText}>
-                                                ไม่สนใจ
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    </>
-                ) : (
-                        <>
-                            <Animated.View
-                                style={{
-                                    opacity , 
-                                    transform:[
-                                        {scaleX : scaleX},
-                                        {scaleY : scaleX}
-                                    ]
-                                }}
-                            >
-                                <View style={[notification.abstractContainer, { backgroundColor: color.BLUE_5, borderRadius: widthToDp('1') }]}>
-                                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                        <Text style={priceInput.headerText}>ระบุราคาโดยประมาณ</Text>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <TextInput
-                                                style={priceInput.textInput}
-                                                placeholderTextColor={color.BLUE_4}
-                                                placeholder='ต่ำสุด'
-                                                keyboardType='number-pad'
-                                                value={lowestPrice}
-                                                onChangeText={val => {
-                                                    setLowestPrice(val)
-                                                }}
-                                                autoFocus={true}
-                                            />
-                                            <Text style={{ color: color.BLUE_2, fontSize: widthToDp('5') }}>
-                                                -
-                                        </Text>
-                                            <TextInput
-                                                style={priceInput.textInput}
-                                                placeholderTextColor={color.BLUE_4}
-                                                placeholder='สูงสุด'
-                                                keyboardType='number-pad'
-                                                value={hightestPrice}
-                                                onChangeText={val => {
-                                                    setHightestPrice(val)
-                                                }}
-
-                                            />
-                                        </View>
-                                        <View style={{ flexDirection: 'row', paddingHorizontal: widthToDp('2') }}>
-                                            <TouchableOpacity
-                                                onPress={() => {
-                                                    setHightestPrice('')
-                                                    setLowestPrice('')
-                                                    setTimeout( () => {
-                                                        setIsAccepted(false)
-                                                    },300)
-                                                    animateOut()
-                                                }}
-                                                style={[priceInput.btn, priceInput.cancel, { marginRight: widthToDp('1') }]}>
-                                                <Text style={priceInput.cancelText}>
-                                                    ยกเลิก
-                                        </Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity
-                                                onPress={() => handleAccept()}
-                                                style={[priceInput.btn, priceInput.accept, { marginLeft: widthToDp('1') }]}>
-                                                <Text style={priceInput.acceptText}>
-                                                    ยืนยัน
-                                        </Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                </View>
-                            </Animated.View>
-                        </>
-                    )
-            }
-
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            </>
         </>
     )
 }
@@ -237,7 +158,7 @@ const priceInput = StyleSheet.create({
         flex: 1,
         textAlign: 'center',
         textAlignVertical: 'center',
-        backgroundColor: color.WHITE,
+        backgroundColor: color.GREY_5,
         fontSize: widthToDp('4'),
         marginHorizontal: widthToDp('2'),
         height: widthToDp('7'),
@@ -252,17 +173,17 @@ const priceInput = StyleSheet.create({
         borderRadius: widthToDp('1'),
     },
     cancel: {
-        backgroundColor: color.RED_3
+        // backgroundColor: color.RED_3
     },
     accept: {
-        backgroundColor: color.GREEN_4
+        // backgroundColor: color.GREEN_4
     },
     acceptText: {
-        color: color.GREEN_0,
+        color: color.IOS_GREEN_LIGHT,
         fontSize: widthToDp('4')
     },
     cancelText: {
-        color: color.RED_0,
+        color: color.IOS_RED_LIGHT,
         fontSize: widthToDp('4')
     },
     headerText: {

@@ -39,7 +39,9 @@ const AcceptedAbstract = (props) => {
                         />
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={notification.detailContainer}>
+                <TouchableOpacity 
+                    style={notification.detailContainer}
+                >
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: '' }}>
                         <View style={{ flexWrap: 'nowrap' }}>
                             <Text style={[acceptedOrder.text, notification.nameText]}>

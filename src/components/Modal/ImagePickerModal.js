@@ -5,7 +5,6 @@ import { View, TouchableOpacity, Text, StyleSheet, SafeAreaView } from 'react-na
 import Modal from 'react-native-modalbox'
 
 import { datePicker, color , widthToDp , heightToDp , modalRadiusDp , buttonRadiusDp } from '../../stylesheet'
-import { modalStyle } from './PostModal'
 
 
 import { connect } from 'react-redux'
@@ -64,7 +63,7 @@ const ImagePickerModal = (props) => {
                             >
                                 <Text style={styles.text}>
                                     ถ่ายรูป
-                                    </Text>
+                                </Text>
                             </TouchableOpacity>
                             <TouchableOpacity 
                                 style={[styles.btn , styles.borderTop]}
@@ -95,7 +94,7 @@ const ImagePickerModal = (props) => {
                             >
                                 <Text
                                     style={{
-                                        color: color.IOS_BLUE,
+                                        color: color.IOS_RED_LIGHT,
                                         fontWeight: 'bold',
                                         fontSize: widthToDp('4')
                                     }}
@@ -126,6 +125,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: widthToDp('4'),
-        color: color.BLUE_1
+        color: color.BLUE_1,
+        fontWeight : 'bold'
     }
 })

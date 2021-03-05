@@ -1,9 +1,8 @@
 import React, { } from 'react'
 
-import { Text, View, TouchableOpacity , SafeAreaView , Platform } from 'react-native'
+import { Text, View, TouchableOpacity, SafeAreaView, Platform } from 'react-native'
 
 import { datePicker, widthToDp } from '../../stylesheet'
-import { modalStyle } from './PostModal'
 
 import { Picker } from '@react-native-picker/picker'
 
@@ -11,7 +10,7 @@ import Modal from 'react-native-modalbox'
 
 import { CLOSE_SELECT_TYPE_PICKER_MODAL } from '../../store/actions/modalAction'
 import { SET_TYPE } from '../../store/actions/formAction'
-import {aptitudeType} from '../../misc/aptitude_type'
+import { aptitudeType } from '../../misc/aptitude_type'
 
 import { connect } from 'react-redux'
 import { techRegModalStyles } from './SelectAptitudeModal'
@@ -41,7 +40,7 @@ const SelectTypePickerModal = (props) => {
                 <SafeAreaView
                     style={techRegModalStyles.container}
                 >
-                    <View 
+                    <View
                         style={{
                             backgroundColor: '#fff',
                             justifyContent: 'flex-start',
@@ -56,7 +55,7 @@ const SelectTypePickerModal = (props) => {
                                 เลือกประเภทอุปกรณ์ หรือ ประเภทงาน
                             </Text>
                         </View>
-                        <View 
+                        <View
                             style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -68,29 +67,33 @@ const SelectTypePickerModal = (props) => {
                             <View
                                 style={techRegModalStyles.rowContainer}
                             >
-                                <Picker
+                                <View
                                     style={{
-                                        ...Platform.select({
-                                            ios : {
-                                                height : 150
-                                            },
-                                            android : {
-                                                flex : 1
-                                            }
-                                        })
-                                    
-                                    }}
-                                    onValueChange={(val) => {
-                                        props.SET_TYPE(val)
-                                    }}
-                                    selectedValue={props.type}
-                                >
-                                    {
-                                        aptitudeType.map((item, index) => <Picker.Item key={index} label={`${item}`} value={item} />)
-                                    }
-                                </Picker>
+                                        flex : 1
+                                    }}>
+                                    <Picker
+                                        itemStyle={{
+                                            ...Platform.select({
+                                                ios: {
+                                                    height: widthToDp('40'),
+                                                },
+                                                android: {
+                                                    flex: 1
+                                                }
+                                            })
+
+                                        }}
+                                        onValueChange={(val) => {
+                                            props.SET_TYPE(val)
+                                        }}
+                                        selectedValue={props.type}
+                                    >
+                                        {
+                                            aptitudeType.map((item, index) => <Picker.Item key={index} label={`${item}`} value={item} />)
+                                        }
+                                    </Picker>
+                                </View>
                             </View>
-                            
                         </View>
                         <View
                             style={techRegModalStyles.closeContainer}

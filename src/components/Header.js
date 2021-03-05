@@ -8,6 +8,7 @@ import { global } from '../stylesheet'
 import Feather from 'react-native-vector-icons/Feather'
 import { connect } from 'react-redux';
 import { LOADED } from '../store/actions/authAction';
+import { useNavigation } from '@react-navigation/native'
 
 const mapStateToProps = (state) => ({
     uid : state.auth.userInfo.uid
@@ -17,8 +18,9 @@ const mapDispatchToProsp = {
     LOADED
 }
 
-const Header = ({ page, back, navigation, chat , isRadius  }) => {
+const Header = ({ page, back, chat , isRadius  }) => {
     const badgesNum = 1
+    const { goBack , navigate } = useNavigation()
     return (
         <>
             <View style={[global.header , isRadius ? global.headerBorderRadius : null ]}>
@@ -29,7 +31,7 @@ const Header = ({ page, back, navigation, chat , isRadius  }) => {
                     !chat ? (
                         <TouchableOpacity
                             onPress={() => {
-                                navigation.navigate('message')
+                                navigate('message')
                             }}
                             style={global.chatIconContainer}
                         >
@@ -43,15 +45,12 @@ const Header = ({ page, back, navigation, chat , isRadius  }) => {
                     ) : null
 
                 }
-
-
-
                 {
                     back ? (
                         <>
                             <TouchableOpacity style={global.backIconContainer}
                                 onPress={() => {
-                                    navigation.goBack()
+                                    goBack()
                                 }}
                             >
                                 <Feather name="chevron-left" style={global.backIcon} />

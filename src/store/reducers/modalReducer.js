@@ -17,6 +17,7 @@ modalType.OPEN_DETAIL_MODAL = 'OPEN_DETAIL_MODAL'
 modalType.CLOSE_DETAIL_MODAL = 'CLOSE_DETAIL_MODAL'
 modalType.OPEN_LOGOUT_CONFIRM_MODAL = 'OPEN_LOGOUT_CONFIRM_MODAL'
 modalType.CLOSE_LOGOUT_CONFIRM_MODAL = 'CLOSE_LOGOUT_CONFIRM_MODAL'
+modalType.SET_FORM_INFO = 'SET_FORM_INFO'
 
 const initialState = {
     post_modal: false,
@@ -28,7 +29,24 @@ const initialState = {
     location_picker_modal: false,
     price_input_modal: false,
     detail_modal: false,
-    logout_confirm_modal : false,
+    logout_confirm_modal: false,
+    order_id: '',
+    formInfo: {
+        _id: '',
+        detail: '',
+        date: '',
+        techType: '',
+        image: [],
+        location: {
+            lat : 0,
+            lon : 0
+        },
+        userInfoID: {
+            firstname: '',
+            lastname: '',
+            avatar: ''
+        }
+    }
 }
 
 export default function (state = initialState, action) {
@@ -96,22 +114,25 @@ export default function (state = initialState, action) {
         case modalType.OPEN_PRICE_INPUT_MODAL:
             return {
                 ...state,
-                price_input_modal: true
+                price_input_modal: true,
+                order_id: action.payload.order_id
             }
         case modalType.CLOSE_PRICE_INPUT_MODAL:
             return {
                 ...state,
-                price_input_modal: false
+                price_input_modal: false,
+                order_id: ''
             }
         case modalType.OPEN_DETAIL_MODAL:
             return {
                 ...state,
-                detail_modal: true
+                detail_modal: true,
+                order_id: action.payload.order_id
             }
         case modalType.CLOSE_DETAIL_MODAL:
             return {
                 ...state,
-                detail_modal: false
+                detail_modal: false,
             }
         case modalType.OPEN_LOGOUT_CONFIRM_MODAL:
             return {
@@ -122,6 +143,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 logout_confirm_modal: false
+            }
+        case modalType.SET_FORM_INFO:
+            return {
+                ...state,
+                formInfo: action.payload
             }
         default:
             return state

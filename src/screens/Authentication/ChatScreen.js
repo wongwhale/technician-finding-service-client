@@ -48,12 +48,12 @@ const Chat = (props) => {
 
     return (
         <>
-            <SafeAreaView style={content.topsafearray} />
+            <SafeAreaView style={[content.topsafearray  ]} />
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
                     style={{ flex: 1 }}
                 >
-                <SafeAreaView style={content.safearray}>
+                <SafeAreaView style={[content.safearray , {backgroundColor : color.GREY_5}]}>
                     <ChatHeader navigation={props.navigation} />
                     {/* {
                         props.messages.length !== 0 ? (
@@ -82,6 +82,9 @@ const Chat = (props) => {
                             )
                     } */}
                     <ScrollView
+                        style={{
+                            backgroundColor : '#fff'
+                        }}
                         ref={scrollView_ref}
                         onContentSizeChange={() => {
                             scrollView_ref.current.scrollToEnd({ animated: true })
@@ -145,7 +148,6 @@ const Chat = (props) => {
                     >
                     </Image>
                 </SafeAreaView>
-
             </Modal>
         </>
     )

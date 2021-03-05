@@ -28,9 +28,6 @@ const AcceptedNotification = (props) => {
                             <Text style={[acceptedOrder.headerText, notification.headerText]}>
                                 ออเดอร์
                         </Text>
-                            <Text style={notification.headerID}>
-                                {`#${props.techAcceptedOrder._id}`}
-                            </Text>
                         </Text>
                     </View>
                     <View style={notification.content}>

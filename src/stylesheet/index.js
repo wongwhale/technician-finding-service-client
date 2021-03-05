@@ -139,11 +139,11 @@ export const global = StyleSheet.create({
     chatHeader: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: color.GREY_5,
+        backgroundColor: '#fff',
         paddingTop: heightToDp('1'),
         paddingBottom: heightToDp('1'),
-        borderBottomLeftRadius: heightToDp('3'),
-        borderBottomRightRadius: heightToDp('3'),
+        borderBottomWidth: 1,
+        borderBottomColor: color.GREY_5
     },
     headerText: {
         color: color.BLUE_2,
@@ -233,7 +233,7 @@ export const userInfo = StyleSheet.create({
         backgroundColor: '#fff',
         borderBottomLeftRadius: heightToDp('4'),
         borderBottomRightRadius: heightToDp('4'),
-        justifyContent : 'space-between'
+        justifyContent: 'space-between'
     },
     subContainer: {
         flexDirection: 'column',
@@ -343,7 +343,7 @@ export const searchScreen = StyleSheet.create({
     },
     detailbtnText: {
         color: color.BLUE_3,
-        fontSize: widthToDp('2.5')
+        fontSize: widthToDp('4')
     },
     filterBtn: {
         backgroundColor: color.WHITE,
@@ -365,14 +365,15 @@ export const userNotification = StyleSheet.create({
         backgroundColor: color.BLUE_5
     },
     contactButton: {
-        backgroundColor: color.BLUE_3,
+        backgroundColor: color.BLUE_2,
     },
     acceptButton: {
-        backgroundColor: color.GREEN_2,
+        backgroundColor: color.IOS_GREEN_LIGHT,
     },
     buttonText: {
-        fontSize: widthToDp('2.6'),
-        color: color.WHITE
+        fontSize: widthToDp('4'),
+        color: '#fff',
+        fontWeight : 'bold'
     },
     star: {
         // backgroundColor:color.YELLOW
@@ -396,11 +397,11 @@ export const userNotification = StyleSheet.create({
 
 export const notification = StyleSheet.create({
     container: {
-        borderRadius: heightToDp('1.5'),
+        borderRadius: widthToDp('4'),
     },
     headerContainer: {
-        borderBottomColor: color.WHITE,
-        borderBottomWidth: heightToDp('0.05'),
+        borderBottomColor: color.GREY_5,
+        borderBottomWidth: 1,
         paddingHorizontal: widthToDp('4'),
         paddingVertical: heightToDp('1')
     },
@@ -417,7 +418,8 @@ export const notification = StyleSheet.create({
     },
     abstractContainer: {
         flexDirection: 'row',
-        height: widthToDp('23')
+        // height: widthToDp('23')
+        paddingVertical: widthToDp('3'),
     },
     abstractBottomBorder: {
         borderBottomWidth: heightToDp('0.1'),
@@ -450,36 +452,36 @@ export const notification = StyleSheet.create({
     },
     button: {
         padding: 5,
-        width: widthToDp('15'),
-        height: widthToDp('6'),
+        width: widthToDp('20'),
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: widthToDp('3'),
+        borderRadius: widthToDp('5'),
         marginVertical: widthToDp('0.2')
     },
     nameText: {
         fontSize: widthToDp('4'),
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     detailText: {
-        fontSize: widthToDp('3')
+        fontSize: widthToDp('3.5')
     },
 })
 
 
 export const newOrder = StyleSheet.create({
     bg: {
-        backgroundColor: color.BLUE_2
+        backgroundColor: color.BLUE_3
     },
     contactButton: {
-        backgroundColor: color.YELLOW_2,
+        backgroundColor: color.IOS_ORANGE_LIGHT,
     },
     acceptButton: {
-        backgroundColor: color.GREEN_2,
+        backgroundColor: color.IOS_GREEN_LIGHT,
     },
     buttonText: {
-        fontSize: widthToDp('2.6'),
-        color: color.WHITE
+        fontSize: widthToDp('4'),
+        color: '#fff',
+        fontWeight: 'bold'
     },
     star: {
         // backgroundColor:color.YELLOW
@@ -487,16 +489,16 @@ export const newOrder = StyleSheet.create({
         color: color.YELLOW
     },
     text: {
-        color: color.WHITE
+        color: color.GREY_5
     },
     headerText: {
-        color: color.WHITE
+        color: color.GREY_5
     },
 })
 
 export const acceptedOrder = StyleSheet.create({
     bg: {
-        backgroundColor: color.GREEN_2
+        backgroundColor: `${color.GREEN_4}77`
     },
     contactButton: {
         backgroundColor: color.YELLOW_2,
@@ -505,7 +507,7 @@ export const acceptedOrder = StyleSheet.create({
         backgroundColor: color.BLUE_2,
     },
     buttonText: {
-        fontSize: widthToDp('2.6'),
+        fontSize: widthToDp('4'),
         color: color.WHITE
     },
     star: {
@@ -514,10 +516,10 @@ export const acceptedOrder = StyleSheet.create({
         color: color.YELLOW
     },
     text: {
-        color: color.WHITE
+        color: color.GREEN_0
     },
     headerText: {
-        color: color.WHITE
+        color: color.GREEN_0
     },
 })
 
@@ -539,7 +541,7 @@ export const posting = StyleSheet.create({
         marginTop: heightToDp('0.5'),
         borderRadius: widthToDp('2'),
         backgroundColor: color.BLUE_5,
-        paddingVertical : widthToDp('2'),
+        paddingVertical: widthToDp('2'),
         flexDirection: 'row',
     },
     fullContainer: {
@@ -557,7 +559,7 @@ export const posting = StyleSheet.create({
         borderRadius: widthToDp('2'),
         justifyContent: 'center',
         backgroundColor: color.BLUE_5,
-        paddingVertical : widthToDp('2'),
+        paddingVertical: widthToDp('2'),
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
@@ -575,7 +577,7 @@ export const posting = StyleSheet.create({
         // borderWidth: widthToDp('0.1'),
         fontSize: widthToDp('4'),
         borderColor: color.GREY_4,
-        backgroundColor : '#fff' ,
+        backgroundColor: '#fff',
         color: color.BLUE_0,
         lineHeight: widthToDp('4'),
         textAlignVertical: 'top'
@@ -647,7 +649,7 @@ export const datePicker = StyleSheet.create({
     headerContainer: {
         justifyContent: 'center',
         alignContent: 'center',
-        paddingVertical : widthToDp('3')
+        paddingVertical: widthToDp('3')
     },
     headerText: {
         fontSize: widthToDp('4'),
@@ -669,7 +671,7 @@ export const datePicker = StyleSheet.create({
         justifyContent: 'center',
     },
     closeContainer: {
-        paddingVertical : widthToDp('3'),
+        paddingVertical: widthToDp('3'),
         marginBottom: widthToDp('2'),
         marginTop: widthToDp('2'),
         textAlign: 'center',
@@ -738,7 +740,7 @@ export const message = StyleSheet.create({
         fontWeight: 'bold',
     },
     text: {
-        fontSize: widthToDp('3.5'),
+        fontSize: widthToDp('4'),
         color: color.BLUE_3,
         fontWeight: 'normal',
     },
@@ -823,7 +825,7 @@ export const message = StyleSheet.create({
     },
     dateTimeText: {
         color: color.BLUE_0,
-        fontSize: widthToDp('2.7')
+        fontSize: widthToDp('3')
     },
     newDateContainer: {
         justifyContent: 'center',
@@ -1048,6 +1050,7 @@ export const registor = StyleSheet.create({
     },
     phoneInput: {
         // backgroundColor:'red',
+        paddingVertical : 0,
         marginHorizontal: 5,
         flex: 1,
         fontSize: 20,

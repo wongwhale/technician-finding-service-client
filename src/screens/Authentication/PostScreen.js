@@ -23,6 +23,7 @@ import { sendPostReq } from '../../store/actions/socketAction'
 import { addNewResponse } from '../../store/actions/notiAction'
 import { SET_FILE, SET_LOCATION , clear } from '../../store/actions/formAction'
 import { CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
+import { LOADING , LOADED } from '../../store/actions/authAction'
 
 import { connect } from 'react-redux'
 import { content, color, card, widthToDp } from '../../stylesheet'
@@ -49,7 +50,7 @@ const mapStateToProps = (state) => ({
     type: state.form.type
 })
 
-const connector = connect(mapStateToProps, { clear , addNewResponse, SET_LOCATION, sendPostReq, SET_FILE, CLOSE_IMAGE_PICKER_MODAL })
+const connector = connect(mapStateToProps, { LOADING , LOADED , clear , addNewResponse, SET_LOCATION, sendPostReq, SET_FILE, CLOSE_IMAGE_PICKER_MODAL })
 
 const PostScreen = (props) => {
     const [locationVisible, setLocationVisible] = React.useState(false)
@@ -160,6 +161,7 @@ const PostScreen = (props) => {
                         </View>
                         <MyButton title='ยืนยัน'
                             onPress={() => {
+                                props.LOADING()
                                 const date = `${props.year}-${("0" + (props.month + 1)).slice(-2)}-${("0" + (props.date)).slice(-2)}T${("0" + (props.hour)).slice(-2)}:${("0" + (props.minute)).slice(-2)}:00Z`
                                 const name = `${props.firstname} ${props.lastname}`
                                 props.sendPostReq({
@@ -174,14 +176,9 @@ const PostScreen = (props) => {
                                         lon: props.lng
                                     }
                                 }).then(res => {
+                                    props.LOADED()
                                     props.navigation.navigate('notification')
-                                    // props.addNewResponse(res)
-                                    //     .then(() => {
-                                    //     })
-                                    //     .catch((err) => {
-                                    //         alert('error')
-                                    //         console.log(err);
-                                    //     })
+                                    
                                 })
                             }}
                         />

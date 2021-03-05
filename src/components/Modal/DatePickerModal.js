@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 
-import { Text, View, TouchableOpacity , SafeAreaView , Platform } from 'react-native'
+import { Text, View, TouchableOpacity, SafeAreaView, Platform } from 'react-native'
 
 import Modal from 'react-native-modalbox'
 
 import { CLOSE_DATE_PICKER_MODAL } from '../../store/actions/modalAction'
-import { SET_DATE , SET_MONTH , SET_YEAR } from '../../store/actions/formAction'
+import { SET_DATE, SET_MONTH, SET_YEAR } from '../../store/actions/formAction'
 
 import { Picker } from '@react-native-picker/picker'
 
@@ -18,13 +18,13 @@ import { color } from '../../stylesheet/colors'
 
 const mapStateToProps = (state) => ({
     isOpen: state.modal.date_picker_modal,
-    date_count : state.form.date_count,
-    date : state.form.date,
-    month : state.form.month,
-    year : state.form.year
+    date_count: state.form.date_count,
+    date: state.form.date,
+    month: state.form.month,
+    year: state.form.year
 })
 
-const connector = connect(mapStateToProps, { CLOSE_DATE_PICKER_MODAL , SET_DATE , SET_MONTH , SET_YEAR })
+const connector = connect(mapStateToProps, { CLOSE_DATE_PICKER_MODAL, SET_DATE, SET_MONTH, SET_YEAR })
 
 const DatePickerModal = (props) => {
     const month = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฏาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
@@ -34,7 +34,7 @@ const DatePickerModal = (props) => {
         props.SET_DATE(current_date.getDate())
         props.SET_MONTH(current_date.getMonth())
         props.SET_YEAR(current_date.getFullYear())
-    },[])
+    }, [])
 
     return (
         <>
@@ -50,7 +50,7 @@ const DatePickerModal = (props) => {
                 <SafeAreaView
                     style={techRegModalStyles.container}
                 >
-                    <View 
+                    <View
                         style={{
                             backgroundColor: '#fff',
                             justifyContent: 'flex-start',
@@ -65,7 +65,7 @@ const DatePickerModal = (props) => {
                                 เลือกวันที่
                             </Text>
                         </View>
-                        <View 
+                        <View
                             style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -76,116 +76,116 @@ const DatePickerModal = (props) => {
                         >
                             <View
                                 style={
-                                    [techRegModalStyles.rowContainer , 
-                                        {
-                                            ...Platform.select({
-                                                ios : {
-                                                    flexDirection : 'row'
-                                                },
-                                                android : {
-                                                    flexDirection : 'column'
-                                                }
-                                            })
-                                        }
+                                    [techRegModalStyles.rowContainer,
+                                    {
+                                        ...Platform.select({
+                                            ios: {
+                                                flexDirection: 'row'
+                                            },
+                                            android: {
+                                                flexDirection: 'column'
+                                            }
+                                        })
+                                    }
                                     ]
                                 }
                             >
-                                <View 
-                                    style={{ 
+                                <View
+                                    style={{
                                         ...Platform.select({
-                                            ios : {
-                                                flex: 1 
+                                            ios: {
+                                                flex: 1
                                             },
-                                            android : {
-                                                height : widthToDp('10'),
-                                                width : '100%'
+                                            android: {
+                                                height: widthToDp('10'),
+                                                width: '100%'
                                             }
                                         }),
                                     }}>
-                                <Picker
+                                    <Picker
+                                        itemStyle={{
+                                            ...Platform.select({
+                                                ios: {
+                                                    height: widthToDp('30'),
+                                                },
+                                                android: {
+                                                    height: widthToDp('10'),
+                                                }
+                                            })
+                                        }}
+                                        selectedValue={props.date}
+                                        onValueChange={(val) => props.SET_DATE(val)}
+                                    >
+                                        {
+                                            [...Array(props.date_count)].map((item, index) => <Picker.Item key={index} label={`${index + 1}`} value={index + 1} />)
+                                        }
+                                    </Picker>
+                                </View>
+                                <View
                                     style={{
                                         ...Platform.select({
-                                            ios : {
-                                                height : 150,
+                                            ios: {
+                                                flex: 2
                                             },
-                                            android : {
-                                                height : widthToDp('10'),
+                                            android: {
+                                                height: widthToDp('10'),
+                                                width: '100%'
                                             }
-                                        })
-                                    }}
-                                    selectedValue={props.date}
-                                    onValueChange={ (val) => props.SET_DATE(val)}
-                                >
-                                    {
-                                        [...Array(props.date_count)].map((item , index) => <Picker.Item key={index} label={`${index+1}`} value={index+1} />)
-                                    }
-                                </Picker>
-                        </View>
-                        <View 
-                            style={{ 
-                                ...Platform.select({
-                                    ios : {
-                                        flex: 2 
-                                    },
-                                    android : {
-                                        height : widthToDp('10'),
-                                        width : '100%'
-                                    }
-                                }),
-                             }}>
-                            <Picker
-                                style={{
-                                    ...Platform.select({
-                                        ios : {
-                                            height : 150,
-                                        },
-                                        android : {
-                                            height : widthToDp('10'),
+                                        }),
+                                    }}>
+                                    <Picker
+                                        itemStyle={{
+                                            ...Platform.select({
+                                                ios: {
+                                                    height: widthToDp('30'),
+                                                },
+                                                android: {
+                                                    height: widthToDp('10'),
+                                                }
+                                            })
+                                        }}
+                                        selectedValue={props.month}
+                                        onValueChange={(val) => props.SET_MONTH(val)}
+                                    >
+                                        {
+                                            month.map((item, index) => <Picker.Item key={index} label={`${item}`} value={index} />)
                                         }
-                                    })
-                                }}
-                                selectedValue={props.month}
-                                onValueChange={ (val) => props.SET_MONTH(val)}
-                            >
-                                {
-                                    month.map((item, index) => <Picker.Item key={index} label={`${item}`} value={index} />)
-                                }
-                            </Picker>
-                        </View>
-                        <View 
-                            style={{ 
-                                ...Platform.select({
-                                    ios : {
-                                        flex: 2 
-                                    },
-                                    android : {
-                                        height : widthToDp('10'),
-                                        width : '100%'
-                                    }
-                                }),
-                            }}>
-                            <Picker
-                                style={{
-                                    ...Platform.select({
-                                        ios : {
-                                            height : 150,
-                                        },
-                                        android : {
-                                            height : widthToDp('10'),
+                                    </Picker>
+                                </View>
+                                <View
+                                    style={{
+                                        ...Platform.select({
+                                            ios: {
+                                                flex: 2
+                                            },
+                                            android: {
+                                                height: widthToDp('10'),
+                                                width: '100%'
+                                            }
+                                        }),
+                                    }}>
+                                    <Picker
+                                        itemStyle={{
+                                            ...Platform.select({
+                                                ios: {
+                                                    height: widthToDp('30'),
+                                                },
+                                                android: {
+                                                    height: widthToDp('10'),
+                                                }
+                                            })
+                                        }}
+                                        selectedValue={props.year}
+                                        onValueChange={(val) => props.SET_YEAR(val)}
+                                    >
+                                        {
+                                            [...Array(40)].map((item, index) => <Picker.Item key={index} label={`${current_date.getFullYear() + index + 543}`} value={current_date.getFullYear() + index} />)
                                         }
-                                    })
-                                }}
-                                selectedValue={props.year}
-                                onValueChange={ (val) => props.SET_YEAR(val)}
-                            >
-                                {
-                                    [...Array(40)].map((item, index) => <Picker.Item key={index} label={`${current_date.getFullYear() + index + 543}`} value={current_date.getFullYear() + index} />)
-                                }
-                            </Picker>
-                        </View>
-                                
+                                    </Picker>
+                                </View>
+
                             </View>
-                            
+
                         </View>
                         <View
                             style={techRegModalStyles.closeContainer}

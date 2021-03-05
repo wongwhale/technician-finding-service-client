@@ -6,6 +6,7 @@ authType.LOADING = 'LOADING'
 authType.LOADED = 'LOADED'
 authType.CLEAR = 'AUTH_REDUCER_CLEAR'
 authType.SET_ROLE = 'SET_ROLE'
+authType.SET_CURRENT_LOCATION = 'SET_CURRENT_LOCATION'
 
 
 const initialState = {
@@ -16,7 +17,11 @@ const initialState = {
         lastname: '',
         role: '',
         uid: '',
-        avatar : ''
+        avatar : '',
+        currentLocation : {
+            lat : 0,
+            lon : 0
+        }
     }
 }
 
@@ -60,6 +65,15 @@ export default function authReducer(state = initialState, action) {
                 userInfo : {
                     ...state.userInfo,
                     role : action.payload.role
+                }
+            }
+        case authType.SET_CURRENT_LOCATION:
+            return {
+                ...state,
+                ...state,
+                userInfo : {
+                    ...state.userInfo,
+                    currentLocation : action.payload.currentLocation
                 }
             }
         default:

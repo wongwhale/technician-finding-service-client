@@ -15,7 +15,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    LOADING, LOADED , cancelRequest
+    LOADING, 
+    LOADED , 
+    cancelRequest
 }
 
 const UserNotification = (props) => {
@@ -36,6 +38,7 @@ const UserNotification = (props) => {
                         </Text>
                         <TouchableOpacity
                             onPress={ () => {
+                                props.LOADING()
                                 props.cancelRequest(props.orderID)
                             }}
                         >
@@ -83,10 +86,10 @@ const UserNotification = (props) => {
                                 })
                             ) : (
                                     <>
-                                        <View style={{ padding: widthToDp('1.5'), paddingHorizontal: widthToDp('4') }}>
+                                        <View style={{ padding: widthToDp('4') }}>
                                             <Text style={{ fontSize: widthToDp('3.5'), color: color.BLUE_2 }}>
                                                 ยังไม่มีการตอบรับ
-                                        </Text>
+                                            </Text>
                                         </View>
                                     </>
                                 )

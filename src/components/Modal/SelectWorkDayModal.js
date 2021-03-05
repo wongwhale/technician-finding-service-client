@@ -36,6 +36,11 @@ const SelectWorkDayModal = (props) => {
                             >
                                 เลือกวันทำงาน
                             </Text>
+                            <Text
+                                style={[techRegModalStyles.headerText , {fontWeight : 'normal'}]}
+                            >
+                                (เลือกได้มากกว่าหนึ่ง)
+                            </Text>
                         </View>
                         <View
                             style={{

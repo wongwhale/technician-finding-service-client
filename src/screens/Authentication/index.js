@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
-const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
 import SearchScreen from './SearchScreen'
@@ -28,8 +26,10 @@ import OrderDetailModal from '../../components/Modal/OrderDetailModal'
 import LoadingModal from '../../components/Modal/LoadingModal';
 import LogoutConfirmModal from '../../components/Modal/LogoutConfirmModal';
 import { OPEN_LOGOUT_CONFIRM_MODAL, CLOSE_LOGOUT_CONFIRM_MODAL } from '../../store/actions/modalAction'
-import { logout } from '../../store/actions/authAction'
+import { logout , setCurrentLocation} from '../../store/actions/authAction'
 import RatingScreen from './RatingScreen';
+import PriceInputModal from '../../components/Modal/PriceInputModal';
+import Geolocation from '@react-native-community/geolocation'
 
 const mapStateToProps = (state) => ({
   uid: state.auth.userInfo.uid,
@@ -48,13 +48,18 @@ const connector = connect(mapStateToProps,
     SET_FILE,
     OPEN_LOGOUT_CONFIRM_MODAL,
     CLOSE_LOGOUT_CONFIRM_MODAL,
-    logout
+    logout,
+    setCurrentLocation
   })
 
 
 const Index = (props) => {
   props.connection(props.uid)
+
   useEffect(() => {
+    Geolocation.getCurrentPosition( ({coords : {latitude , longitude}}) => {
+      props.setCurrentLocation(latitude , longitude)
+    })
     return () => {
       props.leave(props.uid)
     }
@@ -82,7 +87,6 @@ const Index = (props) => {
         <Stack.Screen name='editInfo' component={UserInfoEditScreen} options={{ headerShown: false }} />
         <Stack.Screen name='rating' component={RatingScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
-      <OrderDetailModal />
       <LoadingModal />
       <LogoutConfirmModal
         isOpen={props.logoutConfirmIsOpen}
@@ -90,6 +94,8 @@ const Index = (props) => {
         onLogout={() => props.logout()}
         name={`${props.userInfo.firstname} ${props.userInfo.lastname}`}
       />
+      <PriceInputModal />
+      <OrderDetailModal />
     </>
   );
 };

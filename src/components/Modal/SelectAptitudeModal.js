@@ -36,6 +36,11 @@ const SelectAptitudeModal = (props) => {
                             >
                                 เลือกความถนัด
                             </Text>
+                            <Text
+                                style={[techRegModalStyles.headerText , {fontWeight : 'normal'}]}
+                            >
+                                (เลือกได้มากกว่าหนึ่ง)
+                            </Text>
                         </View>
                         <View
                             style={{

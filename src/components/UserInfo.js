@@ -71,7 +71,11 @@ const UserInfo = (props) => {
                                 {`${props.firstname} ${props.lastname}`}
                             </Text>
                             <Text style={userInfo.type}>
-                                {props.role}
+                                {
+                                    props.role === 'user' ? 'ผู้ใช้ทั่วไป' 
+                                    : props.role === 'technician' ? 'ช่าง'
+                                    : props.role
+                                }
                             </Text>
                         </View>
                     </TouchableOpacity>

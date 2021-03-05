@@ -13,6 +13,9 @@ import { chatType } from '../reducers/chatReducer'
 const socket = io.connect(`${SOCKET_URL}`)
 
 const updateTechOrder = () => {
+    store.dispatch({
+        type : authType.LOADED
+    })
     AsyncStorage.getItem('token').then(token => {
         axios({
             url: WEB_URL,
@@ -94,6 +97,9 @@ const updateTechOrder = () => {
 }
 
 const updateUserResponse = () => {
+    store.dispatch({
+        type : authType.LOADED
+    })
     AsyncStorage.getItem('token').then(token => {
         axios({
             url: WEB_URL,
@@ -142,6 +148,7 @@ const updateUserResponse = () => {
         }).then(res => {
             const data = res.data.data.tokenCheck
             let temp_list = []
+
             Promise.all(
                 data.forms.map(async (form) => {
                     const distance = await getDistance(
@@ -160,6 +167,7 @@ const updateUserResponse = () => {
                     type: notiType.SET_USER_RESPONSE,
                     payload: temp_list
                 })
+                
             }).catch(err => {
                 console.log(err);
             })

@@ -13,10 +13,10 @@ import { global } from '../../stylesheet'
 
 import Feather from 'react-native-vector-icons/Feather'
 import { connect } from 'react-redux';
-import {GET_TECHNICIAN_INFO} from '../../store/actions/techAction'
+import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
 
 const mapStateToProps = (state) => ({
-    interlocutor : state.chat.interlocutor
+    interlocutor: state.chat.interlocutor
 })
 
 const ChatHeader = (props) => {
@@ -24,17 +24,24 @@ const ChatHeader = (props) => {
     return (
         <>
             <View style={[global.chatHeader]}>
-                <View >
-                    <Image style={global.interlocutorImage} source={{uri:props.interlocutor.avatar}} />
-                </View>
-                <TouchableOpacity style={global.nameContainer} 
-                    onPress={ () => {
+                <TouchableOpacity
+                    onPress={() => {
                         props.GET_TECHNICIAN_INFO(props.interlocutor.id)
-                        .then( () => {
-                            props.navigation.navigate('techInfo')
-                        })
+                            .then(() => {
+                                props.navigation.navigate('techInfo')
+                            })
                     }}
-                    >
+                >
+                    <Image style={global.interlocutorImage} source={{ uri: props.interlocutor.avatar }} />
+                </TouchableOpacity>
+                <TouchableOpacity style={global.nameContainer}
+                    onPress={() => {
+                        props.GET_TECHNICIAN_INFO(props.interlocutor.id)
+                            .then(() => {
+                                props.navigation.navigate('techInfo')
+                            })
+                    }}
+                >
                     <Text style={global.interlocutorName}>
                         {props.interlocutor.name}
                     </Text>
@@ -52,4 +59,4 @@ const ChatHeader = (props) => {
     )
 }
 
-export default connect(mapStateToProps , {GET_TECHNICIAN_INFO})(ChatHeader)
+export default connect(mapStateToProps, { GET_TECHNICIAN_INFO })(ChatHeader)

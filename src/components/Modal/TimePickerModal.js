@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react'
 
-import { View, Text, TouchableOpacity , SafeAreaView } from 'react-native'
+import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native'
 import Modal from 'react-native-modalbox'
 import { Picker } from '@react-native-picker/picker'
 import { connect } from 'react-redux'
-import { posting, datePicker , widthToDp } from '../../stylesheet'
-import { modalStyle } from './PostModal'
-import Feather from 'react-native-vector-icons/Feather'
+import { posting, datePicker, widthToDp } from '../../stylesheet'
 import { CLOSE_TIME_PICKER_MODAL } from '../../store/actions/modalAction'
-import { SET_MINUTE , SET_HOUR } from '../../store/actions/formAction'
+import { SET_MINUTE, SET_HOUR } from '../../store/actions/formAction'
 import { techRegModalStyles } from './SelectAptitudeModal'
 import { color } from '../../stylesheet/colors'
 
 const mapStateToProps = (state) => ({
-    time_picker : state.modal.time_picker,
-    hour : state.form.hour,
-    minute : state.form.minute
+    time_picker: state.modal.time_picker,
+    hour: state.form.hour,
+    minute: state.form.minute
 })
 
-const connector = connect(mapStateToProps, { CLOSE_TIME_PICKER_MODAL , SET_MINUTE , SET_HOUR })
+const connector = connect(mapStateToProps, { CLOSE_TIME_PICKER_MODAL, SET_MINUTE, SET_HOUR })
 
 const TimePickerModal = (props) => {
 
@@ -35,14 +33,14 @@ const TimePickerModal = (props) => {
             <Modal
                 isOpen={props.time_picker}
                 onClosed={() => props.CLOSE_TIME_PICKER_MODAL()}
-                style={[modalStyle.subcontainer, { backgroundColor: 'transparent' }]}
+                style={{backgroundColor: 'transparent' }}
                 position='center'
                 swipeToClose={false}
             >
                 <SafeAreaView
                     style={techRegModalStyles.container}
                 >
-                    <View 
+                    <View
                         style={{
                             backgroundColor: '#fff',
                             justifyContent: 'flex-start',
@@ -57,7 +55,7 @@ const TimePickerModal = (props) => {
                                 เลือกเวลาา
                             </Text>
                         </View>
-                        <View 
+                        <View
                             style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -69,26 +67,26 @@ const TimePickerModal = (props) => {
                             <View
                                 style={
                                     [
-                                        techRegModalStyles.rowContainer ,
+                                        techRegModalStyles.rowContainer,
                                         {
-                                            flexDirection : 'row'
+                                            flexDirection: 'row'
                                         }
                                     ]
                                 }
                             >
-                                <View 
-                                    style={{ 
-                                        flex : 1
+                                <View
+                                    style={{
+                                        flex: 1
                                     }}
                                 >
                                     <Picker
-                                        style={{
+                                        itemStyle={{
                                             ...Platform.select({
-                                                ios : {
-                                                    height : 150,
+                                                ios: {
+                                                    height: widthToDp('30'),
                                                 },
-                                                android : {
-                                                    height : widthToDp('10'),
+                                                android: {
+                                                    height: widthToDp('10'),
                                                 }
                                             })
                                         }}
@@ -96,37 +94,37 @@ const TimePickerModal = (props) => {
                                         onValueChange={(val) => {
                                             props.SET_HOUR(val)
                                         }}
-                                        
+
                                     >
                                         {
                                             [...Array(24)].map((item, index) => <Picker.Item key={index} label={`${index}`} value={`${index}`} />)
                                         }
                                     </Picker>
                                 </View>
-                            <View 
-                                style={{ 
-                                    flex : 1
-                                }}>
-                                <Picker
+                                <View
                                     style={{
-                                        ...Platform.select({
-                                            ios : {
-                                                height : 150,
-                                            },
-                                            android : {
-                                                height : widthToDp('10'),
-                                            }
-                                        })
-                                    }}
-                                    selectedValue={`${props.minute}`}
-                                    onValueChange={(val) => props.SET_MINUTE(val)}
-                                >
-                                    {
-                                        [...Array(60)].map((item, index) => <Picker.Item key={index} label={`${index}`} value={`${index}`} />)
-                                    }
-                                </Picker>
+                                        flex: 1
+                                    }}>
+                                    <Picker
+                                        itemStyle={{
+                                            ...Platform.select({
+                                                ios: {
+                                                    height: widthToDp('30'),
+                                                },
+                                                android: {
+                                                    height: widthToDp('10'),
+                                                }
+                                            })
+                                        }}
+                                        selectedValue={`${props.minute}`}
+                                        onValueChange={(val) => props.SET_MINUTE(val)}
+                                    >
+                                        {
+                                            [...Array(60)].map((item, index) => <Picker.Item key={index} label={`${index}`} value={`${index}`} />)
+                                        }
+                                    </Picker>
+                                </View>
                             </View>
-                        </View>
                         </View>
                         <View
                             style={techRegModalStyles.closeContainer}

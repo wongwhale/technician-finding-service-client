@@ -5,3 +5,5 @@ apply from: file("../node_modules/@react-native-community/cli-platform-android/n
 include ':react-native-image-crop-picker'
 project(':react-native-image-crop-picker').projectDir = new File(settingsDir, '../node_modules/react-native-image-crop-picker/android')
 include ':app'
+include ':react-native-android-keyboard-adjust'
+project(':react-native-android-keyboard-adjust').projectDir = new File(settingsDir, '../node_modules/react-native-android-keyboard-adjust/android')
