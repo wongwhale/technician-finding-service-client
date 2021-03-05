@@ -98,8 +98,6 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                                 star
                                 amountOfvoteStar
                                 amountOfcomment
-                                voteID
-                                
                               }
                               workDay
                                 workTime{
