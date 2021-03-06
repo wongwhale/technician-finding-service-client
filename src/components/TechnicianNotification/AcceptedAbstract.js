@@ -36,6 +36,8 @@ const AcceptedAbstract = (props) => {
                         <Image
                             style={notification.image}
                             source={{uri : props.order.userInfoID.avatar}}
+                            resizeMode='cover'
+                            resizeMethod='resize'
                         />
                     </TouchableOpacity>
                 </View>

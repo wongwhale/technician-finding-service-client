@@ -95,6 +95,8 @@ const Abstract = (props) => {
                             <Image
                                 style={notification.image}
                                 source={{ uri: props.order.userInfoID.avatar }}
+                                resizeMethod='resize'
+                                resizeMode='cover'
                             />
                         </TouchableOpacity>
                     </View>
