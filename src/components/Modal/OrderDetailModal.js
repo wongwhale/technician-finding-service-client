@@ -43,6 +43,7 @@ const ImageView = ({ uri }) => {
                     }}
                     source={{ uri: uri }}
                     resizeMode='cover'
+                    resizeMethod='resize'
                 />
             </TouchableOpacity>
         </>
@@ -51,7 +52,6 @@ const ImageView = ({ uri }) => {
 
 const OrderDetailModal = (props) => {
 
-    const [date, setDate] = React.useState(new Date(props.formInfo.date))
     const month = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฏาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
 
     const onClosed = () => {
@@ -166,7 +166,7 @@ const OrderDetailModal = (props) => {
                                             color: color.GREY_5
                                         }}
                                     >
-                                        {`วันที่ : ${date.getDay()} ${month[date.getMonth()]} ${date.getFullYear() + 543}`}
+                                        {`วันที่ : ${new Date(props.formInfo.date).getDay()} ${month[new Date(props.formInfo.date).getMonth()]} ${new Date(props.formInfo.date).getFullYear() + 543}`}
                                     </Text>
                                     <Text
                                         style={{
@@ -175,7 +175,7 @@ const OrderDetailModal = (props) => {
                                             color: color.GREY_5
                                         }}
                                     >
-                                        {`เวลา : ${('0' + date.getHours()).slice(-2)} : ${date.getMinutes()} น.`}
+                                        {`เวลา : ${('0' + new Date(props.formInfo.date).getHours()).slice(-2)} : ${new Date(props.formInfo.date).getMinutes()} น.`}
                                     </Text>
                                 </View>
                                 <View

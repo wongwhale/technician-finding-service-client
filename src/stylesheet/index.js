@@ -266,14 +266,14 @@ export const searchScreen = StyleSheet.create({
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
         flex: 1,
-        height: widthToDp('9'),
+        paddingVertical : widthToDp('0'),
         alignItems: 'center',
         margin: widthToDp('2'),
         borderRadius: widthToDp('2')
     },
     textInput: {
         flex: 1,
-        fontSize: heightToDp('2'),
+        fontSize: widthToDp('3'),
         color: color.BLUE_1,
     },
     searchIconContainer: {
@@ -283,7 +283,7 @@ export const searchScreen = StyleSheet.create({
         aspectRatio: 1
     },
     searchIcon: {
-        fontSize: widthToDp('5'),
+        fontSize: widthToDp('4'),
         color: color.BLUE_1,
     },
     xIconContainer: {

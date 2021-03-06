@@ -4,6 +4,7 @@ import axios from "axios"
 import WEB_URL from "../../misc/web_url"
 import { getDistance } from "../../misc/getDistance"
 import Geolocation from '@react-native-community/geolocation'
+import store from ".."
 
 export const OPEN_DATE_PICKER_MODAL = () => dispatch => {
     dispatch({
@@ -137,51 +138,41 @@ export const getFormInfo = (order_id) => dispatch => {
                             `
                         query{
                             getForm(formID :"${order_id}") {
-                              _id
-                              detail
-                              date
-                              techType
-                            image
-                            location{
-                                lat ,
-                                lon
-                              }
-                            userInfoID {
-                              firstname
-                              lastname
-                              avatar
-                            }
+                                _id
+                                detail
+                                date
+                                techType
+                                image
+                                location{
+                                    lat ,
+                                    lon
+                                }
+                                userInfoID {
+                                firstname
+                                lastname
+                                avatar
+                                }
                             }
                         }
                         `
                     }
                 }).then(res => {
-                    // Geolocation.getCurrentPosition(
-                    //     ( {coords : {latitude , longitude}} ) => {
-                    //         const distance = getDistance(
-                    //             res.data.data.getForm.location.lat,
-                    //             res.data.data.getForm.location.lon,
-                    //             latitude,
-                    //             longitude
-                    //         )
-                    //         dispatch({
-                    //             type : modalType.SET_FORM_INFO,
-                    //             payload : {
-                    //                 ...res.data.data.getForm,
-                    //                 distance : distance
-                    //             }
-                    //         })
-                    //     },
-                    //     () => {
-                    //         dispatch({
-                    //             type : modalType.SET_FORM_INFO,
-                    //             payload : {
-                    //                 ...res.data.data.getForm,
-                    //                 distance : 0
-                    //             }
-                    //         })
-                    //     }
-                    // )
+                    getDistance(
+                        store.getState().auth.userInfo.currentLocation.lat,
+                        store.getState().auth.userInfo.currentLocation.lon,
+                        res.data.data.getForm.location.lat,
+                        res.data.data.getForm.location.lon
+                    ).then( (dist) => {
+                        dispatch({
+                            type : modalType.SET_FORM_INFO,
+                            payload :  {
+                                ...res.data.data.getForm,
+                                distance : parseFloat(dist / 1000).toFixed(2)
+                            }
+                        })
+                    })
+                    
+                    
                     resolve(res.data.data.getForm)
                 }).catch( err => {
                     reject(err)

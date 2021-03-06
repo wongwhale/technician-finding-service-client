@@ -33,7 +33,7 @@ const Message = (props) => {
     useFocusEffect( 
         React.useCallback( () => {
             props.INITIAL_HISTORY_LIST(props.uid)
-            .then( () => {
+            .then( (list) => {
                 props.LOADED()
             }).catch(err => {
                 console.log(err);

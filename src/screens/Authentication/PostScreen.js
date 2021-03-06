@@ -188,15 +188,27 @@ const PostScreen = (props) => {
                     <TimePickerModal />
                     <SelectTypePickerModal />
                     {/* <LocationPickerModal /> */}
-                    <ImagePickerModal libFunc={() => {
-                        ImagePickerManager.openPicker({
-                            multiple: true,
-                            maxFiles: 5
-                        }).then((img) => {
-                            props.SET_FILE(img)
-                            props.CLOSE_IMAGE_PICKER_MODAL()
-                        })
-                    }} />
+                    <ImagePickerModal 
+                        libFunc={() => {
+                            ImagePickerManager.openPicker({
+                                multiple: true,
+                                maxFiles: 5
+                            }).then((img) => {
+                                console.log(img)
+                                props.SET_FILE(img)
+                                props.CLOSE_IMAGE_PICKER_MODAL()
+                            })
+                        }} 
+
+                        camFunc={ () => {
+                            ImagePickerManager.openCamera({
+
+                            }).then( (img) => {
+                                console.log(img);
+                                props.CLOSE_IMAGE_PICKER_MODAL()
+                            })
+                        }}
+                    />
                     <LocationPickerModal
                         isOpen={locationVisible}
                         onClosed={() => setLocationVisible(false)}

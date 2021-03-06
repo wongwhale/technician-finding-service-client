@@ -94,14 +94,36 @@ const ChatInput = (props) => {
         }
     }
 
+    const handleCamera = () => {
+        ImagePicker.openCamera({
+            compressImageQuality : 0.5,
+        }).then( async image => {
+                const reference = firebaseStorage().ref('chat').child(`${props.uid}-${image.path}-${new Date().getTime()}`)
+                await reference.putFile(image.path)
+                await reference.getDownloadURL().then(url => {
+                    console.log(url);
+                    props.SEND_MESSAGE(url, 'image', props.uid)
+                    props.sendMessage({
+                        date: new Date().toISOString(),
+                        message: url,
+                        sender: props.uid,
+                        msgType: 'image'
+                    }, props.interlocutor.id)
+                })
+        }).catch( err => {
+            console.log(err);
+        } )
+    }
+
     const handleSendPhoto = () => {
         if (props.messages.length === 0) {
             props.createChatroom(props.uid, props.interlocutor.id)
                 .then(() => {
                     ImagePicker.openPicker({
-                        multiple: true,
-                        maxFiles: 10
-                    }).then(images => {
+                        multiple: false,
+                        compressImageQuality : 0.7,
+                        compressVideoPreset : 'LowQuality'
+                    }).then( images => {
                         images.map(async image => {
                             const reference = firebaseStorage().ref('chat').child(`${props.uid}-${image.path}-${new Date().getTime()}`)
                             await reference.putFile(image.path)
@@ -155,7 +177,7 @@ const ChatInput = (props) => {
             <View style={message.chatInputContainer}>
                 <TouchableOpacity
                     onPress={() => {
-                        animate()
+                        handleCamera()
                     }}
                 >
                     <LinearGradient

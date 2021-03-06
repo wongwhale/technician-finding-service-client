@@ -253,7 +253,9 @@ export const INITIAL_HISTORY_LIST = (uid) => dispatch => {
                 dispatch({
                     type: chatType.INITIAL_HISTORY_LIST,
                     payload: {
-                        list: res.data.data.getChatRoom
+                        list: res.data.data.getChatRoom.sort( (a,b) => {
+                            return new Date(b.recentMessage.date) - new Date(a.recentMessage.date)
+                        })
                     }
                 })
                 resolve(res.data.data.getChatRoom)

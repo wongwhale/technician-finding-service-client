@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getDistance } from '../../misc/getDistance'
 import { chatType } from '../reducers/chatReducer'
 
+
 const socket = io.connect(`${SOCKET_URL}`)
 
 const updateTechOrder = () => {

@@ -57,8 +57,8 @@ const ImagePickerComponent = (props) => {
                                                                 return (
                                                                     <>
                                                                         <Image
-                                                                            key={index}
-                                                                            source={{ uri: item.sourceURL }}
+                                                                            key={item.modificationDate}
+                                                                            source={{ uri: item.path }}
                                                                             style={{
                                                                                 width: widthToDp('25'),
                                                                                 height: widthToDp('25'),

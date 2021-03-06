@@ -266,8 +266,8 @@ export const checkToken = () => async (dispatch) => {
                 Promise.all(
                     data.technicianInfoID.newForm.map(async (order) => {
                         const distance = await getDistance(
-                            18.795424746501605,
-                            98.95226894013882,
+                            store.getState().auth.userInfo.currentLocation.lat,
+                            store.getState().auth.userInfo.currentLocation.lon,
                             order.location.lat,
                             order.location.lon
                         )
@@ -315,8 +315,8 @@ export const checkToken = () => async (dispatch) => {
                 Promise.all(
                     data.forms.map(async (form) => {
                         const distance = await getDistance(
-                            18.795424746501605,
-                            98.95226894013882,
+                            store.getState().auth.userInfo.currentLocation.lat,
+                            store.getState().auth.userInfo.currentLocation.lon,
                             form.location.lat,
                             form.location.lon
                         )

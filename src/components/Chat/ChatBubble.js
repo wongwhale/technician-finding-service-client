@@ -70,6 +70,8 @@ const ChatBubble = ({ sender, text, name, time, isLast, isFirst, isNewDate, type
                                 <Image
                                     style={[message.bubleImage , sender ? message.rightImageBubble : message.leftImageBubble]}
                                     source={{ uri: text }}
+                                    resizeMethod='resize'
+                                    resizeMode='cover'
                                 />
                             </TouchableOpacity>
                         ) : null

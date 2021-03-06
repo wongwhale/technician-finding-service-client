@@ -81,14 +81,14 @@ const Abstract = (props) => {
             <>
                 <TouchableOpacity
                     style={!props.last ? [notification.abstractContainer, notification.abstractBottomBorder] : notification.abstractContainer}
-                    // onPress={() => {
-                    //     props.getFormInfo(props.order._id)
-                    //         .then(form => {
-                                
-                    //         }).catch(err => {
-                    //             console.log(err);
-                    //         })
-                    // }}
+                    onPress={() => {
+                        props.getFormInfo(props.order._id)
+                            .then(form => {
+                                props.OPEN_DETAIL_MODAL(props.order._id)
+                            }).catch(err => {
+                                console.log(err);
+                            })
+                    }}
                 >
                     <View style={notification.imageContainer}>
                         <TouchableOpacity style={notification.image}>
@@ -99,7 +99,7 @@ const Abstract = (props) => {
                         </TouchableOpacity>
                     </View>
                     <View style={notification.detailContainer}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: '' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <View style={{ flexWrap: 'nowrap' }}>
                                 <Text style={[newOrder.text, notification.nameText]}>
                                     {`${props.order.userInfoID.firstname} ${props.order.userInfoID.lastname}`}
