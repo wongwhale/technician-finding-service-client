@@ -25,8 +25,6 @@ const UserInfo = (props) => {
 
     return (
         <>
-            <SafeAreaView style={[content.topsafearray]} />
-            <SafeAreaView style={content.safearray}>
                 <View style={[global.header]}>
                     <Image
                         style={infoStyles.profileImage}
@@ -81,7 +79,7 @@ const UserInfo = (props) => {
                         }}
                     >
                         <View
-                            style={{ width: widthToDp('70'), backgroundColor: color.BLUE_3, borderRadius: widthToDp('1'), borderWidth: 2, borderColor: `${color.BLUE_3}66`, justifyContent: 'center', alignItems: 'center', height: widthToDp('7') }}
+                            style={{ width: widthToDp('70'), backgroundColor: color.BLUE_3, borderRadius: widthToDp('1'), justifyContent: 'center', alignItems: 'center', height: widthToDp('7') }}
                         >
                             <Text style={{ color: '#fff', fontSize: widthToDp('3.5'), fontWeight: 'bold' }}>แก้ไขข้อมูลส่วนตัว</Text>
                         </View>
@@ -105,7 +103,6 @@ const UserInfo = (props) => {
                         }
                     </View>
                 </ScrollView>
-            </SafeAreaView>
         </>
     )
 }

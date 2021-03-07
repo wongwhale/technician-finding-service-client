@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     Image,
 } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import Header from '../../components/Header'
 import { content, searchScreen, color, technician, widthToDp, heightToDp } from '../../stylesheet'
@@ -17,10 +18,9 @@ import { SEARCH_BY_KEY_WORD, GET_NEAR_TECHNICIAN } from '../../store/actions/tec
 import { SET_LOCATION } from '../../store/actions/formAction'
 import Feather from 'react-native-vector-icons/Feather'
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
-import MapViewDirections from 'react-native-maps-directions'
-import { GOOGLE_API } from '@env'
-import Geolocation from '@react-native-community/geolocation'
 import { useFocusEffect } from '@react-navigation/native'
+import Modal from 'react-native-modalbox'
+import {aptitudeType} from '../../misc/aptitude_type'
 
 const mapStateToProps = (state) => ({
     location: state.form.location
@@ -35,6 +35,8 @@ const mapDispatchToProps = {
 const NearMeScreen = ({ navigation, ...props }) => {
     const [mapKeyword, setMapKeyword] = React.useState('')
     const [technicians, setTechnicians] = React.useState([])
+    const [isOpen , setIsOpen] = React.useState(false)
+
 
     React.useEffect(() => {
         props.GET_NEAR_TECHNICIAN(
@@ -51,12 +53,48 @@ const NearMeScreen = ({ navigation, ...props }) => {
         },[])
     )
 
+    const handleOnPressFilterModal = () => {
+        setIsOpen(false)
+    }
+
     return (
         <>
-            {/* <SafeAreaView style={content.safearray}> */}
-            <SafeAreaView style={content.topsafearray} />
             <View style={[content.safearray , {backgroundColor : color.GREY_5}]}>
                 <Header page="ใกล้ฉัน" back={true} navigation={navigation} />
+                <TouchableOpacity
+                    style={{
+                        position : 'absolute',
+                        bottom : widthToDp('5'),
+                        backgroundColor : color.BLUE_3,
+                        zIndex : 4,
+                        width : widthToDp('40'),
+                        paddingVertical : widthToDp('3'),
+                        alignSelf : 'center',
+                        alignItems : 'center',
+                        justifyContent : 'center',
+                        borderRadius : widthToDp('10'),
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 5,
+                        },
+                        shadowOpacity: 0.34,
+                        shadowRadius: 6.27,
+
+                        elevation: 10,
+                    }}
+                    onPress={() => setIsOpen(true)}
+                >
+                    <Ionicons
+                        name='options-outline'
+                        size={widthToDp("6")}
+                        style={{
+                            fontSize : widthToDp('6'),
+                            fontWeight : 'bold',
+                            color : '#fff',
+                        }}
+                    />
+                </TouchableOpacity>
                 <MapView
                     provider={PROVIDER_GOOGLE}
                     style={[content.container]}
@@ -74,46 +112,6 @@ const NearMeScreen = ({ navigation, ...props }) => {
                     }}
                     showsUserLocation
                 >
-                    {/* <View style={{ flexDirection: 'row' }}>
-                        <View style={searchScreen.textInputContainer}>
-                            {
-                                mapKeyword.length != 0 ? (
-                                    <TouchableOpacity style={searchScreen.xIconContainer} onPress={() => props.SET_SEARCH_KEY_WORD('')}>
-                                        <Feather name='x' style={searchScreen.xIcon} />
-                                    </TouchableOpacity>
-                                ) : null
-
-                            }
-                            <TextInput
-                                placeholder="ค้นหาสถานที่"
-                                placeholderTextColor={color.BLUE_4}
-                                style={searchScreen.textInput}
-                                autoCorrect={false}
-                                onChangeText={(val) => setMapKeyword(val)}
-                                value={mapKeyword}
-                                onSubmitEditing={() => {
-                                    props.SEARCH_BY_KEY_WORD(mapKeyword)
-                                }}
-                            />
-                            <View style={searchScreen.searchIconContainer}>
-                                <Feather name='search' style={searchScreen.searchIcon} />
-                            </View>
-                        </View>
-                    </View> */}
-                    {/* <MapViewDirections
-                        origin={{
-                            latitude: 18.795924746501605,
-                            longitude: 98.95296894013882,
-                        }}
-                        apikey={GOOGLE_API}
-                        strokeWidth={0}
-                        strokeColor='red'
-                        destination={{
-                            latitude: 18.794925746501605,
-                            longitude: 98.95190894013882,
-                        }}
-                    >
-                    </MapViewDirections> */}
                     {
                         technicians.length !== 0 ?
                             technicians.map((tech, index) => {
@@ -145,9 +143,87 @@ const NearMeScreen = ({ navigation, ...props }) => {
                             })
                             : null
                     }
-                    {/* Map */}
                 </MapView>
             </View>
+            <Modal
+                isOpen={isOpen}
+                onClosed={() => setIsOpen(false)}
+                position='bottom'
+                style={{
+                    height : heightToDp('60'),
+                    borderTopRightRadius : heightToDp(3),
+                    borderTopLeftRadius : heightToDp(3)
+                }}
+                swipeArea={heightToDp(3)}
+            >
+                <View
+                    style={{flex :1}}
+                >
+                    <View
+                        style={{
+                            height: heightToDp('3'),
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <View
+                            style={{
+                                backgroundColor: color.GREY_2,
+                                height: 5,
+                                width: widthToDp('10'),
+                                borderRadius: 5
+                            }}
+                        />
+                    </View>
+                    <Text
+                        style={{
+                            fontWeight: 'bold',
+                            fontSize: widthToDp('6'),
+                            color: color.BLUE_1,
+                            alignSelf : 'center'
+                        }}
+                    >
+                        เลือกประเภท
+                    </Text>
+                    <View
+                        style={{
+                            flexDirection : 'row',
+                            flexWrap : 'wrap',
+                            padding : widthToDp('4')
+                        }}
+                    >
+                        {
+                            aptitudeType.map( (item) => {
+                                return (
+                                    <TouchableOpacity
+                                        style={{
+                                            paddingVertical : widthToDp('2'),
+                                            marginHorizontal : widthToDp('1'),
+                                            marginVertical : widthToDp('1'),
+                                            paddingHorizontal : widthToDp('4'),
+                                            borderRadius : widthToDp('4'),
+                                            backgroundColor : color.GREY_5
+                                        }}
+                                    >
+                                        <Text 
+                                            style={{
+                                                fontSize : widthToDp('4'),
+                                                fontWeight : 'bold',
+                                                color : color.BLUE_1
+                                            }}
+                                            key={item}
+                                        >
+                                            
+                                            {item}
+                                            </Text>
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
+                    </View>
+                </View>
+
+            </Modal>
 
         </>
     )

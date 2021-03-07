@@ -1,3 +1,5 @@
+import { userInfo } from "../../stylesheet"
+
 export const authType = {}
 authType.LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 authType.LOGIN_FAIL = 'LOGIN_FAIL'
@@ -32,7 +34,12 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 isLoading: false,
                 isAuth: true,
-                userInfo: action.payload
+                userInfo: {
+                    currentLocation : {
+                        ...state.userInfo.currentLocation
+                    },
+                    ...action.payload
+                }
             }
         case authType.LOGIN_FAIL:
             return {
@@ -70,10 +77,12 @@ export default function authReducer(state = initialState, action) {
         case authType.SET_CURRENT_LOCATION:
             return {
                 ...state,
-                ...state,
                 userInfo : {
                     ...state.userInfo,
-                    currentLocation : action.payload.currentLocation
+                    currentLocation : {
+                        lat : action.payload.currentLocation.lat,
+                        lon : action.payload.currentLocation.lon
+                    }
                 }
             }
         default:

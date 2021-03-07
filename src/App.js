@@ -40,17 +40,16 @@ const connector = connect(mapStateToProps, { setCurrentLocation , disconnect, le
 
 const Router = (props) => {
 
-  const getCurrentPositionSuccess = ({ coords: { latitude, longitude } }) => {
-    props.setCurrentLocation(latitude, longitude)
-    props.checkToken()
-  }
 
   const getCurrentPositionFail = () => {
 
   }
 
   useEffect(() => {
-    Geolocation.getCurrentPosition(getCurrentPositionSuccess, getCurrentPositionFail)
+    Geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+      props.setCurrentLocation(latitude, longitude)
+      props.checkToken()
+    }, getCurrentPositionFail)
     return () => {
       props.disconnect(props.uid)
     }

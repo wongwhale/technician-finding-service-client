@@ -87,8 +87,6 @@ const SearchScreen = (props) => {
 
     return (
         <>
-            <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={[content.safearray, { backgroundColor: '#fff' }]}>
                 <Header page="ค้นหา" back={true} navigation={props.navigation} isRadius />
                 <View style={[content.container, { backgroundColor: '#fff' }]}
                     onStartShouldSetResponder={() => true}
@@ -185,7 +183,6 @@ const SearchScreen = (props) => {
                             })
                     }}
                 />
-            </SafeAreaView>
         </>
     )
 }

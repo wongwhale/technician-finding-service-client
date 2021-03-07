@@ -1,3 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import axios from "axios"
+import WEB_URL from "../../misc/web_url"
 import { notiType } from "../reducers/notificationReducer"
 
 export const addNewOrder = ( order ) => dispatch => {
@@ -7,11 +10,32 @@ export const addNewOrder = ( order ) => dispatch => {
     })
 }
 
-export const removeOrder = (_id) => dispatch => {
+export const removeOrder = (formID , userID) => dispatch => {
+    AsyncStorage.getItem('token').then( token => {
+        axios({
+            url: WEB_URL,
+            method: "post",
+            data: {
+                query: `
+                mutation{
+                    techIgnoreForm(formID :"${formID}" , userID:"${userID}")
+                  }
+                `,
+            },
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            },
+        }).then( res => {
+            console.log(res.data.data.techIgnoreForm);
+        }).catch( err => {
+            console.log(err);
+        })
+    })
     dispatch({
         type : notiType.REMOVE_TECH_ORDER,
         payload : {
-            _id : _id
+            _id : formID
         }
     })
 }

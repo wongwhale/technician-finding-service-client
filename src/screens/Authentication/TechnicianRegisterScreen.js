@@ -172,14 +172,9 @@ const TechnicianRegisterScreen = (props) => {
 
     return (
         <>
-            <SafeAreaView style={content.topsafearray} />
             <View style={[content.safearray, { backgroundColor: color.GREY_5 }]}>
                 <Header navigation={props.navigation} title='สมัครเป็นช่าง' />
 
-                <KeyboardAvoidingView
-                    behavior='padding'
-                    style={{ flex: 1 }}
-                >
                     <ScrollView
                         style={content.container}
                         ref={scrollRef}
@@ -560,7 +555,6 @@ const TechnicianRegisterScreen = (props) => {
                         />
                         <View style={{ marginBottom: widthToDp('8') }} />
                     </ScrollView>
-                </KeyboardAvoidingView>
 
 
                 {/* Start Time Modal */}

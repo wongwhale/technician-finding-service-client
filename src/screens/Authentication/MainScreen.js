@@ -159,18 +159,6 @@ const Main = (props) => {
                                 </LinearGradient>
                             </TouchableOpacity>
                         </View>
-                        <Button
-                            title='up'
-                            onPress={() => {
-                                snackPopUp()
-                            }}
-                        />
-                        <Button
-                            title='down'
-                            onPress={() => {
-                                snackPopDown()
-                            }}
-                        />
                     </View>
                 </ScrollView>
 

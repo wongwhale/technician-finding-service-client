@@ -63,7 +63,7 @@ const LocationPickerModal = ({setLocation , location , ...props}) => {
                                     setLocation(res.latitude, res.longitude)
                                 }}
                             >
-                                <Ionicons name='ios-pin' size={50} style={{ top: -20, right: -2, color: 'red' }} />
+                                <Ionicons name='pin' size={50} style={{ top: -20, right: -2, color: 'red' }} />
                             </MapView>
                         </View>
                         <View

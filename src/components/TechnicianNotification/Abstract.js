@@ -11,12 +11,12 @@ import { acceptedReq } from '../../store/actions/socketAction'
 import { OPEN_PRICE_INPUT_MODAL, OPEN_DETAIL_MODAL, getFormInfo, setFormInfo } from '../../store/actions/modalAction'
 
 import { connect } from 'react-redux'
-import { getDistance } from '../../misc/getDistance'
+import Geolocation from '@react-native-community/geolocation'
 
 const mapStateToProps = (state) => ({
     uid: state.auth.userInfo.uid,
     firstname: state.auth.userInfo.firstname,
-    lastname: state.auth.userInfo.lastname
+    lastname: state.auth.userInfo.lastname,
 })
 
 const mapDispatchToProps = {
@@ -31,7 +31,7 @@ const mapDispatchToProps = {
 const Abstract = (props) => {
 
     const handleRemoveOrder = () => {
-        props.removeOrder(props.order._id)
+        props.removeOrder(props.order._id , props.uid)
 
     }
 
@@ -71,7 +71,6 @@ const Abstract = (props) => {
             acceptScaleY, {
             toValue: 0,
             delay: 1,
-
         }
         )
     }

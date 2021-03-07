@@ -77,7 +77,7 @@ const Notification = ({ navigation, role, userResponse }) => {
                                 <View>
                                     <Text
                                         style={{
-                                            fontWeight: weight,
+                                            fontWeight: 'normal',
                                             fontSize: widthToDp('4'),
                                             color: fontColor
                                         }}

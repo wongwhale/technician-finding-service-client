@@ -24,8 +24,6 @@ const TechnicianInfo = (props) => {
 
     return (
         <>
-            <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={[content.safearray, { backgroundColor: '#fff' }]}>
                 <View style={[global.header]}>
                     <Image
                         style={infoStyles.profileImage}
@@ -139,7 +137,6 @@ const TechnicianInfo = (props) => {
                         <TechnicianInfoComponent info={props.info} />
                     </View>
                 </ScrollView>
-            </SafeAreaView>
         </>
     )
 }

@@ -21,6 +21,7 @@ const LocationPicker = (props) => {
     return (
         <>
             <View style={posting.fullContainer}>
+                
                 <View style={posting.mapContainer}>
                     <MapView
                         style={{
@@ -42,15 +43,9 @@ const LocationPicker = (props) => {
                             props.SET_LOCATION(res.latitude, res.longitude)
                         }}
                     >
-                        <Ionicons name='ios-pin' size={50} style={{ top:-20 , right:-2 , color:'red' }} />
-                        {/* <Marker
-                            coordinate={{
-                                latitude: props.location.latitude,
-                                longitude: props.location.longitude,
-                            }}
-                        ></Marker> */}
+                        <Ionicons name='pin-outline' size={50} style={{  top:-20 , right:-2 , color:'red' }} />
+                       
                     </MapView>
-                    {/* Drag Location  */}
                 </View>
             </View>
         </>

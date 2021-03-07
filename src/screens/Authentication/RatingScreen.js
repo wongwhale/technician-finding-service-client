@@ -24,11 +24,6 @@ const RatingScreen = (props) => {
     }, [])
     return (
         <>
-            <SafeAreaView style={content.topsafearray} />
-            <KeyboardAvoidingView style={{flex : 1}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-                <SafeAreaView
-                    style={content.container}
-                >
 
                     <View
                         style={{
@@ -124,8 +119,6 @@ const RatingScreen = (props) => {
                             {/* <TopTab.Screen name='12' component={RatingTabPage} options={{ tabBarLabel: 'คอมพิวเตอร์' }} /> */}
                         </TopTab.Navigator>
                     </View>
-                </SafeAreaView>
-            </KeyboardAvoidingView>
         </>
     )
 }

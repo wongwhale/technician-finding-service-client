@@ -54,6 +54,9 @@ const OrderDetailModal = (props) => {
 
     const month = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฏาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
 
+    React.useEffect(() => {
+        console.log(props.formInfo);
+    },[])
     const onClosed = () => {
         props.CLOSE_DETAIL_MODAL()
     }
@@ -191,7 +194,7 @@ const OrderDetailModal = (props) => {
                                         }}
                                     >
                                         รายละเอียด
-                                </Text>
+                                    </Text>
                                     <Text
                                         style={{
                                             fontWeight: 'bold',
@@ -229,13 +232,60 @@ const OrderDetailModal = (props) => {
                                         }}
                                     >
                                         {
-                                            props.formInfo.image.map(item => {
-                                                return <ImageView uri={item} key={item} />
-                                            })
+                                            props.formInfo.image.length !== 0 ? (
+                                                props.formInfo.image.map(item => {
+                                                    return <ImageView uri={item} key={item} />
+                                                })
+                                            ) : 
+                                            (
+                                                <Text
+                                        style={{
+                                            fontWeight: 'bold',
+                                            fontSize: widthToDp('4'),
+                                            color: color.GREY_5
+                                        }}
+                                    >
+                                        ไม่มีรูปเพิ่มเติม
+                                    </Text>
+                                            )
                                         }
                                     </View>
                                 </View>
-
+                                <View
+                                    style={{
+                                        marginBottom: widthToDp('5')
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            fontWeight: 'bold',
+                                            fontSize: widthToDp('6'),
+                                            color: color.GREY_5
+                                        }}
+                                    >
+                                    สถานที่
+                                </Text>
+                                    <View
+                                        style={{
+                                            flexWrap: 'wrap',
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            width: '100%',
+                                            paddingVertical: widthToDp('2'),
+                                        }}
+                                    >
+                                        <View 
+                                            style={{
+                                                width : '100%' , 
+                                                aspectRatio : 2,
+                                                backgroundColor : color.GREY_5,
+                                                borderRadius : widthToDp('5')
+                                            }} 
+                                        />
+                                        
+                                    </View>
+                                </View>
                                 <View
                                     style={{
                                         marginBottom: widthToDp('5'),

@@ -44,7 +44,7 @@ const ImagePickerModal = (props) => {
                             <Text
                                 style={techRegModalStyles.headerText}
                             >
-                                เลือกรูปภพ หรือ วิดีโอ
+                                เลือกรูปภาพ หรือ วิดีโอ
                             </Text>
                         </View>
                         <View 

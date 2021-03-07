@@ -75,7 +75,7 @@ export const content = StyleSheet.create({
 export const mainScreen = StyleSheet.create({
     container: {
         flex: 1,
-        padding: widthToDp('5')
+        padding: widthToDp('5'),
     },
     menuLayout: {
         paddingHorizontal: widthToDp('6'),

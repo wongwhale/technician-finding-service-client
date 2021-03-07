@@ -54,8 +54,6 @@ const Btn = (props) => {
 const SettingScreen = (props) => {
     return (
         <>
-            <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={[content.safearray, { backgroundColor: color.GREY_5 }]}>
                 <Header navigation={props.navigation} title='ตั้งค่า' />
                 <View style={{ flex: 1, backgroundColor: color.GREY_5 }}>
                     <View style={{ height: widthToDp('10'), marginTop: widthToDp('2') , borderTopRightRadius : widthToDp('2') , borderTopLeftRadius : widthToDp('2') }}>
@@ -117,7 +115,6 @@ const SettingScreen = (props) => {
                     </View>
                 </View>
 
-            </SafeAreaView>
         </>
     )
 }

@@ -172,7 +172,6 @@ export const getFormInfo = (order_id) => dispatch => {
                         })
                     })
                     
-                    
                     resolve(res.data.data.getForm)
                 }).catch( err => {
                     reject(err)

@@ -69,12 +69,6 @@ const PostScreen = (props) => {
 
     return (
         <>
-            <SafeAreaView style={content.topsafearray} />
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={{ flex: 1 }}
-            >
-                <SafeAreaView style={[content.safearray]}>
                     <Header page='บอกอาการ' back={true} navigation={props.navigation} chat={false} isRadius={true} />
                     <ScrollView style={content.container}>
                         <View style={card.card}>
@@ -217,8 +211,6 @@ const PostScreen = (props) => {
                             props.SET_LOCATION(lat, lng)
                         }}
                     />
-                </SafeAreaView>
-            </KeyboardAvoidingView>
 
         </>
     )

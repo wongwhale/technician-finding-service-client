@@ -29,6 +29,8 @@ import { OPEN_LOGOUT_CONFIRM_MODAL, CLOSE_LOGOUT_CONFIRM_MODAL } from '../../sto
 import { logout } from '../../store/actions/authAction'
 import RatingScreen from './RatingScreen';
 import PriceInputModal from '../../components/Modal/PriceInputModal';
+import { KeyboardAvoidingView, SafeAreaView } from 'react-native';
+import { content } from '../../stylesheet';
 
 
 const mapStateToProps = (state) => ({
@@ -62,35 +64,47 @@ const Index = (props) => {
 
   return (
     <>
-      <Stack.Navigator
-        screenOptions={{
-          cardStyle : {
-            backgroundColor : '#fff'
-          }
-        }}
+    <SafeAreaView style={content.topsafearray} />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 24}
       >
-        <Stack.Screen name='tab' component={TabScreen} options={{ headerShown: false }} />
-        <Stack.Screen name='search' component={SearchScreen} options={{ headerShown: false }} />
-        <Stack.Screen name='nearme' component={NearMeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name='message' component={Message} options={{ headerShown: false }} />
-        <Stack.Screen name='userInfo' component={User} options={{ headerShown: false }} />
-        <Stack.Screen name='post' component={Post} options={{ headerShown: false }} />
-        <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
-        <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
-        <Stack.Screen name='setting' component={SettingScreen} options={{ headerShown: false }} />
-        <Stack.Screen name='regTech' component={TechnicianRegisterScreen} options={{ headerShown: false }} />
-        <Stack.Screen name='editInfo' component={UserInfoEditScreen} options={{ headerShown: false }} />
-        <Stack.Screen name='rating' component={RatingScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
-      <LoadingModal />
-      <LogoutConfirmModal
-        isOpen={props.logoutConfirmIsOpen}
-        onClose={() => props.CLOSE_LOGOUT_CONFIRM_MODAL(false)}
-        onLogout={() => props.logout()}
-        name={`${props.userInfo.firstname} ${props.userInfo.lastname}`}
-      />
-      <PriceInputModal />
-      <OrderDetailModal />
+      <SafeAreaView
+        style={content.safearray}
+      >
+        <Stack.Navigator
+          screenOptions={{
+            cardStyle : {
+              backgroundColor : '#fff'
+            }
+          }}
+        >
+          <Stack.Screen name='tab' component={TabScreen} options={{ headerShown: false }} />
+          <Stack.Screen name='search' component={SearchScreen} options={{ headerShown: false }} />
+          <Stack.Screen name='nearme' component={NearMeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name='message' component={Message} options={{ headerShown: false }} />
+          <Stack.Screen name='userInfo' component={User} options={{ headerShown: false }} />
+          <Stack.Screen name='post' component={Post} options={{ headerShown: false }} />
+          <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
+          <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
+          <Stack.Screen name='setting' component={SettingScreen} options={{ headerShown: false }} />
+          <Stack.Screen name='regTech' component={TechnicianRegisterScreen} options={{ headerShown: false }} />
+          <Stack.Screen name='editInfo' component={UserInfoEditScreen} options={{ headerShown: false }} />
+          <Stack.Screen name='rating' component={RatingScreen} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </SafeAreaView>
+        <LoadingModal />
+        <LogoutConfirmModal
+          isOpen={props.logoutConfirmIsOpen}
+          onClose={() => props.CLOSE_LOGOUT_CONFIRM_MODAL(false)}
+          onLogout={() => props.logout()}
+          name={`${props.userInfo.firstname} ${props.userInfo.lastname}`}
+        />
+        <PriceInputModal />
+        <OrderDetailModal />
+    </KeyboardAvoidingView>
+
     </>
   );
 };

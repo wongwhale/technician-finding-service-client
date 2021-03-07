@@ -48,12 +48,6 @@ const Chat = (props) => {
 
     return (
         <>
-            <SafeAreaView style={[content.topsafearray  ]} />
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    style={{ flex: 1 }}
-                >
-                <SafeAreaView style={[content.safearray , {backgroundColor : color.GREY_5}]}>
                     <ChatHeader navigation={props.navigation} />
                     {/* {
                         props.messages.length !== 0 ? (
@@ -93,8 +87,6 @@ const Chat = (props) => {
                         <ChatBox setImageIsOpen={() => setImageIsOpen(true)} />
                     </ScrollView>
                     <ChatInput />
-                </SafeAreaView>
-            </KeyboardAvoidingView>
             <Modal
                 isOpen={imageIsOpen}
                 onClosed={() => setImageIsOpen(false)}
