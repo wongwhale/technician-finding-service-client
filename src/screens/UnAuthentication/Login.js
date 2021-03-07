@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 
 import {
   Text,
@@ -9,18 +9,21 @@ import {
   TouchableOpacity,
   StyleSheet,
   Keyboard,
+  Animated,
+  Easing
 } from 'react-native';
 import MyButton from '../../components/MyButton';
 import Footer from '../../components/Login/Footer';
-import {color, content, widthToDp} from '../../stylesheet';
-import {inputStyles} from '../../components/MyTextInput';
+import { color, content, widthToDp } from '../../stylesheet';
+import { inputStyles } from '../../components/MyTextInput';
 
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import {connect} from 'react-redux';
-import {login, logout, checkToken} from '../../store/actions/authAction';
-import {connection} from '../../store/actions/socketAction';
+import { connect } from 'react-redux';
+import { login, logout, checkToken, loginWithFacebook } from '../../store/actions/authAction';
+import { connection } from '../../store/actions/socketAction';
+import { clear as regClear } from '../../store/actions/regAction';
 
 import { useFocusEffect } from '@react-navigation/native'
 
@@ -31,6 +34,8 @@ const connector = connect(mapStateToProps, {
   logout,
   connection,
   checkToken,
+  loginWithFacebook,
+  regClear
 });
 
 const Login = (props) => {
@@ -46,188 +51,243 @@ const Login = (props) => {
         props.checkToken();
       } else {
         props.logout();
+        errorPopUp()
       }
     });
   };
 
   const handleFacebookdLogin = () => {
-    onFacebookButtonPress();
+    props.loginWithFacebook().then(res => {
+      if (res.status) {
+        props.checkToken();
+      } else {
+        props.logout();
+      }
+    })
   };
 
-  // return (
-  //   <>
-  //     <SafeAreaView style={content.safearray}>
-  //       <View
-  //         style={{
-  //           flex: 1,
-  //           justifyContent: 'center',
-  //           alignItems: 'center',
-  //           paddingHorizontal: '10%',
-  //         }}>
-  //         <View
-  //           style={{
-  //             flexDirection: 'row',
-  //             justifyContent: 'center',
-  //             alignItems: 'center',
-  //             marginBottom: 40,
-  //           }}>
-  //           <View
-  //             style={{
-  //               width: 100,
-  //               height: 100,
-  //               backgroundColor: color.BLUE_4,
-  //               borderRadius: 50,
-  //               marginRight: 10,
-  //             }}
-  //           />
-  //         </View>
-  //         <View style={[inputStyles.container]}>
-  //           <TextInput
-  //             style={[inputStyles.textInput]}
-  //             placeholder="ชื่อผู้ใช้"
-  //             placeholderTextColor={color.BLUE_2}
-  //             blurOnSubmit={false}
-  //             ref={uname_ref}
-  //             onSubmitEditing={() => {
-  //               pwss_ref.current.focus();
-  //             }}
-  //             value={username}
-  //             onChangeText={(val) => setUsername(val)}
-  //             autoCapitalize="none"
-  //             autoCorrect={false}
-  //             autoCompleteType="off"
-  //           />
-  //         </View>
-  //         <View style={[inputStyles.container]}>
-  //           <TextInput
-  //             style={[inputStyles.textInput]}
-  //             placeholder="รหัสผ่าน"
-  //             placeholderTextColor={color.BLUE_2}
-  //             blurOnSubmit={false}
-  //             ref={pwss_ref}
-  //             onSubmitEditing={() => {
-  //               Keyboard.dismiss();
-  //               // props.login(username, password)
-  //               handleLogin();
-  //             }}
-  //             value={password}
-  //             onChangeText={(val) => setPassword(val)}
-  //             autoCapitalize="none"
-  //             autoCorrect={false}
-  //             secureTextEntry={secure}
-  //             autoCompleteType="off"
-  //           />
-  //           {
-  //             <TouchableOpacity
-  //               style={inputStyles.iconContainer}
-  //               onPress={() => setSecure(!secure)}>
-  //               <Feather
-  //                 name={secure ? 'eye' : 'eye-off'}
-  //                 style={[inputStyles.icon]}
-  //               />
-  //             </TouchableOpacity>
-  //           }
-  //       })
-  //   }
+  const [opacity, setOpacity] = useState(new Animated.Value(1))
 
-  //   const handleFacebookdLogin = () => {
-  //       // onFacebookButtonPress()
-  //   }
+  const translateY = opacity.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, parseInt(widthToDp('20'))]
+  })
+
+  const snackPopDown = () => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start()
+  }
+
+  const snackPopUp = () => {
+    Animated.timing(opacity, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start()
+  }
+
+  const errorPopUp = () => {
+    Animated.sequence([
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 250,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 3000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 250,
+        useNativeDriver: true,
+      })
+    ]).start()
+  }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      props.regClear()
+    }, [])
+  )
 
   return (
     <>
-      <SafeAreaView style={content.safearray}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingHorizontal: '10%',
+          backgroundColor: '#fff'
+        }}>
         <View
           style={{
-            flex: 1,
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            paddingHorizontal: '10%',
+            marginBottom: 40,
           }}>
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: 40,
-            }}>
-            <View
-              style={{
-                width: 100,
-                height: 100,
-                backgroundColor: color.BLUE_4,
-                borderRadius: 50,
-                marginRight: 10,
-              }}
-            />
-          </View>
-          <View style={[inputStyles.container]}>
-            <TextInput
-              style={[inputStyles.textInput]}
-              placeholder="ชื่อผู้ใช้"
-              placeholderTextColor={color.BLUE_2}
-              blurOnSubmit={false}
-              ref={uname_ref}
-              onSubmitEditing={() => {
-                pwss_ref.current.focus();
-              }}
-              value={username}
-              onChangeText={(val) => setUsername(val)}
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoCompleteType="off"
-            />
-          </View>
-          <View style={[inputStyles.container]}>
-            <TextInput
-              style={[inputStyles.textInput]}
-              placeholder="รหัสผ่าน"
-              placeholderTextColor={color.BLUE_2}
-              blurOnSubmit={false}
-              ref={pwss_ref}
-              onSubmitEditing={() => {
-                Keyboard.dismiss();
-                // props.login(username, password)
-                handleLogin();
-              }}
-              value={password}
-              onChangeText={(val) => setPassword(val)}
-              autoCapitalize="none"
-              autoCorrect={false}
-              secureTextEntry={secure}
-              autoCompleteType="off"
-            />
-            {
-              <TouchableOpacity
-                style={inputStyles.iconContainer}
-                onPress={() => setSecure(!secure)}>
-                <Feather
-                  name={secure ? 'eye' : 'eye-off'}
-                  style={[inputStyles.icon]}
-                />
-              </TouchableOpacity>
-            }
-          </View>
-          <MyButton
-            title="เข้าสู่ระบบ"
-            onPress={() => {
-              Keyboard.dismiss();
-              handleLogin();
+              width: 100,
+              height: 100,
+              backgroundColor: color.BLUE_4,
+              borderRadius: 50,
+              marginRight: 10,
             }}
           />
-          <View style={styles.btnContainer}>
-            <View style={styles.header}>
-              <View style={styles.line} />
-              <Text style={styles.headerText}>เข้าสู่ระบบโดยวิธีอื่น</Text>
-              <View style={styles.line} />
-            </View>
-            <TouchableOpacity>
-              <Ionicons name="logo-facebook" style={styles.facebookIcon} />
+        </View>
+        <View style={[inputStyles.container]}>
+          <TextInput
+            style={[inputStyles.textInput]}
+            placeholder="ชื่อผู้ใช้"
+            placeholderTextColor={color.BLUE_2}
+            blurOnSubmit={false}
+            ref={uname_ref}
+            onSubmitEditing={() => {
+              pwss_ref.current.focus();
+            }}
+            value={username}
+            onChangeText={(val) => setUsername(val)}
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoCompleteType="off"
+          />
+        </View>
+        <View style={[inputStyles.container]}>
+          <TextInput
+            style={[inputStyles.textInput]}
+            placeholder="รหัสผ่าน"
+            placeholderTextColor={color.BLUE_2}
+            blurOnSubmit={false}
+            ref={pwss_ref}
+            onSubmitEditing={() => {
+              Keyboard.dismiss();
+              // props.login(username, password)
+              handleLogin();
+            }}
+            value={password}
+            onChangeText={(val) => setPassword(val)}
+            autoCapitalize="none"
+            autoCorrect={false}
+            secureTextEntry={secure}
+            autoCompleteType="off"
+          />
+          {
+            <TouchableOpacity
+              style={inputStyles.iconContainer}
+              onPress={() => setSecure(!secure)}>
+              <Feather
+                name={secure ? 'eye' : 'eye-off'}
+                style={[inputStyles.icon]}
+              />
+            </TouchableOpacity>
+          }
+        </View>
+        <MyButton
+          title="เข้าสู่ระบบ"
+          onPress={() => {
+            Keyboard.dismiss();
+            handleLogin();
+          }}
+        />
+        <View style={styles.btnContainer}>
+          <View style={styles.header}>
+            <View style={styles.line} />
+            <Text style={styles.headerText}>เข้าสู่ระบบโดยวิธีอื่น</Text>
+            <View style={styles.line} />
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              handleFacebookdLogin()
+            }}
+          >
+            <Ionicons name="logo-facebook" style={styles.facebookIcon} />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+
+
+      <Animated.View
+        style={{
+          // backgroundColor : 'red',
+          width: '100%',
+          height: widthToDp('16'),
+          position: 'absolute',
+          bottom: widthToDp('0'),
+          paddingVertical: widthToDp('2'),
+          paddingHorizontal: widthToDp('4'),
+          zIndex: 3,
+          backgroundColor: 'transparent',
+          transform: [
+            { translateY: translateY }
+          ],
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: color.RED_4,
+            flex: 1,
+            borderRadius: widthToDp('4'),
+
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              paddingHorizontal: widthToDp('2'),
+              paddingVertical: 0,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                paddingHorizontal: widthToDp('4'),
+              }}
+              onPress={() => props.navigation.navigate('acceptedRequest')}
+            >
+              <Text
+                style={{
+                  fontSize: widthToDp('4'),
+                  color: color.RED_0,
+                  fontWeight: 'bold'
+                }}
+              >
+                ชื่อผู้ใช้ หรือ รหัสผ่านผิด
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                height: widthToDp('8'),
+                aspectRatio: 1,
+                backgroundColor: `#ffffff66`,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: widthToDp('3')
+              }}
+              onPress={() => {
+                snackPopDown()
+              }}
+            >
+              <Feather name='x' style={{
+                fontSize: widthToDp('5'),
+                color: color.IOS_RED_LIGHT
+              }} />
             </TouchableOpacity>
           </View>
         </View>
-        <Footer navigation={props.navigation} />
-      </SafeAreaView>
+      </Animated.View>
+      <Footer navigation={props.navigation} />
     </>
   );
 };

@@ -21,8 +21,8 @@ const connector = connect(mapStateToProps, { setFirstname, setLastname })
 
 const Name = (props) => {
 
-    const [firstnameStatus,setFirstnameStatus] = useState(null)
-    const [lastnameStatus,setLastnameStatus] = useState(null)
+    const [firstnameStatus, setFirstnameStatus] = useState(null)
+    const [lastnameStatus, setLastnameStatus] = useState(null)
 
     const handleFirstname = () => {
         const check = /^([A-Z]|[a-z]|[ ]|[0-9]|[/]|[\\]|[\n]|[.]|[ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ])+$/.test(props.firstname)
@@ -38,48 +38,46 @@ const Name = (props) => {
 
     return (
         <>
-            <SafeAreaView style={content.safearray}>
-                <View style={[registor.container]}>
-                    <View style={{ marginBottom: 15, width: '100%', alignItems: 'center' }}>
-                        <Text style={registor.whaturname}>
-                            คุณชื่ออะไร ?
+            <View style={[registor.container]}>
+                <View style={{ marginBottom: 15, width: '100%', alignItems: 'center' }}>
+                    <Text style={registor.whaturname}>
+                        คุณชื่ออะไร ?
                     </Text>
-                    </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <View style={{ flex: 1, marginRight: 2 }}>
-                            <MyTextInput
-                                placeholder='ชื่อ'
-                                onChangeText={(val) => props.setFirstname(val)}
-                                value={props.firstname}
-                                isOnBlur={true}
-                                onBlur={() => handleFirstname()}
-                                status={firstnameStatus}
-                            />
-                        </View>
-                        <View style={{ flex: 1, marginLeft: 2 }}>
-                            <MyTextInput
-                                placeholder='นามสกุล'
-                                onChangeText={(val) => props.setLastname(val)}
-                                value={props.lastname}
-                                isOnBlur={true}
-                                onBlur={() => handleLastname()}
-                                status={lastnameStatus}
-                            />
-                        </View>
-                    </View>
-                    <MyButton title='ถัดไป'
-                        onPress={() => {
-                            if (handleFirstname() && handleLastname()) {
-                                props.navigation.navigate('reg_image')
-                            }
-                            else (
-                                console.log('not pass')
-                            )
-                        }}
-                    />
                 </View>
-                <Footer navigation={props.navigation} />
-            </SafeAreaView>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flex: 1, marginRight: 2 }}>
+                        <MyTextInput
+                            placeholder='ชื่อ'
+                            onChangeText={(val) => props.setFirstname(val)}
+                            value={props.firstname}
+                            isOnBlur={true}
+                            onBlur={() => handleFirstname()}
+                            status={firstnameStatus}
+                        />
+                    </View>
+                    <View style={{ flex: 1, marginLeft: 2 }}>
+                        <MyTextInput
+                            placeholder='นามสกุล'
+                            onChangeText={(val) => props.setLastname(val)}
+                            value={props.lastname}
+                            isOnBlur={true}
+                            onBlur={() => handleLastname()}
+                            status={lastnameStatus}
+                        />
+                    </View>
+                </View>
+                <MyButton title='ถัดไป'
+                    onPress={() => {
+                        if (handleFirstname() && handleLastname()) {
+                            props.navigation.navigate('reg_image')
+                        }
+                        else (
+                            console.log('not pass')
+                        )
+                    }}
+                />
+            </View>
+            <Footer navigation={props.navigation} />
         </>
     )
 }

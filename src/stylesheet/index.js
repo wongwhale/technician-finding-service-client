@@ -273,8 +273,8 @@ export const searchScreen = StyleSheet.create({
     },
     textInput: {
         flex: 1,
-        fontSize: widthToDp('3'),
-        color: color.BLUE_1,
+        fontSize: widthToDp('4'),
+        color: color.BLUE_4,
     },
     searchIconContainer: {
         justifyContent: 'center',
@@ -283,7 +283,7 @@ export const searchScreen = StyleSheet.create({
         aspectRatio: 1
     },
     searchIcon: {
-        fontSize: widthToDp('4'),
+        fontSize: widthToDp('5'),
         color: color.BLUE_1,
     },
     xIconContainer: {
@@ -338,7 +338,7 @@ export const searchScreen = StyleSheet.create({
     },
     detailbtnContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         textAlignVertical: 'center'
     },
     detailbtnText: {
@@ -1019,6 +1019,7 @@ export const registor = StyleSheet.create({
         justifyContent: 'flex-start',
         paddingHorizontal: '10%',
         marginTop: '15%',
+        backgroundColor : '#fff'
     },
     descText: {
         color: color.GREY,

@@ -26,10 +26,10 @@ import OrderDetailModal from '../../components/Modal/OrderDetailModal'
 import LoadingModal from '../../components/Modal/LoadingModal';
 import LogoutConfirmModal from '../../components/Modal/LogoutConfirmModal';
 import { OPEN_LOGOUT_CONFIRM_MODAL, CLOSE_LOGOUT_CONFIRM_MODAL } from '../../store/actions/modalAction'
-import { logout , setCurrentLocation} from '../../store/actions/authAction'
+import { logout } from '../../store/actions/authAction'
 import RatingScreen from './RatingScreen';
 import PriceInputModal from '../../components/Modal/PriceInputModal';
-import Geolocation from '@react-native-community/geolocation'
+
 
 const mapStateToProps = (state) => ({
   uid: state.auth.userInfo.uid,
@@ -49,17 +49,12 @@ const connector = connect(mapStateToProps,
     OPEN_LOGOUT_CONFIRM_MODAL,
     CLOSE_LOGOUT_CONFIRM_MODAL,
     logout,
-    setCurrentLocation
   })
 
 
 const Index = (props) => {
   props.connection(props.uid)
-
   useEffect(() => {
-    Geolocation.getCurrentPosition( ({coords : {latitude , longitude}}) => {
-      props.setCurrentLocation(latitude , longitude)
-    })
     return () => {
       props.leave(props.uid)
     }

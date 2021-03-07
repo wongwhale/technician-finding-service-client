@@ -59,8 +59,8 @@ const TabScreen = (props) => {
                     // inactiveBackgroundColor : color.GREY_5,
                     // activeBackgroundColor : color.GREY_5,
                     style: {
-                        borderTopLeftRadius : heightToDp('3'),
-                        borderTopRightRadius : heightToDp('3'),
+                        // borderTopLeftRadius : heightToDp('3'),
+                        // borderTopRightRadius : heightToDp('3'),
                         backgroundColor : color.GREY_5,
                     }
                 }}

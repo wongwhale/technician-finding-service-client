@@ -48,6 +48,7 @@ const Main = (props) => {
 
     const [imageURI, setImageURI] = useState(null)
 
+
     const onChangePageToNearMe = () => {
         return new Promise((resolve, reject) => {
             Geolocation.getCurrentPosition((position) => {
@@ -62,13 +63,35 @@ const Main = (props) => {
                 })
         })
     }
+    
+    const [opacity, setOpacity] = useState(new Animated.Value(0))
 
+    const translateY = opacity.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, parseInt(widthToDp('16'))]
+    })
+
+    const snackPopDown = () => {
+        Animated.timing(opacity, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true,
+        }).start()
+    }
+
+    const snackPopUp = () => {
+        Animated.timing(opacity, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true,
+        }).start()
+    }
 
     return (
         <>
             <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray}>
-                <Header page='หน้าหลัก' back={false} navigation={props.navigation}  />
+                <Header page='หน้าหลัก' back={false} navigation={props.navigation} />
                 <UserInfo navigation={props.navigation} />
                 <ScrollView>
                     <View style={mainScreen.container}>
@@ -120,7 +143,7 @@ const Main = (props) => {
                                     // props.OPEN_POST_MODAL()
                                     props.navigation.navigate('post')
                                 }}
-                                style={{flex : 1 , paddingHorizontal : widthToDp('2') }}
+                                style={{ flex: 1, paddingHorizontal: widthToDp('2') }}
                             >
                                 <LinearGradient
                                     style={mainScreen.fullBox}
@@ -130,14 +153,27 @@ const Main = (props) => {
                                     ]}
                                 >
                                     <Feather name='edit' size={50} color={color.GREY_5} />
-                                    <Text style={[mainScreen.menuTextFull , {color : color.GREY_5}]}>
+                                    <Text style={[mainScreen.menuTextFull, { color: color.GREY_5 }]}>
                                         บอกอาการ
                                     </Text>
                                 </LinearGradient>
                             </TouchableOpacity>
                         </View>
+                        <Button
+                            title='up'
+                            onPress={() => {
+                                snackPopUp()
+                            }}
+                        />
+                        <Button
+                            title='down'
+                            onPress={() => {
+                                snackPopDown()
+                            }}
+                        />
                     </View>
                 </ScrollView>
+
             </SafeAreaView>
         </>
     )

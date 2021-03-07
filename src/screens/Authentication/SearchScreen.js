@@ -8,7 +8,8 @@ import {
     ScrollView,
     Animated,
     Easing,
-    Keyboard
+    Keyboard,
+    Text
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -91,9 +92,9 @@ const SearchScreen = (props) => {
                 <Header page="ค้นหา" back={true} navigation={props.navigation} isRadius />
                 <View style={[content.container, { backgroundColor: '#fff' }]}
                     onStartShouldSetResponder={() => true}
-                    onTouchStart={() => {
-                        searchInputRef.current.blur()
-                    }}
+                    // onTouchStart={() => {
+                    //     searchInputRef.current.blur()
+                    // }}
                 >
                     <View
                         style={{
@@ -117,7 +118,12 @@ const SearchScreen = (props) => {
                                     searchScreen.textInputContainer,
                                 ]}
                             >
-                                <TextInput
+                                <Text   style={searchScreen.textInput}>
+                                    {
+                                        props.keyword.length !== 0 ? props.keyword : 'ค้นหาช่าง  ประเภท , ชื่อ หรือ อื่นๆ'
+                                    }
+                                </Text>
+                                {/* <TextInput
                                     placeholder="ค้นหาช่าง  ประเภท , ชื่อ หรือ อื่นๆ "
                                     placeholderTextColor={color.BLUE_4}
                                     style={searchScreen.textInput}
@@ -125,7 +131,7 @@ const SearchScreen = (props) => {
                                     editable={false}
                                     autoCorrect={false}
                                     value={props.keyword}
-                                />
+                                /> */}
                                 <View style={searchScreen.searchIconContainer}>
                                     <Feather name='search' style={searchScreen.searchIcon} />
                                 </View>

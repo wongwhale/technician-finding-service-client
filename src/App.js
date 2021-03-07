@@ -7,7 +7,8 @@ import UnAuth from './screens/UnAuthentication';
 
 import { connect } from 'react-redux';
 import { disconnect, leave } from './store/actions/socketAction'
-import { checkToken } from './store/actions/authAction'
+import { checkToken, setCurrentLocation } from './store/actions/authAction'
+import Geolocation from '@react-native-community/geolocation'
 
 var firebaseConfig = {
   apiKey: "AIzaSyBs8hnxF4agqDm4gaeu16KhQAjXPozxXEw",
@@ -22,10 +23,10 @@ var firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-}else {
+} else {
   firebase.app(); // if already initialized, use that one
 }
- 
+
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
@@ -35,11 +36,21 @@ const mapStateToProps = (state) => ({
 import firebase from '@react-native-firebase/app';
 
 
-const connector = connect(mapStateToProps, { disconnect, leave, checkToken })
+const connector = connect(mapStateToProps, { setCurrentLocation , disconnect, leave, checkToken })
 
 const Router = (props) => {
-  useEffect(() => {
+
+  const getCurrentPositionSuccess = ({ coords: { latitude, longitude } }) => {
+    props.setCurrentLocation(latitude, longitude)
     props.checkToken()
+  }
+
+  const getCurrentPositionFail = () => {
+
+  }
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition(getCurrentPositionSuccess, getCurrentPositionFail)
     return () => {
       props.disconnect(props.uid)
     }
@@ -51,10 +62,10 @@ const Router = (props) => {
           props.isAuth ? (
             <IsAuth />
           )
-          :
-          (
-            <UnAuth />
-          )
+            :
+            (
+              <UnAuth />
+            )
         }
       </NavigationContainer>
     </>

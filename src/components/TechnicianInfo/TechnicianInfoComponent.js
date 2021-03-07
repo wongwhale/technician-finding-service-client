@@ -25,8 +25,8 @@ const TechnicianInfoComponent = (props) => {
 
     const [amountReview, setAmountReview] = React.useState(0)
     React.useEffect(() => {
-        props.info.aptitude.map(({ amountOfvoteStar }) => {
-            setAmountReview(amountOfvoteStar + amountReview)
+        props.info.aptitude.map( (item ) => {
+            setAmountReview(amountReview + item.data.amountOfcomment);
         })
     }, [])
 
@@ -250,7 +250,7 @@ const TechnicianInfoComponent = (props) => {
                             <Text style={infoStyles.btnText}>เรทติ้ง</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={infoStyles.btnText}>{`${props.info.star}/5  (${amountReview} ครั้ง)`}</Text>
+                            <Text style={infoStyles.btnText}>{`${parseInt(props.info.star)}/5  (${amountReview} ครั้ง)`}</Text>
                             <Feather name='chevron-right' style={infoStyles.btnText} />
                         </View>
                     </LinearGradient>

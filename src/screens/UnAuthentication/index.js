@@ -18,33 +18,38 @@ import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 
 import LoadingModal from '../../components/Modal/LoadingModal'
-import { KeyboardAvoidingView , Platform } from 'react-native'
+import { KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native'
+import { content } from '../../stylesheet'
 
 const mapStateToProps = (state) => ({
-    
+
 })
 
 const UnAuth = (props) => {
     return (
         <>
-        <KeyboardAvoidingView
-            style={{flex : 1}}
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-            <Stack.Navigator>
-                <Stack.Screen name='login' component={Login} options={{headerShown: false}} />
-                <Stack.Screen name='reg_basic' component={BasicInfo} options={{ headerShown: false }} />
-                <Stack.Screen name='reg_name' component={Name} options={{ headerShown: false }} />
-                <Stack.Screen name='reg_select' component={SelectRole} options={{ headerShown: false }} />
-                <Stack.Screen name='reg_phone' component={PhoneNumber} options={{ headerShown: false }} />
-                <Stack.Screen name='reg_otp' component={OTP} options={{ headerShown: false }} />
-                <Stack.Screen name='reg_image' component={ImageProfile} options={{ headerShown: false }} />
-            </Stack.Navigator>
-            <LoadingModal />
-        </KeyboardAvoidingView>
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+            >
+                <SafeAreaView
+                    style={content.safearray}
+                >
+                    <Stack.Navigator>
+                        <Stack.Screen name='login' component={Login} options={{ headerShown: false }} />
+                        <Stack.Screen name='reg_basic' component={BasicInfo} options={{ headerShown: false }} />
+                        <Stack.Screen name='reg_name' component={Name} options={{ headerShown: false }} />
+                        <Stack.Screen name='reg_select' component={SelectRole} options={{ headerShown: false }} />
+                        <Stack.Screen name='reg_phone' component={PhoneNumber} options={{ headerShown: false }} />
+                        <Stack.Screen name='reg_otp' component={OTP} options={{ headerShown: false }} />
+                        <Stack.Screen name='reg_image' component={ImageProfile} options={{ headerShown: false }} />
+                    </Stack.Navigator>
+                    <LoadingModal />
+                </SafeAreaView>
+            </KeyboardAvoidingView>
         </>
 
     )
 }
 
-export default connect(mapStateToProps , {clear})(UnAuth)
+export default connect(mapStateToProps, { clear })(UnAuth)
