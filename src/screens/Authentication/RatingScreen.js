@@ -38,46 +38,39 @@ const RatingScreen = (props) => {
                             screenOptions={({ route }) => ({
                                 tabBarLabel: ({ focused }) => {
                                     let name
-                                    let weight
-                                    let fontColor
+                                    let labelName
                                     let iconColor
-                                    let badgeColor
+                                    let fontColor
                                     if (route.name === 'ช่างซ่อมคอมพิวเตอร์' || route.name === 'คอม') {
                                         name = 'laptop-outline'
-                                        weight = focused ? 'bold' : 'normal'
+                                        labelName = 'คอม'
                                         fontColor = focused ? color.BLUE_0 : color.GREY_2
                                         iconColor = focused ? color.BLUE_0 : color.GREY_2
-                                        badgeColor = focused ? 'red' : color.YELLOW_1
                                     } else if (route.name === 'ไฟฟ้า') {
+                                        labelName = 'ไฟฟ้า'
                                         name = 'bulb-outline'
-                                        weight = focused ? 'bold' : 'normal'
                                         iconColor = focused ? color.IOS_YELLOW_DARK : color.GREY_2
                                         fontColor = focused ? color.BLUE_0 : color.GREY_2
-                                        badgeColor = focused ? 'red' : color.YELLOW_1
                                     } else if (route.name === 'แอร์' || route.name === 'ช่างแอร์') {
+                                        labelName = 'แอร์'
                                         name = 'thermometer-outline'
-                                        weight = focused ? 'bold' : 'normal'
                                         iconColor = focused ? color.IOS_BLUE : color.GREY_2
                                         fontColor = focused ? color.BLUE_0 : color.GREY_2
-                                        badgeColor = focused ? 'red' : color.YELLOW_1
                                     } else if (route.name === 'ช่างซ่อมรถจักรยานยนต์' || route.name === 'จักรยานยนต์') {
+                                        labelName = 'จักรยานยนต์'
                                         name = 'bicycle-outline'
-                                        weight = focused ? 'bold' : 'normal'
                                         iconColor = focused ? color.IOS_INDIGO_DARK : color.GREY_2
                                         fontColor = focused ? color.BLUE_0 : color.GREY_2
-                                        badgeColor = focused ? 'red' : color.YELLOW_1
                                     } else if (route.name === 'ช่างซ่อมนาฬิกา' || route.name === 'นาฬิกา') {
+                                        labelName = 'นาฬิกา'
                                         name = 'watch-outline'
-                                        weight = focused ? 'bold' : 'normal'
                                         iconColor = focused ? color.IOS_ORANGE_DARK : color.GREY_2
                                         fontColor = focused ? color.BLUE_0 : color.GREY_2
-                                        badgeColor = focused ? 'red' : color.YELLOW_1
                                     } else {
+                                        labelName = route.name
                                         name = 'build-outline'
-                                        weight = focused ? 'bold' : 'normal'
                                         iconColor = focused ? color.BLUE_0 : color.GREY_2
                                         fontColor = focused ? color.BLUE_0 : color.GREY_2
-                                        badgeColor = focused ? 'red' : color.YELLOW_1
                                     }
 
                                     return (
@@ -97,7 +90,7 @@ const RatingScreen = (props) => {
                                                     fontWeight: 'bold'
                                                 }}
                                             >
-                                                {route.name}
+                                                {labelName}
                                             </Text>
                                         </View>
                                     )

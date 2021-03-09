@@ -18,15 +18,15 @@ const mapDispatchToProps = {
 const SearchModal = ({ isOpen, onClosed, ...props }) => {
 
     const [guideLists, setGuideLists] = React.useState([])
+    const [allLists , setAllLists] = React.useState([])
 
     const handleCloseModal = () => {
         onClosed()
-        setGuideLists([])
     }
 
     const handleSearch = (key) => {
-        props.setSearchList(key)
-        handleCloseModal()
+            props.setSearchList(key , allLists)
+            handleCloseModal()
     }
 
     const filterSearchLists = (keyword, word) => {
@@ -49,8 +49,10 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
         if (val.trimEnd().length !== 0) {
             props.SEARCH_GUIDE(val.trimEnd())
                 .then(lists => {
-                    emptySearchLists().then( () => {
-                        lists.map((item) => {
+                    setAllLists(lists)
+                    emptySearchLists().then( 
+                        async () => {
+                        await lists.map((item) => {
                             filterSearchLists(val, item)
                         })
                     })
@@ -61,6 +63,7 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
         }
         else {
             setGuideLists([])
+            setAllLists([])
         }
         if (val.length > 0) {
             animateIn()

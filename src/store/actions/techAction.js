@@ -95,9 +95,19 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                               }
                               aptitude {
                                 aptitude
+                                voted
                                 star
                                 amountOfvoteStar
                                 amountOfcomment
+                                comment {
+                                    userID
+                                    comment
+                                    userInfoID {
+                                        avatar
+                                        firstname
+                                        lastname
+                                    }
+                                }
                               }
                               workDay
                                 workTime{
@@ -136,14 +146,15 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                             star: data.star,
                             location: data.address,
                             workDay: data.workDay,
-                            workTime: data.workTime
+                            workTime: data.workTime,
+                            comment : data.comment
                         }
                     })
                     resolve()
                 }).catch(() => reject())
 
             }).catch(err => {
-                console.log(err);
+                console.log('get technician info error :' , err);
                 reject()
             })
         })

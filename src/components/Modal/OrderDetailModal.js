@@ -54,9 +54,6 @@ const OrderDetailModal = (props) => {
 
     const month = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฏาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
 
-    React.useEffect(() => {
-        console.log(props.formInfo);
-    },[])
     const onClosed = () => {
         props.CLOSE_DETAIL_MODAL()
     }

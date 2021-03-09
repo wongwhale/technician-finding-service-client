@@ -29,19 +29,21 @@ const UserInfo = (props) => {
                 }}>
                     <TouchableOpacity
                         onPress={() => {
-                            props.LOADING()
-                            if (props.role === 'technician') {
-                                props.GET_TECHNICIAN_INFO(props.uid).then(() => {
-                                    props.navigation.navigate('userInfo')
-                                    props.LOADED()
-                                }).catch(err => {
-                                    props.LOADED()
-                                })
-                            }
-                            else {
-                                props.navigation.navigate('userInfo')
-                                props.LOADED()
-                            }
+                            props.navigation.navigate('userInfo')
+
+                            // props.LOADING()
+                            // if (props.role === 'technician') {
+                            //     props.GET_TECHNICIAN_INFO(props.uid).then(() => {
+                            //         props.navigation.navigate('userInfo')
+                            //         props.LOADED()
+                            //     }).catch(err => {
+                            //         props.LOADED()
+                            //     })
+                            // }
+                            // else {
+                            //     props.navigation.navigate('userInfo')
+                            //     props.LOADED()
+                            // }
                         }}
                     >
                         <Image
@@ -51,19 +53,21 @@ const UserInfo = (props) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
-                            props.LOADING()
-                            if (props.role === 'technician') {
-                                props.GET_TECHNICIAN_INFO(props.uid).then(() => {
-                                    props.navigation.navigate('userInfo')
-                                    props.LOADED()
-                                }).catch(err => {
-                                    props.LOADED()
-                                })
-                            }
-                            else {
-                                props.navigation.navigate('userInfo')
-                                props.LOADED()
-                            }
+                            props.navigation.navigate('userInfo')
+
+                            // props.LOADING()
+                            // if (props.role === 'technician') {
+                            //     props.GET_TECHNICIAN_INFO(props.uid).then(() => {
+                            //         props.navigation.navigate('userInfo')
+                            //         props.LOADED()
+                            //     }).catch(err => {
+                            //         props.LOADED()
+                            //     })
+                            // }
+                            // else {
+                            //     props.navigation.navigate('userInfo')
+                            //     props.LOADED()
+                            // }
                         }}
                     >
                         <View style={[userInfo.subContainer, { flex: 1 }]}>

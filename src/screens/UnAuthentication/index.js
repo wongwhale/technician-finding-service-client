@@ -13,8 +13,9 @@ import ImageProfile from './ImageProfile'
 import Login from './Login'
 
 import { clear } from '../../store/actions/regAction'
+import { setCurrentLocation } from '../../store/actions/authAction'
 import { connect } from 'react-redux'
-
+import Geolocation from '@react-native-community/geolocation'
 import { useFocusEffect } from '@react-navigation/native'
 
 import LoadingModal from '../../components/Modal/LoadingModal'
@@ -26,11 +27,24 @@ const mapStateToProps = (state) => ({
 })
 
 const UnAuth = (props) => {
+    // useFocusEffect(
+    //     React.useCallback( () => {
+    //         return () => {
+    //             Geolocation.getCurrentPosition(  ({coords:{latitude , longitude}}) => {
+    //                 props.setCurrentLocation(latitude , longitude)
+    //             },
+    //             () => {
+
+    //             } )
+    //         }
+    //     },[])
+    // )
     return (
         <>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
+                keyboardVerticalOffset={Platform.OS === "ios" ? null : 24}
             >
                 <SafeAreaView
                     style={content.safearray}
@@ -52,4 +66,4 @@ const UnAuth = (props) => {
     )
 }
 
-export default connect(mapStateToProps, { clear })(UnAuth)
+export default connect(mapStateToProps, { clear , setCurrentLocation })(UnAuth)

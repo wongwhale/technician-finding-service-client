@@ -1,16 +1,10 @@
 import React from 'react'
+import { StyleSheet } from 'react-native'
+import { color, heightToDp , widthToDp } from '../../stylesheet'
 import { connect } from 'react-redux'
-import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native'
-
-import { content, heightToDp, global, widthToDp, color } from '../../stylesheet'
-import Feather from 'react-native-vector-icons/Feather'
-
-import TechnicianInfoComponent from '../../components/TechnicianInfo/TechnicianInfoComponent'
-
 import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
-import { logout, LOADED } from '../../store/actions/authAction'
-import { ENTER_PRIVATE_CHAT, INITIAL_HISTORY_LIST } from '../../store/actions/chatAction'
-import LinearGredient from 'react-native-linear-gradient'
+import UserInfoContentLoader from '../../components/ContentLoader/UserInfoContentLoader'
+import UserInfo from '../../components/UserInfo/UserInfo'
 
 const mapStateToProps = (state) => ({
     info: state.tech.info,
@@ -21,93 +15,34 @@ const mapStateToProps = (state) => ({
     avatar: state.auth.userInfo.avatar,
 })
 
-const UserInfo = (props) => {
-
+const UserInfoScreen = (props) => {
+    const [isReady , setIsReady] = React.useState(false)
+    React.useEffect( () => {
+        if (props.role === 'technician') {
+            props.GET_TECHNICIAN_INFO(props.uid).then(() => {
+                setIsReady(true)
+            }).catch(err => {
+                setIsReady(true)
+            })
+        }
+        else {
+            setIsReady(true)
+        }
+    },[])
     return (
         <>
-                <View style={[global.header]}>
-                    <Image
-                        style={infoStyles.profileImage}
-                        source={{ uri: props.avatar }}
-                    />
-                    <View style={[global.chatIconContainer, { flexDirection: 'row-reverse' }]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                props.INITIAL_HISTORY_LIST(props.uid)
-                                    .then(() => {
-                                        props.LOADED()
-                                        props.navigation.navigate('message')
-                                    })
-                            }}
-                            style={{ marginLeft: widthToDp('2') }}
-                        >
-                            <Feather name="mail" style={global.chatIcon} />
-                            <View style={global.badges}>
-                                <Text style={global.badgesText}>
-                                    1
-                            </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => {
-                                props.navigation.navigate('setting')
-                            }}
-                        >
-                            <Feather name="settings" style={global.chatIcon} />
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity
-                        style={global.backIconContainer}
-                        onPress={() => {
-                            props.navigation.navigate('tab')
-                        }}
-                    >
-                        <Feather name="chevron-left" style={global.backIcon} />
-                    </TouchableOpacity>
-                </View>
-                <View style={[infoStyles.headerContainer]}>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontSize: widthToDp('4'), fontWeight: 'bold', color: '#333' }}>
-                            {`${props.firstname} ${props.lastname}`}
-                        </Text>
-                    </View>
-                </View>
-                <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8, backgroundColor: '#fff' }}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            props.navigation.navigate('editInfo')
-                        }}
-                    >
-                        <View
-                            style={{ width: widthToDp('70'), backgroundColor: color.BLUE_3, borderRadius: widthToDp('1'), justifyContent: 'center', alignItems: 'center', height: widthToDp('7') }}
-                        >
-                            <Text style={{ color: '#fff', fontSize: widthToDp('3.5'), fontWeight: 'bold' }}>แก้ไขข้อมูลส่วนตัว</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <ScrollView >
-                    <View style={[content.container]}>
-                        {
-                            props.role === 'user' ? (
-                                <>
+        {
+            !isReady ? (
+                <UserInfoContentLoader />
+            ) : <UserInfo />
+        }
 
-                                </>
-                            ) :
-                                props.role === 'technician' ? (
-                                    <>
-                                        <TechnicianInfoComponent
-                                            info={props.info}
-                                        />
-                                    </>
-                                ) : null
-                        }
-                    </View>
-                </ScrollView>
         </>
     )
 }
 
-export default connect(mapStateToProps, { INITIAL_HISTORY_LIST, ENTER_PRIVATE_CHAT, GET_TECHNICIAN_INFO, logout, LOADED })(UserInfo)
+export default connect(mapStateToProps, { GET_TECHNICIAN_INFO })(UserInfoScreen)
+
 
 export const infoStyles = StyleSheet.create({
     coverImage: {
@@ -118,7 +53,8 @@ export const infoStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: widthToDp('1')
+        paddingVertical: widthToDp('1'),
+        backgroundColor : '#fff'
     },
     profileImage: {
         width: heightToDp('5'),

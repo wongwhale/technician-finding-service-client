@@ -14,7 +14,6 @@ import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
 import { ENTER_PRIVATE_CHAT } from '../../store/actions/chatAction'
 import TechnicianInfoComponent from '../../components/TechnicianInfo/TechnicianInfoComponent'
 import LinearGradient from 'react-native-linear-gradient'
-
 const mapStateToProps = (state) => ({
     info: state.tech.info,
     uid: state.auth.userInfo.uid

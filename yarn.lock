@@ -3598,6 +3598,11 @@ hermes-profile-transformer@^0.0.6:
   dependencies:
     source-map "^0.7.3"
 
+hex-to-rgba@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/hex-to-rgba/-/hex-to-rgba-2.0.1.tgz#4176977882a1cb32b83ce5ab1db6828ab84d5a13"
+  integrity sha512-5XqPJBpsEUMsseJUi2w2Hl7cHFFi3+OO10M2pzAvKB1zL6fc+koGMhmBqoDOCB4GemiRM/zvDMRIhVw6EkB8dQ==
+
 hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
@@ -6064,6 +6069,13 @@ react-native-dotenv@^2.5.3:
   dependencies:
     dotenv "^8.0.0"
 
+react-native-easy-content-loader@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-easy-content-loader/-/react-native-easy-content-loader-0.3.2.tgz#5c0dcd69c84c5370365153162b21fe82098459c3"
+  integrity sha512-gLlfEVjOgflWKWoB255GFMgvIkSv5ScVbCvkCGj6KDelFenqMuePnW3yqDvkSGl1xAds76NpqO+JgOuYq7gXMw==
+  dependencies:
+    hex-to-rgba "^2.0.1"
+
 react-native-fbsdk@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-3.0.0.tgz#07ef41758bb17a0acaff744008af625a45ef9a01"
@@ -6119,6 +6131,11 @@ react-native-modalbox@^2.0.2:
   integrity sha512-uSuoZ+siPPNqWGyw8NXhA/Aots7mOx2+qijFoeovequY0kczZEPZDd0ARHbzg+1cE3H3AATJEwGdkVA8lUxs0g==
   dependencies:
     prop-types "^15.5.10"
+
+react-native-push-notification@^7.2.2:
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-7.2.2.tgz#19cd567744616d0347097eea5ce9aa49dec4a975"
+  integrity sha512-c/APy4vvhzYBh5ysGn/hMxsWMeOI7rxHeMz40gebo3UyTs39SlSJuG7awU4Q/ezNQ8jNye2+CudG8TVzyzdo1A==
 
 react-native-ratings@^7.3.0:
   version "7.3.0"

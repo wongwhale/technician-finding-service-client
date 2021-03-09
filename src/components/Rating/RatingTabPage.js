@@ -63,6 +63,8 @@ const RatingTabPage = (props) => {
     const route = useRoute()
     const [info, setInfo] = React.useState({})
     const [star, setStar] = React.useState(0)
+    const [comment , setComment] = React.useState([])
+    const [myVote , setMyVote] = React.useState(0)
 
     React.useEffect(() => {
         const thisInfo = props.aptitude.filter((k) => {
@@ -70,13 +72,30 @@ const RatingTabPage = (props) => {
         })
         setInfo(thisInfo[0])
         setStar(thisInfo[0].data.star)
+        setComment(thisInfo[0].data.comment)
+        setMyVote(thisInfo[0].data.voted)
     }, [])
     return (
         <>
             <ScrollView
                 style={content.container}
             >
-                <View style={{ marginVertical: widthToDp('4') }}>
+                <View
+                    style={{
+                        marginBottom : widthToDp('6')
+                    }}
+                >
+                    <Text
+                        style={{
+                            alignSelf : 'center',
+                            marginVertical : widthToDp('4'),
+                            fontSize : widthToDp('5'),
+                            fontWeight : 'bold',
+                            color : color.BLUE_1
+                        }}
+                    >
+                        {route.name}
+                    </Text>
                     <Rating
                         type='custom'
                         startingValue={star}
@@ -87,26 +106,60 @@ const RatingTabPage = (props) => {
                         readonly={true}
                     />
                 </View>
-                <CommentCard
+                {
+                    comment.length !== 0 ? (
+                        comment.map( (item , index) => {
+                            return (
+                                <CommentCard 
+                                    key={index}
+                                    name={`${item.userInfoID.firstname} ${item.userInfoID.lastname}`}
+                                    decs = {item.comment}
+                                />
+                            )
+                        })
+                    ) : (
+                        <Text
+                            style={{
+                                alignSelf:'center'
+                            }}
+                        >
+                            ไม่มีคอมเมนต์
+                        </Text>
+                    )
+                }
+                {/* <CommentCard
                     name='ปริญญา สีตะวัน'
                     decs='คนนี้คือดี งานละเอียด'
                 />
                 <CommentCard
                     name='นนทวัท อุดพรม'
                     decs='ทำงานลวก ไม่ละเอียด คิดเงินแพง'
-                />
+                /> */}
             </ScrollView>
-            <TextInput
-                placeholder='คอมเมนต์'
-                multiline
+            <View
                 style={{
-
-                    fontSize: widthToDp('4'),
-                    color: color.BLUE_4,
-                    paddingHorizontal: widthToDp('4'),
-                    paddingVertical: widthToDp('2')
+                    backgroundColor : '#fff'
                 }}
-            />
+            >
+                <Rating 
+                    type='custom'
+                    startingValue={myVote}
+                    imageSize={widthToDp('8')}
+                    ratingBackgroundColor={color.GREY}
+                    ratingColor={color.IOS_YELLOW_LIGHT} 
+                />
+                <TextInput
+                    placeholder='คอมเมนต์'
+                    multiline
+                    style={{
+
+                        fontSize: widthToDp('4'),
+                        color: color.BLUE_4,
+                        paddingHorizontal: widthToDp('4'),
+                        paddingVertical: widthToDp('2')
+                    }}
+                />
+            </View>
 
         </>
     )

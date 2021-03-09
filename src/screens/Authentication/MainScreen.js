@@ -162,6 +162,7 @@ const Main = (props) => {
                     </View>
                 </ScrollView>
 
+
             </SafeAreaView>
         </>
     )

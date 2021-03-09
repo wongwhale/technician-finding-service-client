@@ -109,7 +109,7 @@ const TechnicianInfoComponent = (props) => {
                         {
                             props.info.aptitude.map((item, index) => {
                                 return (
-                                    <View key={item.aptitude} style={infoStyles.aptitude}>
+                                    <View key={index} style={infoStyles.aptitude}>
                                         <Text style={infoStyles.aptitudeText}>{item.key}</Text>
                                     </View>
                                 )
@@ -145,7 +145,7 @@ const TechnicianInfoComponent = (props) => {
                             ) : (
                                     props.info.workDay.map((item, index) => {
                                         return (
-                                            <View key={item} style={[infoStyles.aptitude, {
+                                            <View key={index} style={[infoStyles.aptitude, {
                                                 borderRadius: widthToDp('5'),
                                                 paddingHorizontal: widthToDp('2')
                                             }]}>
