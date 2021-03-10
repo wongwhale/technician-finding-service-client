@@ -27,6 +27,7 @@ import { getDistance } from '../../misc/getDistance'
 import Geolocation from '@react-native-community/geolocation'
 
 import SearchModal from '../../components/Modal/SearchModal'
+import ListBoxContentLoader from '../../components/Search/ListBoxContentLoader'
 
 const mapStateToProps = (state) => ({
     keyword: state.tech.keyword,
@@ -40,7 +41,7 @@ const SearchScreen = (props) => {
         'test' : '1',
         '2' : '2'
     }
-
+    const [isLoading , setIsLoading] = React.useState(false)
     const [listsWithDistance, setListsWithDistance] = React.useState([])
     const [searchLists , setSearchLists] = React.useState([])
     const [check, setCheck] = React.useState(false)
@@ -74,12 +75,14 @@ const SearchScreen = (props) => {
             })
         )
             .then(() => {
-                props.LOADED()
+                // props.LOADED()
+                setIsLoading(false)
                 setListsWithDistance(temp_lists.sort((a, b) => {
                     return a.sorter - b.sorter
                 }))
             }).catch((err) => {
-                props.LOADED()
+                // props.LOADED()
+                setIsLoading(false)
                 console.log(err);
             })
     }
@@ -129,7 +132,9 @@ const SearchScreen = (props) => {
 
     return (
         <>
-                <Header page="ค้นหา" back={true} navigation={props.navigation}  />
+        <SafeAreaView style={content.topsafearray} />
+        <SafeAreaView style={content.safearray}>
+                <Header page="ค้นหา" back={false} navigation={props.navigation}  />
                 <View style={{ backgroundColor: '#fff' , flex : 1 }}
                     onStartShouldSetResponder={() => true}
                     // onTouchStart={() => {
@@ -197,7 +202,7 @@ const SearchScreen = (props) => {
                         }}
                     >
                         {
-
+                            isLoading ? <ListBoxContentLoader /> :
                             listsWithDistance.map((item, index) => {
                                 return <ListBox
                                     key={index}
@@ -212,14 +217,16 @@ const SearchScreen = (props) => {
                         }
                     </ScrollView>
                 </View>
+        </SafeAreaView>
                 <SearchModal
                     isOpen={check}
                     onClosed={() => {
                         setCheck(false)
                     }}
                     setSearchList={ (key) => {
+                        setIsLoading(true)
                         props.SET_SEARCH_KEY_WORD(key)
-                        props.LOADING()
+                        // props.LOADING()
                         setSearchLists([])
                         props.SEARCH_GUIDE(key).then(arr => {
                             handleSearch(arr).then( async (t_list) => {

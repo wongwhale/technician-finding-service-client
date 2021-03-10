@@ -300,9 +300,9 @@ export const searchScreen = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingVertical: heightToDp('1.5'),
-        borderBottomWidth: heightToDp('0.1'),
-        borderBottomColor: color.BLUE_5,
-        paddingLeft: widthToDp('3')
+        // borderBottomWidth: heightToDp('0.1'),
+        // borderBottomColor: color.BLUE_5,
+        paddingHorizontal: widthToDp('5')
     },
     listRowContainer: {
         alignItems: 'flex-start',
@@ -317,10 +317,11 @@ export const searchScreen = StyleSheet.create({
     },
     nameText: {
         color: color.BLUE_1,
-        fontSize: widthToDp('4')
+        fontSize: widthToDp('4'),
+        fontWeight : 'bold'
     },
     infoContainer: {
-        justifyContent: 'space-evenly',
+        justifyContent: 'flex-start',
         height: heightToDp('6'),
         flex: 1,
         paddingLeft: widthToDp('3'),
@@ -331,7 +332,7 @@ export const searchScreen = StyleSheet.create({
         height: heightToDp('6'),
     },
     techImage: {
-        height: heightToDp('6'),
+        height: heightToDp('5'),
         aspectRatio: 1,
         borderRadius: heightToDp('3'),
         backgroundColor: color.GREEN_4
@@ -343,7 +344,7 @@ export const searchScreen = StyleSheet.create({
     },
     detailbtnText: {
         color: color.BLUE_3,
-        fontSize: widthToDp('4')
+        fontSize: widthToDp('3')
     },
     filterBtn: {
         backgroundColor: color.WHITE,
@@ -696,8 +697,8 @@ export const datePicker = StyleSheet.create({
 export const message = StyleSheet.create({
     listContainer: {
         flexDirection: 'row',
-        borderBottomColor: color.GREY_5,
-        borderBottomWidth: 1,
+        // borderBottomColor: color.GREY_5,
+        // borderBottomWidth: 1,
         paddingHorizontal: 5,
         paddingVertical: widthToDp('2'),
     },
@@ -830,7 +831,8 @@ export const message = StyleSheet.create({
     newDateContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: heightToDp('1')
+        marginTop: heightToDp('2'),
+        marginBottom : heightToDp('1')
     },
     newDateText: {
         color: color.BLUE_0,

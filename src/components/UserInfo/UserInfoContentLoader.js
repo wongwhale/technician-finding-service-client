@@ -1,48 +1,83 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
-import { color, heightToDp , widthToDp } from '../../stylesheet'
-import { connect } from 'react-redux'
-import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
-import UserInfoContentLoader from '../../components/UserInfo/UserInfoContentLoader'
-import UserInfo from '../../components/UserInfo/UserInfo'
+import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native'
 
-const mapStateToProps = (state) => ({
-    info: state.tech.info,
-    uid: state.auth.userInfo.uid,
-    role: state.auth.userInfo.role,
-    firstname: state.auth.userInfo.firstname,
-    lastname: state.auth.userInfo.lastname,
-    avatar: state.auth.userInfo.avatar,
-})
+import { content, heightToDp, global, widthToDp, color } from '../../stylesheet'
 
-const UserInfoScreen = (props) => {
-    const [isReady , setIsReady] = React.useState(false)
-    React.useEffect( () => {
-        if (props.role === 'technician') {
-            props.GET_TECHNICIAN_INFO(props.uid).then(() => {
-                setIsReady(true)
-            }).catch(err => {
-                setIsReady(true)
-            })
-        }
-        else {
-            setIsReady(true)
-        }
-    },[])
+import ContentLoader from 'react-native-easy-content-loader'
+
+
+const UserInfoContentLoader = (props) => {
     return (
         <>
-        {
-            !isReady ? (
-                <UserInfoContentLoader />
-            ) : <UserInfo />
-        }
+            <SafeAreaView style={content.topsafearray} />
+            <SafeAreaView style={content.safearray} >
+                <View style={[global.header]}>
+                    <ContentLoader
+                        avatar
+                        avatarStyles={infoStyles.profileImage}
+                        pRows={0}
+                        title={false}
+                        containerStyles={{
+                            width: heightToDp('5')
+                        }}
+                    />
+                </View>
+                <View style={[infoStyles.headerContainer]}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <ContentLoader
+                            pRows={0}
+                            title
+                            titleStyles={{
+                                width : widthToDp('50')
+                            }}
+                            containerStyles={{
+                                width : widthToDp('50')
+                            }}
+                        />
+                    </View>
+                </View>
+                <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8}}>
+                    <View>
+                        <View
+                            style={{ width: widthToDp('70'), borderRadius: widthToDp('1'), justifyContent: 'center', alignItems: 'center', height: widthToDp('7') }}
+                        >
+                            <ContentLoader
+                            pRows={0}
+                            title
+                            titleStyles={{
+                                width : widthToDp('70')
+                            }}
+                            containerStyles={{
+                                width : widthToDp('70')
+                            }}
+                        />
+                        </View>
+                    </View>
+                </View>
+                {/* <ScrollView >
+                    <View style={[content.container]}>
+                        {
+                            props.role === 'user' ? (
+                                <>
 
+                                </>
+                            ) :
+                                props.role === 'technician' ? (
+                                    <>
+                                        <TechnicianInfoComponent
+                                            info={props.info}
+                                        />
+                                    </>
+                                ) : null
+                        }
+                    </View>
+                </ScrollView> */}
+            </SafeAreaView>
         </>
     )
 }
 
-export default connect(mapStateToProps, { GET_TECHNICIAN_INFO })(UserInfoScreen)
-
+export default UserInfoContentLoader
 
 export const infoStyles = StyleSheet.create({
     coverImage: {
@@ -54,7 +89,7 @@ export const infoStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: widthToDp('1'),
-        backgroundColor : '#fff'
+        backgroundColor: '#fff'
     },
     profileImage: {
         width: heightToDp('5'),
@@ -168,7 +203,7 @@ export const infoStyles = StyleSheet.create({
     btnText: {
         color: color.GREY_5,
         fontSize: widthToDp('4'),
-        fontWeight : 'bold'
+        fontWeight: 'bold'
     }
 
 })

@@ -52,7 +52,13 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 isLoading: false,
                 isAuth: false,
-                userInfo: initialState.userInfo
+                userInfo: {
+                    ...initialState.userInfo,
+                    currentLocation : {
+                        lat : state.userInfo.currentLocation.lat,
+                        lon : state.userInfo.currentLocation.lon
+                    }
+                }
             }
         case authType.LOADING:
             return {
@@ -65,7 +71,16 @@ export default function authReducer(state = initialState, action) {
                 isLoading: false,
             }
         case authType.CLEAR :
-            return state = initialState
+            return {
+                ...initialState ,
+                userInfo: {
+                    ...initialState.userInfo,
+                    currentLocation : {
+                        lat : state.userInfo.currentLocation.lat,
+                        lon : state.userInfo.currentLocation.lon
+                    }
+                }
+            }
         case authType.SET_ROLE :
             return {
                 ...state,

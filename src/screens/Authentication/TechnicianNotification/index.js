@@ -44,7 +44,7 @@ const Notification = ({ navigation, role, userResponse, techAcceptedOrder, techO
         <>
             <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray}>
-                <Header page="การแจ้งเตือน" navigation={navigation} />
+                <Header page="การแจ้งเตือน (ช่าง)" navigation={navigation} />
                 <TopTab.Navigator lazy tabBarPosition='top'
                     tabBarOptions={{
                         labelStyle: { fontSize: widthToDp('3'), fontWeight: 'bold' },

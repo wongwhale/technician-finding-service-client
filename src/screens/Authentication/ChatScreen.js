@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 
-import { View, Text, SafeAreaView, Keyboard, KeyboardAvoidingView, Image, Dimensions , Platform } from 'react-native'
+import { View, Text, SafeAreaView, Keyboard, KeyboardAvoidingView, Image, Dimensions, Platform } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import ChatHeader from '../../components/Chat/ChatHeader'
 import ChatInput from '../../components/Chat/ChatInput'
@@ -48,8 +48,10 @@ const Chat = (props) => {
 
     return (
         <>
-                    <ChatHeader navigation={props.navigation} />
-                    {/* {
+            <SafeAreaView style={content.topsafearray} />
+            <SafeAreaView style={content.safearray}>
+                <ChatHeader navigation={props.navigation} />
+                {/* {
                         props.messages.length !== 0 ? (
                             <ScrollView
                                 ref={scrollView_ref}
@@ -75,18 +77,19 @@ const Chat = (props) => {
                                 </>
                             )
                     } */}
-                    <ScrollView
-                        style={{
-                            backgroundColor : '#fff'
-                        }}
-                        ref={scrollView_ref}
-                        onContentSizeChange={() => {
-                            scrollView_ref.current.scrollToEnd({ animated: true })
-                        }}
-                    >
-                        <ChatBox setImageIsOpen={() => setImageIsOpen(true)} />
-                    </ScrollView>
-                    <ChatInput />
+                <ScrollView
+                    style={{
+                        backgroundColor: '#fff'
+                    }}
+                    ref={scrollView_ref}
+                    onContentSizeChange={() => {
+                        scrollView_ref.current.scrollToEnd({ animated: true })
+                    }}
+                >
+                    <ChatBox setImageIsOpen={() => setImageIsOpen(true)} />
+                </ScrollView>
+                <ChatInput />
+            </SafeAreaView>
             <Modal
                 isOpen={imageIsOpen}
                 onClosed={() => setImageIsOpen(false)}
@@ -104,8 +107,8 @@ const Chat = (props) => {
                     <View
                         style={{
                             width: '100%',
-                            alignItems : 'flex-end',
-                            padding : widthToDp('2')
+                            alignItems: 'flex-end',
+                            padding: widthToDp('2')
                         }}
                     >
                         <TouchableOpacity

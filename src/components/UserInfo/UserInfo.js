@@ -22,9 +22,11 @@ const mapStateToProps = (state) => ({
 })
 
 const UserInfo = (props) => {
-    const { goBack , navigate } = useNavigation()
+    const { goBack, navigate } = useNavigation()
     return (
         <>
+            <SafeAreaView style={content.topsafearray} />
+            <SafeAreaView style={content.safearray} >
                 <View style={[global.header]}>
                     <Image
                         style={infoStyles.profileImage}
@@ -56,23 +58,15 @@ const UserInfo = (props) => {
                             <Feather name="settings" style={global.chatIcon} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity
-                        style={global.backIconContainer}
-                        onPress={() => {
-                            navigate('menu')
-                        }}
-                    >
-                        <Feather name="chevron-left" style={global.backIcon} />
-                    </TouchableOpacity>
                 </View>
                 <View style={[infoStyles.headerContainer]}>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'  }}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: widthToDp('4'), fontWeight: 'bold', color: '#333' }}>
                             {`${props.firstname} ${props.lastname}`}
                         </Text>
                     </View>
                 </View>
-                <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8, backgroundColor: '#fff' }}>
+                {/* <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8, backgroundColor: '#fff' }}>
                     <TouchableOpacity
                         onPress={() => {
                             navigate('editInfo')
@@ -84,7 +78,7 @@ const UserInfo = (props) => {
                             <Text style={{ color: '#fff', fontSize: widthToDp('3.5'), fontWeight: 'bold' }}>แก้ไขข้อมูลส่วนตัว</Text>
                         </View>
                     </TouchableOpacity>
-                </View>
+                </View> */}
                 <ScrollView >
                     <View style={[content.container]}>
                         {
@@ -103,6 +97,7 @@ const UserInfo = (props) => {
                         }
                     </View>
                 </ScrollView>
+            </SafeAreaView>
         </>
     )
 }
@@ -119,7 +114,7 @@ export const infoStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: widthToDp('1'),
-        backgroundColor : '#fff'
+        backgroundColor: '#fff'
     },
     profileImage: {
         width: heightToDp('5'),
@@ -233,7 +228,7 @@ export const infoStyles = StyleSheet.create({
     btnText: {
         color: color.GREY_5,
         fontSize: widthToDp('4'),
-        fontWeight : 'bold'
+        fontWeight: 'bold'
     }
 
 })

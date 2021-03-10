@@ -20,7 +20,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
 import { useFocusEffect } from '@react-navigation/native'
 import Modal from 'react-native-modalbox'
-import {aptitudeType} from '../../misc/aptitude_type'
+import { aptitudeType } from '../../misc/aptitude_type'
 
 const mapStateToProps = (state) => ({
     location: state.form.location
@@ -35,22 +35,22 @@ const mapDispatchToProps = {
 const NearMeScreen = ({ navigation, ...props }) => {
     const [mapKeyword, setMapKeyword] = React.useState('')
     const [technicians, setTechnicians] = React.useState([])
-    const [isOpen , setIsOpen] = React.useState(false)
+    const [isOpen, setIsOpen] = React.useState(false)
 
 
     React.useEffect(() => {
         props.GET_NEAR_TECHNICIAN(
             props.location.latitude,
             props.location.longitude
-        ).then( (res) => {
+        ).then((res) => {
             setTechnicians(res)
         })
     }, [])
 
-    useFocusEffect( 
-        React.useCallback( () => {
+    useFocusEffect(
+        React.useCallback(() => {
             setTechnicians([])
-        },[])
+        }, [])
     )
 
     const handleOnPressFilterModal = () => {
@@ -59,20 +59,21 @@ const NearMeScreen = ({ navigation, ...props }) => {
 
     return (
         <>
-            <View style={[content.safearray , {backgroundColor : color.GREY_5}]}>
+            <SafeAreaView style={content.topsafearray} />
+            <View style={[content.safearray, { backgroundColor: color.GREY_5 }]}>
                 <Header page="ใกล้ฉัน" back={true} navigation={navigation} />
                 <TouchableOpacity
                     style={{
-                        position : 'absolute',
-                        bottom : widthToDp('5'),
-                        backgroundColor : color.BLUE_3,
-                        zIndex : 4,
-                        width : widthToDp('40'),
-                        paddingVertical : widthToDp('3'),
-                        alignSelf : 'center',
-                        alignItems : 'center',
-                        justifyContent : 'center',
-                        borderRadius : widthToDp('10'),
+                        position: 'absolute',
+                        bottom: widthToDp('5'),
+                        backgroundColor: color.BLUE_3,
+                        zIndex: 4,
+                        width: widthToDp('40'),
+                        paddingVertical: widthToDp('3'),
+                        alignSelf: 'center',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: widthToDp('10'),
                         shadowColor: "#000",
                         shadowOffset: {
                             width: 0,
@@ -89,9 +90,9 @@ const NearMeScreen = ({ navigation, ...props }) => {
                         name='options-outline'
                         size={widthToDp("6")}
                         style={{
-                            fontSize : widthToDp('6'),
-                            fontWeight : 'bold',
-                            color : '#fff',
+                            fontSize: widthToDp('6'),
+                            fontWeight: 'bold',
+                            color: '#fff',
                         }}
                     />
                 </TouchableOpacity>
@@ -150,14 +151,14 @@ const NearMeScreen = ({ navigation, ...props }) => {
                 onClosed={() => setIsOpen(false)}
                 position='bottom'
                 style={{
-                    height : heightToDp('60'),
-                    borderTopRightRadius : heightToDp(3),
-                    borderTopLeftRadius : heightToDp(3)
+                    height: heightToDp('60'),
+                    borderTopRightRadius: heightToDp(3),
+                    borderTopLeftRadius: heightToDp(3)
                 }}
                 swipeArea={heightToDp(3)}
             >
                 <View
-                    style={{flex :1}}
+                    style={{ flex: 1 }}
                 >
                     <View
                         style={{
@@ -180,42 +181,42 @@ const NearMeScreen = ({ navigation, ...props }) => {
                             fontWeight: 'bold',
                             fontSize: widthToDp('6'),
                             color: color.BLUE_1,
-                            alignSelf : 'center'
+                            alignSelf: 'center'
                         }}
                     >
                         เลือกประเภท
                     </Text>
                     <View
                         style={{
-                            flexDirection : 'row',
-                            flexWrap : 'wrap',
-                            padding : widthToDp('4')
+                            flexDirection: 'row',
+                            flexWrap: 'wrap',
+                            padding: widthToDp('4')
                         }}
                     >
                         {
-                            aptitudeType.map( (item) => {
+                            aptitudeType.map((item) => {
                                 return (
                                     <TouchableOpacity
                                         style={{
-                                            paddingVertical : widthToDp('2'),
-                                            marginHorizontal : widthToDp('1'),
-                                            marginVertical : widthToDp('1'),
-                                            paddingHorizontal : widthToDp('4'),
-                                            borderRadius : widthToDp('4'),
-                                            backgroundColor : color.GREY_5
+                                            paddingVertical: widthToDp('2'),
+                                            marginHorizontal: widthToDp('1'),
+                                            marginVertical: widthToDp('1'),
+                                            paddingHorizontal: widthToDp('4'),
+                                            borderRadius: widthToDp('4'),
+                                            backgroundColor: color.GREY_5
                                         }}
                                     >
-                                        <Text 
+                                        <Text
                                             style={{
-                                                fontSize : widthToDp('4'),
-                                                fontWeight : 'bold',
-                                                color : color.BLUE_1
+                                                fontSize: widthToDp('4'),
+                                                fontWeight: 'bold',
+                                                color: color.BLUE_1
                                             }}
                                             key={item}
                                         >
-                                            
+
                                             {item}
-                                            </Text>
+                                        </Text>
                                     </TouchableOpacity>
                                 )
                             })

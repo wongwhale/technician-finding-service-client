@@ -64,14 +64,10 @@ const Index = (props) => {
 
   return (
     <>
-    <SafeAreaView style={content.topsafearray} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 24}
-      >
-      <SafeAreaView
-        style={content.safearray}
       >
         <Stack.Navigator
           screenOptions={{
@@ -93,7 +89,6 @@ const Index = (props) => {
           <Stack.Screen name='editInfo' component={UserInfoEditScreen} options={{ headerShown: false }} />
           <Stack.Screen name='rating' component={RatingScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
-      </SafeAreaView>
         <LoadingModal />
         <LogoutConfirmModal
           isOpen={props.logoutConfirmIsOpen}

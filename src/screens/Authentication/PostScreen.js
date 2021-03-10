@@ -21,9 +21,9 @@ import ImagePickerManager from 'react-native-image-crop-picker'
 
 import { sendPostReq } from '../../store/actions/socketAction'
 import { addNewResponse } from '../../store/actions/notiAction'
-import { SET_FILE, SET_LOCATION , clear } from '../../store/actions/formAction'
+import { SET_FILE, SET_LOCATION, clear } from '../../store/actions/formAction'
 import { CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
-import { LOADING , LOADED } from '../../store/actions/authAction'
+import { LOADING, LOADED } from '../../store/actions/authAction'
 
 import { connect } from 'react-redux'
 import { content, color, card, widthToDp } from '../../stylesheet'
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => ({
     type: state.form.type
 })
 
-const connector = connect(mapStateToProps, { LOADING , LOADED , clear , addNewResponse, SET_LOCATION, sendPostReq, SET_FILE, CLOSE_IMAGE_PICKER_MODAL })
+const connector = connect(mapStateToProps, { LOADING, LOADED, clear, addNewResponse, SET_LOCATION, sendPostReq, SET_FILE, CLOSE_IMAGE_PICKER_MODAL })
 
 const PostScreen = (props) => {
     const [locationVisible, setLocationVisible] = React.useState(false)
@@ -69,148 +69,151 @@ const PostScreen = (props) => {
 
     return (
         <>
-                    <Header page='บอกอาการ' back={true} navigation={props.navigation} chat={false} isRadius={true} />
-                    <ScrollView style={content.container}>
-                        <View style={card.card}>
-                            <View style={card.cardHeader}>
-                                <Text style={card.headerText}>
-                                    ระบุเวลานัด
+            <SafeAreaView style={content.topsafearray} />
+            <SafeAreaView style={content.safearray} >
+                <Header page='บอกอาการ' navigation={props.navigation} chat={false} isRadius={true} />
+                <ScrollView style={content.container}>
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>
+                                ระบุเวลานัด
                             </Text>
-                            </View>
-                            <View style={card.cardContainer}>
-                                <DateTimePicker />
-                            </View>
                         </View>
-                        <View style={card.card}>
-                            <View style={card.cardHeader}>
-                                <Text style={card.headerText}>
-                                    ระบุรายละเอียด
-                            </Text>
-                            </View>
-                            <View style={card.cardContainer}>
-                                <TypePicker />
-                                <DetailInput />
-                                <ImagePicker />
-                            </View>
+                        <View style={card.cardContainer}>
+                            <DateTimePicker />
                         </View>
-                        <View style={card.card}>
-                            <View style={[card.cardHeader, { justifyContent: 'center', alignItems: 'center' }]}>
-                                <Text style={card.headerText}>
-                                    ระบุสถานที่
+                    </View>
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>
+                                ระบุรายละเอียด
                             </Text>
-                                <Text
-                                    style={styles.selectedText}
-                                >
-                                    (ค่าเริ่มต้น : ที่อยู่ปัจจุบัน)
+                        </View>
+                        <View style={card.cardContainer}>
+                            <TypePicker />
+                            <DetailInput />
+                            <ImagePicker />
+                        </View>
+                    </View>
+                    <View style={card.card}>
+                        <View style={[card.cardHeader, { justifyContent: 'center', alignItems: 'center' }]}>
+                            <Text style={card.headerText}>
+                                ระบุสถานที่
+                            </Text>
+                            <Text
+                                style={styles.selectedText}
+                            >
+                                (ค่าเริ่มต้น : ที่อยู่ปัจจุบัน)
                                 </Text>
-                            </View>
-                            <View style={card.cardContainer}>
-                                {/* <LocationPicker /> */}
-                                <TouchableOpacity
-                                    // style={{
-                                    //     width: '100%',
-                                    //     backgroundColor: color.BLUE_5,
-                                    //     padding: widthToDp('2'),
-                                    //     paddingLeft: widthToDp('5'),
-                                    //     borderRadius: widthToDp('2'),
-                                    //     marginBottom: widthToDp('2'),
-                                    //     justifyContent: 'center',
-                                    //     flexDirection: 'row',
-                                    //     alignItems: 'center'
-                                    // }}
-                                    onPress={() => {
-                                        setLocationVisible(true)
+                        </View>
+                        <View style={card.cardContainer}>
+                            {/* <LocationPicker /> */}
+                            <TouchableOpacity
+                                // style={{
+                                //     width: '100%',
+                                //     backgroundColor: color.BLUE_5,
+                                //     padding: widthToDp('2'),
+                                //     paddingLeft: widthToDp('5'),
+                                //     borderRadius: widthToDp('2'),
+                                //     marginBottom: widthToDp('2'),
+                                //     justifyContent: 'center',
+                                //     flexDirection: 'row',
+                                //     alignItems: 'center'
+                                // }}
+                                onPress={() => {
+                                    setLocationVisible(true)
+                                }}
+                            >
+                                <LinearGradient
+                                    style={{
+                                        width: '100%',
+                                        backgroundColor: color.BLUE_5,
+                                        padding: widthToDp('2'),
+                                        paddingLeft: widthToDp('5'),
+                                        borderRadius: widthToDp('2'),
+                                        marginBottom: widthToDp('2'),
+                                        justifyContent: 'center',
+                                        flexDirection: 'row',
+                                        alignItems: 'center'
                                     }}
+                                    colors={[
+                                        color.BLUE_5,
+                                        color.BLUE_5
+                                    ]}
                                 >
-                                    <LinearGradient
-                                        style={{
-                                            width: '100%',
-                                            backgroundColor: color.BLUE_5,
-                                            padding: widthToDp('2'),
-                                            paddingLeft: widthToDp('5'),
-                                            borderRadius: widthToDp('2'),
-                                            marginBottom: widthToDp('2'),
-                                            justifyContent: 'center',
-                                            flexDirection: 'row',
-                                            alignItems: 'center'
-                                        }}
-                                        colors={[
-                                            color.BLUE_5,
-                                            color.BLUE_5
-                                        ]}
+                                    <Text
+                                        style={styles.selectedText}
                                     >
-                                        <Text
-                                            style={styles.selectedText}
-                                        >
-                                            ระบุที่อยู่
+                                        ระบุที่อยู่
                                         </Text>
-                                    </LinearGradient>
-                                    {/* <Feather
+                                </LinearGradient>
+                                {/* <Feather
                                     style={styles.selectedText}
                                     name='map-pin'
                                 /> */}
-                                </TouchableOpacity>
+                            </TouchableOpacity>
 
-                            </View>
                         </View>
-                        <MyButton title='ยืนยัน'
-                            onPress={() => {
-                                props.LOADING()
-                                const date = `${props.year}-${("0" + (props.month + 1)).slice(-2)}-${("0" + (props.date)).slice(-2)}T${("0" + (props.hour)).slice(-2)}:${("0" + (props.minute)).slice(-2)}:00Z`
-                                const name = `${props.firstname} ${props.lastname}`
-                                props.sendPostReq({
-                                    name: name,
-                                    uid: props.uid,
-                                    date: date,
-                                    type: props.type,
-                                    file: props.file,
-                                    detail: props.detail,
-                                    location: {
-                                        lat: props.lat,
-                                        lon: props.lng
-                                    }
-                                }).then(res => {
-                                    props.LOADED()
-                                    props.navigation.navigate('notification')
-                                    
-                                })
-                            }}
-                        />
-                        <View style={{ marginBottom: 25 }} />
-                    </ScrollView>
-                    <DatePickerModal />
-                    <TimePickerModal />
-                    <SelectTypePickerModal />
-                    {/* <LocationPickerModal /> */}
-                    <ImagePickerModal 
-                        libFunc={() => {
-                            ImagePickerManager.openPicker({
-                                multiple: true,
-                                maxFiles: 5
-                            }).then((img) => {
-                                console.log(img)
-                                props.SET_FILE(img)
-                                props.CLOSE_IMAGE_PICKER_MODAL()
-                            })
-                        }} 
+                    </View>
+                    <MyButton title='ยืนยัน'
+                        onPress={() => {
+                            props.LOADING()
+                            const date = `${props.year}-${("0" + (props.month + 1)).slice(-2)}-${("0" + (props.date)).slice(-2)}T${("0" + (props.hour)).slice(-2)}:${("0" + (props.minute)).slice(-2)}:00Z`
+                            const name = `${props.firstname} ${props.lastname}`
+                            props.sendPostReq({
+                                name: name,
+                                uid: props.uid,
+                                date: date,
+                                type: props.type,
+                                file: props.file,
+                                detail: props.detail,
+                                location: {
+                                    lat: props.lat,
+                                    lon: props.lng
+                                }
+                            }).then(res => {
+                                props.LOADED()
+                                props.navigation.navigate('notification')
 
-                        camFunc={ () => {
-                            ImagePickerManager.openCamera({
-
-                            }).then( (img) => {
-                                console.log(img);
-                                props.CLOSE_IMAGE_PICKER_MODAL()
                             })
                         }}
                     />
-                    <LocationPickerModal
-                        isOpen={locationVisible}
-                        onClosed={() => setLocationVisible(false)}
-                        location={props.location}
-                        setLocation={(lat, lng) => {
-                            props.SET_LOCATION(lat, lng)
-                        }}
-                    />
+                    <View style={{ marginBottom: 25 }} />
+                </ScrollView>
+                <DatePickerModal />
+                <TimePickerModal />
+                <SelectTypePickerModal />
+                {/* <LocationPickerModal /> */}
+                <ImagePickerModal
+                    libFunc={() => {
+                        ImagePickerManager.openPicker({
+                            multiple: true,
+                            maxFiles: 5
+                        }).then((img) => {
+                            console.log(img)
+                            props.SET_FILE(img)
+                            props.CLOSE_IMAGE_PICKER_MODAL()
+                        })
+                    }}
+
+                    camFunc={() => {
+                        ImagePickerManager.openCamera({
+
+                        }).then((img) => {
+                            console.log(img);
+                            props.CLOSE_IMAGE_PICKER_MODAL()
+                        })
+                    }}
+                />
+                <LocationPickerModal
+                    isOpen={locationVisible}
+                    onClosed={() => setLocationVisible(false)}
+                    location={props.location}
+                    setLocation={(lat, lng) => {
+                        props.SET_LOCATION(lat, lng)
+                    }}
+                />
+            </SafeAreaView>
 
         </>
     )

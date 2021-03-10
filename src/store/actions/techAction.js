@@ -14,9 +14,9 @@ export const SET_SEARCH_KEY_WORD = (keyword) => dispatch => {
 }
 
 export const SEARCH_BY_KEY_WORD = (keyword) => dispatch => {
-    dispatch({
-        type: authType.LOADING
-    })
+    // dispatch({
+    //     type: authType.LOADING
+    // })
     return new Promise((resolve, reject) => {
         AsyncStorage.getItem('token').then(token => {
             axios({
