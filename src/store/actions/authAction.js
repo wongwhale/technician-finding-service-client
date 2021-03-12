@@ -436,6 +436,7 @@ export const changeRole = (role) => dispatch => {
 }
 
 export const setCurrentLocation = (lat , lon) => dispatch => {
+    console.log(lat , lon);
     dispatch({
         type : authType.SET_CURRENT_LOCATION,
         payload : {

@@ -8,18 +8,16 @@ const MyButton = ({ onPress, title }) => {
     return (
         <>
            
-                <LinearGradient
-                    // colors={[ color.BLUE_3, color.BLUE_2 , color.BLUE_1 , color.BLUE_1 , color.BLUE_0]}
-                    colors={[  color.BLUE_2 , color.BLUE_2 ]}
+                <TouchableOpacity
                     style={styles.container}
-                    onTouchEnd={ () => {
+                    onPress={ () => {
                         onPress()
                     }}
                 >
                     <Text style={styles.text}>
                         {title}
                     </Text>
-                </LinearGradient>
+                </TouchableOpacity>
         </>
     )
 }
@@ -46,6 +44,7 @@ const styles = StyleSheet.create({
         paddingLeft: widthToDp('4'),
         paddingRight: widthToDp('1'),
         marginVertical: widthToDp('1'),
+        backgroundColor : color.BLUE_1
     },
     text: {
         color: '#fff',

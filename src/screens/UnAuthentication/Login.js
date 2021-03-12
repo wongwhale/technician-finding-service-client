@@ -10,7 +10,8 @@ import {
   StyleSheet,
   Keyboard,
   Animated,
-  Easing
+  Easing,
+  Image
 } from 'react-native';
 import MyButton from '../../components/MyButton';
 import Footer from '../../components/Login/Footer';
@@ -132,14 +133,17 @@ const Login = (props) => {
             alignItems: 'center',
             marginBottom: 40,
           }}>
-          <View
+          <Image
+            source={require('../../assets/image/logoLogin.png')}
             style={{
-              width: 100,
-              height: 100,
+              width: widthToDp('25'),
+              height: widthToDp('25'),
               backgroundColor: color.BLUE_4,
-              borderRadius: 50,
+              borderRadius: widthToDp('12.5'),
               marginRight: 10,
             }}
+            resizeMode='cover'
+
           />
         </View>
         <View style={[inputStyles.container]}>

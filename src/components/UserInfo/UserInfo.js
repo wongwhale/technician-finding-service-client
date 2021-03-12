@@ -4,6 +4,7 @@ import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, SafeAreaVi
 
 import { content, heightToDp, global, widthToDp, color } from '../../stylesheet'
 import Feather from 'react-native-vector-icons/Feather'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import TechnicianInfoComponent from '../../components/TechnicianInfo/TechnicianInfoComponent'
 
@@ -66,7 +67,82 @@ const UserInfo = (props) => {
                         </Text>
                     </View>
                 </View>
-                {/* <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8, backgroundColor: '#fff' }}>
+                <ScrollView >
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-evenly',
+                            alignItems: 'center',
+                            padding: 8,
+                            backgroundColor: '#fff',
+                            marginVertical: widthToDp('2')
+                        }}>
+                        {
+                            props.role === 'technician' ? (
+                                <>
+                                    <TouchableOpacity
+                                        style={infoStyles.iconBtn}
+                                        onPress={ () => navigate('techNotification')}
+                                    >
+                                        <Ionicons name='build-outline' color={color.BLUE_2} size={widthToDp('6')} />
+                                        <Text
+                                            style={{
+                                                fontSize: widthToDp('3.5'),
+                                                color: color.BLUE_2
+                                            }}
+                                        >
+                                            ช่าง
+                                    </Text>
+                                    </TouchableOpacity>
+
+                                </>
+                            ) : null
+                        }
+                        <TouchableOpacity
+                            style={infoStyles.iconBtn}
+                            onPress={ () => navigate('userNotification')}
+                        >
+                            <Ionicons name='time-outline' color={color.IOS_ORANGE_LIGHT} size={widthToDp('6')} />
+                            <Text
+                                style={{
+                                    fontSize: widthToDp('3.5'),
+                                    color: color.IOS_ORANGE_LIGHT
+                                }}
+                            >
+                                รอการยืนยัน
+                        </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={infoStyles.iconBtn}
+                            onPress={ () => {
+                                navigate('accepted')
+                            }}
+                        >
+                            <Ionicons name='checkmark-circle-outline' color={color.GREEN_1} size={widthToDp('6')} />
+                            <Text
+                                style={{
+                                    fontSize: widthToDp('3.5'),
+                                    color: color.GREEN_1
+                                }}
+                            >
+                                ยืนยันแล้ว
+                        </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={infoStyles.iconBtn}
+                        >
+                            <Ionicons name='refresh-outline' color={color.IOS_INDIGO_DARK} size={widthToDp('6')} />
+                            <Text
+                                style={{
+                                    fontSize: widthToDp('3.5'),
+                                    color: color.IOS_INDIGO_LIGHT
+                                }}
+                            >
+                                ประวัติ
+                        </Text>
+                        </TouchableOpacity>
+                    </View>
+                    {/* <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8, backgroundColor: '#fff' }}>
                     <TouchableOpacity
                         onPress={() => {
                             navigate('editInfo')
@@ -79,7 +155,6 @@ const UserInfo = (props) => {
                         </View>
                     </TouchableOpacity>
                 </View> */}
-                <ScrollView >
                     <View style={[content.container]}>
                         {
                             props.role === 'user' ? (
@@ -229,6 +304,11 @@ export const infoStyles = StyleSheet.create({
         color: color.GREY_5,
         fontSize: widthToDp('4'),
         fontWeight: 'bold'
+    },
+    iconBtn: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: widthToDp('25')
     }
 
 })

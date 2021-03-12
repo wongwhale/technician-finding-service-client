@@ -22,7 +22,7 @@ const TopTab = createMaterialTopTabNavigator()
 
 const mapStateToProps = (state) => ({
     role: state.auth.userInfo.role,
-    userResponse: state.noti.userResponse
+    userConfirmed : state.noti.userConfirmed
 })
 
 const mapDispatchToProps = {
@@ -30,10 +30,10 @@ const mapDispatchToProps = {
 }
 
 
-const AcceptedRequestOrder = ({ navigation, role, userResponse }) => {
+const AcceptedRequestOrder = ({ userConfirmed }) => {
     return (
         <>
-            <View
+            <SafeAreaView
                 style={{
                     flex: 1,
                     backgroundColor: '#fff'
@@ -46,8 +46,8 @@ const AcceptedRequestOrder = ({ navigation, role, userResponse }) => {
                     }}
                 >
                     {
-                        userResponse.length !== 0 ? (
-                            userResponse.map((form) => {
+                        userConfirmed.length !== 0 ? (
+                            userConfirmed.map((form) => {
                                 console.log(form);
                                 return (
                                     <View key={form._id} style={content.container}>
@@ -64,7 +64,7 @@ const AcceptedRequestOrder = ({ navigation, role, userResponse }) => {
                         ) : null
                     }
                 </ScrollView>
-            </View>
+            </SafeAreaView>
         </>
     )
 }

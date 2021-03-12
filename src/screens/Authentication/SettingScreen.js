@@ -19,6 +19,7 @@ const mapDispatchToProps = {
 const Btn = (props) => {
     return (
         <>
+
             <TouchableOpacity
                 style={
                     {
@@ -54,13 +55,21 @@ const Btn = (props) => {
 const SettingScreen = (props) => {
     return (
         <>
+            <SafeAreaView style={content.topsafearray} />
+            <SafeAreaView style={content.safearray} >
+
                 <Header navigation={props.navigation} title='ตั้งค่า' />
                 <View style={{ flex: 1, backgroundColor: color.GREY_5 }}>
-                    <View style={{ height: widthToDp('10'), marginTop: widthToDp('2') , borderTopRightRadius : widthToDp('2') , borderTopLeftRadius : widthToDp('2') }}>
+                    <View style={{ height: widthToDp('10'), marginTop: widthToDp('2'), borderTopRightRadius: widthToDp('2'), borderTopLeftRadius: widthToDp('2') }}>
+                        <Btn
+                            title=''
+                            navigation={() => props.navigation.navigate('editInfo')}
+                        />
                         <Btn
                             title='ประวัติ'
                             navigation={() => props.navigation.navigate('editInfo')}
                         />
+
                     </View>
                     {
                         props.role === 'user' ? (
@@ -84,10 +93,10 @@ const SettingScreen = (props) => {
                                     paddingHorizontal: widthToDp('5'),
                                     alignItems: 'center',
                                     backgroundColor: '#fff',
-                                    borderBottomRightRadius : widthToDp('2'),
-                                    borderBottomLeftRadius : widthToDp('2'),
-                                    borderTopWidth : widthToDp('0.1'),
-                                    borderTopColor :`${color.GREY_1}66`
+                                    borderBottomRightRadius: widthToDp('2'),
+                                    borderBottomLeftRadius: widthToDp('2'),
+                                    borderTopWidth: widthToDp('0.1'),
+                                    borderTopColor: `${color.GREY_1}66`
                                 }}
                             onPress={() => {
                                 props.OPEN_LOGOUT_CONFIRM_MODAL()
@@ -98,7 +107,7 @@ const SettingScreen = (props) => {
                                     fontSize: widthToDp('4'),
                                     marginRight: widthToDp('2'),
                                     color: color.IOS_RED_LIGHT,
-                                    fontWeight : 'bold'
+                                    fontWeight: 'bold'
                                 }}
                             />
                             <Text
@@ -106,7 +115,7 @@ const SettingScreen = (props) => {
                                     fontSize: widthToDp('4'),
                                     marginRight: widthToDp('2'),
                                     color: color.IOS_RED_LIGHT,
-                                    fontWeight : 'bold'
+                                    fontWeight: 'bold'
                                 }}
                             >
                                 ออกจากระบบ
@@ -114,6 +123,7 @@ const SettingScreen = (props) => {
                         </TouchableOpacity>
                     </View>
                 </View>
+            </SafeAreaView>
 
         </>
     )
