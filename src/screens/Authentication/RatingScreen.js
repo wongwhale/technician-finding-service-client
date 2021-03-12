@@ -24,94 +24,94 @@ const RatingScreen = (props) => {
     }, [])
     return (
         <>
+            <SafeAreaView style={content.topsafearray} />
+            <SafeAreaView style={content.safearray}>
+                <View
+                    style={{
+                        flex: 1,
+                    }}
+                >
+                    <Header
+                        title='รีวิว'
+                    />
+                    <TopTab.Navigator
+                        lazy
+                        screenOptions={({ route }) => ({
+                            tabBarLabel: ({ focused }) => {
+                                let name
+                                let labelName
+                                let iconColor
+                                let fontColor
+                                if (route.name === 'ช่างซ่อมคอมพิวเตอร์' || route.name === 'คอม') {
+                                    name = 'laptop-outline'
+                                    labelName = 'คอม'
+                                    fontColor = focused ? color.BLUE_0 : color.GREY_2
+                                    iconColor = focused ? color.BLUE_0 : color.GREY_2
+                                } else if (route.name === 'ไฟฟ้า') {
+                                    labelName = 'ไฟฟ้า'
+                                    name = 'bulb-outline'
+                                    iconColor = focused ? color.IOS_YELLOW_DARK : color.GREY_2
+                                    fontColor = focused ? color.BLUE_0 : color.GREY_2
+                                } else if (route.name === 'แอร์' || route.name === 'ช่างแอร์') {
+                                    labelName = 'แอร์'
+                                    name = 'thermometer-outline'
+                                    iconColor = focused ? color.IOS_BLUE : color.GREY_2
+                                    fontColor = focused ? color.BLUE_0 : color.GREY_2
+                                } else if (route.name === 'ช่างซ่อมรถจักรยานยนต์' || route.name === 'จักรยานยนต์') {
+                                    labelName = 'จักรยานยนต์'
+                                    name = 'bicycle-outline'
+                                    iconColor = focused ? color.IOS_INDIGO_DARK : color.GREY_2
+                                    fontColor = focused ? color.BLUE_0 : color.GREY_2
+                                } else if (route.name === 'ช่างซ่อมนาฬิกา' || route.name === 'นาฬิกา') {
+                                    labelName = 'นาฬิกา'
+                                    name = 'watch-outline'
+                                    iconColor = focused ? color.IOS_ORANGE_DARK : color.GREY_2
+                                    fontColor = focused ? color.BLUE_0 : color.GREY_2
+                                } else {
+                                    labelName = route.name
+                                    name = 'build-outline'
+                                    iconColor = focused ? color.BLUE_0 : color.GREY_2
+                                    fontColor = focused ? color.BLUE_0 : color.GREY_2
+                                }
 
-                    <View
-                        style={{
-                            flex: 1,
-                        }}
-                    >
-                        <Header
-                            title='รีวิว'
-                        />
-                        <TopTab.Navigator
-                            lazy
-                            screenOptions={({ route }) => ({
-                                tabBarLabel: ({ focused }) => {
-                                    let name
-                                    let labelName
-                                    let iconColor
-                                    let fontColor
-                                    if (route.name === 'ช่างซ่อมคอมพิวเตอร์' || route.name === 'คอม') {
-                                        name = 'laptop-outline'
-                                        labelName = 'คอม'
-                                        fontColor = focused ? color.BLUE_0 : color.GREY_2
-                                        iconColor = focused ? color.BLUE_0 : color.GREY_2
-                                    } else if (route.name === 'ไฟฟ้า') {
-                                        labelName = 'ไฟฟ้า'
-                                        name = 'bulb-outline'
-                                        iconColor = focused ? color.IOS_YELLOW_DARK : color.GREY_2
-                                        fontColor = focused ? color.BLUE_0 : color.GREY_2
-                                    } else if (route.name === 'แอร์' || route.name === 'ช่างแอร์') {
-                                        labelName = 'แอร์'
-                                        name = 'thermometer-outline'
-                                        iconColor = focused ? color.IOS_BLUE : color.GREY_2
-                                        fontColor = focused ? color.BLUE_0 : color.GREY_2
-                                    } else if (route.name === 'ช่างซ่อมรถจักรยานยนต์' || route.name === 'จักรยานยนต์') {
-                                        labelName = 'จักรยานยนต์'
-                                        name = 'bicycle-outline'
-                                        iconColor = focused ? color.IOS_INDIGO_DARK : color.GREY_2
-                                        fontColor = focused ? color.BLUE_0 : color.GREY_2
-                                    } else if (route.name === 'ช่างซ่อมนาฬิกา' || route.name === 'นาฬิกา') {
-                                        labelName = 'นาฬิกา'
-                                        name = 'watch-outline'
-                                        iconColor = focused ? color.IOS_ORANGE_DARK : color.GREY_2
-                                        fontColor = focused ? color.BLUE_0 : color.GREY_2
-                                    } else {
-                                        labelName = route.name
-                                        name = 'build-outline'
-                                        iconColor = focused ? color.BLUE_0 : color.GREY_2
-                                        fontColor = focused ? color.BLUE_0 : color.GREY_2
-                                    }
-
-                                    return (
-                                        <View
+                                return (
+                                    <View
+                                        style={{
+                                            alignItems: 'center'
+                                        }}>
+                                        <Ionicons name={name}
                                             style={{
-                                                alignItems: 'center'
-                                            }}>
-                                            <Ionicons name={name}
-                                                style={{
-                                                    color: iconColor,
-                                                    fontSize: widthToDp('6')
-                                                }} />
-                                            <Text
-                                                style={{
-                                                    color: iconColor,
-                                                    fontSize: widthToDp('3.5'),
-                                                    fontWeight: 'bold'
-                                                }}
-                                            >
-                                                {labelName}
-                                            </Text>
-                                        </View>
-                                    )
-                                },
+                                                color: iconColor,
+                                                fontSize: widthToDp('6')
+                                            }} />
+                                        <Text
+                                            style={{
+                                                color: iconColor,
+                                                fontSize: widthToDp('3.5'),
+                                                fontWeight: 'bold'
+                                            }}
+                                        >
+                                            {labelName}
+                                        </Text>
+                                    </View>
+                                )
+                            },
 
+                        })
+                        }
+                    >
+                        {
+                            props.info.aptitude.map((item, index) => {
+                                return <TopTab.Screen
+                                    key={item.key}
+                                    name={item.key}
+                                    component={RatingTabPage}
+                                />
                             })
-                            }
-                        >
-                            {
-                                props.info.aptitude.map((item, index) => {
-                                    return <TopTab.Screen
-                                        key={item.key}
-                                        name={item.key}
-                                        component={RatingTabPage}
-                                    />
-                                })
-                            }
-                            {/* <TopTab.Screen name='dshfkaljshd' component={RatingTabPage} options={{ tabBarLabel: 'คอมพิวเตอร์' }} /> */}
-                            {/* <TopTab.Screen name='12' component={RatingTabPage} options={{ tabBarLabel: 'คอมพิวเตอร์' }} /> */}
-                        </TopTab.Navigator>
-                    </View>
+                        }
+                    </TopTab.Navigator>
+                </View>
+            </SafeAreaView>
         </>
     )
 }

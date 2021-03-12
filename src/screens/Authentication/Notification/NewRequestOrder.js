@@ -22,7 +22,7 @@ const TopTab = createMaterialTopTabNavigator()
 
 const mapStateToProps = (state) => ({
     role: state.auth.userInfo.role,
-    userResponse: state.noti.userResponse
+    userResponse: state.noti.userResponse,
 })
 
 const mapDispatchToProps = {
@@ -33,7 +33,7 @@ const mapDispatchToProps = {
 const NewRequestOrder = ({ navigation, role, userResponse }) => {
     return (
         <>
-            <View
+            <SafeAreaView
                 style={{
                     flex: 1,
                     backgroundColor: '#fff'
@@ -64,7 +64,7 @@ const NewRequestOrder = ({ navigation, role, userResponse }) => {
                         ) : null
                     }
                 </ScrollView>
-            </View>
+            </SafeAreaView>
         </>
     )
 }

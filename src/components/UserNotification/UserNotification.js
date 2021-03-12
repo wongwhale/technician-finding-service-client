@@ -27,7 +27,7 @@ const UserNotification = (props) => {
     return (
         <>
             <View style={[notification.container, userNotification.bg]}>
-                <View style={[notification.headerContainer, { borderBottomColor: color.BLUE_4 }]}>
+                <View style={[notification.headerContainer, { borderBottomColor: color.GREY_5 , }]}>
                     <View
                         style={{
                             flexDirection: 'row'

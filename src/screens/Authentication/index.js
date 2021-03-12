@@ -28,6 +28,9 @@ import LogoutConfirmModal from '../../components/Modal/LogoutConfirmModal';
 import { OPEN_LOGOUT_CONFIRM_MODAL, CLOSE_LOGOUT_CONFIRM_MODAL } from '../../store/actions/modalAction'
 import { logout } from '../../store/actions/authAction'
 import RatingScreen from './RatingScreen';
+import TechnicianNotification from './TechnicianNotification/';
+import UserNotification from './Notification/NewRequestOrder';
+import AcceptedNotification from './Notification/AcceptedRequestOrder';
 import PriceInputModal from '../../components/Modal/PriceInputModal';
 import { KeyboardAvoidingView, SafeAreaView } from 'react-native';
 import { content } from '../../stylesheet';
@@ -88,6 +91,9 @@ const Index = (props) => {
           <Stack.Screen name='regTech' component={TechnicianRegisterScreen} options={{ headerShown: false }} />
           <Stack.Screen name='editInfo' component={UserInfoEditScreen} options={{ headerShown: false }} />
           <Stack.Screen name='rating' component={RatingScreen} options={{ headerShown: false }} />
+          <Stack.Screen name='techNotification' component={TechnicianNotification} options={{ headerShown: false }} />
+          <Stack.Screen name='userNotification' component={UserNotification} options={{ headerShown: false }} />
+          <Stack.Screen name='accepted' component={AcceptedNotification} options={{ headerShown: false }} />
         </Stack.Navigator>
         <LoadingModal />
         <LogoutConfirmModal

@@ -41,29 +41,29 @@ const TabScreen = (props) => {
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
-                        let iconSize
+                        let iconSize = widthToDp('4')
 
                         if (route.name === 'menu') {
                             iconName = focused ? 'home' : 'home';
                             // iconName = focused ? 'trail-sign' : 'trail-sign-outline'
-                            return <Feather name={iconName} size={20} color={color} />;
+                            return <Feather name={iconName} size={iconSize} color={color} />;
                         } else if (route.name === 'notification') {
                             iconName = focused ? 'bell' : 'bell';
                             // iconName = focused ? 'notifications' : 'notifications-outline';
-                            return <Feather name={iconName} size={20} color={color} />;
+                            return <Feather name={iconName} size={iconSize} color={color} />;
 
 
                         } else if (route.name === 'technicianNotification') {
                             iconName = focused ? 'reader' : 'reader-outline'
-                            return <Feather name={iconName} size={20} color={color} />;
+                            return <Feather name={iconName} size={iconSize} color={color} />;
 
                         } else if (route.name === 'search') {
                             iconName = focused ? 'search' : 'search'
-                            return <Feather name={iconName} size={20} color={color} />;
+                            return <Feather name={iconName} size={iconSize} color={color} />;
 
                         } else if (route.name === 'userInfo') {
                             iconName = focused ? 'user' : 'user'
-                            return <Feather name={iconName} size={20} color={color} />;
+                            return <Feather name={iconName} size={iconSize} color={color} />;
 
                         }else if (route.name === 'post') {
                             iconName = focused ? 'edit' : 'edit'
@@ -71,13 +71,13 @@ const TabScreen = (props) => {
                                 <>
                                     <View
                                         style={{
-                                            width : 48,
-                                            height : 48,
+                                            width : widthToDp('9'),
+                                            height : widthToDp('9'),
                                             borderRadius : widthToDp('6'),
                                             justifyContent : 'center',
                                             alignItems : 'center',
                                             backgroundColor : focused ? myColor.IOS_YELLOW_LIGHT : myColor.BLUE_2,
-                                            borderWidth : 2,
+                                            borderWidth : 1.5,
                                             shadowColor: "#000",
                                             shadowOffset: {
                                                 width: 0,
@@ -92,7 +92,7 @@ const TabScreen = (props) => {
                                             navigate('post')
                                         }}
                                     >
-                                        <Feather name={iconName} size={20} color={ focused ? myColor.BLUE_2 : myColor.GREY_5} />
+                                        <Feather name={iconName} size={iconSize} color={ focused ? myColor.BLUE_2 : myColor.GREY_5} />
                                     </View>
                                 </>    
                             );
@@ -114,7 +114,7 @@ const TabScreen = (props) => {
                         borderTopColor : myColor.BLUE_0,
                         borderTopWidth : 0,
                         // paddingVertical : widthToDp('2'),
-                        height : 90
+                        height : heightToDp('8')
                     }
                 }}
             >

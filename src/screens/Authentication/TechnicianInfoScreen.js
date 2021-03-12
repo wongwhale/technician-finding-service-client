@@ -23,6 +23,9 @@ const TechnicianInfo = (props) => {
 
     return (
         <>
+            <SafeAreaView style={content.topsafearray} />
+            <SafeAreaView style={content.safearray}>
+
                 <View style={[global.header]}>
                     <Image
                         style={infoStyles.profileImage}
@@ -94,7 +97,7 @@ const TechnicianInfo = (props) => {
                                     color.GREEN_0
                                 ]}
                             >
-                                <Ionicons name='call' style={{ color: '#fff', fontSize: widthToDp('4.5') , marginRight : widthToDp('1') }} />
+                                <Ionicons name='call' style={{ color: '#fff', fontSize: widthToDp('4.5'), marginRight: widthToDp('1') }} />
                                 <Text style={{ color: '#fff', fontSize: widthToDp('4'), fontWeight: 'bold' }}>
                                     โทร
                             </Text>
@@ -123,7 +126,7 @@ const TechnicianInfo = (props) => {
                             ]}
                         >
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-end' }}>
-                                <Ionicons name='chatbox' style={{ color: '#fff', fontSize: widthToDp('4') , marginRight : widthToDp('1') }} />
+                                <Ionicons name='chatbox' style={{ color: '#fff', fontSize: widthToDp('4'), marginRight: widthToDp('1') }} />
                                 <Text style={{ color: '#fff', fontSize: widthToDp('4'), fontWeight: 'bold' }}>
                                     แชท
                             </Text>
@@ -136,6 +139,7 @@ const TechnicianInfo = (props) => {
                         <TechnicianInfoComponent info={props.info} />
                     </View>
                 </ScrollView>
+            </SafeAreaView>
         </>
     )
 }

@@ -199,6 +199,7 @@ export const GET_NEAR_TECHNICIAN = (lat, lon) => dispatch => {
                                 firstname
                                 lastname
                                 avatar
+                                userID
                             }
                             address {
                               lat
