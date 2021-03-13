@@ -28,7 +28,7 @@ import LogoutConfirmModal from '../../components/Modal/LogoutConfirmModal';
 import { OPEN_LOGOUT_CONFIRM_MODAL, CLOSE_LOGOUT_CONFIRM_MODAL } from '../../store/actions/modalAction'
 import { logout } from '../../store/actions/authAction'
 import RatingScreen from './RatingScreen';
-import TechnicianNotification from './TechnicianNotification/';
+import TechnicianNotification from './TechnicianNotification/NewOrderTab';
 import UserNotification from './Notification/NewRequestOrder';
 import AcceptedNotification from './Notification/AcceptedRequestOrder';
 import PriceInputModal from '../../components/Modal/PriceInputModal';

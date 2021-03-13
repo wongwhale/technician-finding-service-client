@@ -18,6 +18,8 @@ import UserNotification from '../../../components/UserNotification'
 import { connect } from 'react-redux'
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import Header from '../../../components/Header'
+import NotFoundComponent from '../../../components/NotFoundComponent'
 const TopTab = createMaterialTopTabNavigator()
 
 const mapStateToProps = (state) => ({
@@ -39,6 +41,7 @@ const AcceptedRequestOrder = ({ userConfirmed }) => {
                     backgroundColor: '#fff'
                 }}
             >
+                <Header back page='ยืนยันแล้ว' />
                 <ScrollView
                     style={{
                         flex: 1,
@@ -61,7 +64,7 @@ const AcceptedRequestOrder = ({ userConfirmed }) => {
                                     </View>
                                 )
                             })
-                        ) : null
+                        ) : <NotFoundComponent label='ไม่มีรายการที่ยืนยันแล้ว' /> 
                     }
                 </ScrollView>
             </SafeAreaView>

@@ -8,6 +8,7 @@ import {
     TextInput,
     TouchableOpacity,
     ScrollView,
+    Image,
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -18,6 +19,8 @@ import UserNotification from '../../../components/UserNotification'
 import { connect } from 'react-redux'
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import Header from '../../../components/Header'
+import NotFoundComponent from '../../../components/NotFoundComponent'
 const TopTab = createMaterialTopTabNavigator()
 
 const mapStateToProps = (state) => ({
@@ -39,6 +42,7 @@ const NewRequestOrder = ({ navigation, role, userResponse }) => {
                     backgroundColor: '#fff'
                 }}
             >
+                <Header back page='รอการยืนยัน' />
                 <ScrollView
                     style={{
                         flex: 1,
@@ -61,7 +65,7 @@ const NewRequestOrder = ({ navigation, role, userResponse }) => {
                                     </View>
                                 )
                             })
-                        ) : null
+                        ) : <NotFoundComponent label='ไม่มีการทำรายการ' />
                     }
                 </ScrollView>
             </SafeAreaView>

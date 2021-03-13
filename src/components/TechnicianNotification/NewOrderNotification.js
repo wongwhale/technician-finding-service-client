@@ -6,6 +6,7 @@ import { notification, color, widthToDp, newOrder } from '../../stylesheet'
 
 import Abstract from './Abstract'
 import { connect } from 'react-redux'
+import NotFoundComponent from '../NotFoundComponent'
 
 const mapStateToProps = (state) => ({
     techOrder: state.noti.techOrder
@@ -39,19 +40,7 @@ const NewOrderNotification = (props) => {
                                     last={props.techOrder.length === index + 1 ? true : false}
                                 />
                             })
-                        ) : (
-                                <View
-                                    style={{
-                                        padding: widthToDp('1.5'),
-                                        paddingBottom: widthToDp('4'),
-                                        paddingHorizontal: widthToDp('4')
-                                    }}
-                                >
-                                    <Text style={[notification.nameText , newOrder.text]}>
-                                        ไม่มีออเดอร์ใหม่
-                                    </Text>
-                                </View>
-                            )
+                        ) : null
                     }
                 </View>
             </View>

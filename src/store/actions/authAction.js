@@ -15,6 +15,11 @@ import { color } from "../../stylesheet/colors"
 
 
 export const login = (username, password) => (dispatch) => {
+    
+    let json = []
+
+    AsyncStorage.setItem('notification' , JSON.stringify(json) )
+
     dispatch({
         type: authType.LOADING
     })
@@ -60,6 +65,7 @@ export const login = (username, password) => (dispatch) => {
 
 export const logout = () => (dispatch) => {
     AsyncStorage.removeItem('token')
+    AsyncStorage.removeItem('notification')
     dispatch({
         type: authType.LOGOUT_SUCCESS
     })

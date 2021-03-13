@@ -7,14 +7,31 @@ import Header from '../../components/Header'
 import { color } from '../../stylesheet/colors'
 import Feather from 'react-native-vector-icons/Feather'
 import NotificationMoreModal from '../../components/Modal/NotificationMoreModal'
+import { useFocusEffect , useNavigation } from '@react-navigation/native'
 
 
-const NotificationLists = ({ type = 'ช่างซ่อมคอมพิวเตอร์', tech, status , openModal  }) => {
+const NotificationLists = ({ id , type , tech, status , order , openModal  }) => {
     const onPress = async () => {
-        AsyncStorage.getItem('notification').then( (str) => {
-            
+        await AsyncStorage.getItem('notification').then( (str) => {
+            let temp = JSON.parse(str)
+            const new_noti = temp.map( (item) => {
+                if(item.id === id && tech === item.name){
+                    // console.log(item);
+                    return {
+                        ...item,
+                        status : true
+                    }
+                }else{
+                    return item
+                }
+            }) 
+            AsyncStorage.setItem('notification' , JSON.stringify(new_noti))
         })
+        navigate(
+                        order ? 'techNotification' : 'userNotification'
+                    )
     }
+    const { navigate } = useNavigation()
     return (
         <>
             <TouchableOpacity
@@ -28,6 +45,9 @@ const NotificationLists = ({ type = 'ช่างซ่อมคอมพิว�
                     alignItems: 'center'
                 }}
 
+                onPress={ () => {
+                    onPress()
+                }}
             >
                 <View
                     style={{
@@ -41,7 +61,7 @@ const NotificationLists = ({ type = 'ช่างซ่อมคอมพิว�
                             color : color.BLUE_0
                         }}
                     >
-                        {`มีการเสนอราคาจาก ${tech}`}
+                        {order ? `มีการเสนองานใหม่จาก ${tech}` : `มีการเสนอราคาจาก ${tech}`}
                     </Text>
                     <Text
                         style={{
@@ -49,7 +69,7 @@ const NotificationLists = ({ type = 'ช่างซ่อมคอมพิว�
                             color : color.BLUE_1
                         }}
                     >
-                        {`เกี่ยวกับการหา ${type} ของคุณ`}
+                        {order ? `เกี่ยวกับ ${type}` : `เกี่ยวกับการหา ${type} ของคุณ`}
                     </Text>
                 </View>
                 <TouchableOpacity
@@ -97,19 +117,22 @@ const NotificationTab = () => {
 
     const [notificationLists, setNotificationLists] = React.useState([])
 
-    React.useEffect(() => {
-        // AsyncStorage.setItem('notification' , JSON.stringify(json_var))
-        AsyncStorage.getItem('notification').then(json => {
-            if (json === null) {
-                console.log('is null');
-            }
-            else {
-                const noti_json = JSON.parse(json)
-                setNotificationLists(noti_json.notification)
-            }
-            // console.log(json);
-        })
-    }, [])
+    useFocusEffect(
+        React.useCallback(() => {
+            // AsyncStorage.setItem('notification' , JSON.stringify(json_var))
+            AsyncStorage.getItem('notification').then(json => {
+                if (json === null) {
+                    console.log('is null');
+                }
+                else {
+
+                    const noti_json = JSON.parse(json)
+                    setNotificationLists(noti_json)
+                }
+            })
+            return () => setNotificationLists([])
+        }, [])
+    )
 
     return (
         <>
@@ -122,12 +145,14 @@ const NotificationTab = () => {
                     <View>
                         {
                             notificationLists.map((item, index) => {
-                                console.log(item);
                                 return (
                                     <NotificationLists key={index} 
                                         openModal={() => setMoreVisible(true)} 
                                         tech={item.name}
                                         status={item.status}
+                                        type={item.type}
+                                        order={item.order}
+                                        id={item.id}
                                     />
                                 )
                             })

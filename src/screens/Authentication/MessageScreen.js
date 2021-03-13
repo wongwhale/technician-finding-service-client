@@ -12,6 +12,9 @@ import { connect } from 'react-redux'
 
 import { ENTER_PRIVATE_CHAT, ENTER_PRIVATE_CHAT_BY_ID, INITIAL_HISTORY_LIST, SET_INTERLOCUTOR_ID, unMountMessageScreen } from '../../store/actions/chatAction'
 import { LOADED } from '../../store/actions/authAction'
+import NotFoundComponent from '../../components/NotFoundComponent'
+import MessageLists from '../../components/Message/MessageLists'
+import MessageListsContentLoader from '../../components/Message/MessageListsContentLoader'
 
 const mapStateToProps = (state) => ({
     uid: state.auth.userInfo.uid,
@@ -30,11 +33,14 @@ const Message = (props) => {
     //     })
     // },[])
 
+    const [isLoading , setIsLoading] = React.useState(true)
+
     useFocusEffect(
         React.useCallback(() => {
             props.INITIAL_HISTORY_LIST(props.uid)
                 .then((list) => {
                     props.LOADED()
+                    setIsLoading(false)
                 }).catch(err => {
                     console.log(err);
                 })
@@ -55,27 +61,19 @@ const Message = (props) => {
                 <Header page='กล่องข้อความ' navigation={props.navigation} back={true} chat={true} isRadius={true} />
                 <ScrollView style={content.container}>
                     {
-                        props.chat_history.lenght !== 0 ? (
-                            props.chat_history.map((item, index) => {
-                                return <MessageList
-                                    key={index}
-                                    status={true}
-                                    name={item.technicianID !== props.uid ? item.technicianName : item.userName}
-                                    avatar={item.technicianID !== props.uid ? item.technicianAvatar : item.userAvatar}
-                                    lastMessage={item.recentMessage.message}
-                                    status={item.readStatus}
-                                    badges={0}
-                                    date={item.recentMessage.date}
-                                    msgType={item.recentMessage.msgType}
-                                    onPress={() => {
-                                        props.ENTER_PRIVATE_CHAT_BY_ID(item._id)
-                                            .then(() => {
-                                                props.navigation.navigate('chat')
-                                                props.LOADED()
-                                            })
-                                    }} />
-                            })
-                        ) : null
+                        isLoading ? (
+                            <>
+                        <MessageListsContentLoader />
+                        <MessageListsContentLoader />
+                        <MessageListsContentLoader />
+                        <MessageListsContentLoader />
+                        <MessageListsContentLoader />
+
+                            </>
+                        ) : 
+                        props.chat_history.length !== 0 ? (
+                            <MessageLists />
+                        ) : <NotFoundComponent label='ไม่พบประวัติการแชท' />
                     }
                 </ScrollView>
             </SafeAreaView>

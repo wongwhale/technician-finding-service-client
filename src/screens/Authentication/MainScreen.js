@@ -21,6 +21,7 @@ import { GET_NEAR_TECHNICIAN } from '../../store/actions/techAction'
 import UserInfo from '../../components/UserInfo'
 import Header from '../../components/Header'
 import { connect } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { OPEN_DATE_PICKER_MODAL, OPEN_POST_MODAL, OPEN_TIME_PICKER_MODAL, OPEN_LOCATION_PICKER_MODAL } from '../../store/actions/modalAction'
 import { SET_FILE, SET_LOCATION } from '../../store/actions/formAction'
@@ -164,9 +165,12 @@ const Main = (props) => {
                     <Button
                         title='test notification'
                         onPress={() => {
-                            console.log('pop noti');
                             // notiRef.current.show()
-                            StatusBar.setHidden(false)
+                            // StatusBar.setHidden(false)
+                            // AsyncStorage.getItem('notification').then( str => {
+                            //     console.log(str);
+                            // })
+                            
                         }}
                     />
                 </ScrollView>
