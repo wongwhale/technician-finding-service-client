@@ -9,6 +9,7 @@ import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getDistance } from '../../misc/getDistance'
 import { chatType } from '../reducers/chatReducer'
+import  PushNotification from 'react-native-push-notification'
 
 
 const socket = io.connect(`${SOCKET_URL}`)
@@ -188,10 +189,18 @@ socket.on('update_tech_order', () => {
     updateTechOrder()
 })
 
+socket.on('recieve_new_response' , ({form}) => {
+    console.log(form);
+})
+
 socket.on('receive_message' , ({message}) => {
     const interlocuter = store.getState().chat.interlocutor
     if( interlocuter.id !== message.sender ){
-        alert(message.message)
+        // alert(message.message)
+        PushNotification.localNotification({
+            title:'test',
+            message:message.msgType === 'text' ?  message.message : message.msgType === 'image' ? `test : ได้ส่งรูปภาพ` : 'คุณได้รับข้อความใหม่'
+        })
     }
     else {
         store.dispatch({
