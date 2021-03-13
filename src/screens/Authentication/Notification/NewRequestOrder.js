@@ -16,6 +16,7 @@ import { content, widthToDp, color } from '../../../stylesheet'
 
 import UserNotification from '../../../components/UserNotification'
 import { connect } from 'react-redux'
+import Header from '../../../components/UserInfo/Header'
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 const TopTab = createMaterialTopTabNavigator()
@@ -39,6 +40,7 @@ const NewRequestOrder = ({ navigation, role, userResponse }) => {
                     backgroundColor: '#fff'
                 }}
             >
+                <Header page='รอการยืนยัน' />
                 <ScrollView
                     style={{
                         flex: 1,

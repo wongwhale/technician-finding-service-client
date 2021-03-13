@@ -92,6 +92,9 @@ const updateTechOrder = () => {
                     type : notiType.SET_ACCEPTED_ORDER,
                     payload : acceptedorder_lists
                 })
+                store.dispatch({
+                    type : authType.LOADED
+                })
             })
         })
     })
@@ -168,9 +171,15 @@ const updateUserResponse = () => {
                     type: notiType.SET_USER_RESPONSE,
                     payload: temp_list
                 })
+                store.dispatch({
+                    type : authType.LOADED
+                })
                 
             }).catch(err => {
                 console.log(err);
+                store.dispatch({
+                    type : authType.LOADED
+                })
             })
         })
     })

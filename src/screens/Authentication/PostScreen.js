@@ -157,7 +157,7 @@ const PostScreen = (props) => {
                     </View>
                     <MyButton title='ยืนยัน'
                         onPress={() => {
-                            props.LOADING()
+                            // props.LOADING()
                             const date = `${props.year}-${("0" + (props.month + 1)).slice(-2)}-${("0" + (props.date)).slice(-2)}T${("0" + (props.hour)).slice(-2)}:${("0" + (props.minute)).slice(-2)}:00Z`
                             const name = `${props.firstname} ${props.lastname}`
                             props.sendPostReq({

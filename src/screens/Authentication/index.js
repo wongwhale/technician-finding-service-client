@@ -83,7 +83,6 @@ const Index = (props) => {
           <Stack.Screen name='search' component={SearchScreen} options={{ headerShown: false }} />
           <Stack.Screen name='nearme' component={NearMeScreen} options={{ headerShown: false }} />
           <Stack.Screen name='message' component={Message} options={{ headerShown: false }} />
-          <Stack.Screen name='userInfo' component={User} options={{ headerShown: false }} />
           <Stack.Screen name='post' component={Post} options={{ headerShown: false }} />
           <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
           <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
