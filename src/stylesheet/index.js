@@ -1020,7 +1020,7 @@ export const registor = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         paddingHorizontal: '10%',
-        marginTop: '15%',
+        paddingTop: '15%',
         backgroundColor : '#fff'
     },
     descText: {

@@ -90,6 +90,12 @@ const Chat = (props) => {
                 </ScrollView>
                 <ChatInput />
             </SafeAreaView>
+            <SafeAreaView
+                style={{
+                    flex : 0 ,
+                    backgroundColor : color.GREY_5
+                }}
+            />
             <Modal
                 isOpen={imageIsOpen}
                 onClosed={() => setImageIsOpen(false)}
