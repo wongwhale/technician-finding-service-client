@@ -172,234 +172,235 @@ const TechnicianRegisterScreen = (props) => {
 
     return (
         <>
+            <SafeAreaView style={content.topsafearray} />
             <View style={[content.safearray, { backgroundColor: color.GREY_5 }]}>
                 <Header navigation={props.navigation} title='สมัครเป็นช่าง' />
 
-                    <ScrollView
-                        style={content.container}
-                        ref={scrollRef}
-                    >
+                <ScrollView
+                    style={content.container}
+                    ref={scrollRef}
+                >
 
-                        {/* work day */}
-                        <View style={card.card}>
-                            <View style={card.cardHeader}>
-                                <Text style={card.headerText}>
-                                    วันทำงาน
+                    {/* work day */}
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>
+                                วันทำงาน
                             </Text>
-                            </View>
-                            <View style={[card.cardContainer, { flexDirection: 'row', flexWrap: 'wrap' }]}>
-                                {
-                                    day.title.map((item, index) => (
-                                        day.status[index] ? <SelectedView key={item} title={item} /> : null
-                                    ))
-                                }
-                                <TouchableOpacity
-                                    style={{
-                                        width: '100%',
-                                        backgroundColor: color.BLUE_5,
-                                        padding: widthToDp('2'),
-                                        paddingLeft: widthToDp('5'),
-                                        borderRadius: widthToDp('2'),
-                                        marginBottom: widthToDp('2'),
-                                        justifyContent: 'space-between',
-                                        flexDirection: 'row',
-                                        alignItems: 'center'
-                                    }}
-                                    onPress={() => setWorkDayVisible(true)}
-                                >
-                                    <Text
-                                        style={styles.selectedText}
-                                    >
-                                        เลือกวันทำงาน
-                                </Text>
-                                    <Feather
-                                        style={styles.selectedText}
-                                        name='chevron-right'
-                                    />
-                                </TouchableOpacity>
-                            </View>
                         </View>
+                        <View style={[card.cardContainer, { flexDirection: 'row', flexWrap: 'wrap' }]}>
+                            {
+                                day.title.map((item, index) => (
+                                    day.status[index] ? <SelectedView key={item} title={item} /> : null
+                                ))
+                            }
+                            <TouchableOpacity
+                                style={{
+                                    width: '100%',
+                                    backgroundColor: color.BLUE_5,
+                                    padding: widthToDp('2'),
+                                    paddingLeft: widthToDp('5'),
+                                    borderRadius: widthToDp('2'),
+                                    marginBottom: widthToDp('2'),
+                                    justifyContent: 'space-between',
+                                    flexDirection: 'row',
+                                    alignItems: 'center'
+                                }}
+                                onPress={() => setWorkDayVisible(true)}
+                            >
+                                <Text
+                                    style={styles.selectedText}
+                                >
+                                    เลือกวันทำงาน
+                                </Text>
+                                <Feather
+                                    style={styles.selectedText}
+                                    name='chevron-right'
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
 
-                        {/* workTime */}
-                        <View style={card.card}>
-                            <View style={card.cardHeader}>
-                                <Text style={card.headerText}>เวลาทำงาน</Text>
-                            </View>
-                            <View style={card.cardContainer}>
-                                <View style={[posting.halfContainer]}>
-                                    <View style={{ flex: 1 }}>
-                                        <Text style={posting.halfHeader}>เวลาเริ่มงาน</Text>
-                                        <TouchableOpacity
-                                            style={[posting.halfInput, { marginRight: widthToDp('1'), backgroundColor: color.BLUE_5 }]}
-                                            onPress={() => {
-                                                setStartTimeVisible(true)
-                                            }}
-                                        >
-                                            <Text style={posting.inputText}>{`${("0" + time.start.hour).slice(-2)} : ${("0" + time.start.minute).slice(-2)} น`}</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <View style={{ flex: 1 }}>
-                                        <Text style={posting.halfHeader}>เวลาเสร็จงาน</Text>
-                                        <TouchableOpacity
-                                            style={[posting.halfInput, { marginLeft: widthToDp('1'), backgroundColor: color.BLUE_5 }]}
-                                            onPress={() => setEndTimeVisible(true)}
-                                        >
-                                            <Text style={posting.inputText}>{`${("0" + time.end.hour).slice(-2)} : ${("0" + time.end.minute).slice(-2)} น`}</Text>
-                                        </TouchableOpacity>
-                                    </View>
+                    {/* workTime */}
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>เวลาทำงาน</Text>
+                        </View>
+                        <View style={card.cardContainer}>
+                            <View style={[posting.halfContainer]}>
+                                <View style={{ flex: 1 }}>
+                                    <Text style={posting.halfHeader}>เวลาเริ่มงาน</Text>
+                                    <TouchableOpacity
+                                        style={[posting.halfInput, { marginRight: widthToDp('1'), backgroundColor: color.BLUE_5 }]}
+                                        onPress={() => {
+                                            setStartTimeVisible(true)
+                                        }}
+                                    >
+                                        <Text style={posting.inputText}>{`${("0" + time.start.hour).slice(-2)} : ${("0" + time.start.minute).slice(-2)} น`}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flex: 1 }}>
+                                    <Text style={posting.halfHeader}>เวลาเสร็จงาน</Text>
+                                    <TouchableOpacity
+                                        style={[posting.halfInput, { marginLeft: widthToDp('1'), backgroundColor: color.BLUE_5 }]}
+                                        onPress={() => setEndTimeVisible(true)}
+                                    >
+                                        <Text style={posting.inputText}>{`${("0" + time.end.hour).slice(-2)} : ${("0" + time.end.minute).slice(-2)} น`}</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </View>
+                    </View>
 
-                        {/* frontStore */}
-                        <View style={card.card}>
-                            <View style={card.cardHeader}>
-                                <Text style={card.headerText}>หน้าร้าน</Text>
-                            </View>
-                            <View style={[card.cardContainer, { flexDirection: 'row', justifyContent: 'space-around' }]}>
-                                <TouchableOpacity
-                                    style={[{
-                                        width: '30%',
-                                        alignItems: 'center',
-                                        paddingVertical: widthToDp('1'),
-                                        borderRadius: widthToDp('2'),
-                                    }, frontStore ? {
-                                        backgroundColor: `${color.IOS_GREEN_LIGHT}66`,
-                                    } : {
-                                            backgroundColor: color.BLUE_5,
-                                        }]}
-                                    onPress={() => {
-                                        setFrontStore(true)
-                                    }}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.selectedText
-                                            , frontStore === null ? {
-
-                                            } : frontStore ? {
-                                                fontWeight: 'bold',
-                                                color: color.GREEN_1
-                                            } : null
-                                        ]}
-                                    >
-                                        มี
-                                </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[{
-                                        width: '30%',
-                                        alignItems: 'center',
-                                        paddingVertical: widthToDp('1'),
-                                        borderRadius: widthToDp('2'),
-                                        backgroundColor: color.BLUE_5,
-                                    }, frontStore === null ? {
-                                        backgroundColor: color.BLUE_5,
-                                    } : !frontStore ? {
-                                        backgroundColor: `${color.IOS_RED_LIGHT}66`,
-                                    } : null
-                                    ]}
-                                    onPress={() => {
-                                        setFrontStore(false)
-                                    }}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.selectedText
-                                            ,
-                                            frontStore === null ? null : !frontStore ? {
-                                                fontWeight: 'bold',
-                                                color: color.RED_0
-                                            } : null
-                                        ]}
-                                    >
-                                        ไม่มี
-                                </Text>
-                                </TouchableOpacity>
-
-                            </View>
+                    {/* frontStore */}
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>หน้าร้าน</Text>
                         </View>
+                        <View style={[card.cardContainer, { flexDirection: 'row', justifyContent: 'space-around' }]}>
+                            <TouchableOpacity
+                                style={[{
+                                    width: '30%',
+                                    alignItems: 'center',
+                                    paddingVertical: widthToDp('1'),
+                                    borderRadius: widthToDp('2'),
+                                }, frontStore ? {
+                                    backgroundColor: `${color.IOS_GREEN_LIGHT}66`,
+                                } : {
+                                        backgroundColor: color.BLUE_5,
+                                    }]}
+                                onPress={() => {
+                                    setFrontStore(true)
+                                }}
+                            >
+                                <Text
+                                    style={[
+                                        styles.selectedText
+                                        , frontStore === null ? {
 
-                        {/* onSite */}
-                        <View style={card.card}>
-                            <View style={card.cardHeader}>
-                                <Text style={card.headerText}>บริการนอกสถานที่</Text>
-                            </View>
-                            <View style={[card.cardContainer, { flexDirection: 'row', justifyContent: 'space-around' }]}>
-                                <TouchableOpacity
-                                    style={[{
-                                        width: '30%',
-                                        alignItems: 'center',
-                                        paddingVertical: widthToDp('1'),
-                                        borderRadius: widthToDp('2'),
-                                        backgroundColor: color.BLUE_5,
-                                    }, onsite ? {
-                                        backgroundColor: `${color.IOS_GREEN_LIGHT}66`,
-                                    } : onsite === null ? {
-                                        backgroundColor: color.BLUE_5,
-                                    } : null
-                                    ]
-                                    }
-                                    onPress={() => {
-                                        setOnsite(true)
-                                    }}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.selectedText
-                                            , onsite === null ? {
-
-                                            } : onsite ? {
-                                                fontWeight: 'bold',
-                                                color: color.GREEN_1
-                                            } : null
-                                        ]}
-                                    >
-                                        มี
-                                </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[{
-                                        width: '30%',
-                                        alignItems: 'center',
-                                        paddingVertical: widthToDp('1'),
-                                        borderRadius: widthToDp('2'),
-                                        backgroundColor: color.BLUE_5,
-                                    }, onsite === null ? {
-                                        backgroundColor: color.BLUE_5,
-                                    } : !onsite ? {
-                                        backgroundColor: `${color.IOS_RED_LIGHT}66`,
-                                    } : null
+                                        } : frontStore ? {
+                                            fontWeight: 'bold',
+                                            color: color.GREEN_1
+                                        } : null
                                     ]}
-                                    onPress={() => {
-                                        setOnsite(false)
-                                    }}
                                 >
-                                    <Text
-                                        style={[
-                                            styles.selectedText
-                                            , onsite === null ? {
-
-                                            } : !onsite ? {
-                                                fontWeight: 'bold',
-                                                color: color.RED_0
-                                            } : null
-                                        ]}
-                                    >
-                                        ไม่มี
+                                    มี
                                 </Text>
-                                </TouchableOpacity>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[{
+                                    width: '30%',
+                                    alignItems: 'center',
+                                    paddingVertical: widthToDp('1'),
+                                    borderRadius: widthToDp('2'),
+                                    backgroundColor: color.BLUE_5,
+                                }, frontStore === null ? {
+                                    backgroundColor: color.BLUE_5,
+                                } : !frontStore ? {
+                                    backgroundColor: `${color.IOS_RED_LIGHT}66`,
+                                } : null
+                                ]}
+                                onPress={() => {
+                                    setFrontStore(false)
+                                }}
+                            >
+                                <Text
+                                    style={[
+                                        styles.selectedText
+                                        ,
+                                        frontStore === null ? null : !frontStore ? {
+                                            fontWeight: 'bold',
+                                            color: color.RED_0
+                                        } : null
+                                    ]}
+                                >
+                                    ไม่มี
+                                </Text>
+                            </TouchableOpacity>
 
-                            </View>
                         </View>
+                    </View>
 
-                        {/* aptitude */}
-                        <View style={card.card}>
-                            <View style={card.cardHeader}>
-                                <Text style={card.headerText}>ความถนัด</Text>
-                            </View>
-                            <View style={[card.cardContainer, { flexDirection: 'row', flexWrap: 'wrap' }]}>
-                                {/* {
+                    {/* onSite */}
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>บริการนอกสถานที่</Text>
+                        </View>
+                        <View style={[card.cardContainer, { flexDirection: 'row', justifyContent: 'space-around' }]}>
+                            <TouchableOpacity
+                                style={[{
+                                    width: '30%',
+                                    alignItems: 'center',
+                                    paddingVertical: widthToDp('1'),
+                                    borderRadius: widthToDp('2'),
+                                    backgroundColor: color.BLUE_5,
+                                }, onsite ? {
+                                    backgroundColor: `${color.IOS_GREEN_LIGHT}66`,
+                                } : onsite === null ? {
+                                    backgroundColor: color.BLUE_5,
+                                } : null
+                                ]
+                                }
+                                onPress={() => {
+                                    setOnsite(true)
+                                }}
+                            >
+                                <Text
+                                    style={[
+                                        styles.selectedText
+                                        , onsite === null ? {
+
+                                        } : onsite ? {
+                                            fontWeight: 'bold',
+                                            color: color.GREEN_1
+                                        } : null
+                                    ]}
+                                >
+                                    มี
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[{
+                                    width: '30%',
+                                    alignItems: 'center',
+                                    paddingVertical: widthToDp('1'),
+                                    borderRadius: widthToDp('2'),
+                                    backgroundColor: color.BLUE_5,
+                                }, onsite === null ? {
+                                    backgroundColor: color.BLUE_5,
+                                } : !onsite ? {
+                                    backgroundColor: `${color.IOS_RED_LIGHT}66`,
+                                } : null
+                                ]}
+                                onPress={() => {
+                                    setOnsite(false)
+                                }}
+                            >
+                                <Text
+                                    style={[
+                                        styles.selectedText
+                                        , onsite === null ? {
+
+                                        } : !onsite ? {
+                                            fontWeight: 'bold',
+                                            color: color.RED_0
+                                        } : null
+                                    ]}
+                                >
+                                    ไม่มี
+                                </Text>
+                            </TouchableOpacity>
+
+                        </View>
+                    </View>
+
+                    {/* aptitude */}
+                    <View style={card.card}>
+                        <View style={card.cardHeader}>
+                            <Text style={card.headerText}>ความถนัด</Text>
+                        </View>
+                        <View style={[card.cardContainer, { flexDirection: 'row', flexWrap: 'wrap' }]}>
+                            {/* {
                                 aptitude.type.map((item, index) => {
                                     return <CheckBox
                                         title={item}
@@ -415,146 +416,146 @@ const TechnicianRegisterScreen = (props) => {
                                     />
                                 })
                             } */}
-                                {
-                                    aptitude.type.map((item, index) => (
-                                        aptitude.status[index] ? <SelectedView key={item} title={item} /> : null
-                                    ))
-                                }
-                                <TouchableOpacity
-                                    style={{
-                                        width: '100%',
-                                        backgroundColor: color.BLUE_5,
-                                        padding: widthToDp('2'),
-                                        paddingLeft: widthToDp('5'),
-                                        borderRadius: widthToDp('2'),
-                                        marginBottom: widthToDp('2'),
-                                        justifyContent: 'space-between',
-                                        flexDirection: 'row',
-                                        alignItems: 'center'
-                                    }}
-                                    onPress={() => {
-                                        setApititudeVisible(true)
-                                    }}
+                            {
+                                aptitude.type.map((item, index) => (
+                                    aptitude.status[index] ? <SelectedView key={item} title={item} /> : null
+                                ))
+                            }
+                            <TouchableOpacity
+                                style={{
+                                    width: '100%',
+                                    backgroundColor: color.BLUE_5,
+                                    padding: widthToDp('2'),
+                                    paddingLeft: widthToDp('5'),
+                                    borderRadius: widthToDp('2'),
+                                    marginBottom: widthToDp('2'),
+                                    justifyContent: 'space-between',
+                                    flexDirection: 'row',
+                                    alignItems: 'center'
+                                }}
+                                onPress={() => {
+                                    setApititudeVisible(true)
+                                }}
+                            >
+                                <Text
+                                    style={styles.selectedText}
                                 >
-                                    <Text
-                                        style={styles.selectedText}
-                                    >
-                                        เลือกความถนัด หรือ สายงาน
+                                    เลือกความถนัด หรือ สายงาน
                                 </Text>
-                                    <Feather
-                                        style={styles.selectedText}
-                                        name='chevron-right'
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-
-                        {/* bio */}
-                        <View style={card.card}
-                            onLayout={(e) => {
-                                setBioLayout(e.nativeEvent.layout.y)
-                            }}
-                        >
-                            <View style={card.cardHeader} >
-                                <Text style={card.headerText}>คำอธิบายเพิ่มเติม</Text>
-                            </View>
-                            <View style={card.cardContainer}>
-                                <TextInput
-                                    multiline
-                                    style={[posting.detailInput, { marginBottom: 5 }]}
-                                    placeholder='เกี่ยวกับงาน หรือ ประวัติส่วนตัว'
-                                    value={bio}
-                                    placeholderTextColor={color.GREY_2}
-                                    onChangeText={(val) => setBio(val)}
-                                    onFocus={(e) => {
-                                        scrollRef.current.scrollTo({
-                                            x: 0,
-                                            y: bioLayout,
-                                            animated: true
-                                        })
-                                    }}
+                                <Feather
+                                    style={styles.selectedText}
+                                    name='chevron-right'
                                 />
-                            </View>
+                            </TouchableOpacity>
                         </View>
+                    </View>
 
-                        {/* address */}
-                        <View style={card.card}
-                            onLayout={(e) => {
-                                setaddressLayout(e.nativeEvent.layout.y)
-                            }}
-                        >
-                            <View style={card.cardHeader} >
-                                <Text style={card.headerText}>ที่อยู่</Text>
-                            </View>
-                            <View style={card.cardContainer}>
-                                <TextInput
-                                    multiline
-                                    style={[posting.detailInput, { marginBottom: 5 }]}
-                                    placeholder='ที่อยู่'
-                                    value={detail}
-                                    onChangeText={(val) => setDetail(val)}
-                                    onFocus={(e) => {
-                                        scrollRef.current.scrollTo({
-                                            x: 0,
-                                            y: addressLayout,
-                                            animated: true
-                                        })
-                                    }}
-                                />
-                                <TouchableOpacity
-                                    style={{
-                                        width: '100%',
-                                        backgroundColor: color.BLUE_5,
-                                        padding: widthToDp('2'),
-                                        paddingLeft: widthToDp('5'),
-                                        borderRadius: widthToDp('2'),
-                                        marginBottom: widthToDp('2'),
-                                        justifyContent: 'center',
-                                        flexDirection: 'row',
-                                        alignItems: 'center'
-                                    }}
-                                    onPress={() => {
-                                        setLocationVisible(true)
-                                    }}
+                    {/* bio */}
+                    <View style={card.card}
+                        onLayout={(e) => {
+                            setBioLayout(e.nativeEvent.layout.y)
+                        }}
+                    >
+                        <View style={card.cardHeader} >
+                            <Text style={card.headerText}>คำอธิบายเพิ่มเติม</Text>
+                        </View>
+                        <View style={card.cardContainer}>
+                            <TextInput
+                                multiline
+                                style={[posting.detailInput, { marginBottom: 5 }]}
+                                placeholder='เกี่ยวกับงาน หรือ ประวัติส่วนตัว'
+                                value={bio}
+                                placeholderTextColor={color.GREY_2}
+                                onChangeText={(val) => setBio(val)}
+                                onFocus={(e) => {
+                                    scrollRef.current.scrollTo({
+                                        x: 0,
+                                        y: bioLayout,
+                                        animated: true
+                                    })
+                                }}
+                            />
+                        </View>
+                    </View>
+
+                    {/* address */}
+                    <View style={card.card}
+                        onLayout={(e) => {
+                            setaddressLayout(e.nativeEvent.layout.y)
+                        }}
+                    >
+                        <View style={card.cardHeader} >
+                            <Text style={card.headerText}>ที่อยู่</Text>
+                        </View>
+                        <View style={card.cardContainer}>
+                            <TextInput
+                                multiline
+                                style={[posting.detailInput, { marginBottom: 5 }]}
+                                placeholder='ที่อยู่'
+                                value={detail}
+                                onChangeText={(val) => setDetail(val)}
+                                onFocus={(e) => {
+                                    scrollRef.current.scrollTo({
+                                        x: 0,
+                                        y: addressLayout,
+                                        animated: true
+                                    })
+                                }}
+                            />
+                            <TouchableOpacity
+                                style={{
+                                    width: '100%',
+                                    backgroundColor: color.BLUE_5,
+                                    padding: widthToDp('2'),
+                                    paddingLeft: widthToDp('5'),
+                                    borderRadius: widthToDp('2'),
+                                    marginBottom: widthToDp('2'),
+                                    justifyContent: 'center',
+                                    flexDirection: 'row',
+                                    alignItems: 'center'
+                                }}
+                                onPress={() => {
+                                    setLocationVisible(true)
+                                }}
+                            >
+                                <Text
+                                    style={styles.selectedText}
                                 >
-                                    <Text
-                                        style={styles.selectedText}
-                                    >
-                                        ระบุที่อยู่
+                                    ระบุที่อยู่
                                 </Text>
-                                    {/* <Feather
+                                {/* <Feather
                                     style={styles.selectedText}
                                     name='map-pin'
                                 /> */}
-                                </TouchableOpacity>
-                            </View>
+                            </TouchableOpacity>
                         </View>
+                    </View>
 
-                        <MyButton
-                            title='ยืนยัน'
-                            onPress={() => {
-                                props.LOADING()
-                                handleSubmit()
-                                    .then(info => {
-                                        props.technicianRegister(info)
-                                            .then(res => {
-                                                // props.changeRole('technician')
-                                                props.updateToken()
-                                                    .then(({ uid }) => {
-                                                        props.GET_TECHNICIAN_INFO(uid)
-                                                            .then(() => {
-                                                                props.checkToken()
-                                                                props.navigation.navigate('userInfo')
-                                                            })
-                                                    })
-                                            }).catch(err => {
-                                                console.log('technician register err :', err);
-                                            })
-                                    })
-                            }}
-                        />
-                        <View style={{ marginBottom: widthToDp('8') }} />
-                    </ScrollView>
+                    <MyButton
+                        title='ยืนยัน'
+                        onPress={() => {
+                            props.LOADING()
+                            handleSubmit()
+                                .then(info => {
+                                    props.technicianRegister(info)
+                                        .then(res => {
+                                            // props.changeRole('technician')
+                                            props.updateToken()
+                                                .then(({ uid }) => {
+                                                    props.GET_TECHNICIAN_INFO(uid)
+                                                        .then(() => {
+                                                            props.checkToken()
+                                                            props.navigation.navigate('userInfo')
+                                                        })
+                                                })
+                                        }).catch(err => {
+                                            console.log('technician register err :', err);
+                                        })
+                                })
+                        }}
+                    />
+                    <View style={{ marginBottom: widthToDp('8') }} />
+                </ScrollView>
 
 
                 {/* Start Time Modal */}

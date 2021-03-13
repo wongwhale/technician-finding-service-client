@@ -6,9 +6,10 @@ import { notification, color, widthToDp, newOrder } from '../../stylesheet'
 
 import Abstract from './Abstract'
 import { connect } from 'react-redux'
+import NotFoundComponent from '../NotFoundComponent'
 
 const mapStateToProps = (state) => ({
-    techOrder: state.noti.techOrder
+    // techOrder: state.noti.techOrder
 })
 
 const mapDispatchToProps = {
@@ -30,28 +31,16 @@ const NewOrderNotification = (props) => {
                 </View>
                 <View style={notification.content}>
                     {
-                        props.techOrder.length !== 0 ? (
-                            props.techOrder.map((item, index) => {
+                        props.lists.length !== 0 ? (
+                            props.lists.map((item, index) => {
                                 const date_ = new Date(item.date)
                                 return <Abstract key={index}
                                     order={item}
                                     date={`${date_.getDate()} ${month[date_.getMonth()]} ${date_.getFullYear() + 543}`}
-                                    last={props.techOrder.length === index + 1 ? true : false}
+                                    last={props.lists.length === index + 1 ? true : false}
                                 />
                             })
-                        ) : (
-                                <View
-                                    style={{
-                                        padding: widthToDp('1.5'),
-                                        paddingBottom: widthToDp('4'),
-                                        paddingHorizontal: widthToDp('4')
-                                    }}
-                                >
-                                    <Text style={[notification.nameText , newOrder.text]}>
-                                        ไม่มีออเดอร์ใหม่
-                                    </Text>
-                                </View>
-                            )
+                        ) : null
                     }
                 </View>
             </View>

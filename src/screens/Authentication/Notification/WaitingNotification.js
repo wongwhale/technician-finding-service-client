@@ -8,6 +8,7 @@ import {
     TextInput,
     TouchableOpacity,
     ScrollView,
+    Image,
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -16,27 +17,45 @@ import { content, widthToDp, color } from '../../../stylesheet'
 
 import UserNotification from '../../../components/UserNotification'
 import { connect } from 'react-redux'
-
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import Header from '../../../components/UserInfo/Header'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import NotFoundComponent from '../../../components/NotFoundComponent'
 import ContentLoader from 'react-native-easy-content-loader'
+import { getWaitingList } from '../../../store/actions/notiAction'
+import { useFocusEffect } from '@react-navigation/native'
 
 const TopTab = createMaterialTopTabNavigator()
 
 const mapStateToProps = (state) => ({
     role: state.auth.userInfo.role,
-    userConfirmed: state.noti.userConfirmed
+    userResponse: state.noti.userResponse,
 })
 
 const mapDispatchToProps = {
-
+    getWaitingList
 }
 
 
-const AcceptedRequestOrder = ({ userConfirmed }) => {
+const NewRequestOrder = ({ navigation, role, userResponse ,...props }) => {
 
     const [isReady, setIsReady] = React.useState(true)
+    const [waitingLists , setWaitingLists] = React.useState([])
+
+    useFocusEffect(
+        React.useCallback( () => {  
+            setIsReady(true)
+            props.getWaitingList().then( res => {
+                setWaitingLists(res)
+                setIsReady(false)
+            }).catch(err => {
+                console.log(err);
+            })
+
+            return  () => {
+                setWaitingLists([])
+            }
+        },[])
+    )
 
     return (
         <>
@@ -46,7 +65,7 @@ const AcceptedRequestOrder = ({ userConfirmed }) => {
                     backgroundColor: '#fff'
                 }}
             >
-                <Header page='ยืนยันแล้ว' />
+                <Header page='รอการยืนยัน' />
                 {
                     isReady ? (
                         <>
@@ -92,8 +111,8 @@ const AcceptedRequestOrder = ({ userConfirmed }) => {
                                 }}
                             >
                                 {
-                                    userConfirmed.length !== 0 ? (
-                                        userConfirmed.map((form) => {
+                                    waitingLists.length !== 0 ? (
+                                        waitingLists.map((form) => {
                                             console.log(form);
                                             return (
                                                 <View key={form._id} style={content.container}>
@@ -107,10 +126,9 @@ const AcceptedRequestOrder = ({ userConfirmed }) => {
                                                 </View>
                                             )
                                         })
-                                    ) : <NotFoundComponent label='ไม่มีรายการที่ยืนยันแล้ว' />
+                                    ) : <NotFoundComponent label='ไม่มีการทำรายการ' />
                                 }
                             </ScrollView>
-
                         )
                 }
             </SafeAreaView>
@@ -118,4 +136,4 @@ const AcceptedRequestOrder = ({ userConfirmed }) => {
     )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AcceptedRequestOrder)
+export default connect(mapStateToProps, mapDispatchToProps)(NewRequestOrder)

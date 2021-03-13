@@ -37,16 +37,15 @@ const mapDispatchToProps = {
 const NearMeScreen = ({ navigation, ...props }) => {
     const [mapKeyword, setMapKeyword] = React.useState('')
     const [technicians, setTechnicians] = React.useState([])
-    const [isOpen, setIsOpen] = React.useState(false)
-
+    const [isOpen, setIsOpen] = React.useState(true)
 
     React.useEffect(() => {
-        props.GET_NEAR_TECHNICIAN(
-            props.location.latitude,
-            props.location.longitude
-        ).then((res) => {
-            setTechnicians(res)
-        })
+        // props.GET_NEAR_TECHNICIAN(
+        //     props.location.latitude,
+        //     props.location.longitude
+        // ).then((res) => {
+        //     setTechnicians(res)
+        // })
     }, [])
 
     useFocusEffect(
@@ -55,7 +54,7 @@ const NearMeScreen = ({ navigation, ...props }) => {
         }, [])
     )
 
-    const handleOnPressFilterModal = () => {
+    const handleOnPressFilterModal = (type) => {
         setIsOpen(false)
     }
 
@@ -214,6 +213,9 @@ const NearMeScreen = ({ navigation, ...props }) => {
                                             paddingHorizontal: widthToDp('4'),
                                             borderRadius: widthToDp('4'),
                                             backgroundColor: color.GREY_5
+                                        }}
+                                        onPress={ () => {
+                                            handleOnPressFilterModal( 'test' )
                                         }}
                                     >
                                         <Text

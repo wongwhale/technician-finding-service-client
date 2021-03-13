@@ -60,29 +60,24 @@ const SettingScreen = (props) => {
 
                 <Header navigation={props.navigation} title='ตั้งค่า' />
                 <View style={{ flex: 1, backgroundColor: color.GREY_5 }}>
-                    <View style={{ height: widthToDp('10'), marginTop: widthToDp('2'), borderTopRightRadius: widthToDp('2'), borderTopLeftRadius: widthToDp('2') }}>
+                    <View style={{ marginTop: widthToDp('2'), borderTopRightRadius: widthToDp('2'), borderTopLeftRadius: widthToDp('2') }}>
                         <Btn
-                            title=''
-                            navigation={() => props.navigation.navigate('editInfo')}
+                            title='รอการยืนยัน'
+                            navigation={() => props.navigation.navigate('userNotification')}
                         />
                         <Btn
-                            title='ประวัติ'
-                            navigation={() => props.navigation.navigate('editInfo')}
+                            title='ยืนยันแล้ว'
+                            navigation={() => props.navigation.navigate('accepted')}
                         />
-
+                        {
+                            props.role === 'user' ? (
+                                <Btn
+                                    title='สมัครเป็นช่าง'
+                                    navigation={() => props.navigation.navigate('regTech')}
+                                />
+                            ) : null
+                        }
                     </View>
-                    {
-                        props.role === 'user' ? (
-                            <Btn
-                                title='สมัครเป็นช่าง'
-                                navigation={() => props.navigation.navigate('regTech')}
-                            />
-                        ) : null
-                    }
-                    <Btn
-                        title='แก้ไขข้อมูลส่วนตัว'
-                        navigation={() => props.navigation.navigate('editInfo')}
-                    />
                     <View style={{ height: widthToDp('10') }}>
                         <TouchableOpacity
                             style={

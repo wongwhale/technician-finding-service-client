@@ -67,7 +67,11 @@ const UserInfo = (props) => {
                         </Text>
                     </View>
                 </View>
-                <ScrollView >
+                <ScrollView
+                    style={{
+                        flex: 1
+                    }}
+                >
                     <View
                         style={{
                             flexDirection: 'row',
@@ -75,14 +79,14 @@ const UserInfo = (props) => {
                             alignItems: 'center',
                             padding: 8,
                             backgroundColor: '#fff',
-                            marginVertical: widthToDp('2')
+                            marginVertical: widthToDp('2'),
                         }}>
                         {
                             props.role === 'technician' ? (
                                 <>
                                     <TouchableOpacity
                                         style={infoStyles.iconBtn}
-                                        onPress={ () => navigate('techNotification')}
+                                        onPress={() => navigate('techNotification')}
                                     >
                                         <Ionicons name='build-outline' color={color.BLUE_2} size={widthToDp('6')} />
                                         <Text
@@ -100,7 +104,7 @@ const UserInfo = (props) => {
                         }
                         <TouchableOpacity
                             style={infoStyles.iconBtn}
-                            onPress={ () => navigate('userNotification')}
+                            onPress={() => navigate('userNotification')}
                         >
                             <Ionicons name='time-outline' color={color.IOS_ORANGE_LIGHT} size={widthToDp('6')} />
                             <Text
@@ -114,7 +118,7 @@ const UserInfo = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={infoStyles.iconBtn}
-                            onPress={ () => {
+                            onPress={() => {
                                 navigate('accepted')
                             }}
                         >
@@ -159,7 +163,64 @@ const UserInfo = (props) => {
                         {
                             props.role === 'user' ? (
                                 <>
+                                    <View
+                                        style={{
+                                            flex: 1,
+                                        }}
+                                    >
+                                        <View
+                                            style={{
+                                                marginTop: widthToDp('5'),
+                                                alignSelf: 'center'
+                                            }}
+                                        >
+                                            <Text
+                                                style={{
+                                                    fontSize: widthToDp('5'),
+                                                    color: color.BLUE_3
+                                                }}
+                                            >สนใจมาเป็นช่างกับเรา</Text>
+                                        </View>
+                                        <Image
+                                            source={require('../../assets/image/techVector.png')}
+                                            style={{
+                                                height: widthToDp('60')
+                                            }}
+                                            resizeMethod='resize'
+                                            resizeMode='contain'
+                                        />
+                                        <TouchableOpacity
+                                            style={{
+                                                alignSelf: 'center',
+                                                backgroundColor: '#F0EEEB',
+                                                paddingHorizontal: widthToDp('10'),
+                                                margin: widthToDp('3'),
+                                                paddingVertical: widthToDp('2'),
+                                                borderRadius: widthToDp('10'),
+                                                shadowColor: color.BLUE_2,
+                                                shadowOffset: {
+                                                    width: 0,
+                                                    height: 2,
+                                                },
+                                                shadowOpacity: 0.25,
+                                                shadowRadius: 3.84,
 
+                                                elevation: 5,
+                                            }}
+                                            onPress={ () => {
+                                                navigate('regTech')
+                                            }}
+                                        >
+                                            <Text
+                                                style={{
+                                                    fontSize: widthToDp('5'),
+                                                    fontWeight: 'bold',
+                                                    color: color.BLUE_2
+                                                }}
+                                            >สมัคร</Text>
+                                        </TouchableOpacity>
+
+                                    </View>
                                 </>
                             ) :
                                 props.role === 'technician' ? (

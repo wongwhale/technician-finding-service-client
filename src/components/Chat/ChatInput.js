@@ -87,7 +87,7 @@ const ChatInput = (props) => {
                     date: new Date().toISOString(),
                     message: msg.trimEnd(),
                     sender: props.uid,
-                    msgType: 'text'
+                    msgType: 'text',
                 }, props.interlocutor.id)
                 setMsg('')
             }

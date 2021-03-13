@@ -20,6 +20,8 @@ const mapDispatchToProps = {
 }
 
 const AcceptedOrderTab = () => {
+
+
     return (
         <>
             <ScrollView style={content.container}>

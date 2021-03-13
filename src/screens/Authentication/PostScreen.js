@@ -21,10 +21,10 @@ import ImagePickerManager from 'react-native-image-crop-picker'
 
 import { sendPostReq } from '../../store/actions/socketAction'
 import { addNewResponse } from '../../store/actions/notiAction'
-import { SET_FILE, SET_LOCATION, clear } from '../../store/actions/formAction'
+import { SET_FILE, SET_LOCATION, clear , SET_DATE , SET_MONTH , SET_YEAR , SET_HOUR , SET_MINUTE  } from '../../store/actions/formAction'
 import { CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
 import { LOADING, LOADED } from '../../store/actions/authAction'
-
+import { useFocusEffect } from '@react-navigation/native'
 import { connect } from 'react-redux'
 import { content, color, card, widthToDp } from '../../stylesheet'
 import { styles } from '../../components/Setting/styles'
@@ -50,22 +50,46 @@ const mapStateToProps = (state) => ({
     type: state.form.type
 })
 
-const connector = connect(mapStateToProps, { LOADING, LOADED, clear, addNewResponse, SET_LOCATION, sendPostReq, SET_FILE, CLOSE_IMAGE_PICKER_MODAL })
+const mapDispatchToProps = {
+    LOADING, 
+    LOADED, 
+    clear, 
+    addNewResponse, 
+    SET_LOCATION, 
+    sendPostReq, 
+    SET_FILE, 
+    CLOSE_IMAGE_PICKER_MODAL,
+    SET_DATE , 
+    SET_MONTH , 
+    SET_YEAR , 
+    SET_HOUR , 
+    SET_MINUTE
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps )
 
 const PostScreen = (props) => {
     const [locationVisible, setLocationVisible] = React.useState(false)
-    React.useEffect(() => {
-        Geolocation.getCurrentPosition((position) => {
-            props.SET_LOCATION(position.coords.latitude, position.coords.longitude)
-        }, () => {
 
-        })
-        return () => {
-            props.clear()
-        }
-    }, [])
+    useFocusEffect(
+        React.useCallback(() => {
+            const current_date = new Date()
+            Geolocation.getCurrentPosition((position) => {
+                props.SET_LOCATION(position.coords.latitude, position.coords.longitude)
+            }, () => {
 
+            })
+            props.SET_DATE(current_date.getDate())
+            props.SET_MONTH(current_date.getMonth())
+            props.SET_YEAR(current_date.getFullYear())
+            props.SET_HOUR(current_date.getHours())
+            props.SET_MINUTE(current_date.getMinutes())
 
+            return () => {
+                props.clear()
+            }
+        }, [])
+    )
 
     return (
         <>

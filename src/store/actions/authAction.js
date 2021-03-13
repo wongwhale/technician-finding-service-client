@@ -15,6 +15,11 @@ import { color } from "../../stylesheet/colors"
 
 
 export const login = (username, password) => (dispatch) => {
+
+    let json = []
+
+    AsyncStorage.setItem('notification', JSON.stringify(json))
+
     dispatch({
         type: authType.LOADING
     })
@@ -60,6 +65,7 @@ export const login = (username, password) => (dispatch) => {
 
 export const logout = () => (dispatch) => {
     AsyncStorage.removeItem('token')
+    AsyncStorage.removeItem('notification')
     dispatch({
         type: authType.LOGOUT_SUCCESS
     })
@@ -86,6 +92,8 @@ export const logout = () => (dispatch) => {
 }
 
 export const loginWithFacebook = () => dispatch => {
+    let json = []
+    AsyncStorage.setItem('notification', JSON.stringify(json))
     return new Promise((resolve, reject) => {
         LoginManager.logInWithPermissions(["public_profile"])
             .then((res) => {
@@ -263,86 +271,118 @@ export const checkToken = () => async (dispatch) => {
         let acceptedorder_lists = []
         if (data.status) {
             if (data.role === 'technician') {
-                Promise.all(
-                    data.technicianInfoID.newForm.map(async (order) => {
-                        const distance = await getDistance(
-                            store.getState().auth.userInfo.currentLocation.lat,
-                            store.getState().auth.userInfo.currentLocation.lon,
-                            order.location.lat,
-                            order.location.lon
-                        )
-                        neworder_lists.push({
-                            ...order,
-                            distance: parseFloat(distance / 1000).toFixed(2)
-                        })
-                    }),
-                    data.technicianInfoID.acceptForm.map((order) => {
-                        acceptedorder_lists.push({
-                            ...order
-                        })
-                    })
-                ).then(() => {
-                    dispatch({
-                        type: authType.LOGIN_SUCCESS,
-                        payload: {
-                            firstname: data.firstname,
-                            lastname: data.lastname,
-                            role: data.role,
-                            uid: data.userID,
-                            avatar: data.avatar
-                        }
-                    })
-                    dispatch({
-                        type: authType.LOADED
-                    })
-                    dispatch({
-                        type: notiType.SET_NEW_ORDER,
-                        payload: neworder_lists
-                    })
-                    dispatch({
-                        type: notiType.SET_ACCEPTED_ORDER,
-                        payload: acceptedorder_lists
-                    })
-                }).catch(() => {
-                    dispatch({
-                        type: authType.LOGIN_FAIL
-                    })
-                    dispatch({
-                        type: authType.LOADED
-                    })
+                dispatch({
+                    type: notiType.SET_ORDER_BADGE,
+                    payload: {
+                        order_badge: data.technicianInfoID.newForm.length
+                    }
                 })
+                dispatch({
+                    type: authType.LOADED
+                })
+                dispatch({
+                    type: authType.LOGIN_SUCCESS,
+                    payload: {
+                        firstname: data.firstname,
+                        lastname: data.lastname,
+                        role: data.role,
+                        uid: data.userID,
+                        avatar: data.avatar
+                    }
+                })
+                // Promise.all(
+                //     data.technicianInfoID.newForm.map(async (order) => {
+                //         const distance = await getDistance(
+                //             store.getState().auth.userInfo.currentLocation.lat,
+                //             store.getState().auth.userInfo.currentLocation.lon,
+                //             order.location.lat,
+                //             order.location.lon
+                //         )
+                //         neworder_lists.push({
+                //             ...order,
+                //             distance: parseFloat(distance / 1000).toFixed(2)
+                //         })
+                //     }),
+                //     data.technicianInfoID.acceptForm.map((order) => {
+                //         acceptedorder_lists.push({
+                //             ...order
+                //         })
+                //     })
+                // ).then(() => {
+                // dispatch({
+                //     type: authType.LOGIN_SUCCESS,
+                //     payload: {
+                //         firstname: data.firstname,
+                //         lastname: data.lastname,
+                //         role: data.role,
+                //         uid: data.userID,
+                //         avatar: data.avatar
+                //     }
+                // })
+                //     dispatch({
+                //         type: authType.LOADED
+                //     })
+                //     dispatch({
+                //         type: notiType.SET_NEW_ORDER,
+                //         payload: neworder_lists
+                //     })
+                //     dispatch({
+                //         type: notiType.SET_ACCEPTED_ORDER,
+                //         payload: acceptedorder_lists
+                //     })
+                // }).catch(() => {
+                //     dispatch({
+                //         type: authType.LOGIN_FAIL
+                //     })
+                // dispatch({
+                //     type: authType.LOADED
+                // })
+                // })
             } else {
-                Promise.all(
-                    data.forms.map(async (form) => {
-                        const distance = await getDistance(
-                            store.getState().auth.userInfo.currentLocation.lat,
-                            store.getState().auth.userInfo.currentLocation.lon,
-                            form.location.lat,
-                            form.location.lon
-                        )
-                        temp_list.push({
-                            ...form,
-                            distance: parseFloat(distance / 1000).toFixed(2)
-                        })
-                    })
-                ).then(() => {
-                    dispatch({
-                        type: notiType.SET_USER_RESPONSE,
-                        payload: temp_list
-                    })
-                    dispatch({
-                        type: authType.LOGIN_SUCCESS,
-                        payload: {
-                            firstname: data.firstname,
-                            lastname: data.lastname,
-                            role: data.role,
-                            uid: data.userID,
-                            avatar: data.avatar
-                        }
-                    })
-                }).catch(err => {
-                    console.log(err);
+                dispatch({
+                    type: authType.LOADED
                 })
+                dispatch({
+                    type: authType.LOGIN_SUCCESS,
+                    payload: {
+                        firstname: data.firstname,
+                        lastname: data.lastname,
+                        role: data.role,
+                        uid: data.userID,
+                        avatar: data.avatar
+                    }
+                })
+                // Promise.all(
+                //     data.forms.map(async (form) => {
+                //         const distance = await getDistance(
+                //             store.getState().auth.userInfo.currentLocation.lat,
+                //             store.getState().auth.userInfo.currentLocation.lon,
+                //             form.location.lat,
+                //             form.location.lon
+                //         )
+                //         temp_list.push({
+                //             ...form,
+                //             distance: parseFloat(distance / 1000).toFixed(2)
+                //         })
+                //     })
+                // ).then(() => {
+                //     dispatch({
+                //         type: notiType.SET_USER_RESPONSE,
+                //         payload: temp_list
+                //     })
+                //     dispatch({
+                //         type: authType.LOGIN_SUCCESS,
+                //         payload: {
+                //             firstname: data.firstname,
+                //             lastname: data.lastname,
+                //             role: data.role,
+                //             uid: data.userID,
+                //             avatar: data.avatar
+                //         }
+                //     })
+                // }).catch(err => {
+                //     console.log(err);
+                // })
 
             }
         } else {
@@ -415,11 +455,11 @@ export const updateToken = () => dispatch => {
                         "Content-Type": "application/json",
                         "Authorization": token
                     },
-                }).then( res => {
+                }).then(res => {
                     const data = res.data.data.updateToken
-                    AsyncStorage.setItem('token' , data.token)
-                    resolve({ uid : data.userID })
-                }).catch( err => {
+                    AsyncStorage.setItem('token', data.token)
+                    resolve({ uid: data.userID })
+                }).catch(err => {
                     reject(err)
                 })
             })
@@ -428,21 +468,21 @@ export const updateToken = () => dispatch => {
 
 export const changeRole = (role) => dispatch => {
     dispatch({
-        type : authType.SET_ROLE,
-        payload : {
-            role : role
+        type: authType.SET_ROLE,
+        payload: {
+            role: role
         }
     })
 }
 
-export const setCurrentLocation = (lat , lon) => dispatch => {
-    console.log(lat , lon);
+export const setCurrentLocation = (lat, lon) => dispatch => {
+    console.log(lat, lon);
     dispatch({
-        type : authType.SET_CURRENT_LOCATION,
-        payload : {
-            currentLocation : {
-                lat : lat,
-                lon : lon
+        type: authType.SET_CURRENT_LOCATION,
+        payload: {
+            currentLocation: {
+                lat: lat,
+                lon: lon
             }
         }
     })

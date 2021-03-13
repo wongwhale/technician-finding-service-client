@@ -27,7 +27,6 @@ if (!firebase.apps.length) {
   firebase.app(); // if already initialized, use that one
 }
 
-
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
   uid: state.auth.userInfo.uid,
@@ -35,11 +34,9 @@ const mapStateToProps = (state) => ({
 
 import firebase from '@react-native-firebase/app';
 
-
 const connector = connect(mapStateToProps, { setCurrentLocation , disconnect, leave, checkToken })
 
 const Router = (props) => {
-
 
   const getCurrentPositionFail = () => {
 

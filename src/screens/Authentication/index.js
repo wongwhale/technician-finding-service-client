@@ -28,8 +28,8 @@ import LogoutConfirmModal from '../../components/Modal/LogoutConfirmModal';
 import { OPEN_LOGOUT_CONFIRM_MODAL, CLOSE_LOGOUT_CONFIRM_MODAL } from '../../store/actions/modalAction'
 import { logout } from '../../store/actions/authAction'
 import RatingScreen from './RatingScreen';
-import TechnicianNotification from './TechnicianNotification/';
-import UserNotification from './Notification/NewRequestOrder';
+import TechnicianNotification from './TechnicianNotification/NewOrderTab';
+import UserNotification from './Notification/WaitingNotification';
 import AcceptedNotification from './Notification/AcceptedRequestOrder';
 import PriceInputModal from '../../components/Modal/PriceInputModal';
 import { KeyboardAvoidingView, SafeAreaView } from 'react-native';

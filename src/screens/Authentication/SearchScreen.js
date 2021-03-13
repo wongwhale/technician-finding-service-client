@@ -9,7 +9,8 @@ import {
     Animated,
     Easing,
     Keyboard,
-    Text
+    Text,
+    Image
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -21,40 +22,43 @@ import ListBox from '../../components/Search/ListBox'
 import { connect } from 'react-redux'
 
 import { SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD, SEARCH_GUIDE } from '../../store/actions/techAction'
-import { LOADED , LOADING } from '../../store/actions/authAction'
+import { LOADED, LOADING } from '../../store/actions/authAction'
 import { SET_LOCATION } from '../../store/actions/formAction'
 import { getDistance } from '../../misc/getDistance'
 import Geolocation from '@react-native-community/geolocation'
-
+import { useFocusEffect } from '@react-navigation/native'
 import SearchModal from '../../components/Modal/SearchModal'
 import ListBoxContentLoader from '../../components/Search/ListBoxContentLoader'
 
+
 const mapStateToProps = (state) => ({
     keyword: state.tech.keyword,
-    location : state.form.location
+    location: state.form.location
 })
 
 
 const SearchScreen = (props) => {
 
-    let test = {
-        'test' : '1',
-        '2' : '2'
-    }
-    const [isLoading , setIsLoading] = React.useState(false)
+    const [isLoading, setIsLoading] = React.useState(false)
     const [listsWithDistance, setListsWithDistance] = React.useState([])
-    const [searchLists , setSearchLists] = React.useState([])
+    const [searchLists, setSearchLists] = React.useState([])
     const [check, setCheck] = React.useState(false)
     const searchInputRef = React.useRef()
 
-    React.useEffect( () => {
-        Geolocation.getCurrentPosition( ({coords : {latitude , longitude}}) => {
-            props.SET_LOCATION(latitude , longitude)
-        }, 
-        (err) => {
-            console.log(err);
-        })
-    },[])
+    useFocusEffect(
+        React.useCallback(() => {
+            Geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+                props.SET_LOCATION(latitude, longitude)
+            },
+                (err) => {
+                    console.log(err);
+                })
+            return () => {
+                props.SET_SEARCH_KEY_WORD('')
+                setListsWithDistance([])
+            }
+        }, [])
+    )
 
     const handleDistance = async (t_lists) => {
         let temp_lists = []
@@ -70,8 +74,8 @@ const SearchScreen = (props) => {
                 temp_lists.push({
                     ...t_lists[key],
                     distance: distance,
-                    sorter : (distance/2000) + (5-t_lists[key].star )
-                })  
+                    sorter: (distance / 2000) + (5 - t_lists[key].star)
+                })
             })
         )
             .then(() => {
@@ -87,22 +91,19 @@ const SearchScreen = (props) => {
             })
     }
 
-    const filterLists = async (arr) => {
-    }
-
 
     const handleSearch = (arr) => {
-        return new Promise( (resovle , reject) => {
+        return new Promise((resovle, reject) => {
             let t_list = {}
-            Promise.all( 
-                arr.map( async (key) => {
+            Promise.all(
+                arr.map(async (key) => {
                     await props.SEARCH_BY_KEY_WORD(key)
-                    .then(( lists ) => {
-                        lists.map( (list) => {
-                            t_list[list._id] = list
+                        .then((lists) => {
+                            lists.map((list) => {
+                                t_list[list._id] = list
+                            })
                         })
-                    })
-                    
+
                     // .then((res) => {
                     //     const filter_lists= res.filter( list => {
                     //         if(!pair_list.includes(list._id)){
@@ -115,46 +116,40 @@ const SearchScreen = (props) => {
                     //     return(filter_lists)
                     // })
                 })
-            ).then( () => {
+            ).then(() => {
                 resovle(t_list)
-            }).catch( err => {
+            }).catch(err => {
                 reject(err)
             })
         })
     }
 
-    React.useEffect(() => {
-        return () => {
-            props.SET_SEARCH_KEY_WORD('')
-            setListsWithDistance([])
-        }
-    }, [])
 
     return (
         <>
-        <SafeAreaView style={content.topsafearray} />
-        <SafeAreaView style={content.safearray}>
-                <Header page="ค้นหา" back={false} navigation={props.navigation}  />
-                <View style={{ backgroundColor: '#fff' , flex : 1 }}
+            <SafeAreaView style={content.topsafearray} />
+            <SafeAreaView style={content.safearray}>
+                <Header page="ค้นหา" back={false} navigation={props.navigation} />
+                <View style={{ backgroundColor: '#fff', flex: 1 }}
                     onStartShouldSetResponder={() => true}
-                    // onTouchStart={() => {
-                    //     searchInputRef.current.blur()
-                    // }}
+                // onTouchStart={() => {
+                //     searchInputRef.current.blur()
+                // }}
                 >
                     <View
                         style={{
-                            position: 'absolute',
+                            // position: 'absolute',
                             width: widthToDp('100'),
                             justifyContent: 'center',
                             alignItems: 'center',
                             zIndex: 4,
                             // paddingHorizontal: widthToDp('7'),
                         }}>
-                        <View 
+                        <View
                             style={{
-                                flexDirection: 'row' ,
-                                justifyContent : 'center',
-                                alignItems : 'center',
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
                                 marginHorizontal: widthToDp('7')
                             }}>
                             <TouchableOpacity
@@ -163,7 +158,7 @@ const SearchScreen = (props) => {
                                     searchScreen.textInputContainer,
                                 ]}
                             >
-                                <Text   style={searchScreen.textInput}>
+                                <Text style={searchScreen.textInput}>
                                     {
                                         props.keyword.length !== 0 ? props.keyword : 'ค้นหาช่าง  ประเภท , ชื่อ หรือ อื่นๆ'
                                     }
@@ -194,49 +189,62 @@ const SearchScreen = (props) => {
                         >
                         </View>
                     </View>
-                    <ScrollView 
-                        style={{ 
-                            marginTop: widthToDp('12') ,
-                            paddingHorizontal : widthToDp('7'),
-                            paddingVertical : widthToDp('1')  
+                    {
+                        !isLoading && listsWithDistance.length === 0 ? (
+                            <Image
+                                style={{
+                                    height: widthToDp('60'),
+                                    width: '100%',
+                                    marginTop: widthToDp('10')
+                                }}
+                                source={require('../../assets/image/technician.jpg')}
+                                resizeMode='contain'
+                            />
+                        ) : null
+                    }
+                    <ScrollView
+                        style={{
+                            paddingHorizontal: widthToDp('7'),
+                            paddingVertical: widthToDp('1')
                         }}
                     >
+
                         {
                             isLoading ? <ListBoxContentLoader /> :
-                            listsWithDistance.map((item, index) => {
-                                return <ListBox
-                                    key={index}
-                                    name={`${item.userInfoID.firstname} ${item.userInfoID.lastname}`}
-                                    star={item.star}
-                                    distance={parseFloat(item.distance / 1000).toFixed(2)}
-                                    tid={item.userID}
-                                    avatar={item.userInfoID.avatar}
-                                    navigation={props.navigation}
-                                />
-                            })
+                                listsWithDistance.map((item, index) => {
+                                    return <ListBox
+                                        key={index}
+                                        name={`${item.userInfoID.firstname} ${item.userInfoID.lastname}`}
+                                        star={item.star}
+                                        distance={parseFloat(item.distance / 1000).toFixed(2)}
+                                        tid={item.userID}
+                                        avatar={item.userInfoID.avatar}
+                                        navigation={props.navigation}
+                                    />
+                                })
                         }
                     </ScrollView>
                 </View>
-        </SafeAreaView>
-                <SearchModal
-                    isOpen={check}
-                    onClosed={() => {
-                        setCheck(false)
-                    }}
-                    setSearchList={ (key) => {
-                        setIsLoading(true)
-                        props.SET_SEARCH_KEY_WORD(key)
-                        // props.LOADING()
-                        setSearchLists([])
-                        props.SEARCH_GUIDE(key).then(arr => {
-                            handleSearch(arr).then( async (t_list) => {
-                                await handleDistance(t_list)
-                            })
+            </SafeAreaView>
+            <SearchModal
+                isOpen={check}
+                onClosed={() => {
+                    setCheck(false)
+                }}
+                setSearchList={(key) => {
+                    setIsLoading(true)
+                    props.SET_SEARCH_KEY_WORD(key)
+                    // props.LOADING()
+                    setSearchLists([])
+                    props.SEARCH_GUIDE(key).then(arr => {
+                        handleSearch(arr).then(async (t_list) => {
+                            await handleDistance(t_list)
                         })
-                    }}
-                />
+                    })
+                }}
+            />
         </>
     )
 }
 
-export default connect(mapStateToProps, { LOADING,  SET_LOCATION , SEARCH_GUIDE, LOADED, SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD })(SearchScreen)
+export default connect(mapStateToProps, { LOADING, SET_LOCATION, SEARCH_GUIDE, LOADED, SET_SEARCH_KEY_WORD, SEARCH_BY_KEY_WORD })(SearchScreen)

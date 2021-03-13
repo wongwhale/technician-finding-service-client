@@ -11,6 +11,9 @@ export const notiType = {
     SET_USER_RESPONSE : 'SET_USER_RESPONSE',
     SET_NEW_ORDER : 'SET_NEW_ORDER',
     SET_ACCEPTED_ORDER : 'SET_ACCEPTED_ORDER',
+    SET_ORDER_BADGE : 'SET_ORDER_BADGE',
+    SET_RESPONSE_BADGE : 'SET_RESPONSE_BADGE',
+    SET_NOTIFICATION_BADGE : 'SET_NOTIFICATION_BADGE'
 }
 
 const initialState = {
@@ -26,7 +29,10 @@ const initialState = {
     userConfirmed :[
 
     ],
-    badge: 0,
+    notification_badge: 0,
+    order_badge : 0,
+    response_badge : 0,
+    accepted_badge : 0
 }
 
 export default function notificationReducer(
@@ -110,6 +116,21 @@ export default function notificationReducer(
             }
         case notiType.CLEAR:
             return state = initialState
+        case notiType.SET_NOTIFICATION_BADGE:
+            return {
+                ...state,
+                notification_badge : action.payload.notification_badge
+            }
+        case notiType.SET_ORDER_BADGE:
+            return{
+                ...state,
+                order_badge : action.payload.order_badge
+            }
+        case notiType.SET_RESPONSE_BADGE:
+            return{
+                ...state,
+                response_badge : action.payload.response_badge
+            }
         default:
             return state
     }

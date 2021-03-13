@@ -9,6 +9,8 @@ import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getDistance } from '../../misc/getDistance'
 import { chatType } from '../reducers/chatReducer'
+import  PushNotification from 'react-native-push-notification'
+import { fromPromise } from '@apollo/client'
 
 
 const socket = io.connect(`${SOCKET_URL}`)
@@ -197,10 +199,37 @@ socket.on('update_tech_order', () => {
     updateTechOrder()
 })
 
+socket.on('recieve_new_response' , (res) => {
+    console.log('recieve new response' , res);
+})
+
+socket.on('recieve_new_post_req' , ({form}) => {
+    console.log('recieve new post req' , form);
+    PushNotification.localNotification({
+        title : form.userInfoID.firstname + ' ' +  form.userInfoID.lastname,
+        message : 'รายละเอียดงาน : ' +  form.detail,
+    })
+    AsyncStorage.getItem('notification').then( (str) => {
+        let noti = JSON.parse(str)
+        const new_noti_json = [...noti , {
+            id: form._id,
+            type : form.techType,            
+            name : form.userInfoID.firstname + ' ' + form.userInfoID.lastname,
+            status : false,
+            order : true
+        }]
+        AsyncStorage.setItem('notification' , JSON.stringify(new_noti_json) )
+    })
+})
+
 socket.on('receive_message' , ({message}) => {
     const interlocuter = store.getState().chat.interlocutor
     if( interlocuter.id !== message.sender ){
-        alert(message.message)
+        // alert(message.message)
+        PushNotification.localNotification({
+            title:'test',
+            message:message.msgType === 'text' ?  message.message : message.msgType === 'image' ? `test : ได้ส่งรูปภาพ` : 'คุณได้รับข้อความใหม่'
+        })
     }
     else {
         store.dispatch({
