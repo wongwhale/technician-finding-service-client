@@ -10,6 +10,11 @@ import NotificationMoreModal from '../../components/Modal/NotificationMoreModal'
 
 
 const NotificationLists = ({ type = 'ช่างซ่อมคอมพิวเตอร์', tech, status , openModal  }) => {
+    const onPress = async () => {
+        AsyncStorage.getItem('notification').then( (str) => {
+            
+        })
+    }
     return (
         <>
             <TouchableOpacity
@@ -70,30 +75,30 @@ const NotificationLists = ({ type = 'ช่างซ่อมคอมพิว�
 
 const NotificationTab = () => {
     const [moreVisible, setMoreVisible] = React.useState(false)
-    const json_var = {
-        notification: [
-            {
-                id: '123123',
-                form: 'asdfasdf',
-                name : 'ปริญญา สีตะวัน',
-                status : false
-            },
-            {
-                id: '123123',
-                name: 'นิรัช ศรีใจมูน',
-                status : true
-            }, {
-                id: '123123',
-                name: 'ธีรภัทร์ รัตนพิกุล',
-                status : false
-            }
-        ]
-    }
+    // const json_var = {
+    //     notification: [
+    //         {
+    //             id: '123123',
+    //             form: 'asdfasdf',
+    //             name : 'ปริญญา สีตะวัน',
+    //             status : false
+    //         },
+    //         {
+    //             id: '123123',
+    //             name: 'นิรัช ศรีใจมูน',
+    //             status : true
+    //         }, {
+    //             id: '123123',
+    //             name: 'ธีรภัทร์ รัตนพิกุล',
+    //             status : false
+    //         }
+    //     ]
+    // }
 
     const [notificationLists, setNotificationLists] = React.useState([])
 
     React.useEffect(() => {
-        AsyncStorage.setItem('notification' , JSON.stringify(json_var))
+        // AsyncStorage.setItem('notification' , JSON.stringify(json_var))
         AsyncStorage.getItem('notification').then(json => {
             if (json === null) {
                 console.log('is null');

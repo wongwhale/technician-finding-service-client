@@ -8,7 +8,9 @@ import {
     TouchableOpacity,
     Animated,
     Button,
-    Easing
+    Easing,
+    Image,
+    StatusBar
 } from 'react-native';
 
 import { mainScreen, color, content, widthToDp } from '../../stylesheet'
@@ -25,7 +27,6 @@ import { SET_FILE, SET_LOCATION } from '../../store/actions/formAction'
 
 import Geolocation from '@react-native-community/geolocation'
 import LinearGradient from 'react-native-linear-gradient'
-
 
 const mapStateToProps = (state) => ({
     count: state.counter.count,
@@ -47,7 +48,7 @@ const connector = connect(mapStateToProps, {
 const Main = (props) => {
 
     const [imageURI, setImageURI] = useState(null)
-
+    const notiRef = useRef()
 
     const onChangePageToNearMe = () => {
         return new Promise((resolve, reject) => {
@@ -63,7 +64,7 @@ const Main = (props) => {
                 })
         })
     }
-    
+
     const [opacity, setOpacity] = useState(new Animated.Value(0))
 
     const translateY = opacity.interpolate({
@@ -160,10 +161,19 @@ const Main = (props) => {
                             </TouchableOpacity>
                         </View>
                     </View>
+                    <Button
+                        title='test notification'
+                        onPress={() => {
+                            console.log('pop noti');
+                            // notiRef.current.show()
+                            StatusBar.setHidden(false)
+                        }}
+                    />
                 </ScrollView>
 
 
             </SafeAreaView>
+            
         </>
     )
 }
