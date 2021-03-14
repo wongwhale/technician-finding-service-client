@@ -38,6 +38,7 @@ const NewOrderNotification = (props) => {
                                     order={item}
                                     date={`${date_.getDate()} ${month[date_.getMonth()]} ${date_.getFullYear() + 543}`}
                                     last={props.lists.length === index + 1 ? true : false}
+                                    handleNewOrder={ () => props.handleNewOrder()}
                                 />
                             })
                         ) : null

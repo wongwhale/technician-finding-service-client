@@ -6,9 +6,10 @@ import { ScrollView } from 'react-native-gesture-handler'
 import Header from '../../../components/Header'
 import NotFoundComponent from '../../../components/NotFoundComponent'
 import { getNewOrderLists } from '../../../store/actions/notiAction'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, RefreshControl } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import ContentLoader from 'react-native-easy-content-loader'
+import { socket } from '../../../store/actions/socketAction'
 
 const mapStateToProps = (state) => ({
     techOrder: state.noti.techOrder,
@@ -22,23 +23,49 @@ const mapDispatchToProps = {
 const NewOrder = (props) => {
 
     const [isReady, setIsReady] = React.useState(true)
-    const [newOrderLists , setNewOrderLists] = React.useState([])
-    
+    const [newOrderLists, setNewOrderLists] = React.useState([])
+
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const handleRefresh = () => {
+        setIsReady(true)
+        props.getNewOrderLists().then(res => {
+            setNewOrderLists(res)
+            setIsReady(false)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    const handleNewOrder = () => {
+        props.getNewOrderLists().then(res => {
+            setNewOrderLists(res)
+            setIsReady(false)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
     useFocusEffect(
-        React.useCallback( () => {  
+        React.useCallback(() => {
+            socket.on('recieve_new_post_req', () => {
+                handleNewOrder()
+            })
+            socket.on('confirm_accepted_req' , () => {
+                handleNewOrder()
+            })
             setIsReady(true)
-            props.getNewOrderLists().then( res => {
+            props.getNewOrderLists().then(res => {
                 setNewOrderLists(res)
                 setIsReady(false)
             }).catch(err => {
                 console.log(err);
             })
 
-            return  () => {
+            return () => {
                 setNewOrderLists([])
             }
-        },[])
+        }, [])
     )
 
     return (
@@ -86,9 +113,13 @@ const NewOrder = (props) => {
                     ) : (
                             <>
                                 <ScrollView style={content.container}>
+                                    <RefreshControl
+                                        refreshing={refreshing}
+                                        onRefresh={() => handleRefresh()}
+                                    />
                                     {
                                         newOrderLists.length !== 0 ? (
-                                            <NewOrderNotification lists={newOrderLists} />
+                                            <NewOrderNotification lists={newOrderLists} handleNewOrder={ () => handleNewOrder()} />
                                         )
                                             : <NotFoundComponent label='ยังไม่มีงานใหม่' />
                                     }

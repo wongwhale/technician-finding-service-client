@@ -13,7 +13,6 @@ import { ScrollView } from 'react-native-gesture-handler'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
 const mapStateToProps = (state) => ({
-    isOpen: state.modal.detail_modal,
     order_id: state.modal.order_id,
     formInfo: state.modal.formInfo,
     current_location : state.auth.userInfo.currentLocation
@@ -57,7 +56,7 @@ const OrderDetailModal = (props) => {
     const month = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฏาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
 
     const onClosed = () => {
-        props.CLOSE_DETAIL_MODAL()
+        props.onClosed()
     }
 
     return (
@@ -75,7 +74,7 @@ const OrderDetailModal = (props) => {
                 <View
                     style={{
                         flex: 1,
-                        backgroundColor: color.BLUE_2,
+                        backgroundColor: color.GREY_4,
                         borderTopLeftRadius: heightToDp('3'),
                         borderTopRightRadius: heightToDp('3')
                     }}>
@@ -116,7 +115,7 @@ const OrderDetailModal = (props) => {
                                         width: widthToDp('25'),
                                         height: widthToDp('25'),
                                         borderRadius: widthToDp('10'),
-                                        backgroundColor: color.GREY_5
+                                        backgroundColor: color.BLUE_0
                                     }}
                                 />
                                 <View
@@ -132,7 +131,7 @@ const OrderDetailModal = (props) => {
                                         style={{
                                             fontWeight: 'bold',
                                             fontSize: widthToDp('6'),
-                                            color: color.GREY_5
+                                            color: color.BLUE_0
                                         }}
                                     >
                                         {`${props.formInfo.userInfoID.firstname} ${props.formInfo.userInfoID.lastname}`}
@@ -141,7 +140,7 @@ const OrderDetailModal = (props) => {
                                         style={{
                                             fontWeight: 'bold',
                                             fontSize: widthToDp('4'),
-                                            color: color.GREY_5
+                                            color: color.BLUE_0
                                         }}
                                     >
                                         ห่างจากคุณ {props.formInfo.distance} กม.
@@ -165,16 +164,16 @@ const OrderDetailModal = (props) => {
                                         style={{
                                             fontWeight: 'bold',
                                             fontSize: widthToDp('6'),
-                                            color: color.GREY_5
+                                            color: color.BLUE_0
                                         }}
                                     >
-                                        {`วันที่ : ${new Date(props.formInfo.date).getDate()} ${month[new Date(props.formInfo.date).getMonth()]} ${new Date(props.formInfo.date).getFullYear() + 543}`}
+                                        {`วันที่ : ${new Date(props.formInfo.date).getDay()} ${month[new Date(props.formInfo.date).getMonth()]} ${new Date(props.formInfo.date).getFullYear() + 543}`}
                                     </Text>
                                     <Text
                                         style={{
                                             fontWeight: 'bold',
                                             fontSize: widthToDp('6'),
-                                            color: color.GREY_5
+                                            color: color.BLUE_0
                                         }}
                                     >
                                         {`เวลา : ${('0' + new Date(props.formInfo.date).getHours()).slice(-2)} : ${new Date(props.formInfo.date).getMinutes()} น.`}
@@ -189,7 +188,7 @@ const OrderDetailModal = (props) => {
                                         style={{
                                             fontWeight: 'bold',
                                             fontSize: widthToDp('6'),
-                                            color: color.GREY_5
+                                            color: color.BLUE_0
                                         }}
                                     >
                                         รายละเอียด
@@ -198,7 +197,7 @@ const OrderDetailModal = (props) => {
                                         style={{
                                             fontWeight: 'bold',
                                             fontSize: widthToDp('4'),
-                                            color: color.GREY_5
+                                            color: color.BLUE_0
                                         }}
                                     >
                                         {
@@ -215,7 +214,7 @@ const OrderDetailModal = (props) => {
                                         style={{
                                             fontWeight: 'bold',
                                             fontSize: widthToDp('6'),
-                                            color: color.GREY_5
+                                            color: color.BLUE_0
                                         }}
                                     >
                                         รูปภาพ หรือ วิดีโอ
@@ -241,7 +240,7 @@ const OrderDetailModal = (props) => {
                                                         style={{
                                                             fontWeight: 'bold',
                                                             fontSize: widthToDp('4'),
-                                                            color: color.GREY_5
+                                                            color: color.BLUE_0
                                                         }}
                                                     >
                                                         ไม่มีรูปเพิ่มเติม
@@ -259,7 +258,7 @@ const OrderDetailModal = (props) => {
                                         style={{
                                             fontWeight: 'bold',
                                             fontSize: widthToDp('6'),
-                                            color: color.GREY_5
+                                            color: color.BLUE_0
                                         }}
                                     >
                                         สถานที่
@@ -278,12 +277,12 @@ const OrderDetailModal = (props) => {
                                             style={{
                                                 width: '100%',
                                                 aspectRatio: 2,
-                                                backgroundColor: color.GREY_5,
+                                                backgroundColor: color.BLUE_0,
                                                 borderRadius: widthToDp('5')
                                             }}
                                         >
                                             <MapView
-
+                                                provider={PROVIDER_GOOGLE}
                                                 style={{
                                                     width: '100%',
                                                     height: '100%',
@@ -311,50 +310,6 @@ const OrderDetailModal = (props) => {
                                         width: '100%'
                                     }}
                                 >
-                                    <TouchableOpacity
-                                        style={{
-                                            paddingVertical: widthToDp('3'),
-                                            paddingHorizontal: widthToDp('6'),
-                                            borderRadius: widthToDp('10'),
-                                            backgroundColor: color.IOS_GREEN_LIGHT
-                                        }}
-                                        onPress={() => {
-                                            props.OPEN_PRICE_INPUT_MODAL(props.order_id)
-                                            onClosed()
-                                        }}
-                                    >
-                                        <Text
-                                            style={{
-                                                fontSize: widthToDp('4'),
-                                                fontWeight: 'bold',
-                                                color: color.GREY_5
-                                            }}
-                                        >
-                                            ตอบรับ
-                                    </Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        style={{
-                                            paddingVertical: widthToDp('3'),
-                                            paddingHorizontal: widthToDp('6'),
-                                            borderRadius: widthToDp('10'),
-                                            backgroundColor: color.IOS_ORANGE_DARK
-                                        }}
-                                        onPress={() => {
-                                            props.CLOSE_DETAIL_MODAL()
-                                            props.removeOrder(props.order_id)
-                                        }}
-                                    >
-                                        <Text
-                                            style={{
-                                                fontSize: widthToDp('4'),
-                                                fontWeight: 'bold',
-                                                color: color.GREY_5
-                                            }}
-                                        >
-                                            ไม่สนใจ
-                                    </Text>
-                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </ScrollView>

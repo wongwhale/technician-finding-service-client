@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
+import store from '../index'
 import WEB_URL from "../../misc/web_url"
 import { notiType } from "../reducers/notificationReducer"
 import { getDistance } from "../../misc/getDistance"
@@ -124,11 +125,12 @@ export const getWaitingList = () => dispatch => {
             }).then(res => {
                 const data = res.data.data.tokenCheck
                 let temp_list = []
+                const current_location = store.getState().auth.userInfo.currentLocation
                 Promise.all(
                     data.forms.map(async (form) => {
                         const distance = await getDistance(
-                            18.795424746501605,
-                            98.95226894013882,
+                            current_location.lat,
+                            current_location.lon,
                             form.location.lat,
                             form.location.lon
                         )
@@ -138,6 +140,12 @@ export const getWaitingList = () => dispatch => {
                         })
                     })
                 ).then(() => {
+                    dispatch({
+                        type : notiType.SET_USER_RESPONSE,
+                        payload : {
+
+                        }
+                    })
                     resovle(temp_list)
                 }).catch(err => {
                     reject(err)
@@ -176,17 +184,6 @@ export const getNewOrderLists = () => dispatch => {
                                     lastname
                                     avatar
                                   }
-                                } 
-                                acceptForm {
-                                  _id
-                                  senderID
-                                  detail
-                                  date
-                                  userInfoID{
-                                      firstname 
-                                      lastname
-                                      avatar
-                                  }
                                 }
                               }
                             }
@@ -197,11 +194,12 @@ export const getNewOrderLists = () => dispatch => {
                 const data = res.data.data.tokenCheck
                 let neworder_lists = []
                 let acceptedorder_lists = []
+                const current_location = store.getState().auth.userInfo.currentLocation
                 Promise.all(
                     data.technicianInfoID.newForm.map(async (order) => {
                         const distance = await getDistance(
-                            18.795424746501605,
-                            98.95226894013882,
+                            current_location.lat,
+                            current_location.lon,
                             order.location.lat,
                             order.location.lon
                         )
@@ -220,6 +218,71 @@ export const getNewOrderLists = () => dispatch => {
                 }).catch(err => {
                     reject(err)
                 })
+            })
+        })
+    })
+}
+
+export const getAcceptedList = () => dispatch => {
+    return new Promise((resovle, reject) => {
+        AsyncStorage.getItem('token').then(token => {
+            axios({
+                url: WEB_URL,
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                data: {
+                    query:
+                        `
+                        query{
+                            tokenCheck {
+                                acceptForms {
+                                    _id
+                                    senderID
+                                    detail
+                                    date
+                                    image
+                                    techType
+                                    location{
+                                        lat
+                                        lon
+                                    }
+                                }
+                            }
+                          }
+                    `
+                }
+            }).then(res => {
+                const data = res.data.data.tokenCheck.acceptForms
+                let acceptedorder_lists = []
+                const current_location = store.getState().auth.userInfo.currentLocation
+                Promise.all(
+                    data.map(async (order) => {
+                        const distance = await getDistance(
+                            current_location.lat,
+                            current_location.lon,
+                            order.location.lat,
+                            order.location.lon
+                        )
+                        acceptedorder_lists.push({
+                            ...order,
+                            distance: parseFloat(distance / 1000).toFixed(2)
+                        })
+                    })
+                    // data.technicianInfoID.acceptForm.map((order) => {
+                    //     acceptedorder_lists.push({
+                    //         ...order
+                    //     })
+                    // })
+                ).then(() => {
+                    resovle(acceptedorder_lists)
+                }).catch(err => {
+                    reject(err)
+                })
+            }).catch( err => {
+                reject(err)
             })
         })
     })

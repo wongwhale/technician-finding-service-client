@@ -15,6 +15,7 @@ import { LOADED } from '../../store/actions/authAction'
 import NotFoundComponent from '../../components/NotFoundComponent'
 import MessageLists from '../../components/Message/MessageLists'
 import MessageListsContentLoader from '../../components/Message/MessageListsContentLoader'
+import { socket } from '../../store/actions/socketAction'
 
 const mapStateToProps = (state) => ({
     uid: state.auth.userInfo.uid,
@@ -33,10 +34,20 @@ const Message = (props) => {
     //     })
     // },[])
 
-    const [isLoading , setIsLoading] = React.useState(true)
+    const [isLoading, setIsLoading] = React.useState(true)
 
     useFocusEffect(
         React.useCallback(() => {
+            socket.on('receive_message', ({ message }) => {
+                // console.log(message);
+                props.INITIAL_HISTORY_LIST(props.uid)
+                    .then((list) => {
+                        props.LOADED()
+                        setIsLoading(false)
+                    }).catch(err => {
+                        console.log(err);
+                    })
+            })
             props.INITIAL_HISTORY_LIST(props.uid)
                 .then((list) => {
                     props.LOADED()
@@ -63,17 +74,17 @@ const Message = (props) => {
                     {
                         isLoading ? (
                             <>
-                        <MessageListsContentLoader />
-                        <MessageListsContentLoader />
-                        <MessageListsContentLoader />
-                        <MessageListsContentLoader />
-                        <MessageListsContentLoader />
+                                <MessageListsContentLoader />
+                                <MessageListsContentLoader />
+                                <MessageListsContentLoader />
+                                <MessageListsContentLoader />
+                                <MessageListsContentLoader />
 
                             </>
-                        ) : 
-                        props.chat_history.length !== 0 ? (
-                            <MessageLists />
-                        ) : <NotFoundComponent label='ไม่พบประวัติการแชท' />
+                        ) :
+                            props.chat_history.length !== 0 ? (
+                                <MessageLists />
+                            ) : <NotFoundComponent label='ไม่พบประวัติการแชท' />
                     }
                 </ScrollView>
             </SafeAreaView>

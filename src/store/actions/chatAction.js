@@ -89,10 +89,10 @@ export const ENTER_PRIVATE_CHAT = (uid, tid) => dispatch => {
                                     messages: res.data.data.getChatInformation.history
                                 }
                             })
-                        ).then( () => {
+                        ).then(() => {
                             resolve({ status: true })
-                        }).catch ( () => {
-                            reject({status : false})
+                        }).catch(() => {
+                            reject({ status: false })
                         })
                     }
                     else {
@@ -233,7 +233,9 @@ export const INITIAL_HISTORY_LIST = (uid) => dispatch => {
                               _id
                               userID
                               userName
+                              userFirstname
                               technicianID
+                              technicianFirstname
                               technicianName
                               technicianAvatar
                               readStatus
@@ -253,7 +255,7 @@ export const INITIAL_HISTORY_LIST = (uid) => dispatch => {
                 dispatch({
                     type: chatType.INITIAL_HISTORY_LIST,
                     payload: {
-                        list: res.data.data.getChatRoom.sort( (a,b) => {
+                        list: res.data.data.getChatRoom.sort((a, b) => {
                             return new Date(b.recentMessage.date).getTime() - new Date(a.recentMessage.date).getTime()
                         })
                     }
@@ -275,6 +277,18 @@ export const SEND_MESSAGE = (msg, type, uid) => dispatch => {
             message: msg,
             sender: uid,
             msgType: type
+        }
+    })
+}
+
+export const RECEIVE_MESSAGE = (message) => dispatch => {
+    dispatch({
+        type: chatType.APPEND_MESSAGE,
+        payload: {
+            date: message.date,
+            message: message.message,
+            sender: message.sender,
+            msgType: message.msgType
         }
     })
 }

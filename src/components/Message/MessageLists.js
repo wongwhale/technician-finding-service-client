@@ -45,27 +45,32 @@ const Message = (props) => {
 
     return (
         <>
-                    {
-                        props.chat_history.map((item, index) => {
-                            return <MessageList
-                                key={index}
-                                status={true}
-                                name={item.technicianID !== props.uid ? item.technicianName : item.userName}
-                                avatar={item.technicianID !== props.uid ? item.technicianAvatar : item.userAvatar}
-                                lastMessage={item.recentMessage.message}
-                                status={item.readStatus}
-                                badges={0}
-                                date={item.recentMessage.date}
-                                msgType={item.recentMessage.msgType}
-                                onPress={() => {
-                                    props.ENTER_PRIVATE_CHAT_BY_ID(item._id)
-                                        .then(() => {
-                                            navigate('chat')
-                                            props.LOADED()
-                                        })
-                                }} />
-                        })
-                    }
+            {
+                props.chat_history.map((item, index) => {
+                    return <MessageList
+                        key={index}
+                        name={item.technicianID !== props.uid ? item.technicianName : item.userName}
+                        firstname={item.recentMessage.sender === props.uid
+                            ?
+                            'คุณ'
+                            :
+                            item.technicianID !== props.uid ? item.userFirstname : item.technicianFirstname
+                        }
+                        avatar={item.technicianID !== props.uid ? item.technicianAvatar : item.userAvatar}
+                        lastMessage={item.recentMessage.message}
+                        status={item.readStatus}
+                        badges={0}
+                        date={item.recentMessage.date}
+                        msgType={item.recentMessage.msgType}
+                        onPress={() => {
+                            props.ENTER_PRIVATE_CHAT_BY_ID(item._id)
+                                .then(() => {
+                                    navigate('chat')
+                                    props.LOADED()
+                                })
+                        }} />
+                })
+            }
         </>
     )
 }
