@@ -19,9 +19,7 @@ const mapDispatchToProps = {
 }
 
 const RatingScreen = (props) => {
-    React.useEffect(() => {
-        console.log(props.info.aptitude);
-    }, [])
+    
     return (
         <>
             <SafeAreaView style={content.topsafearray} />

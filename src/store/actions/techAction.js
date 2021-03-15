@@ -353,3 +353,71 @@ export const searchTechnicianByType = (aptitude) => dispatch => {
         })
     })
 }
+
+export const voting = (type , star , tid) => dispatch => {
+    return new Promise((resolve, reject) => {
+        AsyncStorage.getItem('token').then(token => {
+            axios({
+                url: WEB_URL,
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                data: {
+                    query:
+                        `
+                        mutation{
+                            userVote(
+                            userID : "${tid}"
+                            aptitude :"${type}"
+                            voteStar : ${star}
+                          ) {
+                              status
+                            }
+                        }
+                `
+                }
+            }).then( (res) => {
+                resolve(res.data.data.userVote.status)
+            }).catch( err => {
+                console.log('vote err : ' , err);
+                reject(false)
+            })
+        })
+    })
+}
+
+export const comment = (type , comment , tid) => dispatch => {
+    return new Promise((resolve, reject) => {
+        AsyncStorage.getItem('token').then(token => {
+            axios({
+                url: WEB_URL,
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                data: {
+                    query:
+                        `
+                        mutation{
+                            userComment(
+                            userID : "${tid}"
+                            aptitude :"${type}"
+                            comment : "${comment}"
+                          ) {
+                              status
+                            }
+                        }
+                `
+                }
+            }).then( (res) => {
+                resolve(res.data.data.userComment.status)
+            }).catch( err => {
+                console.log('comment err : ' , err);
+                reject(false)
+            })
+        })
+    })
+}
