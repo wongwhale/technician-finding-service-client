@@ -12,19 +12,20 @@ import {
 
 import Feather from 'react-native-vector-icons/Feather'
 
-import { content, widthToDp, color } from '../../../stylesheet'
+import { content, widthToDp, color } from '../../stylesheet'
 
-import Abstract from '../../../components/UserNotification/AcceptedAbstract'
+import Abstract from '../../components/UserNotification/HistoryAbstract'
 import { connect } from 'react-redux'
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import Header from '../../../components/UserInfo/Header'
-import NotFoundComponent from '../../../components/NotFoundComponent'
+import Header from '../../components/UserInfo/Header'
+import NotFoundComponent from '../../components/NotFoundComponent'
 import ContentLoader from 'react-native-easy-content-loader'
-import { getAcceptedList } from '../../../store/actions/notiAction'
-import {} from '../../../store/actions/socketAction'
+import { getAcceptedList } from '../../store/actions/notiAction'
+import {} from '../../store/actions/socketAction'
 import { useFocusEffect } from '@react-navigation/native'
-import ShowMapModal from '../../../components/Modal/ShowMapModal'
+import ShowMapModal from '../../components/Modal/ShowMapModal'
+import AcceptedDetailModal from '../../components/Modal/AcceptedDetailModal'
 
 const TopTab = createMaterialTopTabNavigator()
 
@@ -42,7 +43,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
 
     const [isReady, setIsReady] = React.useState(true)
     const [acceptedLists , setAcceptedLists] = React.useState([])
-    const [mapModalVisible , setMapModalVisible] = React.useState(false)
+    const [modalVisible , setModalVisible] = React.useState(false)
     const [location , setLocation ] = React.useState({
         lat : 0,
         lon : 0
@@ -56,9 +57,9 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
             setIsReady(true)
             props.getAcceptedList().then( (res) => {
                 setAcceptedLists(res.sort((a,b) => {
-                    return new Date(a.date).getTime() - new Date(b.date).getTime()
+                    return new Date(b.date).getTime() - new Date(a.date).getTime()
                 }).filter( (val) => {
-                    return new Date(val.date).getTime() > (new Date().getTime() - 86400)
+                    return new Date(val.date).getTime() < (new Date().getTime() - 86400)
                 })
                 )
                 setIsReady(false)
@@ -86,7 +87,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                     backgroundColor: '#fff'
                 }}
             >
-                <Header page='ยืนยันแล้ว' />
+                <Header page='ประวัติ' />
                 {
                     isReady ? (
                         <>
@@ -96,8 +97,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                                 titleStyles={{
                                     height: widthToDp('30'),
                                     width: '92%',
-                                    marginHorizontal: widthToDp('4'),
-                                    marginVertical : widthToDp('2'),
+                                    margin: widthToDp('4'),
                                     borderRadius: widthToDp('4')
                                 }}
 
@@ -108,8 +108,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                                 titleStyles={{
                                     height: widthToDp('30'),
                                     width: '92%',
-                                    marginHorizontal: widthToDp('4'),
-                                    marginVertical : widthToDp('2'),
+                                    margin: widthToDp('4'),
                                     borderRadius: widthToDp('4')
                                 }}
 
@@ -120,8 +119,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                                 titleStyles={{
                                     height: widthToDp('30'),
                                     width: '92%',
-                                    marginHorizontal: widthToDp('4'),
-                                    marginVertical : widthToDp('2'),
+                                    margin: widthToDp('4'),
                                     borderRadius: widthToDp('4')
                                 }}
 
@@ -142,13 +140,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                                                     id={form._id}
                                                     date={form.date}
                                                     type={form.techType}
-                                                    onOpenModal={ () => {
-                                                        setLocation({
-                                                            lat : form.location.lat,
-                                                            lon : form.location.lon
-                                                        })
-                                                        setMapModalVisible(true)
-                                                    }}
+                                                    openDetailModal={ () => setModalVisible(true)}
                                                 />
                                             )
                                         })
@@ -159,12 +151,11 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                         )
                 }
             </SafeAreaView>
-            <ShowMapModal 
-                isOpen={mapModalVisible}
-                onClosed={ () => {
-                    setMapModalVisible(false)
+            <AcceptedDetailModal 
+                isOpen={modalVisible}
+                onClosed = { () => {
+                    setModalVisible(false)
                 }}
-                location={location}
             />
         </>
     )

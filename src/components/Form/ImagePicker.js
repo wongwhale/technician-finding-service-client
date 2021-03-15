@@ -71,27 +71,6 @@ const ImagePickerComponent = (props) => {
                                                                 )
                                                             })
                                                         }
-                                                        <LinearGradient
-                                                            colors={[
-                                                                '#e9e9e9',
-                                                                color.GREY_5,
-                                                                '#ffffff',
-                                                            ]}
-                                                            key={`add_new_image`}
-                                                            style={{
-                                                                width: widthToDp('25'),
-                                                                height: widthToDp('25'),
-                                                                margin: widthToDp('1'),
-                                                                borderRadius: widthToDp('4'),
-                                                                backgroundColor: '#ffffff56',
-                                                                justifyContent: 'center',
-                                                                alignItems: 'center'
-                                                            }}>
-                                                            <Feather name='plus' style={{
-                                                                fontSize: 40,
-                                                                color: color.BLUE_3
-                                                            }} />
-                                                        </LinearGradient>
                                                     </>
 
                                                 ) : (

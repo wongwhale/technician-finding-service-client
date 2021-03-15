@@ -134,6 +134,9 @@ const UserInfo = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={infoStyles.iconBtn}
+                            onPress={ () => {
+                                navigate('history')
+                            }}
                         >
                             <Ionicons name='refresh-outline' color={color.IOS_INDIGO_DARK} size={widthToDp('6')} />
                             <Text
@@ -179,7 +182,7 @@ const UserInfo = (props) => {
                                                     fontSize: widthToDp('5'),
                                                     color: color.BLUE_3
                                                 }}
-                                            >สนใจมาเป็นช่างกับเรา</Text>
+                                            >มาเป็นช่างกับเรา</Text>
                                         </View>
                                         <Image
                                             source={require('../../assets/image/techVector.png')}

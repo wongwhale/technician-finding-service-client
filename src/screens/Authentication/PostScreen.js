@@ -198,7 +198,6 @@ const PostScreen = (props) => {
                             }).then(res => {
                                 props.LOADED()
                                 props.navigation.navigate('userNotification')
-
                             })
                         }}
                     />

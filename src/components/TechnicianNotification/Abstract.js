@@ -32,7 +32,7 @@ const Abstract = (props) => {
 
     const handleRemoveOrder = () => {
         props.removeOrder(props.order._id , props.uid)
-
+        props.handleNewOrder()
     }
 
     const [opacity, setOpacity] = React.useState(new Animated.Value(0))
@@ -139,11 +139,12 @@ const Abstract = (props) => {
                                     style={[newOrder.contactButton, notification.button]}
                                     onPress={() => {
                                         handleRemoveOrder()
+                                        
                                     }}
                                 >
                                     <Text style={newOrder.buttonText}>
                                         ไม่สนใจ
-                                            </Text>
+                                    </Text>
                                 </TouchableOpacity>
                             </View>
                         </View>

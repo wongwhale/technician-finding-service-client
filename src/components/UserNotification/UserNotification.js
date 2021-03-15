@@ -38,8 +38,8 @@ const UserNotification = (props) => {
                         </Text>
                         <TouchableOpacity
                             onPress={ () => {
-                                props.LOADING()
                                 props.cancelRequest(props.orderID)
+                                props.handleCancel(props.orderID)
                             }}
                         >
                             <Text style={{

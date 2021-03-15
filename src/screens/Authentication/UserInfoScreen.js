@@ -2,9 +2,10 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import { color, heightToDp , widthToDp } from '../../stylesheet'
 import { connect } from 'react-redux'
-import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
+import { GET_TECHNICIAN_INFO , clear } from '../../store/actions/techAction'
 import UserInfoContentLoader from '../../components/UserInfo/UserInfoContentLoader'
 import UserInfo from '../../components/UserInfo/UserInfo'
+import { useFocusEffect } from '@react-navigation/native'
 
 const mapStateToProps = (state) => ({
     info: state.tech.info,
@@ -17,18 +18,28 @@ const mapStateToProps = (state) => ({
 
 const UserInfoScreen = (props) => {
     const [isReady , setIsReady] = React.useState(false)
+
+    useFocusEffect(
+        React.useCallback( () => {
+            if (props.role === 'technician') {
+                props.GET_TECHNICIAN_INFO(props.uid).then(() => {
+                    setIsReady(true)
+                }).catch(err => {
+                    setIsReady(true)
+                })
+            }
+            else {
+                setIsReady(true)
+            }
+        },[])
+    )
+
     React.useEffect( () => {
-        if (props.role === 'technician') {
-            props.GET_TECHNICIAN_INFO(props.uid).then(() => {
-                setIsReady(true)
-            }).catch(err => {
-                setIsReady(true)
-            })
-        }
-        else {
-            setIsReady(true)
+        return () => {
+            props.clear()
         }
     },[])
+
     return (
         <>
         {
@@ -41,7 +52,7 @@ const UserInfoScreen = (props) => {
     )
 }
 
-export default connect(mapStateToProps, { GET_TECHNICIAN_INFO })(UserInfoScreen)
+export default connect(mapStateToProps, { clear, GET_TECHNICIAN_INFO })(UserInfoScreen)
 
 
 export const infoStyles = StyleSheet.create({

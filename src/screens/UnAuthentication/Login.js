@@ -59,10 +59,12 @@ const Login = (props) => {
 
   const handleFacebookdLogin = () => {
     props.loginWithFacebook().then(res => {
+      // console.log(res);
       if (res.status) {
         props.checkToken();
       } else {
-        props.logout();
+        // props.logout();
+        props.navigation.navigate('reg_name')
       }
     })
   };

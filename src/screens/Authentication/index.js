@@ -34,6 +34,7 @@ import AcceptedNotification from './Notification/AcceptedRequestOrder';
 import PriceInputModal from '../../components/Modal/PriceInputModal';
 import { KeyboardAvoidingView, SafeAreaView } from 'react-native';
 import { content } from '../../stylesheet';
+import HistoryScreen from './HistoryScreen';
 
 
 const mapStateToProps = (state) => ({
@@ -92,6 +93,7 @@ const Index = (props) => {
           <Stack.Screen name='rating' component={RatingScreen} options={{ headerShown: false }} />
           <Stack.Screen name='techNotification' component={TechnicianNotification} options={{ headerShown: false }} />
           <Stack.Screen name='userNotification' component={UserNotification} options={{ headerShown: false }} />
+          <Stack.Screen name='history' component={HistoryScreen} options={{ headerShown: false }} />
           <Stack.Screen name='accepted' component={AcceptedNotification} options={{ headerShown: false }} />
         </Stack.Navigator>
         <LoadingModal />

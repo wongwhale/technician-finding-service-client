@@ -9,9 +9,10 @@ import ChatBox from '../../components/Chat/ChatBox'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import { color, content, widthToDp, heightToDp } from '../../stylesheet'
 import { connect } from 'react-redux'
-import { SEND_MESSAGE, LEAVE_PRIVATE_CHAT, clear } from '../../store/actions/chatAction'
+import { SEND_MESSAGE, LEAVE_PRIVATE_CHAT, clear, RECEIVE_MESSAGE } from '../../store/actions/chatAction'
 
 import Modal from 'react-native-modalbox'
+import { socket } from '../../store/actions/socketAction'
 
 
 const mapStateToProps = (state) => ({
@@ -21,7 +22,7 @@ const mapStateToProps = (state) => ({
     imageUrl: state.chat.imageUrl
 })
 
-const connector = connect(mapStateToProps, { clear, SEND_MESSAGE, LEAVE_PRIVATE_CHAT })
+const connector = connect(mapStateToProps, { RECEIVE_MESSAGE, clear, SEND_MESSAGE, LEAVE_PRIVATE_CHAT })
 
 const Chat = (props) => {
 
@@ -92,8 +93,8 @@ const Chat = (props) => {
             </SafeAreaView>
             <SafeAreaView
                 style={{
-                    flex : 0 ,
-                    backgroundColor : color.GREY_5
+                    flex: 0,
+                    backgroundColor: color.GREY_5
                 }}
             />
             <Modal

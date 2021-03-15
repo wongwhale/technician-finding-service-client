@@ -296,3 +296,10 @@ export const technicianRegister = (info) => dispatch => {
         })
     })
 }
+
+
+export const clear = () => disptach => {
+    disptach({
+        type : techType.CLEAR
+    })
+}

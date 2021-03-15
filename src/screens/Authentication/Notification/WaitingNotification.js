@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     ScrollView,
     Image,
+    RefreshControl
 } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -22,6 +23,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import NotFoundComponent from '../../../components/NotFoundComponent'
 import ContentLoader from 'react-native-easy-content-loader'
 import { getWaitingList } from '../../../store/actions/notiAction'
+import { socket } from '../../../store/actions/socketAction'
 import { useFocusEffect } from '@react-navigation/native'
 
 const TopTab = createMaterialTopTabNavigator()
@@ -36,25 +38,60 @@ const mapDispatchToProps = {
 }
 
 
-const NewRequestOrder = ({ navigation, role, userResponse ,...props }) => {
+const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
 
     const [isReady, setIsReady] = React.useState(true)
-    const [waitingLists , setWaitingLists] = React.useState([])
+    const [waitingLists, setWaitingLists] = React.useState([])
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const handleRefresh = () => {
+        setIsReady(true)
+        props.getWaitingList().then(res => {
+            setWaitingLists(res)
+            setIsReady(false)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    const handleNewResponse = () => {
+        props.getWaitingList().then(res => {
+            setWaitingLists(res)
+            setIsReady(false)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    const handleCancel = (formID) => {
+
+        const lists = waitingLists.filter((value) => {
+            return value._id !== formID
+        })
+
+        setWaitingLists(lists)
+    }
 
     useFocusEffect(
-        React.useCallback( () => {  
+        React.useCallback(() => {
             setIsReady(true)
-            props.getWaitingList().then( res => {
+            socket.on('recieve_new_response' , () => {
+                handleNewResponse()
+            })
+            socket.on('confirm_send_post_req' , () => {
+                handleNewResponse()
+            })
+            props.getWaitingList().then(res => {
                 setWaitingLists(res)
                 setIsReady(false)
             }).catch(err => {
                 console.log(err);
             })
 
-            return  () => {
+            return () => {
                 setWaitingLists([])
             }
-        },[])
+        }, [])
     )
 
     return (
@@ -75,7 +112,8 @@ const NewRequestOrder = ({ navigation, role, userResponse ,...props }) => {
                                 titleStyles={{
                                     height: widthToDp('30'),
                                     width: '92%',
-                                    margin: widthToDp('4'),
+                                    marginHorizontal: widthToDp('4'),
+                                    marginVertical : widthToDp('2'),
                                     borderRadius: widthToDp('4')
                                 }}
 
@@ -86,7 +124,8 @@ const NewRequestOrder = ({ navigation, role, userResponse ,...props }) => {
                                 titleStyles={{
                                     height: widthToDp('30'),
                                     width: '92%',
-                                    margin: widthToDp('4'),
+                                    marginHorizontal: widthToDp('4'),
+                                    marginVertical : widthToDp('2'),
                                     borderRadius: widthToDp('4')
                                 }}
 
@@ -97,7 +136,8 @@ const NewRequestOrder = ({ navigation, role, userResponse ,...props }) => {
                                 titleStyles={{
                                     height: widthToDp('30'),
                                     width: '92%',
-                                    margin: widthToDp('4'),
+                                    marginHorizontal: widthToDp('4'),
+                                    marginVertical : widthToDp('2'),
                                     borderRadius: widthToDp('4')
                                 }}
 
@@ -107,13 +147,19 @@ const NewRequestOrder = ({ navigation, role, userResponse ,...props }) => {
                             <ScrollView
                                 style={{
                                     flex: 1,
-                                    backgroundColor: '#fff'
+                                    backgroundColor: '#fff',
+                                    paddingHorizontal : widthToDp('2')
                                 }}
                             >
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={() => {
+                                        handleRefresh()
+                                    }}
+                                />
                                 {
                                     waitingLists.length !== 0 ? (
                                         waitingLists.map((form) => {
-                                            console.log(form);
                                             return (
                                                 <View key={form._id} style={content.container}>
                                                     <UserNotification
@@ -122,6 +168,7 @@ const NewRequestOrder = ({ navigation, role, userResponse ,...props }) => {
                                                         date={form.date}
                                                         acceptedTech={form.technician}
                                                         distance={form.distance}
+                                                        handleCancel={(id) => handleCancel(id)}
                                                     />
                                                 </View>
                                             )
