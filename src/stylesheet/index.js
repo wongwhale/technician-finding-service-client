@@ -421,6 +421,8 @@ export const notification = StyleSheet.create({
         flexDirection: 'row',
         // height: widthToDp('23')
         paddingVertical: widthToDp('3'),
+        margin : widthToDp('2'),
+        borderRadius : widthToDp('4')
     },
     abstractBottomBorder: {
         borderBottomWidth: heightToDp('0.1'),

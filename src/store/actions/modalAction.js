@@ -157,6 +157,8 @@ export const getFormInfo = (order_id) => dispatch => {
                         `
                     }
                 }).then(res => {
+                    let time = new Date(res.data.data.getForm.date)
+                    time.setMinutes( time.getMinutes() - 7 * 60 )
                     getDistance(
                         store.getState().auth.userInfo.currentLocation.lat,
                         store.getState().auth.userInfo.currentLocation.lon,
@@ -167,6 +169,7 @@ export const getFormInfo = (order_id) => dispatch => {
                             type : modalType.SET_FORM_INFO,
                             payload :  {
                                 ...res.data.data.getForm,
+                                date : time,
                                 distance : parseFloat(dist / 1000).toFixed(2)
                             }
                         })

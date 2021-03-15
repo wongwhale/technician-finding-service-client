@@ -8,13 +8,13 @@ import Feather from 'react-native-vector-icons/Feather'
 
 import { Rating } from 'react-native-ratings';
 
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { connect } from 'react-redux';
 
 import { SET_INTERLOCUTOR_ID, ENTER_PRIVATE_CHAT } from '../../store/actions/chatAction'
 import { LOADED , LOADING } from '../../store/actions/authAction'
 import { GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
-import { confirmTechnician } from '../../store/actions/socketAction'
+import { confirmTechnician, socket } from '../../store/actions/socketAction'
 
 
 const mapStateToProps = (state) => ({
@@ -50,9 +50,10 @@ const Abstract = ({ name, star, distance, price, last, avatar, techID ,...props 
     }
 
     const handleAccept = () => {
-        props.LOADING()
         props.confirmTechnician(props.formID , techID)
+        navigation.navigate('accepted')
     }
+
 
     return (
         <>

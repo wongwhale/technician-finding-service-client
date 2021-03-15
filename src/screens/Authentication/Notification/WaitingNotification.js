@@ -25,6 +25,7 @@ import ContentLoader from 'react-native-easy-content-loader'
 import { getWaitingList } from '../../../store/actions/notiAction'
 import { socket } from '../../../store/actions/socketAction'
 import { useFocusEffect } from '@react-navigation/native'
+import HistoryDetailModal from '../../../components/Modal/HistoryDetailModal'
 
 const TopTab = createMaterialTopTabNavigator()
 
@@ -43,20 +44,18 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
     const [isReady, setIsReady] = React.useState(true)
     const [waitingLists, setWaitingLists] = React.useState([])
     const [refreshing, setRefreshing] = React.useState(false);
+    const [modalVisible, setModalVisible] = React.useState(false);
 
     const handleRefresh = () => {
         setIsReady(true)
-        props.getWaitingList().then(res => {
-            setWaitingLists(res)
-            setIsReady(false)
-        }).catch(err => {
-            console.log(err);
-        })
+        handleNewResponse()
     }
 
     const handleNewResponse = () => {
         props.getWaitingList().then(res => {
-            setWaitingLists(res)
+            setWaitingLists(res.sort((a,b) => {
+                return new Date(a.date).getTime() - new Date(b.date).getTime()
+            }))
             setIsReady(false)
         }).catch(err => {
             console.log(err);
@@ -81,12 +80,7 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
             socket.on('confirm_send_post_req' , () => {
                 handleNewResponse()
             })
-            props.getWaitingList().then(res => {
-                setWaitingLists(res)
-                setIsReady(false)
-            }).catch(err => {
-                console.log(err);
-            })
+            handleNewResponse()
 
             return () => {
                 setWaitingLists([])
@@ -160,15 +154,20 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
                                 {
                                     waitingLists.length !== 0 ? (
                                         waitingLists.map((form) => {
+                                            let date = new Date(form.date)
+                                            date.setMinutes(date.getMinutes() - 7 * 60)
                                             return (
                                                 <View key={form._id} style={content.container}>
                                                     <UserNotification
                                                         orderID={form._id}
                                                         detail={form.detail}
-                                                        date={form.date}
+                                                        date={date}
                                                         acceptedTech={form.technician}
                                                         distance={form.distance}
                                                         handleCancel={(id) => handleCancel(id)}
+                                                        openDetailModal={ () => {
+                                                            setModalVisible(true)
+                                                        }}
                                                     />
                                                 </View>
                                             )
@@ -179,6 +178,12 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
                         )
                 }
             </SafeAreaView>
+            <HistoryDetailModal 
+                isOpen={modalVisible}
+                onClosed = { () => {
+                    setModalVisible(false)
+                }}
+            />
         </>
     )
 }

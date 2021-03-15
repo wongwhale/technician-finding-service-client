@@ -4,6 +4,17 @@ import { TouchableOpacity, Text, View } from 'react-native'
 import { widthToDp } from '../../stylesheet'
 import { color } from '../../stylesheet/colors'
 import Feather from 'react-native-vector-icons/Feather'
+import { connect } from 'react-redux'
+import { getFormInfo } from '../../store/actions/modalAction'
+
+const mapStateToProps = () => ({
+
+})
+
+const mapDispatchToProps  = {
+    getFormInfo
+}
+
 
 const AcceptedAbstract = (props) => {
 
@@ -23,6 +34,14 @@ const AcceptedAbstract = (props) => {
                     flexDirection : 'row',
                     justifyContent : 'space-between',
                     alignItems : 'center'
+                }}
+                onPress={() => {
+                    props.getFormInfo(props.id)
+                        .then(form => {
+                            props.openDetailModal()
+                        }).catch(err => {
+                            console.log(err);
+                        })
                 }}
             >
                 <View
@@ -93,4 +112,4 @@ const AcceptedAbstract = (props) => {
     )
 }
 
-export default AcceptedAbstract
+export default connect(mapStateToProps , mapDispatchToProps)(AcceptedAbstract)
