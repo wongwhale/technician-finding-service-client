@@ -29,17 +29,14 @@ const NewOrder = (props) => {
 
     const handleRefresh = () => {
         setIsReady(true)
-        props.getNewOrderLists().then(res => {
-            setNewOrderLists(res)
-            setIsReady(false)
-        }).catch(err => {
-            console.log(err);
-        })
+        handleNewOrder()
     }
 
     const handleNewOrder = () => {
         props.getNewOrderLists().then(res => {
-            setNewOrderLists(res)
+            setNewOrderLists(res.sort( (a,b) => {
+                return new Date(a.date).getTime() - new Date(b.date).getTime()
+            }))
             setIsReady(false)
         }).catch(err => {
             console.log(err);
@@ -55,12 +52,7 @@ const NewOrder = (props) => {
                 handleNewOrder()
             })
             setIsReady(true)
-            props.getNewOrderLists().then(res => {
-                setNewOrderLists(res)
-                setIsReady(false)
-            }).catch(err => {
-                console.log(err);
-            })
+            handleNewOrder()
 
             return () => {
                 setNewOrderLists([])

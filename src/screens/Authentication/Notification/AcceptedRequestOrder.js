@@ -25,6 +25,7 @@ import { getAcceptedList } from '../../../store/actions/notiAction'
 import {} from '../../../store/actions/socketAction'
 import { useFocusEffect } from '@react-navigation/native'
 import ShowMapModal from '../../../components/Modal/ShowMapModal'
+import AcceptedDetailModal from '../../../components/Modal/AcceptedDetailModal'
 
 const TopTab = createMaterialTopTabNavigator()
 
@@ -43,6 +44,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
     const [isReady, setIsReady] = React.useState(true)
     const [acceptedLists , setAcceptedLists] = React.useState([])
     const [mapModalVisible , setMapModalVisible] = React.useState(false)
+    const [detailModalVisible , setDetailModalVisible] = React.useState(false)
     const [location , setLocation ] = React.useState({
         lat : 0,
         lon : 0
@@ -137,10 +139,12 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                                 {
                                     acceptedLists.length !== 0 ? (
                                         acceptedLists.map((form) => {
+                                            let date = new Date(form.date)
+                                            date.setMinutes(date.getMinutes() - 7 * 60)
                                             return (
                                                 <Abstract 
                                                     id={form._id}
-                                                    date={form.date}
+                                                    date={date}
                                                     type={form.techType}
                                                     onOpenModal={ () => {
                                                         setLocation({
@@ -148,6 +152,9 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                                                             lon : form.location.lon
                                                         })
                                                         setMapModalVisible(true)
+                                                    }}
+                                                    openDetailModal=  { () => {
+                                                        setDetailModalVisible(true)
                                                     }}
                                                 />
                                             )
@@ -165,6 +172,13 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                     setMapModalVisible(false)
                 }}
                 location={location}
+            />
+            <AcceptedDetailModal
+                isOpen={detailModalVisible}
+                onClosed={ () => {
+                    setDetailModalVisible(false)
+                }}
+
             />
         </>
     )

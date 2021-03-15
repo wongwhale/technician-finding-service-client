@@ -3,6 +3,7 @@ import axios from 'axios'
 import WEB_URL from "../../misc/web_url"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { authType } from "../reducers/authReducer"
+import store from '../'
 
 export const SET_SEARCH_KEY_WORD = (keyword) => dispatch => {
     dispatch({
@@ -127,10 +128,10 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
             }).then(res => {
                 const data = res.data.data.getTechnicianInfo
                 Promise.all(
-                    data.aptitude.map( (item) => {
+                    data.aptitude.map((item) => {
                         return {
-                            key : item.aptitude,
-                            data : item
+                            key: item.aptitude,
+                            data: item
                         }
                     })
                 ).then((aptitude) => {
@@ -147,14 +148,14 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                             location: data.address,
                             workDay: data.workDay,
                             workTime: data.workTime,
-                            comment : data.comment
+                            comment: data.comment
                         }
                     })
                     resolve()
                 }).catch(() => reject())
 
             }).catch(err => {
-                console.log('get technician info error :' , err);
+                console.log('get technician info error :', err);
                 reject()
             })
         })
@@ -171,7 +172,7 @@ export const SET_TID = (tid) => dispatch => {
 }
 
 export const GET_NEAR_TECHNICIAN = (lat, lon) => dispatch => {
-    return new Promise((resolve, resject) => {
+    return new Promise((resolve, reject) => {
         AsyncStorage.getItem('token').then(token => {
             axios({
                 url: WEB_URL,
@@ -300,6 +301,55 @@ export const technicianRegister = (info) => dispatch => {
 
 export const clear = () => disptach => {
     disptach({
-        type : techType.CLEAR
+        type: techType.CLEAR
+    })
+}
+
+export const searchTechnicianByType = (aptitude) => dispatch => {
+    const current_location = store.getState().auth.userInfo.currentLocation
+    return new Promise((resolve, reject) => {
+        AsyncStorage.getItem('token').then(token => {
+            axios({
+                url: WEB_URL,
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                data: {
+                    query:
+                        `
+                    query{
+                        findbyType(
+                            aptitude : "${aptitude}"
+                            lat : ${current_location.lat}
+                            lon : ${current_location.lon}
+                        ) {
+                          technician {
+                            _id
+                            onSite
+                            star
+                            description
+                            userInfoID {
+                                firstname
+                                lastname
+                                avatar
+                                userID
+                            }
+                            address {
+                              lat
+                              lon
+                            }
+                          }
+                        }
+                      }
+                    `
+                }
+            }).then(res => {
+                resolve(res.data.data.findbyType.technician)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     })
 }

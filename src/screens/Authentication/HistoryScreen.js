@@ -25,7 +25,7 @@ import { getAcceptedList } from '../../store/actions/notiAction'
 import {} from '../../store/actions/socketAction'
 import { useFocusEffect } from '@react-navigation/native'
 import ShowMapModal from '../../components/Modal/ShowMapModal'
-import AcceptedDetailModal from '../../components/Modal/AcceptedDetailModal'
+import HistoryDetailModal from '../../components/Modal/HistoryDetailModal'
 
 const TopTab = createMaterialTopTabNavigator()
 
@@ -135,6 +135,8 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                                 {
                                     acceptedLists.length !== 0 ? (
                                         acceptedLists.map((form) => {
+                                            let date = new Date(form.date)
+                                            date.setDate(date.getMinutes() - 7 * 60)
                                             return (
                                                 <Abstract 
                                                     id={form._id}
@@ -151,7 +153,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                         )
                 }
             </SafeAreaView>
-            <AcceptedDetailModal 
+            <HistoryDetailModal 
                 isOpen={modalVisible}
                 onClosed = { () => {
                     setModalVisible(false)

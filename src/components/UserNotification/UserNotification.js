@@ -9,41 +9,53 @@ import { connect } from 'react-redux';
 
 import { LOADING, LOADED } from '../../store/actions/authAction'
 import { cancelRequest } from '../../store/actions/socketAction'
+import { getFormInfo } from '../../store/actions/modalAction'
 
 const mapStateToProps = (state) => ({
 
 })
 
 const mapDispatchToProps = {
-    LOADING, 
-    LOADED , 
-    cancelRequest
+    LOADING,
+    LOADED,
+    cancelRequest,
+    getFormInfo
 }
 
 const UserNotification = (props) => {
-    const [date, setDate] = React.useState(new Date(props.date))
+    date = new Date(props.date)
     const month_ = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
 
     return (
         <>
-            <View style={[notification.container, userNotification.bg]}>
-                <View style={[notification.headerContainer, { borderBottomColor: color.GREY_5 , }]}>
+            <TouchableOpacity
+                style={[notification.container, userNotification.bg]}
+                onPress={() => {
+                    props.getFormInfo(props.orderID)
+                        .then(form => {
+                            props.openDetailModal()
+                        }).catch(err => {
+                            console.log(err);
+                        })
+                }}
+            >
+                <View style={[notification.headerContainer, { borderBottomColor: color.GREY_5, }]}>
                     <View
                         style={{
                             flexDirection: 'row'
                         }}
                     >
-                        <Text style={[notification.headerText, userNotification.headerText,{flex:1}]}>
+                        <Text style={[notification.headerText, userNotification.headerText, { flex: 1 }]}>
                             {`การตอบรับของรายการ`}
                         </Text>
                         <TouchableOpacity
-                            onPress={ () => {
+                            onPress={() => {
                                 props.cancelRequest(props.orderID)
                                 props.handleCancel(props.orderID)
                             }}
                         >
                             <Text style={{
-                                color :color.IOS_BLUE,
+                                color: color.IOS_BLUE,
                                 fontSize: widthToDp('4'),
                             }}>
                                 ยกเลิก
@@ -60,11 +72,11 @@ const UserNotification = (props) => {
                             {`วันที่ ${date.getDate()} ${month_[date.getMonth()]} ${date.getFullYear() + 543}`}
                         </Text>
                         <Text style={notification.headerID}>
-                            {`เวลา ${date.getHours()}:${date.getMinutes()}`}
+                            {`เวลา ${('0' + date.getHours()).slice(-2)} : ${('0' + date.getMinutes()).slice(-2)} น.`}
                         </Text>
-                        <Text style={notification.headerID}>
+                        {/* <Text style={notification.headerID}>
                             {`รายละเอียด ${props.detail} `}
-                        </Text>
+                        </Text> */}
                     </View>
                 </View>
                 <View style={notification.content}>
@@ -104,7 +116,7 @@ const UserNotification = (props) => {
                             )
                     }
                 </View>
-            </View>
+            </TouchableOpacity>
         </>
     )
 }

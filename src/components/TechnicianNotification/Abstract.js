@@ -79,7 +79,7 @@ const Abstract = (props) => {
         <>
             <>
                 <TouchableOpacity
-                    style={!props.last ? [notification.abstractContainer, notification.abstractBottomBorder] : notification.abstractContainer}
+                    style={[notification.abstractContainer , newOrder.bg]}
                     onPress={() => {
                         props.getFormInfo(props.order._id)
                             .then(form => {

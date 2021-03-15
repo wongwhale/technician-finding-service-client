@@ -14,7 +14,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Header from '../../components/Header'
 import { content, searchScreen, color, technician, widthToDp, heightToDp } from '../../stylesheet'
 import { connect } from 'react-redux'
-import { SEARCH_BY_KEY_WORD, GET_NEAR_TECHNICIAN , GET_TECHNICIAN_INFO } from '../../store/actions/techAction'
+import { SEARCH_BY_KEY_WORD, GET_NEAR_TECHNICIAN, GET_TECHNICIAN_INFO, searchTechnicianByType } from '../../store/actions/techAction'
 import { SET_LOCATION } from '../../store/actions/formAction'
 import Feather from 'react-native-vector-icons/Feather'
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
@@ -31,7 +31,8 @@ const mapDispatchToProps = {
     SEARCH_BY_KEY_WORD,
     GET_NEAR_TECHNICIAN,
     SET_LOCATION,
-    GET_TECHNICIAN_INFO
+    GET_TECHNICIAN_INFO,
+    searchTechnicianByType
 }
 
 const NearMeScreen = ({ navigation, ...props }) => {
@@ -55,6 +56,9 @@ const NearMeScreen = ({ navigation, ...props }) => {
     )
 
     const handleOnPressFilterModal = (type) => {
+        props.searchTechnicianByType(type).then(res => {
+            setTechnicians(res)
+        })
         setIsOpen(false)
     }
 
@@ -203,7 +207,7 @@ const NearMeScreen = ({ navigation, ...props }) => {
                         }}
                     >
                         {
-                            aptitudeType.map((item) => {
+                            aptitudeType.map((item, index) => {
                                 return (
                                     <TouchableOpacity
                                         style={{
@@ -214,8 +218,9 @@ const NearMeScreen = ({ navigation, ...props }) => {
                                             borderRadius: widthToDp('4'),
                                             backgroundColor: color.GREY_5
                                         }}
-                                        onPress={ () => {
-                                            handleOnPressFilterModal( 'test' )
+                                        key={index}
+                                        onPress={() => {
+                                            handleOnPressFilterModal(item)
                                         }}
                                     >
                                         <Text
@@ -224,7 +229,6 @@ const NearMeScreen = ({ navigation, ...props }) => {
                                                 fontWeight: 'bold',
                                                 color: color.BLUE_1
                                             }}
-                                            key={item}
                                         >
 
                                             {item}

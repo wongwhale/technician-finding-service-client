@@ -74,7 +74,7 @@ const OrderDetailModal = (props) => {
                 <View
                     style={{
                         flex: 1,
-                        backgroundColor: color.GREEN_4,
+                        backgroundColor: color.GREY_4,
                         borderTopLeftRadius: heightToDp('3'),
                         borderTopRightRadius: heightToDp('3')
                     }}>
