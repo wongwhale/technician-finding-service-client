@@ -50,25 +50,25 @@ export const ENTER_PRIVATE_CHAT = (uid, tid) => (dispatch) => {
         },
         data: {
           query: `
-                    query{
-                        getChatInformation(
-                            technicianID : "${tid}"
-                            userID : "${uid}"
-                        ) {
-                            technicianID
-                            technicianName
-                            userName
-                            technicianAvatar
-                            userAvatar
-                            history {
-                                sender
-                                message
-                                date
-                                msgType
-                            }
-                        }
-                    }
-                    `,
+              query{
+                  getChatInformation(
+                      technicianID : "${tid}"
+                      userID : "${uid}"
+                  ) {
+                      technicianID
+                      technicianName
+                      userName
+                      technicianAvatar
+                      userAvatar
+                      history {
+                          sender
+                          message
+                          date
+                          msgType
+                      }
+                  }
+              }
+              `,
         },
       })
         .then((res) => {
@@ -160,24 +160,24 @@ export const ENTER_PRIVATE_CHAT_BY_ID = (chatID) => (dispatch) => {
         },
         data: {
           query: `
-                                query{
-                                    getChatInformationByID
-                                    (chatID:"${chatID}") {
-                                        technicianID
-                                        technicianName
-                                        userName
-                                        userID
-                                        technicianAvatar
-                                        userAvatar
-                                        history {
-                                            sender
-                                            message
-                                            date
-                                            msgType
-                                        }
-                                    }
-                                }
-                            `,
+                query{
+                    getChatInformationByID
+                    (chatID:"${chatID}") {
+                        technicianID
+                        technicianName
+                        userName
+                        userID
+                        technicianAvatar
+                        userAvatar
+                        history {
+                            sender
+                            message
+                            date
+                            msgType
+                        }
+                    }
+                }
+            `,
         },
       })
         .then((res) => {

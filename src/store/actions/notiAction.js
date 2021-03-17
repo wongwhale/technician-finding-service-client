@@ -287,3 +287,16 @@ export const getAcceptedList = () => dispatch => {
         })
     })
 }
+
+export const setNotificationBadge = () => async dispatch => {
+    const notification = await AsyncStorage.getItem('notification')
+    const notRead = JSON.parse(notification).filter( (val) => {
+        return val.status === false
+    })
+    dispatch({
+        type : notiType.SET_NOTIFICATION_BADGE,
+        payload : {
+            notification_badge : notRead.length
+        }
+    })
+}

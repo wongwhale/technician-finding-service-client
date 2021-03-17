@@ -96,7 +96,6 @@ export const GET_TECHNICIAN_INFO = (tid) => dispatch => {
                               }
                               aptitude {
                                 aptitude
-                                voted
                                 star
                                 amountOfvoteStar
                                 amountOfcomment

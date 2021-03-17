@@ -113,9 +113,7 @@ const Chat = (props) => {
                 >
                     <View
                         style={{
-                            width: '100%',
-                            alignItems: 'flex-end',
-                            padding: widthToDp('2')
+                            flex: 1
                         }}
                     >
                         <TouchableOpacity
@@ -129,6 +127,7 @@ const Chat = (props) => {
                                 height: widthToDp('8'),
                                 justifyContent: 'center',
                                 alignItems: 'center',
+                                position: 'absolute',
                             }}
                         >
                             <Feather
@@ -140,15 +139,21 @@ const Chat = (props) => {
                                 color={color.GREY_1}
                             />
                         </TouchableOpacity>
+                        <View
+                            style={{
+                                flex: 1,
+                            }}
+                        >
+                            <Image
+                                source={{ uri: props.imageUrl }}
+                                style={{
+                                    flex: 1,
+                                    resizeMode: 'contain',
+                                }}
+                            />
+                        </View>
+
                     </View>
-                    <Image
-                        source={{ uri: props.imageUrl }}
-                        style={{
-                            flex: 1,
-                            resizeMode: 'contain',
-                        }}
-                    >
-                    </Image>
                 </SafeAreaView>
             </Modal>
         </>
