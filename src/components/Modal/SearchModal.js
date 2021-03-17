@@ -19,6 +19,7 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
 
     const [guideLists, setGuideLists] = React.useState([])
     const [allLists , setAllLists] = React.useState([])
+    const inputRef = React.useRef(null)
 
     const handleCloseModal = () => {
         onClosed()
@@ -90,6 +91,7 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
         }
         ).start()
     }
+    
 
     const [opacity, setOpacity] = React.useState(new Animated.Value(0));
 
@@ -161,6 +163,7 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
                                     placeholder="ค้นหาช่าง ประเภท , ชื่อ หรือ อื่นๆ "
                                     placeholderTextColor={color.BLUE_4}
                                     autoFocus
+                                    ref={inputRef}
                                     style={{
                                         flex: 1,
                                         fontSize: widthToDp('4'),
