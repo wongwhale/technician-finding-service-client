@@ -106,13 +106,13 @@ const Abstract = (props) => {
                                     {`${props.order.userInfoID.firstname} ${props.order.userInfoID.lastname}`}
                                 </Text>
                             </View>
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            {/* <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={[newOrder.text, notification.detailText]}> ดูรายละเอียด</Text>
                                 <Feather name='chevron-right' style={[newOrder.text, notification.detailText]} />
-                            </View>
+                            </View> */}
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
+                            <View style={{ flexDirection: 'column', justifyContent: 'space-evenly' }}>
                                 <Text style={[newOrder.text, notification.detailText]}>
                                     {`ห่างจากคุณ : ${props.order.distance} กม. `}
                                 </Text>

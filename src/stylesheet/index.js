@@ -466,7 +466,7 @@ export const notification = StyleSheet.create({
         fontWeight: 'bold',
     },
     detailText: {
-        fontSize: widthToDp('3.5')
+        fontSize: widthToDp('3')
     },
 })
 
@@ -482,7 +482,7 @@ export const newOrder = StyleSheet.create({
         backgroundColor: color.IOS_GREEN_LIGHT,
     },
     buttonText: {
-        fontSize: widthToDp('4'),
+        fontSize: widthToDp('3.5'),
         color: '#fff',
         fontWeight: 'bold'
     },

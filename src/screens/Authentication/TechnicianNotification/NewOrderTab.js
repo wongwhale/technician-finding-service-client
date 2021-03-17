@@ -9,6 +9,7 @@ import { getNewOrderLists } from '../../../store/actions/notiAction'
 import { SafeAreaView, RefreshControl } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import ContentLoader from 'react-native-easy-content-loader'
+import OrderDetailModal from '../../../components/Modal/OrderDetailModal'
 import { socket } from '../../../store/actions/socketAction'
 
 const mapStateToProps = (state) => ({
@@ -120,6 +121,7 @@ const NewOrder = (props) => {
                         )
                 }
             </SafeAreaView>
+            <OrderDetailModal />
         </>
     )
 }

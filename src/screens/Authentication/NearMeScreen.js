@@ -140,8 +140,8 @@ const NearMeScreen = ({ navigation, ...props }) => {
                                     >
                                         <Image
                                             style={{
-                                                width: widthToDp('7'),
-                                                height: widthToDp('7'),
+                                                width: widthToDp('10'),
+                                                height: widthToDp('10'),
                                                 borderRadius: widthToDp('5'),
                                                 borderWidth: 2,
                                                 borderColor: color.RED_0

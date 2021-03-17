@@ -18,11 +18,11 @@ import { CLOSE_DATE_PICKER_MODAL } from '../../store/actions/modalAction';
 import { INITIAL_HISTORY_LIST } from '../../store/actions/chatAction';
 import { SET_FILE } from '../../store/actions/formAction';
 import { clear } from '../../store/actions/authAction';
+import { setNotificationBadge } from '../../store/actions/notiAction';
 
 import { connect } from 'react-redux';
 import TechnicianRegisterScreen from './TechnicianRegisterScreen';
 import UserInfoEditScreen from './UserInfoEditScreen';
-import OrderDetailModal from '../../components/Modal/OrderDetailModal'
 import LoadingModal from '../../components/Modal/LoadingModal';
 import LogoutConfirmModal from '../../components/Modal/LogoutConfirmModal';
 import { OPEN_LOGOUT_CONFIRM_MODAL, CLOSE_LOGOUT_CONFIRM_MODAL } from '../../store/actions/modalAction'
@@ -55,11 +55,14 @@ const connector = connect(mapStateToProps,
     OPEN_LOGOUT_CONFIRM_MODAL,
     CLOSE_LOGOUT_CONFIRM_MODAL,
     logout,
+    setNotificationBadge
   })
 
 
 const Index = (props) => {
+
   props.connection(props.uid)
+  props.setNotificationBadge()
   useEffect(() => {
     return () => {
       props.leave(props.uid)
@@ -104,7 +107,6 @@ const Index = (props) => {
           name={`${props.userInfo.firstname} ${props.userInfo.lastname}`}
         />
         <PriceInputModal />
-        <OrderDetailModal />
     </KeyboardAvoidingView>
 
     </>

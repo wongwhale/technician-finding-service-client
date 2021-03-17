@@ -21,11 +21,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 
 const mapStateToProps = (state) => ({
-    badge: state.noti.badge,
-    techOrder: state.noti.techOrder,
-    techAcceptedOrder: state.noti.techAcceptedOrder,
-    userResponse: state.noti.userResponse,
-    role: state.auth.userInfo.role,
+    notification_badge: state.noti.notification_badge,
 })
 
 const mapDispatchToProps = {
@@ -121,7 +117,11 @@ const TabScreen = (props) => {
                 <Tab.Screen name="menu" component={Main} />
                 <Tab.Screen name="search" component={SearchScreen} />
                 <Tab.Screen name="post" component={PostScreen}  />
-                <Tab.Screen name="notification" component={Notification}/>
+                <Tab.Screen name="notification" component={Notification}
+                    options={{
+                        tabBarBadge : props.notification_badge > 0 ? props.notification_badge : null
+                    }}
+                />
                 <Tab.Screen name="userInfo" component={UserInfoScreen}  />
 
             </Tab.Navigator>

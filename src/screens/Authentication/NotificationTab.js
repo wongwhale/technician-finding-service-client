@@ -10,7 +10,7 @@ import NotificationMoreModal from '../../components/Modal/NotificationMoreModal'
 import { useFocusEffect , useNavigation } from '@react-navigation/native'
 
 
-const NotificationLists = ({ id , type , tech, status , order , openModal  }) => {
+const NotificationLists = ({ id , type , tech, status , page , openModal  }) => {
     const onPress = async () => {
         await AsyncStorage.getItem('notification').then( (str) => {
             let temp = JSON.parse(str)
@@ -27,9 +27,7 @@ const NotificationLists = ({ id , type , tech, status , order , openModal  }) =>
             }) 
             AsyncStorage.setItem('notification' , JSON.stringify(new_noti))
         })
-        navigate(
-                        order ? 'techNotification' : 'userNotification'
-                    )
+        navigate(page)
     }
     const { navigate } = useNavigation()
     return (
@@ -61,7 +59,7 @@ const NotificationLists = ({ id , type , tech, status , order , openModal  }) =>
                             color : color.BLUE_0
                         }}
                     >
-                        {order ? `มีการเสนองานใหม่จาก ${tech}` : `มีการเสนอราคาจาก ${tech}`}
+                        {page === 'techNotification' ? `มีการเสนองานใหม่จาก ${tech}` : `มีการเสนอราคาจาก ${tech}`}
                     </Text>
                     <Text
                         style={{
@@ -69,7 +67,7 @@ const NotificationLists = ({ id , type , tech, status , order , openModal  }) =>
                             color : color.BLUE_1
                         }}
                     >
-                        {order ? `เกี่ยวกับ ${type}` : `เกี่ยวกับการหา ${type} ของคุณ`}
+                        {page === 'techNotification' ? `เกี่ยวกับ ${type}` : `เกี่ยวกับการหา ${type} ของคุณ`}
                     </Text>
                 </View>
                 <TouchableOpacity
@@ -174,7 +172,7 @@ const NotificationTab = () => {
                                         tech={item.name}
                                         status={item.status}
                                         type={item.type}
-                                        order={item.order}
+                                        page={item.page}
                                         id={item.id}
                                     />
                                 )

@@ -205,8 +205,29 @@ socket.on('join', (id) => {
 //     updateTechOrder()
 // })
 
-socket.on('recieve_new_response', (res) => {
-    // console.log('recieve new response', res);
+socket.on('recieve_new_response', (data) => {
+    // console.log('recieve new response', data);
+    AsyncStorage.getItem('notification').then((str) => {
+        let noti = JSON.parse(str)
+        const new_noti_json = [ {
+            id: data.result._id,
+            type: data.result.techType,
+            name: data.tech.firstname + ' ' + data.tech.lastname,
+            status: false,
+            page: 'userNotification'
+        } , ...noti]
+
+        const notRead = new_noti_json.filter( (val) => {
+            return val.status === false
+        })
+        dispatch({
+            type: notiType.SET_NOTIFICATION_BADGE,
+            payload: {
+                notification_badge: notRead.length
+            }
+        })
+        AsyncStorage.setItem('notification', JSON.stringify(new_noti_json))
+    })
 })
 
 socket.on('recieve_new_post_req', ({ form }) => {
@@ -217,13 +238,26 @@ socket.on('recieve_new_post_req', ({ form }) => {
     })
     AsyncStorage.getItem('notification').then((str) => {
         let noti = JSON.parse(str)
-        const new_noti_json = [...noti, {
+
+        const new_noti_json = [ {
             id: form._id,
             type: form.techType,
             name: form.userInfoID.firstname + ' ' + form.userInfoID.lastname,
             status: false,
-            order: true
-        }]
+            page: 'techNotification'
+        } , ...noti]
+
+        const notRead = new_noti_json.filter( (val) => {
+            return val.status === false
+        })
+
+        dispatch({
+            type: notiType.SET_NOTIFICATION_BADGE,
+            payload: {
+                notification_badge: notRead.length
+            }
+        })
+
         AsyncStorage.setItem('notification', JSON.stringify(new_noti_json))
     })
 })
@@ -263,7 +297,7 @@ socket.on('receive_message', ({ message }) => {
     //                           msgType
     //                         }
     //                     }
-                    
+
     //                 }
     //                 `
     //         }
@@ -362,12 +396,20 @@ export const sendPostReq = ({ name, uid, date, type, file, detail, location }) =
 }
 
 export const acceptedReq = (res) => dispatch => {
+    const firstname = store.getState().auth.userInfo.firstname
+    const lastname = store.getState().auth.userInfo.lastname
     socket.emit('accepted_req', {
-        formID: res._id,
-        technician: {
-            maxPrice: res.maxPrice,
-            minPrice: res.minPrice,
-            tech: res.uid
+        data : {
+            formID: res._id,
+            technician: {
+                maxPrice: res.maxPrice,
+                minPrice: res.minPrice,
+                tech: res.uid,
+            }
+        },
+        tech : {
+            firstname : firstname,
+            lastname : lastname
         }
     })
 }
