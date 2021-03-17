@@ -22,10 +22,11 @@ import Header from '../../../components/UserInfo/Header'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import NotFoundComponent from '../../../components/NotFoundComponent'
 import ContentLoader from 'react-native-easy-content-loader'
-import { getWaitingList } from '../../../store/actions/notiAction'
+import { getWaitingList , setNotificationBadge } from '../../../store/actions/notiAction'
 import { socket } from '../../../store/actions/socketAction'
 import { useFocusEffect } from '@react-navigation/native'
 import HistoryDetailModal from '../../../components/Modal/HistoryDetailModal'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const TopTab = createMaterialTopTabNavigator()
 
@@ -35,7 +36,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    getWaitingList
+    getWaitingList,
+    setNotificationBadge
 }
 
 
@@ -73,6 +75,22 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
 
     useFocusEffect(
         React.useCallback(() => {
+            AsyncStorage.getItem('notification').then( str => {
+                const notification = JSON.parse(str)
+                let readed = notification.map( (item) => {
+                    if(item.page === 'userNotification'){
+                        return {
+                            ...item,
+                            status : true
+                        }
+                    }
+                    else {
+                        return item
+                    }
+                })
+                AsyncStorage.setItem('notification' , JSON.stringify(readed))
+                props.setNotificationBadge()
+            }) 
             setIsReady(true)
             socket.on('recieve_new_response' , () => {
                 handleNewResponse()

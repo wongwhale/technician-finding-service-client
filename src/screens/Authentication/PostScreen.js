@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SafeAreaView, View, ScrollView, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'
+import { SafeAreaView, View, ScrollView, Text, TouchableOpacity, Animated, Easing, KeyboardAvoidingView, Platform } from 'react-native'
 
 import Header from '../../components/Header'
 import DateTimePicker from '../../components/Form/DateTimePicker'
@@ -21,14 +21,14 @@ import ImagePickerManager from 'react-native-image-crop-picker'
 
 import { sendPostReq } from '../../store/actions/socketAction'
 import { addNewResponse } from '../../store/actions/notiAction'
-import { SET_FILE, SET_LOCATION, clear , SET_DATE , SET_MONTH , SET_YEAR , SET_HOUR , SET_MINUTE  } from '../../store/actions/formAction'
+import { SET_FILE, SET_LOCATION, clear, SET_DATE, SET_MONTH, SET_YEAR, SET_HOUR, SET_MINUTE, APPEND_FILE } from '../../store/actions/formAction'
 import { CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
 import { LOADING, LOADED } from '../../store/actions/authAction'
 import { useFocusEffect } from '@react-navigation/native'
 import { connect } from 'react-redux'
 import { content, color, card, widthToDp } from '../../stylesheet'
 import { styles } from '../../components/Setting/styles'
-
+import Feather from 'react-native-vector-icons/Feather'
 import LinearGradient from 'react-native-linear-gradient'
 import Geolocation from '@react-native-community/geolocation'
 
@@ -51,22 +51,23 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    LOADING, 
-    LOADED, 
-    clear, 
-    addNewResponse, 
-    SET_LOCATION, 
-    sendPostReq, 
-    SET_FILE, 
+    LOADING,
+    LOADED,
+    clear,
+    addNewResponse,
+    SET_LOCATION,
+    sendPostReq,
+    SET_FILE,
     CLOSE_IMAGE_PICKER_MODAL,
-    SET_DATE , 
-    SET_MONTH , 
-    SET_YEAR , 
-    SET_HOUR , 
-    SET_MINUTE
+    SET_DATE,
+    SET_MONTH,
+    SET_YEAR,
+    SET_HOUR,
+    SET_MINUTE,
+    APPEND_FILE
 }
 
-const connector = connect(mapStateToProps, mapDispatchToProps )
+const connector = connect(mapStateToProps, mapDispatchToProps)
 
 const PostScreen = (props) => {
     const [locationVisible, setLocationVisible] = React.useState(false)
@@ -90,6 +91,42 @@ const PostScreen = (props) => {
             }
         }, [])
     )
+
+    const [opacity, setOpacity] = React.useState(new Animated.Value(1))
+
+    const translateY = opacity.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, parseInt(widthToDp('20'))]
+    })
+
+    const snackPopDown = () => {
+        Animated.timing(opacity, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true,
+        }).start()
+    }
+
+    const errorPopUp = () => {
+        Animated.sequence([
+            Animated.timing(opacity, {
+                toValue: 0,
+                duration: 250,
+                useNativeDriver: true,
+            }),
+            Animated.timing(opacity, {
+                toValue: 0,
+                duration: 3000,
+                useNativeDriver: true,
+            }),
+            Animated.timing(opacity, {
+                toValue: 1,
+                duration: 250,
+                useNativeDriver: true,
+            })
+        ]).start()
+    }
+
 
     return (
         <>
@@ -184,21 +221,26 @@ const PostScreen = (props) => {
                             // props.LOADING()
                             const date = `${props.year}-${("0" + (props.month + 1)).slice(-2)}-${("0" + (props.date)).slice(-2)}T${("0" + (props.hour)).slice(-2)}:${("0" + (props.minute)).slice(-2)}:00.209Z`
                             const name = `${props.firstname} ${props.lastname}`
-                            props.sendPostReq({
-                                name: name,
-                                uid: props.uid,
-                                date: date,
-                                type: props.type,
-                                file: props.file,
-                                detail: props.detail,
-                                location: {
-                                    lat: props.lat,
-                                    lon: props.lng
-                                }
-                            }).then(res => {
-                                props.LOADED()
-                                props.navigation.navigate('userNotification')
-                            })
+                            if (props.type === '') {
+                                errorPopUp()
+                            }
+                            else {
+                                props.sendPostReq({
+                                    name: name,
+                                    uid: props.uid,
+                                    date: date,
+                                    type: props.type,
+                                    file: props.file,
+                                    detail: props.detail,
+                                    location: {
+                                        lat: props.lat,
+                                        lon: props.lng
+                                    }
+                                }).then(res => {
+                                    props.LOADED()
+                                    props.navigation.navigate('userNotification')
+                                })
+                            }
                         }}
                     />
                     <View style={{ marginBottom: 25 }} />
@@ -211,19 +253,21 @@ const PostScreen = (props) => {
                     libFunc={() => {
                         ImagePickerManager.openPicker({
                             multiple: true,
-                            maxFiles: 5
+                            maxFiles: 5,
+                            mediaType: 'photo',
                         }).then((img) => {
-                            console.log(img)
-                            props.SET_FILE(img)
+                            img.map(item => {
+                                props.APPEND_FILE(item)
+                            })
                             props.CLOSE_IMAGE_PICKER_MODAL()
                         })
                     }}
 
                     camFunc={() => {
                         ImagePickerManager.openCamera({
-
+                            mediaType : 'photo'
                         }).then((img) => {
-                            console.log(img);
+                            props.APPEND_FILE(img)
                             props.CLOSE_IMAGE_PICKER_MODAL()
                         })
                     }}
@@ -236,6 +280,81 @@ const PostScreen = (props) => {
                         props.SET_LOCATION(lat, lng)
                     }}
                 />
+
+                <Animated.View
+                    style={{
+                        // backgroundColor : 'red',
+                        width: '100%',
+                        height: widthToDp('16'),
+                        position: 'absolute',
+                        bottom: widthToDp('0'),
+                        paddingVertical: widthToDp('2'),
+                        paddingHorizontal: widthToDp('4'),
+                        zIndex: 3,
+                        backgroundColor: 'transparent',
+                        transform: [
+                            { translateY: translateY }
+                        ],
+                    }}
+                >
+                    <View
+                        style={{
+                            backgroundColor: color.RED_4,
+                            flex: 1,
+                            borderRadius: widthToDp('4'),
+
+                        }}
+                    >
+                        <View
+                            style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                                paddingHorizontal: widthToDp('2'),
+                                paddingVertical: 0,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <TouchableOpacity
+                                style={{
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    paddingHorizontal: widthToDp('4'),
+                                }}
+                                onPress={() => props.navigation.navigate('acceptedRequest')}
+                            >
+                                <Text
+                                    style={{
+                                        fontSize: widthToDp('4'),
+                                        color: color.RED_0,
+                                        fontWeight: 'bold'
+                                    }}
+                                >
+                                    กรุณาระบุประเภท
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={{
+                                    height: widthToDp('8'),
+                                    aspectRatio: 1,
+                                    backgroundColor: `#ffffff66`,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    borderRadius: widthToDp('3')
+                                }}
+                                onPress={() => {
+                                    snackPopDown()
+                                }}
+                            >
+                                <Feather name='x' style={{
+                                    fontSize: widthToDp('5'),
+                                    color: color.IOS_RED_LIGHT
+                                }} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Animated.View>
+
             </SafeAreaView>
 
         </>

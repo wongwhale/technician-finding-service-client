@@ -11,15 +11,15 @@ import { LOADED } from '../../store/actions/authAction';
 import { useNavigation } from '@react-navigation/native'
 
 const mapStateToProps = (state) => ({
-    uid: state.auth.userInfo.uid
+    uid: state.auth.userInfo.uid,
+    badge: state.chat.badge
 })
 
 const mapDispatchToProsp = {
     LOADED
 }
 
-const Header = ({ page, isRadius }) => {
-    const badgesNum = 1
+const Header = ({ page, isRadius, ...props }) => {
     const { goBack, navigate } = useNavigation()
     return (
         <>
@@ -34,11 +34,15 @@ const Header = ({ page, isRadius }) => {
                     style={global.chatIconContainer}
                 >
                     <Feather name="mail" style={global.chatIcon} />
-                    <View style={global.badges}>
-                        <Text style={global.badgesText}>
-                            {badgesNum}
-                        </Text>
-                    </View>
+                    {
+                        props.badge ? (
+                            <View style={global.badges}>
+                                <Text style={global.badgesText}>
+                                    {props.badge}
+                                </Text>
+                            </View>
+                        ) : null
+                    }
                 </TouchableOpacity>
                 <TouchableOpacity style={global.backIconContainer}
                     onPress={() => {

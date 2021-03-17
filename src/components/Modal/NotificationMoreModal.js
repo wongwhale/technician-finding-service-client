@@ -3,8 +3,11 @@ import { View, TouchableOpacity, Text } from 'react-native'
 import Modal from 'react-native-modalbox'
 import { heightToDp, widthToDp } from '../../stylesheet'
 import { color } from '../../stylesheet/colors'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const NotificationMoreModal = ({ isOpen, onClosed }) => {
+
+
     return (
         <>
             <Modal

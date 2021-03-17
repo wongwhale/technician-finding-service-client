@@ -1,49 +1,57 @@
 import React from 'react'
 
-import { SafeAreaView, ScrollView, Button, Text, View, TouchableOpacity, Image } from 'react-native'
+import { SafeAreaView, ScrollView, Button, Text, View, TouchableOpacity, Image, RefreshControl } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { content, widthToDp } from '../../stylesheet'
 import Header from '../../components/Header'
 import { color } from '../../stylesheet/colors'
 import Feather from 'react-native-vector-icons/Feather'
 import NotificationMoreModal from '../../components/Modal/NotificationMoreModal'
-import { useFocusEffect , useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { setNotificationBadge } from '../../store/actions/notiAction'
+import { connect } from 'react-redux'
+import { socket } from '../../store/actions/socketAction'
 
+const mapStateToProps = (state) => ({
 
-const NotificationLists = ({ id , type , tech, status , page , openModal  }) => {
+})
+
+const mapDispatchToProps = {
+    setNotificationBadge
+}
+
+const NotificationLists = ({ item , tech }) => {
     const onPress = async () => {
-        await AsyncStorage.getItem('notification').then( (str) => {
-            let temp = JSON.parse(str)
-            const new_noti = temp.map( (item) => {
-                if(item.id === id && tech === item.name){
-                    // console.log(item);
-                    return {
-                        ...item,
-                        status : true
-                    }
-                }else{
-                    return item
-                }
-            }) 
-            AsyncStorage.setItem('notification' , JSON.stringify(new_noti))
-        })
         navigate(page)
     }
     const { navigate } = useNavigation()
+
+    const handleDelete = () => {
+        AsyncStorage.getItem('notification').then( str => {
+            const notification = JSON.parse(str)
+            const filtered = notification.filter( (val) => {
+                return val.id !== item.id && val.type !== item.type && val.name !== item.name
+            })
+            AsyncStorage.setItem('notification' , JSON.stringify(filtered)).then( () => {
+                onRefresh()
+            })
+        })
+    }
+
     return (
         <>
             <TouchableOpacity
                 style={{
                     paddingVertical: widthToDp('3'),
                     paddingHorizontal: widthToDp('4'),
-                    backgroundColor: status ? color.GREY_5 : color.BLUE_5,
+                    backgroundColor: item.status ? color.GREY_5 : color.BLUE_5,
                     margin: widthToDp('1'),
                     borderRadius: widthToDp('2'),
                     flexDirection: 'row',
                     alignItems: 'center'
                 }}
 
-                onPress={ () => {
+                onPress={() => {
                     onPress()
                 }}
             >
@@ -55,35 +63,36 @@ const NotificationLists = ({ id , type , tech, status , page , openModal  }) => 
                     <Text
                         style={{
                             fontSize: widthToDp('4'),
-                            fontWeight : 'bold',
-                            color : color.BLUE_0
+                            fontWeight: 'bold',
+                            color: color.BLUE_0
                         }}
                     >
-                        {page === 'techNotification' ? `มีการเสนองานใหม่จาก ${tech}` : `มีการเสนอราคาจาก ${tech}`}
+                        {item.page === 'techNotification' ? `มีการเสนองานใหม่จาก ${tech}` : `มีการเสนอราคาจาก ${tech}`}
                     </Text>
                     <Text
                         style={{
                             fontSize: widthToDp('3.5'),
-                            color : color.BLUE_1
+                            color: color.BLUE_1
                         }}
                     >
-                        {page === 'techNotification' ? `เกี่ยวกับ ${type}` : `เกี่ยวกับการหา ${type} ของคุณ`}
+                        {item.page === 'techNotification' ? `เกี่ยวกับ ${item.type}` : `เกี่ยวกับการหา ${item.type} ของคุณ`}
                     </Text>
                 </View>
                 <TouchableOpacity
                     style={{
-                        width : widthToDp('6'),
-                        aspectRatio : 1,
-                        borderRadius : widthToDp('3'),
-                        backgroundColor : '#fff',
-                        alignItems : 'center',
-                        justifyContent : 'center'
+                        width: widthToDp('6'),
+                        aspectRatio: 1,
+                        borderRadius: widthToDp('3'),
+                        backgroundColor: '#fff',
+                        alignItems: 'center',
+                        justifyContent: 'center'
                     }}
                     onPress={() => {
-                        openModal()
+                        handleDelete()
+                        // openModal()
                     }}
                 >
-                    <Feather name='more-horizontal' color={color.BLUE_1} size={widthToDp('5')} />
+                    <Feather name='trash-2' color={color.IOS_RED_LIGHT} size={widthToDp('4')} />
                 </TouchableOpacity>
 
             </TouchableOpacity>
@@ -91,7 +100,7 @@ const NotificationLists = ({ id , type , tech, status , page , openModal  }) => 
     )
 }
 
-const NotificationTab = () => {
+const NotificationTab = (props) => {
     const [moreVisible, setMoreVisible] = React.useState(false)
     // const json_var = {
     //     notification: [
@@ -115,19 +124,39 @@ const NotificationTab = () => {
 
     const [notificationLists, setNotificationLists] = React.useState([])
 
+
+    const [refreshing, setRefreshing] = React.useState(false)
+
+    const onRefresh = () => {
+        AsyncStorage.getItem('notification').then(json => {
+            if (json === null) {
+                console.log('is null');
+            }
+            else {
+                const noti_json = JSON.parse(json)
+                setNotificationLists(noti_json)
+            }
+        })
+    }
+
     useFocusEffect(
         React.useCallback(() => {
-            // AsyncStorage.setItem('notification' , JSON.stringify(json_var))
+            socket.on('recieve_new_response', () => {
+                onRefresh()
+            })
+            socket.on('recieve_new_post_req', () => {
+                onRefresh()
+            })
             AsyncStorage.getItem('notification').then(json => {
                 if (json === null) {
                     console.log('is null');
                 }
                 else {
-
                     const noti_json = JSON.parse(json)
                     setNotificationLists(noti_json)
                 }
             })
+            // AsyncStorage.setItem('notification' , JSON.stringify(json_var))
             return () => setNotificationLists([])
         }, [])
     )
@@ -140,22 +169,22 @@ const NotificationTab = () => {
                 {
                     notificationLists.length === 0 ? (
                         <>
-                        <Image 
-                            source={require('../../assets/image/noNotification.jpg')}
-                            style={{
-                                height : widthToDp('60'),
-                                alignSelf : 'center',
-                                resizeMode : 'contain'
-                            }}
-                        />
-                        <Text
-                            style={{
-                                alignSelf : 'center',
-                                fontSize : widthToDp('5'),
-                                color : color.BLUE_2
-                            }}
-                        >
-                            ยังไม่มีการแจ้งเตือน
+                            <Image
+                                source={require('../../assets/image/noNotification.jpg')}
+                                style={{
+                                    height: widthToDp('60'),
+                                    alignSelf: 'center',
+                                    resizeMode: 'contain'
+                                }}
+                            />
+                            <Text
+                                style={{
+                                    alignSelf: 'center',
+                                    fontSize: widthToDp('5'),
+                                    color: color.BLUE_2
+                                }}
+                            >
+                                ยังไม่มีการแจ้งเตือน
                         </Text>
                         </>
                     ) : null
@@ -163,17 +192,24 @@ const NotificationTab = () => {
                 <ScrollView
                     style={content.container}
                 >
+                    <RefreshControl 
+                        refreshing={refreshing}
+                        onRefresh={ () => onRefresh()}
+                    />
                     <View>
                         {
                             notificationLists.map((item, index) => {
                                 return (
-                                    <NotificationLists key={index} 
-                                        openModal={() => setMoreVisible(true)} 
+                                    <NotificationLists key={index}
+                                        openModal={() => setMoreVisible(true)}
                                         tech={item.name}
                                         status={item.status}
                                         type={item.type}
                                         page={item.page}
                                         id={item.id}
+                                        item={item}
+                                        onRefresh={ () => onRefresh()}
+                                        setBadge={() => props.setNotificationBadge()}
                                     />
                                 )
                             })
@@ -183,10 +219,10 @@ const NotificationTab = () => {
             </SafeAreaView>
             <NotificationMoreModal
                 isOpen={moreVisible}
-                onClosed={() => setMoreVisible(false)}
+                onClosed={ () => setMoreVisible(false) }
             />
         </>
     )
 }
 
-export default NotificationTab
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationTab)

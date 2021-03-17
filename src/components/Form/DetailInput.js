@@ -32,9 +32,9 @@ const DetailInput = (props) => {
                         props.SET_DETAIL(val)
                     }}
                 />
-                <View style={posting.detailLength}>
+                {/* <View style={posting.detailLength}>
                     <Text style={{ color: color.BLUE_4 }}>{`${props.detail.length}/150`}</Text>
-                </View>
+                </View> */}
             </View>
         </>
     )

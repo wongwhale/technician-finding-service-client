@@ -97,6 +97,7 @@ const ChatInput = (props) => {
     const handleCamera = () => {
         ImagePicker.openCamera({
             compressImageQuality : 0.5,
+            mediaType : 'photo'
         }).then( async image => {
                 const reference = firebaseStorage().ref('chat').child(`${props.uid}-${image.path}-${new Date().getTime()}`)
                 await reference.putFile(image.path)
@@ -121,8 +122,8 @@ const ChatInput = (props) => {
                 .then(() => {
                     ImagePicker.openPicker({
                         multiple: false,
-                        compressImageQuality : 0.7,
-                        compressVideoPreset : 'LowQuality'
+                        compressImageQuality : 0.6,
+                        mediaType : 'photo'
                     }).then( images => {
                         images.map(async image => {
                             const reference = firebaseStorage().ref('chat').child(`${props.uid}-${image.path}-${new Date().getTime()}`)
@@ -145,7 +146,9 @@ const ChatInput = (props) => {
         } else {
             ImagePicker.openPicker({
                 multiple: true,
-                maxFiles: 10
+                compressImageQuality : 0.6,
+                maxFiles: 10,
+                mediaType : 'photo'
             }).then(images => {
                 images.map(async image => {
                     const reference = firebaseStorage().ref('chat').child(`${props.uid}-${image.path}-${new Date().getTime()}`)

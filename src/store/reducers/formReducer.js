@@ -11,6 +11,8 @@ formType.SET_LOCATION = 'SET_LOCATION'
 formType.SET_MINUTE = 'SET_MINUTE'
 formType.SET_HOUR = 'SET_HOUR'
 formType.CLEAR = 'FORM_REDUCER_CLEAR'
+formType.APPEND_FILE = 'APPEND_FILE'
+formType.DELETE_FILE = 'DELETE_FILE'
 
 const initialState = {
     date_count: 30,
@@ -88,6 +90,18 @@ export default function formReducer(state = initialState, action) {
             }
         case formType.CLEAR :
             return state = initialState
+        case formType.APPEND_FILE:
+            return {
+                ...state,
+                file : [...state.file , action.payload.file]
+            }
+        case formType.DELETE_FILE:
+            return{
+                ...state,
+                file : state.file.filter( (val) => {
+                    return val !== action.payload.file
+                })
+            }
         default:
             return state
     }

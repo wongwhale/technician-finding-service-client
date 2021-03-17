@@ -103,7 +103,6 @@ const Chat = (props) => {
                 backdropPressToClose={true}
                 style={{
                     backgroundColor: 'transparent',
-                    flex: 1
                 }}
             >
                 <SafeAreaView
@@ -111,47 +110,41 @@ const Chat = (props) => {
                         flex: 1
                     }}
                 >
+                    {/* source={{ uri: props.imageUrl }} */}
+
                     <View
                         style={{
                             flex: 1
                         }}
                     >
-                        <TouchableOpacity
-                            onPress={() => {
-                                setImageIsOpen(false)
-                            }}
-                            style={{
-                                backgroundColor: color.GREY_5,
-                                borderRadius: widthToDp('8'),
-                                width: widthToDp('8'),
-                                height: widthToDp('8'),
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                position: 'absolute',
-                            }}
-                        >
-                            <Feather
-                                name='x'
-                                style={{
-                                    fontSize: widthToDp('6'),
-
-                                }}
-                                color={color.GREY_1}
-                            />
-                        </TouchableOpacity>
                         <View
                             style={{
-                                flex: 1,
+                                position:'relative',
+                                height :  widthToDp(7),
+                                width : widthToDp('100')
                             }}
                         >
-                            <Image
-                                source={{ uri: props.imageUrl }}
+                            <TouchableOpacity
                                 style={{
-                                    flex: 1,
-                                    resizeMode: 'contain',
+                                    zIndex: 2,
+                                    alignSelf : 'flex-end',
+                                    marginRight : widthToDp('7')
                                 }}
-                            />
+                                onPress={ () => {
+                                    setImageIsOpen(false)
+                                }}
+                            >
+                                <Feather name='x' size={widthToDp('7')} />
+                            </TouchableOpacity>
                         </View>
+                        <Image
+                            source={{ uri: props.imageUrl }}
+                            style={{
+                                flex: 1
+                            }}
+                            resizeMethod='auto'
+                            resizeMode='contain'
+                        />
 
                     </View>
                 </SafeAreaView>

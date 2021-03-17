@@ -91,7 +91,6 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
         }
         ).start()
     }
-    
 
     const [opacity, setOpacity] = React.useState(new Animated.Value(0));
 

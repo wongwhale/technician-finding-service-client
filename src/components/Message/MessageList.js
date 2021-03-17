@@ -58,7 +58,7 @@ const MessageList = ({ status, name, firstname, lastMessage, badges, date, onPre
                         </View>
                         <View>
                             <Text
-                                style={[message.text, !status ? message.unreadMessage : null,
+                                style={[message.dateTimeText, !status ? message.unreadMessage : null,
                                 {
                                     height: widthToDp('5'),
                                     lineHeight: widthToDp('5')
@@ -69,7 +69,7 @@ const MessageList = ({ status, name, firstname, lastMessage, badges, date, onPre
                                         && new Date(date).getDate() !== new Date().getMonth()
                                         && new Date(date).getFullYear !== new Date().getFullYear()
                                         ? `${new Date(date).getDate()} ${_month[new Date(date).getMonth()]} ${new Date(date).getFullYear() + 543}`
-                                        : `${new Date(date).getHours()} : ${new Date(date).getMinutes()} น.`
+                                        : `${('0'+(new Date(date).getHours())).slice(-2)} : ${('0' + new Date(date).getMinutes()).slice(-2)} น.`
                                 }
                             </Text>
                         </View>

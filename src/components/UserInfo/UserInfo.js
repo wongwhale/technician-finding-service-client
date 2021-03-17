@@ -20,6 +20,7 @@ const mapStateToProps = (state) => ({
     firstname: state.auth.userInfo.firstname,
     lastname: state.auth.userInfo.lastname,
     avatar: state.auth.userInfo.avatar,
+    badge: state.chat.badge
 })
 
 const UserInfo = (props) => {
@@ -45,11 +46,15 @@ const UserInfo = (props) => {
                             style={{ marginLeft: widthToDp('2') }}
                         >
                             <Feather name="mail" style={global.chatIcon} />
-                            <View style={global.badges}>
-                                <Text style={global.badgesText}>
-                                    1
-                            </Text>
-                            </View>
+                            {
+                                props.badge > 0 ? (
+                                    <View style={global.badges}>
+                                        <Text style={global.badgesText}>
+                                            1
+                                        </Text>
+                                    </View>
+                                ) : null
+                            }
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
@@ -134,7 +139,7 @@ const UserInfo = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={infoStyles.iconBtn}
-                            onPress={ () => {
+                            onPress={() => {
                                 navigate('history')
                             }}
                         >
@@ -210,7 +215,7 @@ const UserInfo = (props) => {
 
                                                 elevation: 5,
                                             }}
-                                            onPress={ () => {
+                                            onPress={() => {
                                                 navigate('regTech')
                                             }}
                                         >

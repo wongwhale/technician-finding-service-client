@@ -11,19 +11,19 @@ import { LOADED } from '../store/actions/authAction';
 import { useNavigation } from '@react-navigation/native'
 
 const mapStateToProps = (state) => ({
-    uid : state.auth.userInfo.uid
+    uid: state.auth.userInfo.uid,
+    badge : state.chat.badge
 })
 
 const mapDispatchToProsp = {
     LOADED
 }
 
-const Header = ({ page, back, chat , isRadius  }) => {
-    const badgesNum = 1
-    const { goBack , navigate } = useNavigation()
+const Header = ({ page, back, chat, isRadius , ...props}) => {
+    const { goBack, navigate } = useNavigation()
     return (
         <>
-            <View style={[global.header , isRadius ? global.headerBorderRadius : null ]}>
+            <View style={[global.header, isRadius ? global.headerBorderRadius : null]}>
                 <Text style={global.headerText}>
                     {page}
                 </Text>
@@ -36,11 +36,15 @@ const Header = ({ page, back, chat , isRadius  }) => {
                             style={global.chatIconContainer}
                         >
                             <Feather name="mail" style={global.chatIcon} />
-                            <View style={global.badges}>
-                                <Text style={global.badgesText}>
-                                    {badgesNum}
-                                </Text>
-                            </View>
+                            {
+                                props.badge > 0 ? (
+                                    <View style={global.badges}>
+                                        <Text style={global.badgesText}>
+                                            {props.badge}
+                                        </Text>
+                                    </View>
+                                ) : null
+                            }
                         </TouchableOpacity>
                     ) : null
 
@@ -68,4 +72,4 @@ const Header = ({ page, back, chat , isRadius  }) => {
     )
 }
 
-export default connect(mapStateToProps , mapDispatchToProsp)(Header)
+export default connect(mapStateToProps, mapDispatchToProsp)(Header)

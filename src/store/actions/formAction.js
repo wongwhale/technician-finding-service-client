@@ -148,6 +148,24 @@ export const SET_FILE = (file) => dispatch => {
     })
 }
 
+export const DELETE_FILE = (file) => dispatch => {
+    dispatch({
+        type : formType.DELETE_FILE,
+        payload : {
+            file : file
+        }
+    })
+}
+
+export const APPEND_FILE = (file) => dispatch => {
+    dispatch({
+        type : formType.APPEND_FILE,
+        payload : {
+            file : file
+        }
+    })
+}
+
 export const SET_DETAIL = (detail) => dispatch => {
     dispatch({
         type: formType.SET_DETAIL,

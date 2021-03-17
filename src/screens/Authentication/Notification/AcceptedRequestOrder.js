@@ -60,7 +60,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                 setAcceptedLists(res.sort((a,b) => {
                     return new Date(a.date).getTime() - new Date(b.date).getTime()
                 }).filter( (val) => {
-                    return new Date(val.date).getTime() > (new Date().getTime() - 86400)
+                    return new Date(val.date).getTime() > (new Date().getTime() - 86400000)
                 })
                 )
                 setIsReady(false)

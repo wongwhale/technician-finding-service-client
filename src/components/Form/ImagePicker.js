@@ -4,6 +4,7 @@ import { Text, View, TouchableOpacity, Image, Platform } from 'react-native'
 import { datePicker, posting, color, widthToDp } from '../../stylesheet'
 import { connect } from 'react-redux'
 import { OPEN_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
+import { DELETE_FILE } from '../../store/actions/formAction'
 import Feather from 'react-native-vector-icons/Feather'
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -11,6 +12,40 @@ const mapStateToProps = (state) => ({
     uri: state.form.uri,
     file: state.form.file
 })
+
+const ImageShower = ({ item , onDelete }) => {
+    return (
+        <>
+            <View>
+                <Image
+                    source={{ uri: item.path }}
+                    style={{
+                        width: widthToDp('25'),
+                        height: widthToDp('25'),
+                        margin: widthToDp('1'),
+                        borderRadius: widthToDp('4')
+                    }}
+                />
+                <TouchableOpacity
+                    style={{
+                        position: 'absolute',
+                        right: 0,
+                        top: 0,
+                        width: widthToDp('6'),
+                        height: widthToDp('6'),
+                        backgroundColor: color.BLUE_5,
+                        borderRadius: widthToDp('5'),
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                    onPress={ () => onDelete()}
+                >
+                    <Feather name='x-circle' size={widthToDp('5')} color={color.IOS_RED_DARK} />
+                </TouchableOpacity>
+            </View>
+        </>
+    )
+}
 
 const ImagePickerComponent = (props) => {
 
@@ -50,24 +85,38 @@ const ImagePickerComponent = (props) => {
                                     <>
                                         <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
                                             {
+                                                props.file.map((item, index) => {
+                                                    return (
+                                                        <ImageShower
+                                                            item={item}
+                                                            key={index}
+                                                            onDelete={ () => props.DELETE_FILE(item)}
+                                                        />
+                                                    )
+                                                })
+                                            }
+                                            <View
+                                                style={{
+                                                    width: widthToDp('25'),
+                                                    height: widthToDp('25'),
+                                                    margin: widthToDp('1'),
+                                                    borderRadius: widthToDp('4'),
+                                                    justifyContent : 'center',
+                                                    alignItems : 'center'
+                                                }}
+                                            >
+                                                <Feather name='plus' size={widthToDp('8')} color={color.BLUE_0} />
+                                            </View>
+                                            {/* {
                                                 props.file.length < 5 ? (
                                                     <>
                                                         {
                                                             props.file.map((item, index) => {
                                                                 return (
-                                                                    <>
-                                                                        <Image
-                                                                            key={item.modificationDate}
-                                                                            source={{ uri: item.path }}
-                                                                            style={{
-                                                                                width: widthToDp('25'),
-                                                                                height: widthToDp('25'),
-                                                                                margin: widthToDp('1'),
-                                                                                borderRadius: widthToDp('4')
-
-                                                                            }}
-                                                                        />
-                                                                    </>
+                                                                    <ImageShower
+                                                                        item={item}
+                                                                        key={index}
+                                                                    />
                                                                 )
                                                             })
                                                         }
@@ -79,16 +128,9 @@ const ImagePickerComponent = (props) => {
                                                                 props.file.map((item, index) => {
                                                                     return (
                                                                         <>
-                                                                            <Image
+                                                                            <ImageShower 
                                                                                 key={index}
-                                                                                source={{ uri: item.sourceURL }}
-                                                                                style={{
-                                                                                    width: 100,
-                                                                                    height: 100,
-                                                                                    margin: 3,
-                                                                                    borderRadius: 10
-
-                                                                                }}
+                                                                                item={item}
                                                                             />
                                                                         </>
                                                                     )
@@ -97,7 +139,7 @@ const ImagePickerComponent = (props) => {
                                                         </>
                                                     )
 
-                                            }
+                                            } */}
                                         </View>
                                     </>
                                 )
@@ -105,11 +147,11 @@ const ImagePickerComponent = (props) => {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-            <View style={posting.detailLength}>
+            {/* <View style={posting.detailLength}>
                 <Text style={{ color: color.BLUE_4 }}>{`${props.file.length}/5`}</Text>
-            </View>
+            </View> */}
         </>
     )
 }
 
-export default connect(mapStateToProps, { OPEN_IMAGE_PICKER_MODAL })(ImagePickerComponent)
+export default connect(mapStateToProps, { DELETE_FILE, OPEN_IMAGE_PICKER_MODAL })(ImagePickerComponent)

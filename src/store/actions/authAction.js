@@ -201,59 +201,14 @@ export const checkToken = () => async (dispatch) => {
                   role
                   forms{
                       _id
-                      detail
-                      date 
-                      location {
-                          lat
-                          lon
-                      }
-                      technician {
-                        minPrice
-                        maxPrice
-                        location {
-                        lat
-                        lon
-                        }
-                        tech {
-                          _id
-                          star
-                          count
-                          userInfoID {
-                            userID
-                            firstname
-                            lastname
-                            avatar
-                          }
-                        }
-                      }
                   }
                   userID
                   technicianInfoID {
                     newForm {
                       _id
-                      detail
-                      date
-                      location {
-                          lat 
-                          lon
-                      }
-                      userInfoID {
-                        firstname
-                        lastname
-                        avatar
-                      }
                     } 
                     acceptForm {
                       _id
-                      senderID
-                      detail
-                      date
-                      userInfoID{
-
-                          firstname 
-                          lastname
-                          avatar
-                      }
                     }
                   }
                 }
@@ -266,9 +221,6 @@ export const checkToken = () => async (dispatch) => {
         },
     }).then(res => {
         const data = res.data.data.tokenCheck
-        let temp_list = []
-        let neworder_lists = []
-        let acceptedorder_lists = []
         if (data.status) {
             if (data.role === 'technician') {
                 dispatch({
@@ -290,54 +242,6 @@ export const checkToken = () => async (dispatch) => {
                         avatar: data.avatar
                     }
                 })
-                // Promise.all(
-                //     data.technicianInfoID.newForm.map(async (order) => {
-                //         const distance = await getDistance(
-                //             store.getState().auth.userInfo.currentLocation.lat,
-                //             store.getState().auth.userInfo.currentLocation.lon,
-                //             order.location.lat,
-                //             order.location.lon
-                //         )
-                //         neworder_lists.push({
-                //             ...order,
-                //             distance: parseFloat(distance / 1000).toFixed(2)
-                //         })
-                //     }),
-                //     data.technicianInfoID.acceptForm.map((order) => {
-                //         acceptedorder_lists.push({
-                //             ...order
-                //         })
-                //     })
-                // ).then(() => {
-                // dispatch({
-                //     type: authType.LOGIN_SUCCESS,
-                //     payload: {
-                //         firstname: data.firstname,
-                //         lastname: data.lastname,
-                //         role: data.role,
-                //         uid: data.userID,
-                //         avatar: data.avatar
-                //     }
-                // })
-                //     dispatch({
-                //         type: authType.LOADED
-                //     })
-                //     dispatch({
-                //         type: notiType.SET_NEW_ORDER,
-                //         payload: neworder_lists
-                //     })
-                //     dispatch({
-                //         type: notiType.SET_ACCEPTED_ORDER,
-                //         payload: acceptedorder_lists
-                //     })
-                // }).catch(() => {
-                //     dispatch({
-                //         type: authType.LOGIN_FAIL
-                //     })
-                // dispatch({
-                //     type: authType.LOADED
-                // })
-                // })
             } else {
                 dispatch({
                     type: authType.LOADED
@@ -487,3 +391,72 @@ export const setCurrentLocation = (lat, lon) => dispatch => {
         }
     })
 }
+
+
+
+// query{
+//     tokenCheck {
+//       status
+//       firstname
+//       lastname
+//       avatar
+//       role
+//       forms{
+//           _id
+//           detail
+//           date 
+//           location {
+//               lat
+//               lon
+//           }
+//           technician {
+//             minPrice
+//             maxPrice
+//             location {
+//             lat
+//             lon
+//             }
+//             tech {
+//               _id
+//               star
+//               count
+//               userInfoID {
+//                 userID
+//                 firstname
+//                 lastname
+//                 avatar
+//               }
+//             }
+//           }
+//       }
+//       userID
+//       technicianInfoID {
+//         newForm {
+//           _id
+//           detail
+//           date
+//           location {
+//               lat 
+//               lon
+//           }
+//           userInfoID {
+//             firstname
+//             lastname
+//             avatar
+//           }
+//         } 
+//         acceptForm {
+//           _id
+//           senderID
+//           detail
+//           date
+//           userInfoID{
+
+//               firstname 
+//               lastname
+//               avatar
+//           }
+//         }
+//       }
+//     }
+//   }

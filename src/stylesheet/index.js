@@ -178,6 +178,7 @@ export const global = StyleSheet.create({
         position: 'absolute',
         left: widthToDp('5'),
         flexDirection: 'row',
+        width: widthToDp('10'),
         zIndex: 2
     },
     backIcon: {

@@ -128,7 +128,7 @@ const NearMeScreen = ({ navigation, ...props }) => {
                                     <Marker
                                         key={index}
                                         coordinate={{
-                                            latitude: tech.address.lat,
+                                            latitude: tech.address.lat - 0.0005 ,
                                             longitude: tech.address.lon
                                         }}
                                         onPress={() => {
@@ -138,20 +138,36 @@ const NearMeScreen = ({ navigation, ...props }) => {
                                                 })
                                         }}
                                     >
-                                        <Image
+                                        <View
                                             style={{
-                                                width: widthToDp('10'),
-                                                height: widthToDp('10'),
-                                                borderRadius: widthToDp('5'),
-                                                borderWidth: 2,
-                                                borderColor: color.RED_0
-                                            }}
-                                            source={{
-                                                uri: tech.userInfoID.avatar
+                                                // marginTop : widthToDp('5')
+                                                justifyContent : 'center',
+                                                alignItems : 'center'
                                             }}
                                         >
-
-                                        </Image>
+                                            <Image
+                                                style={{
+                                                    width: widthToDp('10'),
+                                                    height: widthToDp('10'),
+                                                    borderRadius: widthToDp('5'),
+                                                    borderWidth: 2,
+                                                    borderColor: color.RED_0
+                                                }}
+                                                source={{
+                                                    uri: tech.userInfoID.avatar
+                                                }}
+                                            >
+                                            </Image>
+                                            <Text
+                                                style={{
+                                                    backgroundColor : '#fff',
+                                                    padding : 2,
+                                                    borderRadius : widthToDp('2')
+                                                }}
+                                            >
+                                                {`${tech.userInfoID.firstname} ${tech.userInfoID.lastname}`}
+                                            </Text>
+                                        </View>
                                     </Marker>
                                 )
                             })

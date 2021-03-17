@@ -5,12 +5,14 @@ import { connect } from 'react-redux'
 import { ScrollView } from 'react-native-gesture-handler'
 import Header from '../../../components/Header'
 import NotFoundComponent from '../../../components/NotFoundComponent'
-import { getNewOrderLists } from '../../../store/actions/notiAction'
+import { getNewOrderLists , setNotificationBadge } from '../../../store/actions/notiAction'
+import { CLOSE_DETAIL_MODAL } from '../../../store/actions/modalAction'
 import { SafeAreaView, RefreshControl } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import ContentLoader from 'react-native-easy-content-loader'
 import OrderDetailModal from '../../../components/Modal/OrderDetailModal'
 import { socket } from '../../../store/actions/socketAction'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const mapStateToProps = (state) => ({
     techOrder: state.noti.techOrder,
@@ -18,7 +20,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    getNewOrderLists
+    getNewOrderLists,
+    setNotificationBadge,
+    CLOSE_DETAIL_MODAL
 }
 
 const NewOrder = (props) => {
@@ -46,6 +50,22 @@ const NewOrder = (props) => {
 
     useFocusEffect(
         React.useCallback(() => {
+            AsyncStorage.getItem('notification').then( str => {
+                const notification = JSON.parse(str)
+                let readed = notification.map( (item) => {
+                    if(item.page === 'techNotification'){
+                        return {
+                            ...item,
+                            status : true
+                        }
+                    }
+                    else {
+                        return item
+                    }
+                })
+                AsyncStorage.setItem('notification' , JSON.stringify(readed))
+                props.setNotificationBadge()
+            }) 
             socket.on('recieve_new_post_req', () => {
                 handleNewOrder()
             })
@@ -57,6 +77,7 @@ const NewOrder = (props) => {
 
             return () => {
                 setNewOrderLists([])
+                props.CLOSE_DETAIL_MODAL()
             }
         }, [])
     )
