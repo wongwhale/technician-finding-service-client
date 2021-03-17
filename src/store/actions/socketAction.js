@@ -220,7 +220,7 @@ socket.on('recieve_new_response', (data) => {
         const notRead = new_noti_json.filter( (val) => {
             return val.status === false
         })
-        dispatch({
+        store.dispatch({
             type: notiType.SET_NOTIFICATION_BADGE,
             payload: {
                 notification_badge: notRead.length
@@ -251,7 +251,7 @@ socket.on('recieve_new_post_req', ({ form }) => {
             return val.status === false
         })
 
-        dispatch({
+        store.dispatch({
             type: notiType.SET_NOTIFICATION_BADGE,
             payload: {
                 notification_badge: notRead.length
