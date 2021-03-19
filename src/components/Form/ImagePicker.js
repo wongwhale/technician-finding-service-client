@@ -78,7 +78,7 @@ const ImagePickerComponent = (props) => {
                                         color: color.BLUE_3,
                                     }} />
                                     <Text style={posting.inputText}>
-                                        อัปโหลดรูปภาพ หรือ วิดีโอ
+                                        อัปโหลดรูปภาพ
                                 </Text>
                                 </>
                             ) : (

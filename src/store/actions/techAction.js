@@ -373,12 +373,13 @@ export const voting = (type , star , tid) => dispatch => {
                             voteStar : ${star}
                           ) {
                               status
+                              star
                             }
                         }
                 `
                 }
             }).then( (res) => {
-                resolve(res.data.data.userVote.status)
+                resolve(res.data.data.userVote)
             }).catch( err => {
                 console.log('vote err : ' , err);
                 reject(false)

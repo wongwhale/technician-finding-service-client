@@ -8,7 +8,7 @@ import { Rating } from 'react-native-ratings'
 import { TextInput, ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import ChatInput from '../Chat/ChatInput'
 import RatingModal from '../Modal/RatingModal'
-import { GET_TECHNICIAN_INFO , comment } from '../../store/actions/techAction'
+import { GET_TECHNICIAN_INFO, comment } from '../../store/actions/techAction'
 
 const CommentCard = ({ name, decs, star, avatar }) => {
     return (
@@ -30,6 +30,7 @@ const CommentCard = ({ name, decs, star, avatar }) => {
                     }}
                 >
                     <Image
+                        source={{ uri: avatar }}
                         style={{
                             width: widthToDp('10'),
                             height: widthToDp('10'),
@@ -69,7 +70,8 @@ const RatingTabPage = (props) => {
     const [myVote, setMyVote] = React.useState(0)
     const [ratingModalVisible, setRatingModalVisible] = React.useState(false)
     const [refreshing, setRefreshing] = React.useState(false)
-    const [myComment , setMyComment] = React.useState('')
+    const [myComment, setMyComment] = React.useState('')
+    const scrollRef = React.useRef(null)
 
     React.useEffect(() => {
         const thisInfo = props.aptitude.filter((k) => {
@@ -80,6 +82,10 @@ const RatingTabPage = (props) => {
         setComment(thisInfo[0].data.comment)
         setMyVote(thisInfo[0].data.voted)
     }, [])
+
+    const handleVote = (newStar) => {
+        setStar(newStar)
+    }
 
     const handleRefresh = () => {
         props.GET_TECHNICIAN_INFO(props.tid)
@@ -96,13 +102,12 @@ const RatingTabPage = (props) => {
 
     return (
         <>
-            <ScrollView
-                style={content.container}
+            <View
+                style={{
+                    backgroundColor : '#fff',
+                    paddingHorizontal : widthToDp('7')
+                }}
             >
-                <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={() => handleRefresh()}
-                />
                 <Text
                     style={{
                         alignSelf: 'flex-start',
@@ -117,7 +122,7 @@ const RatingTabPage = (props) => {
                 </Text>
                 <View
                     style={{
-                        marginBottom: widthToDp('6'),
+                        marginBottom: widthToDp(2),
                         flexDirection: 'row',
                         justifyContent: 'space-between',
 
@@ -161,6 +166,18 @@ const RatingTabPage = (props) => {
                                 </Text>
                     </TouchableOpacity>
                 </View>
+            </View>
+            <ScrollView
+                style={content.container}
+                ref={scrollRef}
+                onContentSizeChange={() => {
+                    scrollRef.current.scrollToEnd({ animated: true })
+                }}
+            >
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={() => handleRefresh()}
+                />
                 <View
                     style={{
                         flex: 1,
@@ -180,6 +197,7 @@ const RatingTabPage = (props) => {
                                         key={index}
                                         name={`${item.userInfoID.firstname} ${item.userInfoID.lastname}`}
                                         decs={item.comment}
+                                        avatar={item.userInfoID.avatar}
                                     />
                                 )
                             })
@@ -211,9 +229,9 @@ const RatingTabPage = (props) => {
                     backgroundColor: '#fff',
                     flexDirection: 'row',
                     justifyContent: 'center',
-                    alignItems : 'center',
-                    paddingHorizontal : widthToDp('4'),
-                    paddingVertical : widthToDp('2')
+                    alignItems: 'center',
+                    paddingHorizontal: widthToDp('4'),
+                    paddingVertical: widthToDp('2')
                 }}
             >
                 <TextInput
@@ -221,7 +239,7 @@ const RatingTabPage = (props) => {
                     placeholderTextColor={color.BLUE_3}
                     multiline
                     value={myComment}
-                    onChangeText={ (val) => {
+                    onChangeText={(val) => {
                         setMyComment(val)
                     }}
                     style={{
@@ -234,24 +252,30 @@ const RatingTabPage = (props) => {
                 />
                 <TouchableOpacity
                     style={{
-                        paddingHorizontal : widthToDp('4'),
-                        paddingVertical : widthToDp('2'),
-                        borderRadius : widthToDp('10'),
-                        backgroundColor : color.IOS_INDIGO_LIGHT,
+                        paddingHorizontal: widthToDp('4'),
+                        paddingVertical: widthToDp('2'),
+                        borderRadius: widthToDp('10'),
+                        backgroundColor: color.IOS_INDIGO_LIGHT,
                     }}
-                    onPress={ () => {
-                        props.comment(route.name , myComment , props.tid)
-                        .then( () => {
-                            setMyComment('')
-                            handleRefresh()
-                        })
+                    onPress={() => {
+                        setComment([...comment, {
+                            userInfoID: {
+                                firstname: props.userInfo.firstname,
+                                lastname: props.userInfo.lastname
+                            },
+                            comment: myComment
+                        }])
+                        props.comment(route.name, myComment, props.tid)
+                            .then(() => {
+                                setMyComment('')
+                            })
                     }}
                 >
                     <Text
                         style={{
-                            color : '#fff',
-                            fontWeight : 'bold',
-                            fontSize : widthToDp('3.5')
+                            color: '#fff',
+                            fontWeight: 'bold',
+                            fontSize: widthToDp('3.5')
                         }}
                     >
                         ส่ง
@@ -265,7 +289,7 @@ const RatingTabPage = (props) => {
                 }}
                 aptitudeType={route.name}
                 tid={props.tid}
-                handleRefresh={() => handleRefresh()}
+                handleVote={(star) => handleVote(star)}
             />
         </>
     )
@@ -275,7 +299,7 @@ const mapStateToProps = (state) => ({
     aptitude: state.tech.info.aptitude,
     firstname: state.tech.info.personalInfo.firstname,
     tid: state.tech.info.personalInfo.userID,
-    
+    userInfo: state.auth.userInfo
 })
 
 const mapDispatchToProps = {

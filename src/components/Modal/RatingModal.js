@@ -186,9 +186,9 @@ const RatingModal = ({ isOpen, ...props }) => {
                                 alignItems: 'center'
                             }}
                             onPress={() => {
-                                props.voting( props.aptitudeType , star , props.tid).then( () => {
+                                props.voting( props.aptitudeType , star , props.tid).then( (res) => {
                                     props.onClose()
-                                    props.handleRefresh()
+                                    props.handleVote(res.star)
                                 }).catch( () => {
                                     props.onClose()
                                 })
