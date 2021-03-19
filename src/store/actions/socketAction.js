@@ -230,6 +230,12 @@ socket.on('recieve_new_response', (data) => {
     })
 })
 
+socket.on('confirm_send_post_req' , () => {
+    store.dispatch({
+        type : authType.LOADED
+    })
+})
+
 socket.on('recieve_new_post_req', ({ form }) => {
     // console.log('recieve new post req', form);
     PushNotification.localNotification({

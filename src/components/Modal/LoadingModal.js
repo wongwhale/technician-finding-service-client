@@ -3,7 +3,7 @@ import React from 'react'
 import {ActivityIndicator} from 'react-native'
 import Modal from 'react-native-modalbox'
 
-import {} from '../../store/actions/authAction'
+import { LOADED } from '../../store/actions/authAction'
 import { connect } from 'react-redux'
 import { color } from '../../stylesheet'
 
@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-
+    LOADED
 }
 
 const LoadingModal = (props) => {
@@ -20,6 +20,7 @@ const LoadingModal = (props) => {
         <>
         <Modal
             isOpen={props.isLoading}
+            onClosed={ () => props.LOADED()}
             swipeToClose={false}
             backButtonClose={false}
             backdropPressToClose={false}

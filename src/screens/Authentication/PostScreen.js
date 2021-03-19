@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SafeAreaView, View, ScrollView, Text, TouchableOpacity, Animated, Easing, KeyboardAvoidingView, Platform } from 'react-native'
+import { SafeAreaView, View, ScrollView, Text, TouchableOpacity, Animated, ActivityIndicator, Easing, KeyboardAvoidingView, Platform } from 'react-native'
 
 import Header from '../../components/Header'
 import DateTimePicker from '../../components/Form/DateTimePicker'
@@ -10,7 +10,7 @@ import ImagePicker from '../../components/Form/ImagePicker'
 import LocationPicker from '../../components/Form/LocationPicker'
 import TypePicker from '../../components/Form/TypePicker'
 import MyButton from '../../components/MyButton'
-
+import Modal from 'react-native-modalbox'
 import DatePickerModal from '../../components/Modal/DatePickerModal'
 import TimePickerModal from '../../components/Modal/TimePickerModal'
 import ImagePickerModal from '../../components/Modal/ImagePickerModal'
@@ -71,6 +71,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 
 const PostScreen = (props) => {
     const [locationVisible, setLocationVisible] = React.useState(false)
+    const [isLoading, setIsLoading] = React.useState(false)
 
     useFocusEffect(
         React.useCallback(() => {
@@ -80,6 +81,7 @@ const PostScreen = (props) => {
             }, () => {
 
             })
+            setIsLoading(false)
             props.SET_DATE(current_date.getDate())
             props.SET_MONTH(current_date.getMonth())
             props.SET_YEAR(current_date.getFullYear())
@@ -88,6 +90,7 @@ const PostScreen = (props) => {
 
             return () => {
                 props.clear()
+                setIsLoading(false)
             }
         }, [])
     )
@@ -218,13 +221,13 @@ const PostScreen = (props) => {
                     </View>
                     <MyButton title='ยืนยัน'
                         onPress={() => {
-                            // props.LOADING()
                             const date = `${props.year}-${("0" + (props.month + 1)).slice(-2)}-${("0" + (props.date)).slice(-2)}T${("0" + (props.hour)).slice(-2)}:${("0" + (props.minute)).slice(-2)}:00.209Z`
                             const name = `${props.firstname} ${props.lastname}`
                             if (props.type === '') {
                                 errorPopUp()
                             }
                             else {
+                                setIsLoading(true)
                                 props.sendPostReq({
                                     name: name,
                                     uid: props.uid,
@@ -237,8 +240,10 @@ const PostScreen = (props) => {
                                         lon: props.lng
                                     }
                                 }).then(res => {
-                                    props.LOADED()
+                                    setIsLoading(false)
                                     props.navigation.navigate('userNotification')
+                                }).catch(err => {
+                                    setIsLoading(true)
                                 })
                             }
                         }}
@@ -265,7 +270,7 @@ const PostScreen = (props) => {
 
                     camFunc={() => {
                         ImagePickerManager.openCamera({
-                            mediaType : 'photo'
+                            mediaType: 'photo'
                         }).then((img) => {
                             props.APPEND_FILE(img)
                             props.CLOSE_IMAGE_PICKER_MODAL()
@@ -357,6 +362,20 @@ const PostScreen = (props) => {
 
             </SafeAreaView>
 
+            <Modal
+                isOpen={isLoading}
+                swipeToClose={false}
+                backButtonClose={false}
+                backdropPressToClose={false}
+                position='center'
+                style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'tranparent'
+                }}
+            >
+                <ActivityIndicator size='small' color={color.WHITE} />
+            </Modal>
         </>
     )
 }

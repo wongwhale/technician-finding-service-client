@@ -24,6 +24,7 @@ import NotFoundComponent from '../../../components/NotFoundComponent'
 import ContentLoader from 'react-native-easy-content-loader'
 import { getWaitingList , setNotificationBadge } from '../../../store/actions/notiAction'
 import { socket } from '../../../store/actions/socketAction'
+import { LOADED } from '../../../store/actions/authAction'
 import { useFocusEffect } from '@react-navigation/native'
 import HistoryDetailModal from '../../../components/Modal/HistoryDetailModal'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -37,7 +38,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     getWaitingList,
-    setNotificationBadge
+    setNotificationBadge,
+    LOADED
 }
 
 
