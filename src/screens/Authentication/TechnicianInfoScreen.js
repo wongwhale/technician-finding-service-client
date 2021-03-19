@@ -16,7 +16,9 @@ import TechnicianInfoComponent from '../../components/TechnicianInfo/TechnicianI
 import LinearGradient from 'react-native-linear-gradient'
 const mapStateToProps = (state) => ({
     info: state.tech.info,
-    uid: state.auth.userInfo.uid
+    uid: state.auth.userInfo.uid,
+    badge: state.chat.badge
+
 })
 
 const TechnicianInfo = (props) => {
@@ -37,11 +39,16 @@ const TechnicianInfo = (props) => {
                             style={{ marginLeft: widthToDp('2') }}
                         >
                             <Feather name="mail" style={global.chatIcon} />
-                            <View style={global.badges}>
-                                <Text style={global.badgesText}>
-                                    1
-                            </Text>
-                            </View>
+                            {
+                                props.badge > 0 ?
+                                    (<View style={global.badges}>
+                                        <Text style={global.badgesText}>
+                                            1
+                                    </Text>
+                                    </View>
+                                    ) : null
+
+                            }
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity
