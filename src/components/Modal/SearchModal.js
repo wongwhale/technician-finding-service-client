@@ -1,6 +1,7 @@
 import React from 'react'
-import { View, Text, Modal, SafeAreaView, Button, TextInput, Animated, Easing, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import { View, Text, SafeAreaView, Button, TextInput, Animated, Easing, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import { color, searchScreen, heightToDp, widthToDp } from '../../stylesheet'
+import Modal from 'react-native-modalbox'
 import Feather from 'react-native-vector-icons/Feather'
 import { ScrollView } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
@@ -107,9 +108,12 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
     return (
         <>
             <Modal
-                visible={isOpen}
-                onTouchCancel={() => onClosed()}
-                animationType='fade'
+                isOpen={isOpen}
+                swipeToClose={false}
+                onClosed={ () => onClosed()}
+                onOpened={ () => {
+                    inputRef.current.focus()
+                }}
             >
                 <KeyboardAvoidingView
                     style={{ flex: 1 }}
@@ -161,7 +165,6 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
                                 <TextInput
                                     placeholder="ค้นหาช่าง ประเภท , ชื่อ หรือ อื่นๆ "
                                     placeholderTextColor={color.BLUE_4}
-                                    autoFocus
                                     ref={inputRef}
                                     style={{
                                         flex: 1,
