@@ -22,7 +22,7 @@ const mapDispatchToProps = {
 
 const NotificationLists = ({ item , tech }) => {
     const onPress = async () => {
-        navigate(page)
+        navigate(item.page)
     }
     const { navigate } = useNavigation()
 

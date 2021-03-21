@@ -45,18 +45,20 @@ const SearchScreen = (props) => {
     const [check, setCheck] = React.useState(false)
     const searchInputRef = React.useRef()
 
-    React.useEffect(() => {
-        Geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-            props.SET_LOCATION(latitude, longitude)
-        },
-            (err) => {
-                console.log(err);
-            })
-        return () => {
-            props.SET_SEARCH_KEY_WORD('')
-            setListsWithDistance([])
-        }
-    }, [])
+    useFocusEffect(
+        React.useCallback(() => {
+            Geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+                props.SET_LOCATION(latitude, longitude)
+            },
+                (err) => {
+                    console.log(err);
+                })
+            return () => {
+                props.SET_SEARCH_KEY_WORD('')
+                setListsWithDistance([])
+            }
+        }, [])
+    )
 
     const handleDistance = async (t_lists) => {
         let temp_lists = []

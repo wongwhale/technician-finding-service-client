@@ -261,7 +261,8 @@ const RatingTabPage = (props) => {
                         setComment([...comment, {
                             userInfoID: {
                                 firstname: props.userInfo.firstname,
-                                lastname: props.userInfo.lastname
+                                lastname: props.userInfo.lastname,
+                                avatar : props.userInfo.avatar
                             },
                             comment: myComment
                         }])

@@ -112,7 +112,7 @@ const Abstract = (props) => {
                             </View> */}
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style={{ flexDirection: 'column', justifyContent: 'space-evenly' }}>
+                            <View style={{ flex : 1, flexDirection: 'column', justifyContent: 'space-evenly' }}>
                                 <Text style={[newOrder.text, notification.detailText]}>
                                     {`ห่างจากคุณ : ${props.order.distance} กม. `}
                                 </Text>
@@ -120,7 +120,10 @@ const Abstract = (props) => {
                                     {`วันที่: ${props.date}`}
                                 </Text>
                                 <Text style={[newOrder.text, notification.detailText]}>
-                                    {`รายละเอียด: ${props.order.detail}`}
+                                    {`รายละเอียด:`}
+                                </Text>
+                                <Text style={[newOrder.text, notification.detailText]}>
+                                    {`${props.order.detail}`}
                                 </Text>
                             </View>
                             <View style={notification.buttonContainer}>

@@ -451,7 +451,6 @@ export const notification = StyleSheet.create({
     },
     buttonContainer: {
         // backgroundColor:'grey',
-        justifyContent: 'space-between',
         alignItems: 'center',
     },
     button: {

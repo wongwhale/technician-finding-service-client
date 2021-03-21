@@ -209,15 +209,15 @@ socket.on('recieve_new_response', (data) => {
     // console.log('recieve new response', data);
     AsyncStorage.getItem('notification').then((str) => {
         let noti = JSON.parse(str)
-        const new_noti_json = [ {
+        const new_noti_json = [{
             id: data.result._id,
             type: data.result.techType,
             name: data.tech.firstname + ' ' + data.tech.lastname,
             status: false,
             page: 'userNotification'
-        } , ...noti]
+        }, ...noti]
 
-        const notRead = new_noti_json.filter( (val) => {
+        const notRead = new_noti_json.filter((val) => {
             return val.status === false
         })
         store.dispatch({
@@ -230,9 +230,9 @@ socket.on('recieve_new_response', (data) => {
     })
 })
 
-socket.on('confirm_send_post_req' , () => {
+socket.on('confirm_send_post_req', () => {
     store.dispatch({
-        type : authType.LOADED
+        type: authType.LOADED
     })
 })
 
@@ -245,15 +245,15 @@ socket.on('recieve_new_post_req', ({ form }) => {
     AsyncStorage.getItem('notification').then((str) => {
         let noti = JSON.parse(str)
 
-        const new_noti_json = [ {
+        const new_noti_json = [{
             id: form._id,
             type: form.techType,
             name: form.userInfoID.firstname + ' ' + form.userInfoID.lastname,
             status: false,
             page: 'techNotification'
-        } , ...noti]
+        }, ...noti]
 
-        const notRead = new_noti_json.filter( (val) => {
+        const notRead = new_noti_json.filter((val) => {
             return val.status === false
         })
 
@@ -271,72 +271,23 @@ socket.on('recieve_new_post_req', ({ form }) => {
 socket.on('receive_message', ({ message }) => {
     // const uid = store.getState().auth.userInfo.uid
     const interlocuter = store.getState().chat.interlocutor
-    // AsyncStorage.getItem('token').then((token) => {
-    //     axios({
-    //         url: `${WEB_URL}`,
-    //         method: 'post',
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": `${token}`
-    //         },
-    //         data: {
-    //             query:
-    //                 `
-    //                 query{
-    //                     getChatRoom(
-    //                         userID : "${uid}"
-    //                     ) {
-    //                       _id
-    //                       userID
-    //                       userName
-    //                       userFirstname
-    //                       technicianID
-    //                       technicianName
-    //                       technicianFirstname
-    //                       technicianAvatar
-    //                       readStatus
-    //                       userAvatar
-    //                         recentMessage {
-    //                           sender
-    //                           message
-    //                           date
-    //                           msgType
-    //                         }
-    //                     }
 
-    //                 }
-    //                 `
+    // alert(message.message)
+    PushNotification.localNotification({
+        title: 'test',
+        message: message.msgType === 'text' ? message.message : message.msgType === 'image' ? `test : ได้ส่งรูปภาพ` : 'คุณได้รับข้อความใหม่'
+    })
+    // else {
+    //     store.dispatch({
+    //         type: chatType.APPEND_MESSAGE,
+    //         payload: {
+    //             date: message.date,
+    //             message: message.message,
+    //             sender: message.sender,
+    //             msgType: message.msgType
     //         }
-    //     }).then(res => {
-    //         store.dispatch({
-    //             type: chatType.INITIAL_HISTORY_LIST,
-    //             payload: {
-    //                 list: res.data.data.getChatRoom.sort((a, b) => {
-    //                     return new Date(b.recentMessage.date).getTime() - new Date(a.recentMessage.date).getTime()
-    //                 })
-    //             }
-    //         })
-    //     }).catch(err => {
     //     })
-    // })
-    if (interlocuter.id !== message.sender) {
-        // alert(message.message)
-        PushNotification.localNotification({
-            title: 'test',
-            message: message.msgType === 'text' ? message.message : message.msgType === 'image' ? `test : ได้ส่งรูปภาพ` : 'คุณได้รับข้อความใหม่'
-        })
-    }
-    else {
-        store.dispatch({
-            type: chatType.APPEND_MESSAGE,
-            payload: {
-                date: message.date,
-                message: message.message,
-                sender: message.sender,
-                msgType: message.msgType
-            }
-        })
-    }
+    // }
 })
 
 socket.on('send_message_response', ({ message }) => {
@@ -405,7 +356,7 @@ export const acceptedReq = (res) => dispatch => {
     const firstname = store.getState().auth.userInfo.firstname
     const lastname = store.getState().auth.userInfo.lastname
     socket.emit('accepted_req', {
-        data : {
+        data: {
             formID: res._id,
             technician: {
                 maxPrice: res.maxPrice,
@@ -413,9 +364,9 @@ export const acceptedReq = (res) => dispatch => {
                 tech: res.uid,
             }
         },
-        tech : {
-            firstname : firstname,
-            lastname : lastname
+        tech: {
+            firstname: firstname,
+            lastname: lastname
         }
     })
 }

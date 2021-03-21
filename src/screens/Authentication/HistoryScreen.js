@@ -146,7 +146,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                                                 />
                                             )
                                         })
-                                    ) : <NotFoundComponent label='ไม่มีรายการที่ยืนยันแล้ว' />
+                                    ) : <NotFoundComponent label='ยังไม่มีประวัติการซ่อม' />
                                 }
                             </ScrollView>
 

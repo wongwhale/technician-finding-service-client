@@ -24,7 +24,7 @@ const DetailInput = (props) => {
                     multiline={true}
                     numberOfLines={4}
                     value={props.detail}
-                    maxLength={150}
+                    maxLength={200}
                     style={[posting.detailInput,]}
                     placeholder="รายละเอียด"
                     placeholderTextColor={color.BLUE_3}

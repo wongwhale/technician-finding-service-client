@@ -4,7 +4,7 @@ import Modal from 'react-native-modalbox'
 import { widthToDp } from '../../stylesheet'
 import { color } from '../../stylesheet/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import { techRegModalStyles } from './SelectAptitudeModal'
 
 const LocationPickerModal = ({setLocation , location , ...props}) => {
@@ -63,7 +63,15 @@ const LocationPickerModal = ({setLocation , location , ...props}) => {
                                     setLocation(res.latitude, res.longitude)
                                 }}
                             >
-                                <Ionicons name='pin' size={50} style={{ top: -20, right: -2, color: 'red' }} />
+                                <Marker
+                                    coordinate={{
+                                        latitude : location.latitude,
+                                        longitude : location.longitude
+                                    }}
+                                >
+
+                                </Marker>
+                                {/* <Ionicons name='pin' size={50} style={{ top: -20, right: -2, color: 'red' }} /> */}
                             </MapView>
                         </View>
                         <View
