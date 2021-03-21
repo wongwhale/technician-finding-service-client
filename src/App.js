@@ -46,7 +46,9 @@ const Router = (props) => {
     Geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
       props.setCurrentLocation(latitude, longitude)
       props.checkToken()
-    }, getCurrentPositionFail)
+    },  () => {
+      alert('กรุณาอนุญาติการเข้าถึงตำแหน่งปัจจุบัน')
+    })
     return () => {
       props.disconnect(props.uid)
     }
