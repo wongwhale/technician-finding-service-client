@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SafeAreaView, View, ScrollView, Text, TouchableOpacity, Animated, ActivityIndicator, Easing, KeyboardAvoidingView, Platform } from 'react-native'
+import { SafeAreaView, View, ScrollView, Text, TouchableOpacity, Animated, ActivityIndicator, Easing, KeyboardAvoidingView, Platform, Modal } from 'react-native'
 
 import Header from '../../components/Header'
 import DateTimePicker from '../../components/Form/DateTimePicker'
@@ -10,7 +10,6 @@ import ImagePicker from '../../components/Form/ImagePicker'
 import LocationPicker from '../../components/Form/LocationPicker'
 import TypePicker from '../../components/Form/TypePicker'
 import MyButton from '../../components/MyButton'
-import Modal from 'react-native-modalbox'
 import DatePickerModal from '../../components/Modal/DatePickerModal'
 import TimePickerModal from '../../components/Modal/TimePickerModal'
 import ImagePickerModal from '../../components/Modal/ImagePickerModal'
@@ -71,9 +70,10 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 
 const PostScreen = (props) => {
     const [locationVisible, setLocationVisible] = React.useState(false)
-
+    const [isLoading , setIsLoading] = React.useState(false) 
     useFocusEffect(
         React.useCallback(() => {
+            setIsLoading(false)
             const current_date = new Date()
             Geolocation.getCurrentPosition((position) => {
                 props.SET_LOCATION(position.coords.latitude, position.coords.longitude)
@@ -175,17 +175,6 @@ const PostScreen = (props) => {
                             <View style={card.cardContainer}>
                                 {/* <LocationPicker /> */}
                                 <TouchableOpacity
-                                    // style={{
-                                    //     width: '100%',
-                                    //     backgroundColor: color.BLUE_5,
-                                    //     padding: widthToDp('2'),
-                                    //     paddingLeft: widthToDp('5'),
-                                    //     borderRadius: widthToDp('2'),
-                                    //     marginBottom: widthToDp('2'),
-                                    //     justifyContent: 'center',
-                                    //     flexDirection: 'row',
-                                    //     alignItems: 'center'
-                                    // }}
                                     onPress={() => {
                                         setLocationVisible(true)
                                     }}
@@ -229,6 +218,7 @@ const PostScreen = (props) => {
                                     errorPopUp()
                                 }
                                 else {
+                                    setIsLoading(true)
                                     props.sendPostReq({
                                         name: name,
                                         uid: props.uid,
@@ -241,8 +231,10 @@ const PostScreen = (props) => {
                                             lon: props.lng
                                         }
                                     }).then(res => {
+                                        setIsLoading(false)
                                         props.navigation.navigate('userNotification')
                                     }).catch(err => {
+                                        setIsLoading(false)
                                     })
                                 }
                             }}
@@ -360,6 +352,23 @@ const PostScreen = (props) => {
                     </Animated.View>
                 </SafeAreaView>
             </KeyboardAvoidingView>
+            <Modal
+                visible={isLoading}
+                animationType='fade'
+                transparent={true}
+            >
+                <SafeAreaView
+                    style={{
+                        flex :1,
+                        alignItems : 'center',
+                        justifyContent : 'center',
+                        backgroundColor : '#22222233',
+                        
+                    }}
+                >
+                    <ActivityIndicator size='small' />
+                </SafeAreaView>
+            </Modal>
         </>
     )
 }
