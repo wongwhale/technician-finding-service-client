@@ -71,11 +71,11 @@ const Index = (props) => {
 
   return (
     <>
-      <KeyboardAvoidingView
+      {/* <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 24}
-      >
+      > */}
         <Stack.Navigator
           screenOptions={{
             cardStyle : {
@@ -107,7 +107,7 @@ const Index = (props) => {
           name={`${props.userInfo.firstname} ${props.userInfo.lastname}`}
         />
         <PriceInputModal />
-    </KeyboardAvoidingView>
+    {/* </KeyboardAvoidingView> */}
 
     </>
   );

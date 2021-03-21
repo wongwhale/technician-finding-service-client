@@ -75,7 +75,7 @@ const PriceInputModal = (props) => {
                             <Text
                                 style={techRegModalStyles.headerText}
                             >
-                                เลือกรูปภพ หรือ วิดีโอ 
+                                ระบุราคาโดยประมาณ
                             </Text>
                         </View>
                         <View

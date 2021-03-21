@@ -49,10 +49,16 @@ const Chat = (props) => {
 
     return (
         <>
-            <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={content.safearray}>
-                <ChatHeader navigation={props.navigation} />
-                {/* {
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={{ flex: 1 }}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 24}
+            >
+
+                <SafeAreaView style={content.topsafearray} />
+                <SafeAreaView style={content.safearray}>
+                    <ChatHeader navigation={props.navigation} />
+                    {/* {
                         props.messages.length !== 0 ? (
                             <ScrollView
                                 ref={scrollView_ref}
@@ -78,25 +84,26 @@ const Chat = (props) => {
                                 </>
                             )
                     } */}
-                <ScrollView
+                    <ScrollView
+                        style={{
+                            backgroundColor: '#fff'
+                        }}
+                        ref={scrollView_ref}
+                        onContentSizeChange={() => {
+                            scrollView_ref.current.scrollToEnd({ animated: true })
+                        }}
+                    >
+                        <ChatBox setImageIsOpen={() => setImageIsOpen(true)} />
+                    </ScrollView>
+                    <ChatInput />
+                </SafeAreaView>
+                <SafeAreaView
                     style={{
-                        backgroundColor: '#fff'
+                        flex: 0,
+                        backgroundColor: color.GREY_5
                     }}
-                    ref={scrollView_ref}
-                    onContentSizeChange={() => {
-                        scrollView_ref.current.scrollToEnd({ animated: true })
-                    }}
-                >
-                    <ChatBox setImageIsOpen={() => setImageIsOpen(true)} />
-                </ScrollView>
-                <ChatInput />
-            </SafeAreaView>
-            <SafeAreaView
-                style={{
-                    flex: 0,
-                    backgroundColor: color.GREY_5
-                }}
-            />
+                />
+            </KeyboardAvoidingView>
             <Modal
                 isOpen={imageIsOpen}
                 onClosed={() => setImageIsOpen(false)}
@@ -119,18 +126,18 @@ const Chat = (props) => {
                     >
                         <View
                             style={{
-                                position:'relative',
-                                height :  widthToDp(7),
-                                width : widthToDp('100')
+                                position: 'relative',
+                                height: widthToDp(7),
+                                width: widthToDp('100')
                             }}
                         >
                             <TouchableOpacity
                                 style={{
                                     zIndex: 2,
-                                    alignSelf : 'flex-end',
-                                    marginRight : widthToDp('7')
+                                    alignSelf: 'flex-end',
+                                    marginRight: widthToDp('7')
                                 }}
-                                onPress={ () => {
+                                onPress={() => {
                                     setImageIsOpen(false)
                                 }}
                             >

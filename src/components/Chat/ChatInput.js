@@ -244,6 +244,7 @@ const ChatInput = (props) => {
                         }}
                         autoFocus
                         multiline
+                        autoCorrect={false}
                         style={{
                             flex: 1,
                             paddingVertical : 0,

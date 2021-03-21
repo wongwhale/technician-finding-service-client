@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 import { ScrollView } from 'react-native-gesture-handler'
 import Header from '../../../components/Header'
 import NotFoundComponent from '../../../components/NotFoundComponent'
-import { getNewOrderLists , setNotificationBadge } from '../../../store/actions/notiAction'
+import { getNewOrderLists, setNotificationBadge } from '../../../store/actions/notiAction'
 import { CLOSE_DETAIL_MODAL } from '../../../store/actions/modalAction'
-import { SafeAreaView, RefreshControl } from 'react-native'
+import { SafeAreaView, RefreshControl , KeyboardAvoidingView , Platform } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import ContentLoader from 'react-native-easy-content-loader'
 import OrderDetailModal from '../../../components/Modal/OrderDetailModal'
@@ -39,7 +39,7 @@ const NewOrder = (props) => {
 
     const handleNewOrder = () => {
         props.getNewOrderLists().then(res => {
-            setNewOrderLists(res.sort( (a,b) => {
+            setNewOrderLists(res.sort((a, b) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime()
             }))
             setIsReady(false)
@@ -50,26 +50,26 @@ const NewOrder = (props) => {
 
     useFocusEffect(
         React.useCallback(() => {
-            AsyncStorage.getItem('notification').then( str => {
+            AsyncStorage.getItem('notification').then(str => {
                 const notification = JSON.parse(str)
-                let readed = notification.map( (item) => {
-                    if(item.page === 'techNotification'){
+                let readed = notification.map((item) => {
+                    if (item.page === 'techNotification') {
                         return {
                             ...item,
-                            status : true
+                            status: true
                         }
                     }
                     else {
                         return item
                     }
                 })
-                AsyncStorage.setItem('notification' , JSON.stringify(readed))
+                AsyncStorage.setItem('notification', JSON.stringify(readed))
                 props.setNotificationBadge()
-            }) 
+            })
             socket.on('recieve_new_post_req', () => {
                 handleNewOrder()
             })
-            socket.on('confirm_accepted_req' , () => {
+            socket.on('confirm_accepted_req', () => {
                 handleNewOrder()
             })
             setIsReady(true)
@@ -84,64 +84,70 @@ const NewOrder = (props) => {
 
     return (
         <>
-            <SafeAreaView style={content.topsafearray} />
-            <SafeAreaView style={content.safearray}>
-                <Header back page='ออเดอร์ใหม่' />
-                {
-                    isReady ? (
-                        <>
-                            <ContentLoader
-                                pRows={0}
-                                title
-                                titleStyles={{
-                                    height: widthToDp('30'),
-                                    width: '92%',
-                                    margin: widthToDp('4'),
-                                    borderRadius: widthToDp('4')
-                                }}
-
-                            />
-                            <ContentLoader
-                                pRows={0}
-                                title
-                                titleStyles={{
-                                    height: widthToDp('30'),
-                                    width: '92%',
-                                    margin: widthToDp('4'),
-                                    borderRadius: widthToDp('4')
-                                }}
-
-                            />
-                            <ContentLoader
-                                pRows={0}
-                                title
-                                titleStyles={{
-                                    height: widthToDp('30'),
-                                    width: '92%',
-                                    margin: widthToDp('4'),
-                                    borderRadius: widthToDp('4')
-                                }}
-
-                            />
-                        </>
-                    ) : (
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={{ flex: 1 }}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 24}
+            >
+                <SafeAreaView style={content.topsafearray} />
+                <SafeAreaView style={content.safearray}>
+                    <Header back page='ออเดอร์ใหม่' />
+                    {
+                        isReady ? (
                             <>
-                                <ScrollView style={content.container}>
-                                    <RefreshControl
-                                        refreshing={refreshing}
-                                        onRefresh={() => handleRefresh()}
-                                    />
-                                    {
-                                        newOrderLists.length !== 0 ? (
-                                            <NewOrderNotification lists={newOrderLists} handleNewOrder={ () => handleNewOrder()} />
-                                        )
-                                            : <NotFoundComponent label='ยังไม่มีงานใหม่' />
-                                    }
-                                </ScrollView>
+                                <ContentLoader
+                                    pRows={0}
+                                    title
+                                    titleStyles={{
+                                        height: widthToDp('30'),
+                                        width: '92%',
+                                        margin: widthToDp('4'),
+                                        borderRadius: widthToDp('4')
+                                    }}
+
+                                />
+                                <ContentLoader
+                                    pRows={0}
+                                    title
+                                    titleStyles={{
+                                        height: widthToDp('30'),
+                                        width: '92%',
+                                        margin: widthToDp('4'),
+                                        borderRadius: widthToDp('4')
+                                    }}
+
+                                />
+                                <ContentLoader
+                                    pRows={0}
+                                    title
+                                    titleStyles={{
+                                        height: widthToDp('30'),
+                                        width: '92%',
+                                        margin: widthToDp('4'),
+                                        borderRadius: widthToDp('4')
+                                    }}
+
+                                />
                             </>
-                        )
-                }
-            </SafeAreaView>
+                        ) : (
+                                <>
+                                    <ScrollView style={content.container}>
+                                        <RefreshControl
+                                            refreshing={refreshing}
+                                            onRefresh={() => handleRefresh()}
+                                        />
+                                        {
+                                            newOrderLists.length !== 0 ? (
+                                                <NewOrderNotification lists={newOrderLists} handleNewOrder={() => handleNewOrder()} />
+                                            )
+                                                : <NotFoundComponent label='ยังไม่มีงานใหม่' />
+                                        }
+                                    </ScrollView>
+                                </>
+                            )
+                    }
+                </SafeAreaView>
+            </KeyboardAvoidingView>
             <OrderDetailModal />
         </>
     )
