@@ -18,7 +18,7 @@ import LocationPickerModal from '../../components/Modal/LocationPickerModal'
 
 import ImagePickerManager from 'react-native-image-crop-picker'
 
-import { sendPostReq } from '../../store/actions/socketAction'
+import { sendPostReq , connection } from '../../store/actions/socketAction'
 import { addNewResponse } from '../../store/actions/notiAction'
 import { SET_FILE, SET_LOCATION, clear, SET_DATE, SET_MONTH, SET_YEAR, SET_HOUR, SET_MINUTE, APPEND_FILE } from '../../store/actions/formAction'
 import { CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
@@ -63,7 +63,8 @@ const mapDispatchToProps = {
     SET_YEAR,
     SET_HOUR,
     SET_MINUTE,
-    APPEND_FILE
+    APPEND_FILE,
+    connection,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -73,6 +74,7 @@ const PostScreen = (props) => {
     const [isLoading , setIsLoading] = React.useState(false) 
     useFocusEffect(
         React.useCallback(() => {
+            props.connection(props.uid)
             setIsLoading(false)
             const current_date = new Date()
             Geolocation.getCurrentPosition((position) => {

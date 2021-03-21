@@ -53,13 +53,16 @@ const SearchScreen = (props) => {
                 (err) => {
                     console.log(err);
                 })
-            return () => {
-                props.SET_SEARCH_KEY_WORD('')
-                setListsWithDistance([])
-            }
+
         }, [])
     )
 
+    React.useEffect(() => {
+        return () => {
+            props.SET_SEARCH_KEY_WORD('')
+            setListsWithDistance([])
+        }
+    }, [])
     const handleDistance = async (t_lists) => {
         let temp_lists = []
         Promise.all(

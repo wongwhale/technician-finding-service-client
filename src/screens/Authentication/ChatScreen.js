@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import { SEND_MESSAGE, LEAVE_PRIVATE_CHAT, clear, RECEIVE_MESSAGE } from '../../store/actions/chatAction'
 
 import Modal from 'react-native-modalbox'
-import { socket } from '../../store/actions/socketAction'
+import { socket , connection } from '../../store/actions/socketAction'
 
 
 const mapStateToProps = (state) => ({
@@ -22,7 +22,7 @@ const mapStateToProps = (state) => ({
     imageUrl: state.chat.imageUrl
 })
 
-const connector = connect(mapStateToProps, { RECEIVE_MESSAGE, clear, SEND_MESSAGE, LEAVE_PRIVATE_CHAT })
+const connector = connect(mapStateToProps, { RECEIVE_MESSAGE, clear, SEND_MESSAGE, LEAVE_PRIVATE_CHAT , connection })
 
 const Chat = (props) => {
 
@@ -30,6 +30,7 @@ const Chat = (props) => {
     const scrollView_ref = useRef()
 
     useEffect(() => {
+        props.connection(props.uid)
         socket.on('receive_message' , ({message}) => {
             props.RECEIVE_MESSAGE(message)
         })

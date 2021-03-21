@@ -300,6 +300,7 @@ export const sendMessage = (message, receiver) => dispatch => {
 }
 
 export const leave = (uid) => dispatch => {
+    console.log('leave :' , uid);
     socket.emit('leave', { uid })
     dispatch({
         type: socketType.DISCONNECT

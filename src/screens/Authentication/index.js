@@ -61,9 +61,9 @@ const connector = connect(mapStateToProps,
 
 const Index = (props) => {
 
-  props.connection(props.uid)
-  props.setNotificationBadge()
   useEffect(() => {
+    props.connection(props.uid)
+    props.setNotificationBadge()
     return () => {
       props.leave(props.uid)
     }
@@ -76,38 +76,38 @@ const Index = (props) => {
         style={{ flex: 1 }}
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 24}
       > */}
-        <Stack.Navigator
-          screenOptions={{
-            cardStyle : {
-              backgroundColor : '#fff'
-            }
-          }}
-        >
-          <Stack.Screen name='tab' component={TabScreen} options={{ headerShown: false }} />
-          <Stack.Screen name='search' component={SearchScreen} options={{ headerShown: false }} />
-          <Stack.Screen name='nearme' component={NearMeScreen} options={{ headerShown: false }} />
-          <Stack.Screen name='message' component={Message} options={{ headerShown: false }} />
-          <Stack.Screen name='post' component={Post} options={{ headerShown: false }} />
-          <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
-          <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
-          <Stack.Screen name='setting' component={SettingScreen} options={{ headerShown: false }} />
-          <Stack.Screen name='regTech' component={TechnicianRegisterScreen} options={{ headerShown: false }} />
-          <Stack.Screen name='editInfo' component={UserInfoEditScreen} options={{ headerShown: false }} />
-          <Stack.Screen name='rating' component={RatingScreen} options={{ headerShown: false }} />
-          <Stack.Screen name='techNotification' component={TechnicianNotification} options={{ headerShown: false }} />
-          <Stack.Screen name='userNotification' component={UserNotification} options={{ headerShown: false }} />
-          <Stack.Screen name='history' component={HistoryScreen} options={{ headerShown: false }} />
-          <Stack.Screen name='accepted' component={AcceptedNotification} options={{ headerShown: false }} />
-        </Stack.Navigator>
-        <LoadingModal />
-        <LogoutConfirmModal
-          isOpen={props.logoutConfirmIsOpen}
-          onClose={() => props.CLOSE_LOGOUT_CONFIRM_MODAL(false)}
-          onLogout={() => props.logout()}
-          name={`${props.userInfo.firstname} ${props.userInfo.lastname}`}
-        />
-        <PriceInputModal />
-    {/* </KeyboardAvoidingView> */}
+      <Stack.Navigator
+        screenOptions={{
+          cardStyle: {
+            backgroundColor: '#fff'
+          }
+        }}
+      >
+        <Stack.Screen name='tab' component={TabScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='search' component={SearchScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='nearme' component={NearMeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='message' component={Message} options={{ headerShown: false }} />
+        <Stack.Screen name='post' component={Post} options={{ headerShown: false }} />
+        <Stack.Screen name='chat' component={Chat} options={{ headerShown: false }} />
+        <Stack.Screen name='techInfo' component={TechnicianInfo} options={{ headerShown: false }} />
+        <Stack.Screen name='setting' component={SettingScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='regTech' component={TechnicianRegisterScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='editInfo' component={UserInfoEditScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='rating' component={RatingScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='techNotification' component={TechnicianNotification} options={{ headerShown: false }} />
+        <Stack.Screen name='userNotification' component={UserNotification} options={{ headerShown: false }} />
+        <Stack.Screen name='history' component={HistoryScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='accepted' component={AcceptedNotification} options={{ headerShown: false }} />
+      </Stack.Navigator>
+      <LoadingModal />
+      <LogoutConfirmModal
+        isOpen={props.logoutConfirmIsOpen}
+        onClose={() => props.CLOSE_LOGOUT_CONFIRM_MODAL(false)}
+        onLogout={() => props.logout()}
+        name={`${props.userInfo.firstname} ${props.userInfo.lastname}`}
+      />
+      <PriceInputModal />
+      {/* </KeyboardAvoidingView> */}
 
     </>
   );
