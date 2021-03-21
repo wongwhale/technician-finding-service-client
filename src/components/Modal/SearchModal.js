@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, Text, SafeAreaView, Button, TextInput, Animated, Easing, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import { View, Text, SafeAreaView,Modal , Button, TextInput, Animated, Easing, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import { color, searchScreen, heightToDp, widthToDp } from '../../stylesheet'
-import Modal from 'react-native-modalbox'
 import Feather from 'react-native-vector-icons/Feather'
 import { ScrollView } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
@@ -108,17 +107,13 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
     return (
         <>
             <Modal
-                isOpen={isOpen}
-                swipeToClose={false}
-                onClosed={ () => onClosed()}
-                onOpened={ () => {
-                    inputRef.current.focus()
-                }}
+                visible={isOpen}
+                animationType='fade'
             >
-                <KeyboardAvoidingView
+                {/* <KeyboardAvoidingView
                     style={{ flex: 1 }}
                     behavior='padding'
-                >
+                > */}
                     <SafeAreaView>
                         <View
                             style={{
@@ -166,6 +161,8 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
                                     placeholder="ค้นหาช่าง ประเภท , ชื่อ หรือ อื่นๆ "
                                     placeholderTextColor={color.BLUE_4}
                                     ref={inputRef}
+                                    autoFocus
+                                    autoCompleteType='off'
                                     style={{
                                         flex: 1,
                                         fontSize: widthToDp('4'),
@@ -246,7 +243,7 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
                             }
                         </ScrollView>
                     </SafeAreaView>
-                </KeyboardAvoidingView>
+                {/* </KeyboardAvoidingView> */}
             </Modal>
         </>
     )
