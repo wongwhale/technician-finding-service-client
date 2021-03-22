@@ -63,8 +63,9 @@ const NewOrder = (props) => {
                         return item
                     }
                 })
-                AsyncStorage.setItem('notification', JSON.stringify(readed))
-                props.setNotificationBadge()
+                AsyncStorage.setItem('notification', JSON.stringify(readed)).then( () => {
+                    props.setNotificationBadge()
+                })
             })
             socket.on('recieve_new_post_req', () => {
                 handleNewOrder()

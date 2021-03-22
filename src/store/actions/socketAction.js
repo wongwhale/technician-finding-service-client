@@ -197,6 +197,31 @@ socket.on('join', (id) => {
     console.log('join', id);
 })
 
+socket.on('confirm_technician_response', (data) => {
+    console.log(data);
+    AsyncStorage.getItem('notification').then((str) => {
+        let noti = JSON.parse(str)
+        const new_noti_json = [{
+            id: data.formID,
+            type: '',
+            name: '',
+            status: false,
+            page: 'accepted'
+        }, ...noti]
+
+        const notRead = new_noti_json.filter((val) => {
+            return val.status === false
+        })
+        store.dispatch({
+            type: notiType.SET_NOTIFICATION_BADGE,
+            payload: {
+                notification_badge: notRead.length
+            }
+        })
+        AsyncStorage.setItem('notification', JSON.stringify(new_noti_json))
+    })
+})
+
 // socket.on('update_user_response', () => {
 //     updateUserResponse()
 // })
@@ -300,7 +325,7 @@ export const sendMessage = (message, receiver) => dispatch => {
 }
 
 export const leave = (uid) => dispatch => {
-    console.log('leave :' , uid);
+    console.log('leave :', uid);
     socket.emit('leave', { uid })
     dispatch({
         type: socketType.DISCONNECT
@@ -319,7 +344,7 @@ export const connection = (uid) => dispatch => {
 }
 
 export const disconnect = (uid) => dispatch => {
-    console.log('disconnect ' , uid);
+    console.log('disconnect ', uid);
     socket.disconnect(uid)
     // socket.emit('leave', { uid })
     // socket.disconnect()

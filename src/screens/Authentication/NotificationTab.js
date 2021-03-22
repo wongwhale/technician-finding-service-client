@@ -20,19 +20,19 @@ const mapDispatchToProps = {
     setNotificationBadge
 }
 
-const NotificationLists = ({ item , tech }) => {
+const NotificationLists = ({ item, tech }) => {
     const onPress = async () => {
         navigate(item.page)
     }
     const { navigate } = useNavigation()
 
     const handleDelete = () => {
-        AsyncStorage.getItem('notification').then( str => {
+        AsyncStorage.getItem('notification').then(str => {
             const notification = JSON.parse(str)
-            const filtered = notification.filter( (val) => {
+            const filtered = notification.filter((val) => {
                 return val.id !== item.id && val.type !== item.type && val.name !== item.name
             })
-            AsyncStorage.setItem('notification' , JSON.stringify(filtered)).then( () => {
+            AsyncStorage.setItem('notification', JSON.stringify(filtered)).then(() => {
                 onRefresh()
             })
         })
@@ -67,7 +67,13 @@ const NotificationLists = ({ item , tech }) => {
                             color: color.BLUE_0
                         }}
                     >
-                        {item.page === 'techNotification' ? `มีการเสนองานใหม่จาก ${tech}` : `มีการเสนอราคาจาก ${tech}`}
+                        {
+                            item.page === 'techNotification' ?
+                                `มีการเสนองานใหม่จาก ${tech}` :
+                                item.page === 'accepted' ?
+                                    `ออเดอร์ ${item.id} ยืนยันแล้ว` :
+                                    `มีการเสนอราคาจาก ${tech}`
+                        }
                     </Text>
                     <Text
                         style={{
@@ -75,7 +81,12 @@ const NotificationLists = ({ item , tech }) => {
                             color: color.BLUE_1
                         }}
                     >
-                        {item.page === 'techNotification' ? `เกี่ยวกับ ${item.type}` : `เกี่ยวกับการหา ${item.type} ของคุณ`}
+                        {
+                            item.page === 'techNotification' ?
+                                `เกี่ยวกับ ${item.type}` :
+                                item.page === 'accepted' ?
+                                    `` :
+                                    `เกี่ยวกับการหา ${item.type} ของคุณ`}
                     </Text>
                 </View>
                 <TouchableOpacity
@@ -102,25 +113,6 @@ const NotificationLists = ({ item , tech }) => {
 
 const NotificationTab = (props) => {
     const [moreVisible, setMoreVisible] = React.useState(false)
-    // const json_var = {
-    //     notification: [
-    //         {
-    //             id: '123123',
-    //             form: 'asdfasdf',
-    //             name : 'ปริญญา สีตะวัน',
-    //             status : false
-    //         },
-    //         {
-    //             id: '123123',
-    //             name: 'นิรัช ศรีใจมูน',
-    //             status : true
-    //         }, {
-    //             id: '123123',
-    //             name: 'ธีรภัทร์ รัตนพิกุล',
-    //             status : false
-    //         }
-    //     ]
-    // }
 
     const [notificationLists, setNotificationLists] = React.useState([])
 
@@ -136,6 +128,7 @@ const NotificationTab = (props) => {
                 const noti_json = JSON.parse(json)
                 setNotificationLists(noti_json)
             }
+            props.setNotificationBadge()
         })
     }
 
@@ -147,15 +140,7 @@ const NotificationTab = (props) => {
             socket.on('recieve_new_post_req', () => {
                 onRefresh()
             })
-            AsyncStorage.getItem('notification').then(json => {
-                if (json === null) {
-                    console.log('is null');
-                }
-                else {
-                    const noti_json = JSON.parse(json)
-                    setNotificationLists(noti_json)
-                }
-            })
+            onRefresh()
             // AsyncStorage.setItem('notification' , JSON.stringify(json_var))
             return () => setNotificationLists([])
         }, [])
@@ -166,35 +151,36 @@ const NotificationTab = (props) => {
             <SafeAreaView style={content.topsafearray} />
             <SafeAreaView style={content.safearray} >
                 <Header page='การแจ้งเตือน' />
-                {
-                    notificationLists.length === 0 ? (
-                        <>
-                            <Image
-                                source={require('../../assets/image/noNotification.jpg')}
-                                style={{
-                                    height: widthToDp('60'),
-                                    alignSelf: 'center',
-                                    resizeMode: 'contain'
-                                }}
-                            />
-                            <Text
-                                style={{
-                                    alignSelf: 'center',
-                                    fontSize: widthToDp('5'),
-                                    color: color.BLUE_2
-                                }}
-                            >
-                                ยังไม่มีการแจ้งเตือน
-                        </Text>
-                        </>
-                    ) : null
-                }
+
                 <ScrollView
                     style={content.container}
                 >
-                    <RefreshControl 
+                    {
+                        notificationLists.length === 0 ? (
+                            <>
+                                <Image
+                                    source={require('../../assets/image/noNotification.jpg')}
+                                    style={{
+                                        height: widthToDp('60'),
+                                        alignSelf: 'center',
+                                        resizeMode: 'contain'
+                                    }}
+                                />
+                                <Text
+                                    style={{
+                                        alignSelf: 'center',
+                                        fontSize: widthToDp('5'),
+                                        color: color.BLUE_2
+                                    }}
+                                >
+                                    ยังไม่มีการแจ้งเตือน
+                        </Text>
+                            </>
+                        ) : null
+                    }
+                    <RefreshControl
                         refreshing={refreshing}
-                        onRefresh={ () => onRefresh()}
+                        onRefresh={() => onRefresh()}
                     />
                     <View>
                         {
@@ -208,7 +194,7 @@ const NotificationTab = (props) => {
                                         page={item.page}
                                         id={item.id}
                                         item={item}
-                                        onRefresh={ () => onRefresh()}
+                                        onRefresh={() => onRefresh()}
                                         setBadge={() => props.setNotificationBadge()}
                                     />
                                 )
@@ -219,7 +205,7 @@ const NotificationTab = (props) => {
             </SafeAreaView>
             <NotificationMoreModal
                 isOpen={moreVisible}
-                onClosed={ () => setMoreVisible(false) }
+                onClosed={() => setMoreVisible(false)}
             />
         </>
     )

@@ -90,8 +90,9 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
                         return item
                     }
                 })
-                AsyncStorage.setItem('notification' , JSON.stringify(readed))
-                props.setNotificationBadge()
+                AsyncStorage.setItem('notification', JSON.stringify(readed)).then( () => {
+                    props.setNotificationBadge()
+                })
             }) 
             setIsReady(true)
             socket.on('recieve_new_response' , () => {

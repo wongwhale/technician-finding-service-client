@@ -21,11 +21,12 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Header from '../../../components/UserInfo/Header'
 import NotFoundComponent from '../../../components/NotFoundComponent'
 import ContentLoader from 'react-native-easy-content-loader'
-import { getAcceptedList } from '../../../store/actions/notiAction'
-import {} from '../../../store/actions/socketAction'
+import { getAcceptedList , setNotificationBadge} from '../../../store/actions/notiAction'
+import { } from '../../../store/actions/socketAction'
 import { useFocusEffect } from '@react-navigation/native'
 import ShowMapModal from '../../../components/Modal/ShowMapModal'
 import AcceptedDetailModal from '../../../components/Modal/AcceptedDetailModal'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const TopTab = createMaterialTopTabNavigator()
 
@@ -35,36 +36,54 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    getAcceptedList
+    getAcceptedList,
+    setNotificationBadge
 }
 
 
-const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
+const AcceptedRequestOrder = ({ userConfirmed, ...props }) => {
 
     const [isReady, setIsReady] = React.useState(true)
-    const [acceptedLists , setAcceptedLists] = React.useState([])
-    const [mapModalVisible , setMapModalVisible] = React.useState(false)
-    const [detailModalVisible , setDetailModalVisible] = React.useState(false)
-    const [location , setLocation ] = React.useState({
-        lat : 0,
-        lon : 0
+    const [acceptedLists, setAcceptedLists] = React.useState([])
+    const [mapModalVisible, setMapModalVisible] = React.useState(false)
+    const [detailModalVisible, setDetailModalVisible] = React.useState(false)
+    const [location, setLocation] = React.useState({
+        lat: 0,
+        lon: 0
     })
 
     useFocusEffect(
         React.useCallback(() => {
+            AsyncStorage.getItem('notification').then(str => {
+                const notification = JSON.parse(str)
+                let readed = notification.map((item) => {
+                    if (item.page === 'accepted') {
+                        return {
+                            ...item,
+                            status: true
+                        }
+                    }
+                    else {
+                        return item
+                    }
+                })
+                AsyncStorage.setItem('notification', JSON.stringify(readed)).then( () => {
+                    props.setNotificationBadge()
+                })
+            })
             // socket.on('recieve_new_post_req', () => {
             //     handleNewOrder()
             // })
             setIsReady(true)
-            props.getAcceptedList().then( (res) => {
-                setAcceptedLists(res.sort((a,b) => {
+            props.getAcceptedList().then((res) => {
+                setAcceptedLists(res.sort((a, b) => {
                     return new Date(a.date).getTime() - new Date(b.date).getTime()
-                }).filter( (val) => {
+                }).filter((val) => {
                     return new Date(val.date).getTime() > (new Date().getTime() - 86400000)
                 })
                 )
                 setIsReady(false)
-            }).catch( err => {
+            }).catch(err => {
                 console.log(err)
             })
             // props.getAcceptedList().then(res => {
@@ -99,7 +118,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                                     height: widthToDp('30'),
                                     width: '92%',
                                     marginHorizontal: widthToDp('4'),
-                                    marginVertical : widthToDp('2'),
+                                    marginVertical: widthToDp('2'),
                                     borderRadius: widthToDp('4')
                                 }}
 
@@ -111,7 +130,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                                     height: widthToDp('30'),
                                     width: '92%',
                                     marginHorizontal: widthToDp('4'),
-                                    marginVertical : widthToDp('2'),
+                                    marginVertical: widthToDp('2'),
                                     borderRadius: widthToDp('4')
                                 }}
 
@@ -123,7 +142,7 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                                     height: widthToDp('30'),
                                     width: '92%',
                                     marginHorizontal: widthToDp('4'),
-                                    marginVertical : widthToDp('2'),
+                                    marginVertical: widthToDp('2'),
                                     borderRadius: widthToDp('4')
                                 }}
 
@@ -138,22 +157,23 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                             >
                                 {
                                     acceptedLists.length !== 0 ? (
-                                        acceptedLists.map((form) => {
+                                        acceptedLists.map((form, index) => {
                                             let date = new Date(form.date)
                                             date.setMinutes(date.getMinutes() - 7 * 60)
                                             return (
-                                                <Abstract 
+                                                <Abstract
+                                                    key={index}
                                                     id={form._id}
                                                     date={date}
                                                     type={form.techType}
-                                                    onOpenModal={ () => {
+                                                    onOpenModal={() => {
                                                         setLocation({
-                                                            lat : form.location.lat,
-                                                            lon : form.location.lon
+                                                            lat: form.location.lat,
+                                                            lon: form.location.lon
                                                         })
                                                         setMapModalVisible(true)
                                                     }}
-                                                    openDetailModal=  { () => {
+                                                    openDetailModal={() => {
                                                         setDetailModalVisible(true)
                                                     }}
                                                 />
@@ -166,16 +186,16 @@ const AcceptedRequestOrder = ({ userConfirmed , ...props}) => {
                         )
                 }
             </SafeAreaView>
-            <ShowMapModal 
+            <ShowMapModal
                 isOpen={mapModalVisible}
-                onClosed={ () => {
+                onClosed={() => {
                     setMapModalVisible(false)
                 }}
                 location={location}
             />
             <AcceptedDetailModal
                 isOpen={detailModalVisible}
-                onClosed={ () => {
+                onClosed={() => {
                     setDetailModalVisible(false)
                 }}
 

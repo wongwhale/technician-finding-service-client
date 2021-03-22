@@ -20,7 +20,6 @@ const LoadingModal = (props) => {
         <>
         <Modal
             isOpen={props.isLoading}
-            backButtonClose={true}
             onClosed={ () => props.LOADED()}
             swipeToClose={false}
             backButtonClose={false}
