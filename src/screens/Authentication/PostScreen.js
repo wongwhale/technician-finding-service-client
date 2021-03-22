@@ -15,14 +15,14 @@ import TimePickerModal from '../../components/Modal/TimePickerModal'
 import ImagePickerModal from '../../components/Modal/ImagePickerModal'
 import SelectTypePickerModal from '../../components/Modal/SelectTypePickerModal'
 import LocationPickerModal from '../../components/Modal/LocationPickerModal'
-
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import ImagePickerManager from 'react-native-image-crop-picker'
 
-import { sendPostReq , connection } from '../../store/actions/socketAction'
+import { sendPostReq, connection } from '../../store/actions/socketAction'
 import { addNewResponse } from '../../store/actions/notiAction'
 import { SET_FILE, SET_LOCATION, clear, SET_DATE, SET_MONTH, SET_YEAR, SET_HOUR, SET_MINUTE, APPEND_FILE } from '../../store/actions/formAction'
 import { CLOSE_IMAGE_PICKER_MODAL } from '../../store/actions/modalAction'
-import { LOADING, LOADED } from '../../store/actions/authAction'
+import { LOADING, LOADED, setCurrentLocation } from '../../store/actions/authAction'
 import { useFocusEffect } from '@react-navigation/native'
 import { connect } from 'react-redux'
 import { content, color, card, widthToDp } from '../../stylesheet'
@@ -47,7 +47,8 @@ const mapStateToProps = (state) => ({
     lat: state.form.location.latitude,
     lng: state.form.location.longitude,
     location: state.form.location,
-    type: state.form.type
+    type: state.form.type,
+    currentLocation: state.auth.userInfo.currentLocation
 })
 
 const mapDispatchToProps = {
@@ -72,15 +73,16 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 
 const PostScreen = (props) => {
     const [locationVisible, setLocationVisible] = React.useState(false)
-    const [isLoading , setIsLoading] = React.useState(false) 
-    const [locationDesc , setLocationDesc] = React.useState('')
+    const [isLoading, setIsLoading] = React.useState(false)
+    const [locationDesc, setLocationDesc] = React.useState('')
 
 
     useFocusEffect(
         React.useCallback(() => {
             setIsLoading(false)
             const current_date = new Date()
-            Geolocation.getCurrentPosition( async (position) => {
+            Geolocation.getCurrentPosition(async (position) => {
+                props.setCurrentLocation(position.coords.latitude, position.coords.longitude)
                 props.SET_LOCATION(position.coords.latitude, position.coords.longitude)
                 const desc = await getLocationDescription(position.coords.latitude, position.coords.longitude)
                 setLocationDesc(desc)
@@ -176,45 +178,38 @@ const PostScreen = (props) => {
                                 <Text
                                     style={styles.selectedText}
                                 >
-                                    (ค่าเริ่มต้น : ที่อยู่ปัจจุบัน)
-                                </Text>
-                                <Text
-                                    style={styles.selectedText}
-                                >
                                     {locationDesc}
                                 </Text>
                             </View>
                             <View style={card.cardContainer}>
-                                {/* <LocationPicker /> */}
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        setLocationVisible(true)
-                                    }}
-                                >
-                                    <View
-                                        style={{
-                                            width: '100%',
-                                            backgroundColor: color.BLUE_5,
-                                            padding: widthToDp('2'),
-                                            paddingLeft: widthToDp('5'),
-                                            borderRadius: widthToDp('2'),
-                                            marginBottom: widthToDp('2'),
-                                            justifyContent: 'center',
-                                            flexDirection: 'row',
-                                            alignItems: 'center'
+                                <View>
+                                    <MapView
+                                        style={{ width: '100%', aspectRatio: 1, justifyContent: 'center', alignItems: 'center', borderRadius: widthToDp('2') }}
+                                        provider={PROVIDER_GOOGLE}
+                                        initialRegion={{
+                                            latitude: props.currentLocation.lat,
+                                            longitude: props.currentLocation.lon,
+                                            latitudeDelta: 0.005,
+                                            longitudeDelta: 0.005
+                                        }}
+                                        zoomEnabled
+                                        showsUserLocation
+                                        onRegionChangeComplete={async (res) => {
+                                            props.SET_LOCATION(res.latitude, res.longitude)
+                                            const desc = await getLocationDescription(res.latitude, res.longitude)
+                                            setLocationDesc(desc)
                                         }}
                                     >
-                                        <Text
-                                            style={styles.selectedText}
+                                        <Marker
+                                            coordinate={{
+                                                latitude: props.location.latitude,
+                                                longitude: props.location.longitude
+                                            }}
                                         >
-                                            ระบุโลเคชัน
-                                        </Text>
-                                    </View>
-                                    {/* <Feather
-                                    style={styles.selectedText}
-                                    name='map-pin'
-                                /> */}
-                                </TouchableOpacity>
+
+                                        </Marker>
+                                    </MapView>
+                                </View>
 
                             </View>
                         </View>
@@ -276,18 +271,17 @@ const PostScreen = (props) => {
                             })
                         }}
                     />
-                    <LocationPickerModal
+                    {/* <LocationPickerModal
                         isOpen={locationVisible}
                         onClosed={() => setLocationVisible(false)}
                         location={props.location}
                         setLocation={(lat, lng) => {
                             props.SET_LOCATION(lat, lng)
                         }}
-                        changeDesc={ (desc) => {
+                        changeDesc={(desc) => {
                             setLocationDesc(desc)
                         }}
-                    />
-
+                    /> */}
                     <Animated.View
                         style={{
                             // backgroundColor : 'red',
@@ -370,11 +364,11 @@ const PostScreen = (props) => {
             >
                 <SafeAreaView
                     style={{
-                        flex :1,
-                        alignItems : 'center',
-                        justifyContent : 'center',
-                        backgroundColor : '#22222233',
-                        
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#22222233',
+
                     }}
                 >
                     <ActivityIndicator size='small' />
