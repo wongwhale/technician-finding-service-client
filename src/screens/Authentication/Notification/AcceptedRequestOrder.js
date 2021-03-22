@@ -21,7 +21,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Header from '../../../components/UserInfo/Header'
 import NotFoundComponent from '../../../components/NotFoundComponent'
 import ContentLoader from 'react-native-easy-content-loader'
-import { getAcceptedList , setNotificationBadge} from '../../../store/actions/notiAction'
+import { getAcceptedList, setNotificationBadge } from '../../../store/actions/notiAction'
 import { } from '../../../store/actions/socketAction'
 import { useFocusEffect } from '@react-navigation/native'
 import ShowMapModal from '../../../components/Modal/ShowMapModal'
@@ -67,7 +67,7 @@ const AcceptedRequestOrder = ({ userConfirmed, ...props }) => {
                         return item
                     }
                 })
-                AsyncStorage.setItem('notification', JSON.stringify(readed)).then( () => {
+                AsyncStorage.setItem('notification', JSON.stringify(readed)).then(() => {
                     props.setNotificationBadge()
                 })
             })
@@ -95,6 +95,23 @@ const AcceptedRequestOrder = ({ userConfirmed, ...props }) => {
 
             return () => {
                 setAcceptedLists([])
+                AsyncStorage.getItem('notification').then(str => {
+                    const notification = JSON.parse(str)
+                    let readed = notification.map((item) => {
+                        if (item.page === 'accepted') {
+                            return {
+                                ...item,
+                                status: true
+                            }
+                        }
+                        else {
+                            return item
+                        }
+                    })
+                    AsyncStorage.setItem('notification', JSON.stringify(readed)).then(() => {
+                        props.setNotificationBadge()
+                    })
+                })
             }
         }, [])
     )

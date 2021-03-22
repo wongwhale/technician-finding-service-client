@@ -26,17 +26,17 @@ const NotificationLists = ({ item, tech }) => {
     }
     const { navigate } = useNavigation()
 
-    const handleDelete = () => {
-        AsyncStorage.getItem('notification').then(str => {
-            const notification = JSON.parse(str)
-            const filtered = notification.filter((val) => {
-                return val.id !== item.id && val.type !== item.type && val.name !== item.name
-            })
-            AsyncStorage.setItem('notification', JSON.stringify(filtered)).then(() => {
-                onRefresh()
-            })
-        })
-    }
+    // const handleDelete = () => {
+    //     AsyncStorage.getItem('notification').then(str => {
+    //         const notification = JSON.parse(str)
+    //         const filtered = notification.filter((val) => {
+    //             return val.id !== item.id && val.type !== item.type && val.name !== item.name 
+    //         })
+    //         AsyncStorage.setItem('notification', JSON.stringify(filtered)).then(() => {
+    //             onRefresh()
+    //         })
+    //     })
+    // }
 
     return (
         <>
@@ -89,7 +89,7 @@ const NotificationLists = ({ item, tech }) => {
                                     `เกี่ยวกับการหา ${item.type} ของคุณ`}
                     </Text>
                 </View>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     style={{
                         width: widthToDp('6'),
                         aspectRatio: 1,
@@ -99,12 +99,12 @@ const NotificationLists = ({ item, tech }) => {
                         justifyContent: 'center'
                     }}
                     onPress={() => {
-                        handleDelete()
+                        // handleDelete()
                         // openModal()
                     }}
                 >
                     <Feather name='trash-2' color={color.IOS_RED_LIGHT} size={widthToDp('4')} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
             </TouchableOpacity>
         </>
@@ -135,10 +135,19 @@ const NotificationTab = (props) => {
     useFocusEffect(
         React.useCallback(() => {
             socket.on('recieve_new_response', () => {
-                onRefresh()
+                setTimeout(() => {
+                    onRefresh()
+                }, 3000)
             })
             socket.on('recieve_new_post_req', () => {
-                onRefresh()
+                setTimeout(() => {
+                    onRefresh()
+                }, 3000)
+            })
+            socket.on('confirm_technician_response', () => {
+                setTimeout(() => {
+                    onRefresh()
+                }, 3000)
             })
             onRefresh()
             // AsyncStorage.setItem('notification' , JSON.stringify(json_var))

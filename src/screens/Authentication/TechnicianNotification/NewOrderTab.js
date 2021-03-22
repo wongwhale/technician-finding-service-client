@@ -7,7 +7,7 @@ import Header from '../../../components/Header'
 import NotFoundComponent from '../../../components/NotFoundComponent'
 import { getNewOrderLists, setNotificationBadge } from '../../../store/actions/notiAction'
 import { CLOSE_DETAIL_MODAL } from '../../../store/actions/modalAction'
-import { SafeAreaView, RefreshControl , KeyboardAvoidingView , Platform } from 'react-native'
+import { SafeAreaView, RefreshControl, KeyboardAvoidingView, Platform } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import ContentLoader from 'react-native-easy-content-loader'
 import OrderDetailModal from '../../../components/Modal/OrderDetailModal'
@@ -63,7 +63,7 @@ const NewOrder = (props) => {
                         return item
                     }
                 })
-                AsyncStorage.setItem('notification', JSON.stringify(readed)).then( () => {
+                AsyncStorage.setItem('notification', JSON.stringify(readed)).then(() => {
                     props.setNotificationBadge()
                 })
             })
@@ -79,6 +79,23 @@ const NewOrder = (props) => {
             return () => {
                 setNewOrderLists([])
                 props.CLOSE_DETAIL_MODAL()
+                AsyncStorage.getItem('notification').then(str => {
+                    const notification = JSON.parse(str)
+                    let readed = notification.map((item) => {
+                        if (item.page === 'techNotification') {
+                            return {
+                                ...item,
+                                status: true
+                            }
+                        }
+                        else {
+                            return item
+                        }
+                    })
+                    AsyncStorage.setItem('notification', JSON.stringify(readed)).then(() => {
+                        props.setNotificationBadge()
+                    })
+                })
             }
         }, [])
     )

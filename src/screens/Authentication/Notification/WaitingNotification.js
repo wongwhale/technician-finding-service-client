@@ -22,7 +22,7 @@ import Header from '../../../components/UserInfo/Header'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import NotFoundComponent from '../../../components/NotFoundComponent'
 import ContentLoader from 'react-native-easy-content-loader'
-import { getWaitingList , setNotificationBadge } from '../../../store/actions/notiAction'
+import { getWaitingList, setNotificationBadge } from '../../../store/actions/notiAction'
 import { socket } from '../../../store/actions/socketAction'
 import { LOADED } from '../../../store/actions/authAction'
 import { useFocusEffect } from '@react-navigation/native'
@@ -57,7 +57,7 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
 
     const handleNewResponse = () => {
         props.getWaitingList().then(res => {
-            setWaitingLists(res.sort((a,b) => {
+            setWaitingLists(res.sort((a, b) => {
                 return new Date(a.date).getTime() - new Date(b.date).getTime()
             }))
             setIsReady(false)
@@ -77,34 +77,51 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
 
     useFocusEffect(
         React.useCallback(() => {
-            AsyncStorage.getItem('notification').then( str => {
+            AsyncStorage.getItem('notification').then(str => {
                 const notification = JSON.parse(str)
-                let readed = notification.map( (item) => {
-                    if(item.page === 'userNotification'){
+                let readed = notification.map((item) => {
+                    if (item.page === 'userNotification') {
                         return {
                             ...item,
-                            status : true
+                            status: true
                         }
                     }
                     else {
                         return item
                     }
                 })
-                AsyncStorage.setItem('notification', JSON.stringify(readed)).then( () => {
+                AsyncStorage.setItem('notification', JSON.stringify(readed)).then(() => {
                     props.setNotificationBadge()
                 })
-            }) 
+            })
             setIsReady(true)
-            socket.on('recieve_new_response' , () => {
+            socket.on('recieve_new_response', () => {
                 handleNewResponse()
             })
-            socket.on('confirm_send_post_req' , () => {
+            socket.on('confirm_send_post_req', () => {
                 handleNewResponse()
             })
             handleNewResponse()
 
             return () => {
                 setWaitingLists([])
+                AsyncStorage.getItem('notification').then(str => {
+                    const notification = JSON.parse(str)
+                    let readed = notification.map((item) => {
+                        if (item.page === 'userNotification') {
+                            return {
+                                ...item,
+                                status: true
+                            }
+                        }
+                        else {
+                            return item
+                        }
+                    })
+                    AsyncStorage.setItem('notification', JSON.stringify(readed)).then(() => {
+                        props.setNotificationBadge()
+                    })
+                })
             }
         }, [])
     )
@@ -128,7 +145,7 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
                                     height: widthToDp('30'),
                                     width: '92%',
                                     marginHorizontal: widthToDp('4'),
-                                    marginVertical : widthToDp('2'),
+                                    marginVertical: widthToDp('2'),
                                     borderRadius: widthToDp('4')
                                 }}
 
@@ -140,7 +157,7 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
                                     height: widthToDp('30'),
                                     width: '92%',
                                     marginHorizontal: widthToDp('4'),
-                                    marginVertical : widthToDp('2'),
+                                    marginVertical: widthToDp('2'),
                                     borderRadius: widthToDp('4')
                                 }}
 
@@ -152,7 +169,7 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
                                     height: widthToDp('30'),
                                     width: '92%',
                                     marginHorizontal: widthToDp('4'),
-                                    marginVertical : widthToDp('2'),
+                                    marginVertical: widthToDp('2'),
                                     borderRadius: widthToDp('4')
                                 }}
 
@@ -163,7 +180,7 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
                                 style={{
                                     flex: 1,
                                     backgroundColor: '#fff',
-                                    paddingHorizontal : widthToDp('2')
+                                    paddingHorizontal: widthToDp('2')
                                 }}
                             >
                                 <RefreshControl
@@ -186,7 +203,7 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
                                                         acceptedTech={form.technician}
                                                         distance={form.distance}
                                                         handleCancel={(id) => handleCancel(id)}
-                                                        openDetailModal={ () => {
+                                                        openDetailModal={() => {
                                                             setModalVisible(true)
                                                         }}
                                                     />
@@ -199,9 +216,9 @@ const NewRequestOrder = ({ navigation, role, userResponse, ...props }) => {
                         )
                 }
             </SafeAreaView>
-            <HistoryDetailModal 
+            <HistoryDetailModal
                 isOpen={modalVisible}
-                onClosed = { () => {
+                onClosed={() => {
                     setModalVisible(false)
                 }}
             />

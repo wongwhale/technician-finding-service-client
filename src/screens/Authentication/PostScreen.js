@@ -67,6 +67,7 @@ const mapDispatchToProps = {
     SET_MINUTE,
     APPEND_FILE,
     connection,
+    setCurrentLocation
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
