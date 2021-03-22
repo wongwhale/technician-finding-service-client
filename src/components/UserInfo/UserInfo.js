@@ -37,11 +37,12 @@ const UserInfo = (props) => {
                     <View style={[global.chatIconContainer, { flexDirection: 'row-reverse' }]}>
                         <TouchableOpacity
                             onPress={() => {
-                                props.INITIAL_HISTORY_LIST(props.uid)
-                                    .then(() => {
-                                        props.LOADED()
-                                        navigate('message')
-                                    })
+                                navigate('message')
+                                // props.INITIAL_HISTORY_LIST(props.uid)
+                                //     .then(() => {
+                                //         props.LOADED()
+                                //         navigate('message')
+                                //     })
                             }}
                             style={{ marginLeft: widthToDp('2') }}
                         >

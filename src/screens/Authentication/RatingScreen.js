@@ -70,7 +70,37 @@ const RatingScreen = (props) => {
                                         name = 'watch-outline'
                                         iconColor = focused ? color.IOS_ORANGE_DARK : color.GREY_2
                                         fontColor = focused ? color.BLUE_0 : color.GREY_2
-                                    } else {
+                                    } else if (route.name === 'ช่างก่อสร้าง') {
+                                        labelName = 'ก่อสร้าง'
+                                        name = 'business-outline'
+                                        iconColor = focused ? color.YELLOW : color.GREY_2
+                                        fontColor = focused ? color.BLUE_0 : color.GREY_2
+                                    }  else if (route.name === 'ช่างซ่อมรถยนต์') {
+                                        labelName = 'รถยนต์'
+                                        name = 'car-outline'
+                                        iconColor = focused ? color.IOS_PURPLE_DARK : color.GREY_2
+                                        fontColor = focused ? color.IOS_PURPLE_DARK : color.GREY_2
+                                    }else if (route.name === 'ช่างประปา') {
+                                        labelName = 'ประปา'
+                                        name = 'water-outline'
+                                        iconColor = focused ? color.IOS_INDIGO_DARK : color.GREY_2
+                                        fontColor = focused ? color.IOS_INDIGO_DARK : color.GREY_2
+                                    }else if (route.name === 'ช่างซ่อมโทรศัพท์') {
+                                        labelName = 'โทรศัพท์'
+                                        name = 'phone-portrait-outline'
+                                        iconColor = focused ? color.IOS_INDIGO_DARK : color.GREY_2
+                                        fontColor = focused ? color.IOS_INDIGO_DARK : color.GREY_2
+                                    }else if (route.name === 'คนทำความสะอาด') {
+                                        labelName = 'คนทำความสะอาด'
+                                        name = 'bed-outline'
+                                        iconColor = focused ? color.IOS_ORANGE_DARK : color.GREY_2
+                                        fontColor = focused ? color.BLUE_0 : color.GREY_2
+                                    }else if (route.name === 'ช่างไฟฟ้า') {
+                                        labelName = 'ไฟฟ้า'
+                                        name = 'bulb-outline'
+                                        iconColor = focused ? color.IOS_ORANGE_DARK : color.GREY_2
+                                        fontColor = focused ? color.BLUE_0 : color.GREY_2
+                                    }else {
                                         labelName = route.name
                                         name = 'build-outline'
                                         iconColor = focused ? color.BLUE_0 : color.GREY_2

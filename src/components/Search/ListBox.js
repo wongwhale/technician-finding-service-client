@@ -51,7 +51,7 @@ const ListBox = (props) => {
                         <Text style={searchScreen.distanceText}>
                             ห่างจากคุณ: {props.distance} กม.
                         </Text>
-                        <TouchableOpacity
+                        <View
                             style={[searchScreen.detailbtnContainer]}
                         >
                             <Text
@@ -66,7 +66,7 @@ const ListBox = (props) => {
                                 fontSize: widthToDp('3'),
                                 color: color.BLUE_3
                             }} name='chevron-right' />
-                        </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </TouchableOpacity>
