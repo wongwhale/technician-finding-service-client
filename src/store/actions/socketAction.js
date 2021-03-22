@@ -319,6 +319,7 @@ export const connection = (uid) => dispatch => {
 }
 
 export const disconnect = (uid) => dispatch => {
+    console.log('disconnect ' , uid);
     socket.disconnect(uid)
     // socket.emit('leave', { uid })
     // socket.disconnect()

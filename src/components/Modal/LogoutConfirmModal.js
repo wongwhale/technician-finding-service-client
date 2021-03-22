@@ -8,6 +8,7 @@ const LogoutConfirmModal = ( { isOpen , ...props}) => {
         <>
             <Modal
                 isOpen={isOpen}
+                backButtonClose={true}
                 style={{
                     flex: 1,
                     justifyContent: 'center',

@@ -12,6 +12,7 @@ const SelectWorkDayModal = (props) => {
         <>
             <Modal
                 isOpen={props.isOpen}
+                backButtonClose={true}
                 onClosed={() => props.onClosed()}
                 swipeToClose={false}
                 style={{

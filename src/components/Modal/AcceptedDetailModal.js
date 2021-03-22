@@ -68,6 +68,7 @@ const OrderDetailModal = (props) => {
                     height: heightToDp('80'),
                     backgroundColor: 'transparent'
                 }}
+                backButtonClose={true}
                 position='bottom'
                 swipeArea={heightToDp('3')}
             >

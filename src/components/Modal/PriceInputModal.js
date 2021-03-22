@@ -55,6 +55,7 @@ const PriceInputModal = (props) => {
             <Modal
                 isOpen={props.isOpen}
                 onClosed={() => onClose()}
+                backButtonClose={true}
                 style={{ backgroundColor: 'transparent' , zIndex : 3 }}
                 position='center'
                 swipeToClose={false}

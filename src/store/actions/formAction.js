@@ -219,3 +219,12 @@ export const clear = () => dispatch => {
         type : formType.CLEAR
     })
 }
+
+export const setLocationDescription = (location_description) = dispatch => {
+    dispatch({
+        type : formType.SET_LOCATION_DESCRIPTION,
+        payload : {
+            location_description
+        }
+    })
+}

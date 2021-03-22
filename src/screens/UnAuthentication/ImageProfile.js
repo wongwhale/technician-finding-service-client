@@ -125,6 +125,7 @@ const ImageProfile = (props) => {
                         width: 400,
                         height: 400,
                         cropping: true,
+                        mediaType : 'photo',
                         cropperCircleOverlay: true
                     }).then(res => {
                         console.log(res);
@@ -134,7 +135,17 @@ const ImageProfile = (props) => {
                     })
                 }}
                 camFunc={() => {
-
+                    ImagePicker.openCamera({
+                        mediaType : 'photo',
+                        cropping : true,
+                        multiple : false,
+                        width: 400,
+                        height: 400,
+                    }).then( res => {
+                        handleLibPicker(res , 'file')
+                    }).catch(err => {
+                        console.log(err);
+                    })
                 }}
             />
         </>

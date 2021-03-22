@@ -28,6 +28,7 @@ import { SET_FILE, SET_LOCATION } from '../../store/actions/formAction'
 
 import Geolocation from '@react-native-community/geolocation'
 import LinearGradient from 'react-native-linear-gradient'
+import { getLocationDescription } from '../../misc/getLocationDescription';
 
 const mapStateToProps = (state) => ({
     count: state.counter.count,

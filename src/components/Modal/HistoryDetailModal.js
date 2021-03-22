@@ -63,6 +63,7 @@ const OrderDetailModal = (props) => {
         <>
             <Modal
                 isOpen={props.isOpen}
+                backButtonClose={true}
                 onClosed={() => onClosed()}
                 style={{
                     height: heightToDp('80'),

@@ -23,6 +23,7 @@ const ImagePickerModal = (props) => {
         <>
             <Modal
                 isOpen={props.isOpen}
+                backButtonClose={true}
                 onClosed={() => props.CLOSE_IMAGE_PICKER_MODAL()}
                 style={{ backgroundColor: 'transparent' }}
                 position='center'
@@ -44,7 +45,7 @@ const ImagePickerModal = (props) => {
                             <Text
                                 style={techRegModalStyles.headerText}
                             >
-                                เลือกรูปภาพ หรือ วิดีโอ
+                                เลือกรูปภาพ
                             </Text>
                         </View>
                         <View 

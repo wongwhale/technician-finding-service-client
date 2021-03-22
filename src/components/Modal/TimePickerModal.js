@@ -32,6 +32,7 @@ const TimePickerModal = (props) => {
         <>
             <Modal
                 isOpen={props.time_picker}
+                backButtonClose={true}
                 onClosed={() => props.CLOSE_TIME_PICKER_MODAL()}
                 style={{backgroundColor: 'transparent' }}
                 position='center'

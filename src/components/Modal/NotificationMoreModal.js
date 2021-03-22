@@ -13,6 +13,7 @@ const NotificationMoreModal = ({ isOpen, onClosed }) => {
             <Modal
                 isOpen={isOpen}
                 onClosed={() => onClosed()}
+                backButtonClose={true}
                 position='bottom'
                 swipeArea={heightToDp('3')}
                 style={{

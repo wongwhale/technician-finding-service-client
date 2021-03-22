@@ -12,6 +12,7 @@ const SelectAptitudeModal = (props) => {
         <>
             <Modal
                 isOpen={props.isOpen}
+                backButtonClose={true}
                 onClosed={() => props.onClosed()}
                 swipeToClose={false}
                 style={{
@@ -133,7 +134,7 @@ export const techRegModalStyles = StyleSheet.create({
     },
     headerText: {
         fontSize: widthToDp('4'),
-        color: color.BLUE_0,
+        color: "#222",
         fontWeight: 'bold'
     },
     text: {

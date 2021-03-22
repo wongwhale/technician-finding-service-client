@@ -6,13 +6,15 @@ import { color } from '../../stylesheet/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import { techRegModalStyles } from './SelectAptitudeModal'
+import { getLocationDescription } from '../../misc/getLocationDescription'
 
-const LocationPickerModal = ({setLocation , location , ...props}) => {
+const LocationPickerModal = ({ setLocation, location, changeDesc , ...props }) => {
 
     return (
         <>
             <Modal
                 isOpen={props.isOpen}
+                backButtonClose={true}
                 onClosed={() => props.onClosed()}
                 swipeToClose={false}
                 style={{
@@ -59,14 +61,16 @@ const LocationPickerModal = ({setLocation , location , ...props}) => {
                                 }}
                                 zoomEnabled
                                 showsUserLocation
-                                onRegionChangeComplete={(res) => {
+                                onRegionChangeComplete={ async (res) => {
                                     setLocation(res.latitude, res.longitude)
+                                    const desc = await getLocationDescription(res.latitude  , res.longitude)
+                                    changeDesc(desc)
                                 }}
                             >
                                 <Marker
                                     coordinate={{
-                                        latitude : location.latitude,
-                                        longitude : location.longitude
+                                        latitude: location.latitude,
+                                        longitude: location.longitude
                                     }}
                                 >
 

@@ -13,6 +13,7 @@ import { SEND_MESSAGE, LEAVE_PRIVATE_CHAT, clear, RECEIVE_MESSAGE } from '../../
 
 import Modal from 'react-native-modalbox'
 import { socket , connection } from '../../store/actions/socketAction'
+import { useFocusEffect } from '@react-navigation/native'
 
 
 const mapStateToProps = (state) => ({
@@ -29,8 +30,8 @@ const Chat = (props) => {
     const [imageIsOpen, setImageIsOpen] = React.useState(false)
     const scrollView_ref = useRef()
 
+
     useEffect(() => {
-        props.connection(props.uid)
         socket.on('receive_message' , ({message}) => {
             props.RECEIVE_MESSAGE(message)
         })

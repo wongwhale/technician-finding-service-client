@@ -43,6 +43,7 @@ const DatePickerModal = (props) => {
                 onClosed={() => {
                     props.CLOSE_DATE_PICKER_MODAL()
                 }}
+                backButtonClose={true}
                 style={{ backgroundColor: 'transparent' }}
                 position='center'
                 swipeToClose={false}

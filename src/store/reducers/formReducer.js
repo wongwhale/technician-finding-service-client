@@ -13,6 +13,7 @@ formType.SET_HOUR = 'SET_HOUR'
 formType.CLEAR = 'FORM_REDUCER_CLEAR'
 formType.APPEND_FILE = 'APPEND_FILE'
 formType.DELETE_FILE = 'DELETE_FILE'
+formType.SET_LOCATION_DESCRIPTION = 'SET_LOCATION_DESCRIPTION'
 
 const initialState = {
     date_count: 30,
@@ -28,7 +29,8 @@ const initialState = {
     location: {
         latitude: 0,
         longitude: 0
-    }
+    },
+    location_description : ''
 }
 
 export default function formReducer(state = initialState, action) {
@@ -101,6 +103,11 @@ export default function formReducer(state = initialState, action) {
                 file : state.file.filter( (val) => {
                     return val !== action.payload.file
                 })
+            }
+        case formType.SET_LOCATION_DESCRIPTION:
+            return {
+                ...state,
+                location_description : action.payload.location_description
             }
         default:
             return state

@@ -25,11 +25,11 @@ const connector = connect(mapStateToProps, { CLOSE_SELECT_TYPE_PICKER_MODAL, SET
 
 const SelectTypePickerModal = (props) => {
 
-
     return (
         <>
             <Modal
                 isOpen={props.isOpen}
+                backButtonClose={true}
                 onClosed={() => props.CLOSE_SELECT_TYPE_PICKER_MODAL()}
                 style={{
                     backgroundColor: 'transparent'
@@ -88,6 +88,11 @@ const SelectTypePickerModal = (props) => {
                                         }}
                                         selectedValue={props.type}
                                     >
+                                        {
+                                            props.type === '' ? (
+                                                <Picker.Item label='เลือกประเภทอุปกรณ์ หรือ ประเภทงาน' value={''}  />
+                                            ) : null
+                                        }
                                         {
                                             aptitudeType.map((item, index) => <Picker.Item key={index} label={`${item}`} value={item} />)
                                         }

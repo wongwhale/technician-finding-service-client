@@ -108,6 +108,7 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
         <>
             <Modal
                 visible={isOpen}
+                onRequestClose={ () => handleCloseModal()}
                 animationType='fade'
             >
                 {/* <KeyboardAvoidingView

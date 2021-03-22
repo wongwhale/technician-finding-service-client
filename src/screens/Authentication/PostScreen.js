@@ -30,6 +30,7 @@ import { styles } from '../../components/Setting/styles'
 import Feather from 'react-native-vector-icons/Feather'
 import LinearGradient from 'react-native-linear-gradient'
 import Geolocation from '@react-native-community/geolocation'
+import { getLocationDescription } from '../../misc/getLocationDescription'
 
 
 const mapStateToProps = (state) => ({
@@ -72,13 +73,17 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 const PostScreen = (props) => {
     const [locationVisible, setLocationVisible] = React.useState(false)
     const [isLoading , setIsLoading] = React.useState(false) 
+    const [locationDesc , setLocationDesc] = React.useState('')
+
+
     useFocusEffect(
         React.useCallback(() => {
-            props.connection(props.uid)
             setIsLoading(false)
             const current_date = new Date()
-            Geolocation.getCurrentPosition((position) => {
+            Geolocation.getCurrentPosition( async (position) => {
                 props.SET_LOCATION(position.coords.latitude, position.coords.longitude)
+                const desc = await getLocationDescription(position.coords.latitude, position.coords.longitude)
+                setLocationDesc(desc)
             }, () => {
 
             })
@@ -173,6 +178,11 @@ const PostScreen = (props) => {
                                 >
                                     (ค่าเริ่มต้น : ที่อยู่ปัจจุบัน)
                                 </Text>
+                                <Text
+                                    style={styles.selectedText}
+                                >
+                                    {locationDesc}
+                                </Text>
                             </View>
                             <View style={card.cardContainer}>
                                 {/* <LocationPicker /> */}
@@ -181,7 +191,7 @@ const PostScreen = (props) => {
                                         setLocationVisible(true)
                                     }}
                                 >
-                                    <LinearGradient
+                                    <View
                                         style={{
                                             width: '100%',
                                             backgroundColor: color.BLUE_5,
@@ -193,17 +203,13 @@ const PostScreen = (props) => {
                                             flexDirection: 'row',
                                             alignItems: 'center'
                                         }}
-                                        colors={[
-                                            color.BLUE_5,
-                                            color.BLUE_5
-                                        ]}
                                     >
                                         <Text
                                             style={styles.selectedText}
                                         >
-                                            ระบุที่อยู่
+                                            ระบุโลเคชัน
                                         </Text>
-                                    </LinearGradient>
+                                    </View>
                                     {/* <Feather
                                     style={styles.selectedText}
                                     name='map-pin'
@@ -276,6 +282,9 @@ const PostScreen = (props) => {
                         location={props.location}
                         setLocation={(lat, lng) => {
                             props.SET_LOCATION(lat, lng)
+                        }}
+                        changeDesc={ (desc) => {
+                            setLocationDesc(desc)
                         }}
                     />
 

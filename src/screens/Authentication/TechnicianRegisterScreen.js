@@ -521,7 +521,7 @@ const TechnicianRegisterScreen = (props) => {
                                 <Text
                                     style={styles.selectedText}
                                 >
-                                    ระบุที่อยู่
+                                    ระบุโลเคชัน
                                 </Text>
                                 {/* <Feather
                                     style={styles.selectedText}
