@@ -198,7 +198,6 @@ socket.on('join', (id) => {
 })
 
 socket.on('confirm_technician_response', (data) => {
-    console.log(data);
     AsyncStorage.getItem('notification').then((str) => {
         let noti = JSON.parse(str)
         const new_noti_json = [{
@@ -299,7 +298,7 @@ socket.on('receive_message', ({ message }) => {
 
     // alert(message.message)
     PushNotification.localNotification({
-        title: 'test',
+        title: 'คุณได้รับข้อความใหม่',
         message: message.msgType === 'text' ? message.message : message.msgType === 'image' ? `test : ได้ส่งรูปภาพ` : 'คุณได้รับข้อความใหม่'
     })
     // else {
