@@ -6,8 +6,9 @@ import IsAuth from './screens/Authentication/'
 import UnAuth from './screens/UnAuthentication';
 
 import { connect } from 'react-redux';
-import { disconnect, leave } from './store/actions/socketAction'
+import { disconnect, leave, socket } from './store/actions/socketAction'
 import { checkToken, setCurrentLocation } from './store/actions/authAction'
+import { RECEIVE_MESSAGE } from './store/actions/chatAction'
 import Geolocation from '@react-native-community/geolocation'
 
 var firebaseConfig = {
@@ -34,7 +35,7 @@ const mapStateToProps = (state) => ({
 
 import firebase from '@react-native-firebase/app';
 
-const connector = connect(mapStateToProps, { setCurrentLocation , disconnect, leave, checkToken })
+const connector = connect(mapStateToProps, {RECEIVE_MESSAGE , setCurrentLocation, disconnect, leave, checkToken })
 
 const Router = (props) => {
 
@@ -43,10 +44,13 @@ const Router = (props) => {
   }
 
   useEffect(() => {
+    socket.on('receive_message', ({ message }) => {
+      props.RECEIVE_MESSAGE(message)
+    })
     Geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
       props.setCurrentLocation(latitude, longitude)
       props.checkToken()
-    },  () => {
+    }, () => {
       alert('กรุณาอนุญาติการเข้าถึงตำแหน่งปัจจุบัน')
     })
     return () => {

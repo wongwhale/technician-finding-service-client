@@ -32,9 +32,6 @@ const Chat = (props) => {
 
 
     useEffect(() => {
-        socket.on('receive_message' , ({message}) => {
-            props.RECEIVE_MESSAGE(message)
-        })
         Keyboard.addListener('keyboardDidShow', _keyboardDidShow)
         Keyboard.addListener('keyboardDidHide', _keyboardDidHide)
         return () => {
