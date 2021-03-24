@@ -23,7 +23,6 @@ const TimePickerModal = (props) => {
     const date_ = new Date
 
     useEffect(() => {
-        console.log(date_.toISOString());
         props.SET_HOUR(date_.toTimeString().slice(0, 2))
         props.SET_MINUTE(date_.toTimeString().slice(3, 5))
     }, [])

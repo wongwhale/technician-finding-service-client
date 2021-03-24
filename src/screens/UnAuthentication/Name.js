@@ -71,9 +71,6 @@ const Name = (props) => {
                         if (handleFirstname() && handleLastname()) {
                             props.navigation.navigate('reg_image')
                         }
-                        else (
-                            console.log('not pass')
-                        )
                     }}
                 />
             </View>

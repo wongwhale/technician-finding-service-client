@@ -102,7 +102,6 @@ const ChatInput = (props) => {
                 const reference = firebaseStorage().ref('chat').child(`${props.uid}-${image.path}-${new Date().getTime()}`)
                 await reference.putFile(image.path)
                 await reference.getDownloadURL().then(url => {
-                    console.log(url);
                     props.SEND_MESSAGE(url, 'image', props.uid)
                     props.sendMessage({
                         date: new Date().toISOString(),

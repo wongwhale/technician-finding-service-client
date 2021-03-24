@@ -128,7 +128,6 @@ const ImageProfile = (props) => {
                         mediaType : 'photo',
                         cropperCircleOverlay: true
                     }).then(res => {
-                        console.log(res);
                         handleLibPicker(res, 'file')
                     }).catch(err => {
                         console.log(err);

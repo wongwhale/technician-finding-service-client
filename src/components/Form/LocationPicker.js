@@ -39,7 +39,6 @@ const LocationPicker = (props) => {
                         }}
                         showsUserLocation={true}
                         onRegionChangeComplete={(res) => {
-                            console.log( `\nlat :  ${res.latitude}\nlng : ${res.longitude}`);
                             props.SET_LOCATION(res.latitude, res.longitude)
                         }}
                     >

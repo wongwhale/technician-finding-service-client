@@ -122,7 +122,7 @@ const NotificationTab = (props) => {
     const onRefresh = () => {
         AsyncStorage.getItem('notification').then(json => {
             if (json === null) {
-                console.log('is null');
+                setNotificationLists([])
             }
             else {
                 const noti_json = JSON.parse(json)

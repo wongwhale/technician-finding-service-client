@@ -56,7 +56,6 @@ const OTP = (props) => {
     }
 
     const checkOTP = (otp) => {
-        console.log(confirmOTP , otp);
         if (otp === confirmOTP){
             return true
         }else {
@@ -84,7 +83,6 @@ const OTP = (props) => {
                 }`
             }
         }).then(res => {
-            console.log(res.data);
             setConfirmOTP(res.data.data.sendOTP)
         })
     },[])
@@ -197,7 +195,7 @@ const OTP = (props) => {
                                     props.checkToken()
                                 })
                             }
-                            else console.log('false');
+                            else alert('รหัส OTP ไม่ตรง')
                         }
                     }} />
                 </View>
