@@ -1,200 +1,32 @@
 import io from 'socket.io-client'
 import firebase from '@react-native-firebase/storage'
-import { SOCKET_URL, WEB_URL } from '../../misc/web_url'
+import { SOCKET_URL } from '../../misc/web_url'
 import { socketType } from '../reducers/socketReducer'
 import store from '../'
 import { notiType } from '../reducers/notificationReducer'
 import { authType } from '../reducers/authReducer'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getDistance } from '../../misc/getDistance'
-import { chatType } from '../reducers/chatReducer'
 import PushNotification from 'react-native-push-notification'
-import { fromPromise } from '@apollo/client'
-import { useRoute } from '@react-navigation/native'
 
-export const socket = io.connect(`${SOCKET_URL}`)
 
-const updateTechOrder = () => {
-    store.dispatch({
-        type: authType.LOADED
-    })
-    AsyncStorage.getItem('token').then(token => {
-        axios({
-            url: WEB_URL,
-            method: 'post',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": token
-            },
-            data: {
-                query:
-                    `
-                    query{
-                        tokenCheck {
-                          technicianInfoID {
-                            newForm {
-                              _id
-                              detail
-                              date
-                              location {
-                                  lat 
-                                  lon
-                              }
-                              userInfoID {
-                                firstname
-                                lastname
-                                avatar
-                              }
-                            } 
-                            acceptForm {
-                              _id
-                              senderID
-                              detail
-                              date
-                              userInfoID{
-                                  firstname 
-                                  lastname
-                                  avatar
-                              }
-                            }
-                          }
-                        }
-                      }
-                `
-            }
-        }).then(res => {
-            const data = res.data.data.tokenCheck
-            let neworder_lists = []
-            let acceptedorder_lists = []
-            // Promise.all(
-            //     data.technicianInfoID.newForm.map(async (order) => {
-            //         const distance = await getDistance(
-            //             18.795424746501605,
-            //             98.95226894013882,
-            //             order.location.lat,
-            //             order.location.lon
-            //         )
-            //         neworder_lists.push({
-            //             ...order,
-            //             distance: parseFloat(distance / 1000).toFixed(2)
-            //         })
-            //     }),
-            //     data.technicianInfoID.acceptForm.map((order) => {
-            //         acceptedorder_lists.push({
-            //             ...order
-            //         })
-            //     })
-            // ).then(() => {
-            //     store.dispatch({
-            //         type: notiType.SET_NEW_ORDER,
-            //         payload: neworder_lists
-            //     })
-            //     store.dispatch({
-            //         type: notiType.SET_ACCEPTED_ORDER,
-            //         payload: acceptedorder_lists
-            //     })
-            // })
-            store.dispatch({
-                type: notiType.SET_ORDER_BADGE,
-                payload: {
-                    order_badge: data.technicianInfoID.newForm.length
-                }
-            })
-            store.dispatch({
-                type: authType.LOADED
-            })
-        })
-    })
-}
 
-const updateUserResponse = () => {
-    store.dispatch({
-        type: authType.LOADED
-    })
-    AsyncStorage.getItem('token').then(token => {
-        axios({
-            url: WEB_URL,
-            method: 'post',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": token
-            },
-            data: {
-                query:
-                    `
-                    query{
-                        tokenCheck {
-                           forms{
-                            _id
-                            detail
-                            date 
-                            location {
-                                lat
-                                lon
-                            }
-                            technician {
-                              minPrice
-                              maxPrice
-                              location {
-                                lat
-                                lon
-                              }
-                              tech {
-                                _id
-                                star
-                                count
-                                userInfoID {
-                                  firstname
-                                  lastname
-                                  avatar
-                                  userID
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                `
-            }
-        }).then(res => {
-            const data = res.data.data.tokenCheck
-            let temp_list = []
-
-            // Promise.all(
-            //     data.forms.map(async (form) => {
-            //         const distance = await getDistance(
-            //             18.795424746501605,
-            //             98.95226894013882,
-            //             form.location.lat,
-            //             form.location.lon
-            //         )
-            //         temp_list.push({
-            //             ...form,
-            //             distance: parseFloat(distance / 1000).toFixed(2)
-            //         })
-            //     })
-            // ).then(() => {
-            //     store.dispatch({
-            //         type: notiType.SET_USER_RESPONSE,
-            //         payload: temp_list
-            //     })
-            //     store.dispatch({
-            //         type: authType.LOADED
-            //     })
-
-            // }).catch(err => {
-            //     console.log(err);
-            // })
-            store.dispatch({
-                type: authType.LOADED
-            })
-        })
-    })
-}
+export const socket = io.connect(`${SOCKET_URL}`,{
+    reconnectionDelay : 1000,
+    query : {
+        uid : store.getState().auth.userInfo.uid
+    },
+    reconnection : true,
+    
+})
 
 socket.on('join', (id) => {
-    console.log('join', id);
+    // console.log('join', id);
+})
+
+socket.on('reconnect' , () => {
+    const uid = store.getState().auth.userInfo.uid
+    socket.emit('join', { uid })
 })
 
 socket.on('confirm_technician_response', (data) => {
@@ -230,7 +62,6 @@ socket.on('confirm_technician_response', (data) => {
 // })
 
 socket.on('recieve_new_response', (data) => {
-    // console.log('recieve new response', data);
     AsyncStorage.getItem('notification').then((str) => {
         let noti = JSON.parse(str)
         const new_noti_json = [{
@@ -324,7 +155,7 @@ export const sendMessage = (message, receiver) => dispatch => {
 }
 
 export const leave = (uid) => dispatch => {
-    console.log('leave :', uid);
+    // console.log('leave :', uid);
     socket.emit('leave', { uid })
     dispatch({
         type: socketType.DISCONNECT
@@ -343,7 +174,7 @@ export const connection = (uid) => dispatch => {
 }
 
 export const disconnect = (uid) => dispatch => {
-    console.log('disconnect ', uid);
+    // console.log('disconnect ', uid);
     socket.disconnect(uid)
     // socket.emit('leave', { uid })
     // socket.disconnect()

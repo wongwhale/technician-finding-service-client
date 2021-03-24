@@ -29,7 +29,7 @@ export const removeOrder = (formID, userID) => dispatch => {
                 "Authorization": token
             },
         }).then(res => {
-            console.log(res.data.data.techIgnoreForm);
+            // console.log(res.data.data.techIgnoreForm);
         }).catch(err => {
             console.log(err);
         })
@@ -141,8 +141,8 @@ export const getWaitingList = () => dispatch => {
                     })
                 ).then(() => {
                     dispatch({
-                        type : notiType.SET_USER_RESPONSE,
-                        payload : {
+                        type: notiType.SET_USER_RESPONSE,
+                        payload: {
 
                         }
                     })
@@ -281,7 +281,7 @@ export const getAcceptedList = () => dispatch => {
                 }).catch(err => {
                     reject(err)
                 })
-            }).catch( err => {
+            }).catch(err => {
                 reject(err)
             })
         })
@@ -290,13 +290,22 @@ export const getAcceptedList = () => dispatch => {
 
 export const setNotificationBadge = () => async dispatch => {
     const notification = await AsyncStorage.getItem('notification')
-    const notRead = JSON.parse(notification).filter( (val) => {
-        return val.status === false
-    })
-    dispatch({
-        type : notiType.SET_NOTIFICATION_BADGE,
-        payload : {
-            notification_badge : notRead.length
-        }
-    })
+    if (notification !== null) {
+        const notRead = JSON.parse(notification).filter((val) => {
+            return val.status === false
+        })
+        dispatch({
+            type: notiType.SET_NOTIFICATION_BADGE,
+            payload: {
+                notification_badge: notRead.length
+            }
+        })
+    } else {
+        dispatch({
+            type: notiType.SET_NOTIFICATION_BADGE,
+            payload: {
+                notification_badge: 0
+            }
+        })
+    }
 }
