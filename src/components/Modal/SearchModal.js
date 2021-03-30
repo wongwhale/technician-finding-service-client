@@ -59,7 +59,7 @@ const SearchModal = ({ isOpen, onClosed, ...props }) => {
                     })
                 })
                 .catch(err => {
-                    console.log('error on search guide method', err);
+                    // console.log('error on search guide method', err);
                 })
         }
         else {

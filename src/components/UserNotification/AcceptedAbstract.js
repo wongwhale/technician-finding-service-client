@@ -7,8 +7,8 @@ import Feather from 'react-native-vector-icons/Feather'
 import { connect } from 'react-redux'
 import { getFormInfo } from '../../store/actions/modalAction'
 
-const mapStateToProps = () => ({
-
+const mapStateToProps = (state) => ({
+    // role : state.auth.userInfo.role
 })
 
 const mapDispatchToProps  = {

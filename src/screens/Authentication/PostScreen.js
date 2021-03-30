@@ -187,9 +187,15 @@ const PostScreen = (props) => {
                                     <MapView
                                         style={{ width: '100%', aspectRatio: 1, justifyContent: 'center', alignItems: 'center', borderRadius: widthToDp('2') }}
                                         provider={PROVIDER_GOOGLE}
-                                        initialRegion={{
-                                            latitude: props.currentLocation.lat,
-                                            longitude: props.currentLocation.lon,
+                                        // initialRegion={{
+                                        //     latitude: props.currentLocation.lat,
+                                        //     longitude: props.currentLocation.lon,
+                                        //     latitudeDelta: 0.005,
+                                        //     longitudeDelta: 0.005
+                                        // }}
+                                        region={{
+                                            latitude: props.location.latitude,
+                                            longitude: props.location.longitude,
                                             latitudeDelta: 0.005,
                                             longitudeDelta: 0.005
                                         }}
@@ -248,7 +254,6 @@ const PostScreen = (props) => {
                     <DatePickerModal />
                     <TimePickerModal />
                     <SelectTypePickerModal />
-                    {/* <LocationPickerModal /> */}
                     <ImagePickerModal
                         libFunc={() => {
                             ImagePickerManager.openPicker({
@@ -272,17 +277,8 @@ const PostScreen = (props) => {
                             })
                         }}
                     />
-                    {/* <LocationPickerModal
-                        isOpen={locationVisible}
-                        onClosed={() => setLocationVisible(false)}
-                        location={props.location}
-                        setLocation={(lat, lng) => {
-                            props.SET_LOCATION(lat, lng)
-                        }}
-                        changeDesc={(desc) => {
-                            setLocationDesc(desc)
-                        }}
-                    /> */}
+
+
                     <Animated.View
                         style={{
                             // backgroundColor : 'red',

@@ -10,13 +10,13 @@ import { CLOSE_DETAIL_MODAL, OPEN_PRICE_INPUT_MODAL, getFormInfo, clearFormInfo 
 import { removeOrder } from '../../store/actions/notiAction'
 import { color, heightToDp, widthToDp } from '../../stylesheet'
 import { ScrollView } from 'react-native-gesture-handler'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 
 const mapStateToProps = (state) => ({
     isOpen: state.modal.detail_modal,
     order_id: state.modal.order_id,
     formInfo: state.modal.formInfo,
-    current_location : state.auth.userInfo.currentLocation
+    current_location: state.auth.userInfo.currentLocation
 })
 
 const mapDispatchToProps = {
@@ -290,15 +290,22 @@ const OrderDetailModal = (props) => {
                                                     height: '100%',
                                                     borderRadius: widthToDp('5')
                                                 }}
+                                                provider={PROVIDER_GOOGLE}
+                                                zoomEnabled
                                                 initialRegion={{
-                                                    latitude : props.formInfo.location.lat,
-                                                    longitude : props.formInfo.location.lon,
-                                                    latitudeDelta : 0.005,
-                                                    longitudeDelta : 0.005
+                                                    latitude: props.formInfo.location.lat,
+                                                    longitude: props.formInfo.location.lon,
+                                                    latitudeDelta: 0.005,
+                                                    longitudeDelta: 0.005
                                                 }}
                                                 showsUserLocation
                                             >
-
+                                                <Marker
+                                                    coordinate={{
+                                                        latitude: props.formInfo.location.lat,
+                                                        longitude: props.formInfo.location.lon,
+                                                    }}
+                                                />
                                             </MapView>
                                         </View>
 

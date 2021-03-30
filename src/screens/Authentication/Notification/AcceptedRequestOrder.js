@@ -84,7 +84,7 @@ const AcceptedRequestOrder = ({ userConfirmed, ...props }) => {
                 )
                 setIsReady(false)
             }).catch(err => {
-                console.log(err)
+                // console.log(err)
             })
             // props.getAcceptedList().then(res => {
             //     setNewOrderLists(res)
