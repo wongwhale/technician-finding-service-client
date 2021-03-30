@@ -220,6 +220,9 @@ export const checkToken = () => async (dispatch) => {
             "Authorization": token
         },
     }).then(res => {
+        dispatch({
+            type: authType.LOADED
+        })
         const data = res.data.data.tokenCheck
         if (data.status) {
             if (data.role === 'technician') {
@@ -292,6 +295,9 @@ export const checkToken = () => async (dispatch) => {
         } else {
             dispatch({
                 type: authType.LOGIN_FAIL
+            })
+            dispatch({
+                type: authType.LOADED
             })
         }
     })
